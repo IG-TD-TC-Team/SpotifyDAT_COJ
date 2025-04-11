@@ -12,7 +12,7 @@ import java.util.List;
  * @param <T> The type of object to persist.
  */
 public class JsonRepository<T> {
-    // The Class type of T, used by Jackson for serialization/deserialization.
+    // The Class type of T, used by Jackson for serialization/deserialization .
     private final Class<T> type;
 
     // The path where the JSON file is stored.
@@ -29,7 +29,7 @@ public class JsonRepository<T> {
      */
     public JsonRepository(Class<T> type, String filename) {
         this.type = type;
-        // Store file under the "data" directory.
+        // Store file under the "/data" directory.
         this.storagePath = Paths.get("data", filename);
         try {
             // Ensure the parent directory exists.

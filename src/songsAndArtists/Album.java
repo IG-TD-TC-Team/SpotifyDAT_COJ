@@ -6,18 +6,18 @@ import java.util.*;
 public class Album {
 
     public Album() {}
-    public Album (int id, String title, String artistId, List<Integer> songs) {
+    public Album (int id, String title, String artistId, List<Integer> songsIds) {
         this.id = id;
         this.title = title;
         this.artistId = artistId;
-        this.songs = songs;
+        this.songsIds = songsIds;
     }
 
 
-    private  int id;
+    private int id;
     private String title;
     private String artistId;
-    private List<Integer> songs;
+    private List<Integer> songsIds;
 
     public int getId() {
         return id;
@@ -28,9 +28,7 @@ public class Album {
     public String getTitle() {
         return title;
     }
-    public void setTitle(String title) {
-        this.title = title;
-    }
+    public void setTitle(String title) { this.title = title; }
     public String getArtistId() {
         return artistId;
     }
@@ -38,9 +36,9 @@ public class Album {
         this.artistId = artistId;
     }
     public List<Integer> getSongs() {
-        return songs;
+        return songsIds;
     }
-    public void setSongs(List<Integer> songs) {
-        this.songs = songs;
+    public void setSongs(List<Integer> songsIds) {
+        this.songsIds = songsIds;
     }
 }

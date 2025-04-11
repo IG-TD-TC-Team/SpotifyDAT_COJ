@@ -1,0 +1,71 @@
+[ {
+  "artistID" : 1,
+  "firstName" : "Daft",
+  "lastName" : "Punk",
+  "birthDate" : 97369200000,
+  "countryOfBirth" : "France",
+  "songs" : [ 101, 102, 103 ]
+}, {
+  "artistID" : 2,
+  "firstName" : "David",
+  "lastName" : "Bowie",
+  "birthDate" : -725245200000,
+  "countryOfBirth" : "UK",
+  "songs" : [ 201, 202, 203 ]
+}, {
+  "artistID" : 1,
+  "firstName" : "Daft",
+  "lastName" : "Punk",
+  "birthDate" : 97369200000,
+  "countryOfBirth" : "France",
+  "songs" : [ 101, 102, 103 ]
+}, {
+  "artistID" : 2,
+  "firstName" : "David",
+  "lastName" : "Bowie",
+  "birthDate" : -725245200000,
+  "countryOfBirth" : "UK",
+  "songs" : [ 201, 202, 203 ]
+}, {
+  "artistID" : 1,
+  "firstName" : "Daft",
+  "lastName" : "Punk",
+  "birthDate" : 97369200000,
+  "countryOfBirth" : "France",
+  "songs" : null
+}, {
+  "artistID" : 2,
+  "firstName" : "David",
+  "lastName" : "Bowie",
+  "birthDate" : -725245200000,
+  "countryOfBirth" : "UK",
+  "songs" : null
+}, {
+  "artistID" : 1,
+  "firstName" : "Daft",
+  "lastName" : "Punk",
+  "birthDate" : 97369200000,
+  "countryOfBirth" : "France",
+  "songs" : null
+}, {
+  "artistID" : 2,
+  "firstName" : "David",
+  "lastName" : "Bowie",
+  "birthDate" : -725245200000,
+  "countryOfBirth" : "UK",
+  "songs" : null
+}, {
+  "artistID" : 1,
+  "firstName" : "Daft",
+  "lastName" : "Punk",
+  "birthDate" : 97369200000,
+  "countryOfBirth" : "France",
+  "songs" : null
+}, {
+  "artistID" : 2,
+  "firstName" : "David",
+  "lastName" : "Bowie",
+  "birthDate" : -725245200000,
+  "countryOfBirth" : "UK",
+  "songs" : null
+} ]

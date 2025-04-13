@@ -1,6 +1,8 @@
 package persistence;
 
 import songsAndArtists.Album;
+import songsAndArtists.Artist;
+
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -14,8 +16,10 @@ public class AlbumRepository extends JsonRepository<Album> {
     /**
      * Constructor that initializes the Album repository.
      */
-    public AlbumRepository() {
-        super(Album.class, "albums.json");
+    public AlbumRepository() {super(Album.class, "albums.json");}
+
+    public AlbumRepository(Class<Album> albumClass, String s) {
+        super(albumClass, s);
     }
 
     /**

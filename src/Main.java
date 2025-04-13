@@ -1,10 +1,7 @@
 import songsAndArtists.*;
 import persistence.*;
-import songsManagement.*;
-import subscription.*;
 
 import java.util.Arrays;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -19,7 +16,7 @@ public class Main {
         // Set up repositories
         JsonRepository<Artist> artistRepo = new JsonRepository<>(Artist.class, "artists.json");
         JsonRepository<Song> songRepo = new JsonRepository<>(Song.class, "songs.json");
-        AlbumRepository albumRepo = new AlbumRepository();
+        JsonRepository<Album> albumRepo = new JsonRepository<>(Album.class, "albums.json");
 
         // Create and add artists
         Artist daftPunk = new Artist(

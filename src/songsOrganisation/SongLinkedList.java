@@ -1,4 +1,4 @@
-package songsManagement;
+package songsOrganisation;
 
 public class SongLinkedList {
 }

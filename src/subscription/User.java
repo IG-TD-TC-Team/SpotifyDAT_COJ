@@ -1,6 +1,7 @@
-import subscription.SubscriptionPlan;
+package subscription;
 
 import java.util.Date;
+import java.util.List;
 
 public class User {
     //Identifier
@@ -17,6 +18,10 @@ public class User {
     //Account information
     private SubscriptionPlan subscription;
     private Date creationDate;
+
+    //Followed Users
+    private List<User> followedUsers;
+    private List<User> followByUsers;
 
     public User(int userID) {
         this.userID = userID;

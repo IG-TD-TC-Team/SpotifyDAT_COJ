@@ -1,0 +1,61 @@
+[ {
+  "id" : 1001,
+  "title" : "Random Access Memories",
+  "artistId" : "1",
+  "songs" : [ 101, 102, 103 ]
+}, {
+  "id" : 1002,
+  "title" : "Homework",
+  "artistId" : "1",
+  "songs" : [ 103 ]
+}, {
+  "id" : 2001,
+  "title" : "Hunky Dory",
+  "artistId" : "2",
+  "songs" : [ 201, 202 ]
+}, {
+  "id" : 2002,
+  "title" : "The Rise and Fall of Ziggy Stardust",
+  "artistId" : "2",
+  "songs" : [ 203 ]
+}, {
+  "id" : 1001,
+  "title" : "Random Access Memories",
+  "artistId" : "1",
+  "songs" : [ 101, 102 ]
+}, {
+  "id" : 1002,
+  "title" : "Homework",
+  "artistId" : "1",
+  "songs" : [ 103 ]
+}, {
+  "id" : 2001,
+  "title" : "Hunky Dory",
+  "artistId" : "2",
+  "songs" : [ 201, 202 ]
+}, {
+  "id" : 2002,
+  "title" : "The Rise and Fall of Ziggy Stardust",
+  "artistId" : "2",
+  "songs" : [ 203 ]
+}, {
+  "id" : 1001,
+  "title" : "Random Access Memories",
+  "artistId" : "1",
+  "songs" : [ 101, 102 ]
+}, {
+  "id" : 1002,
+  "title" : "Homework",
+  "artistId" : "1",
+  "songs" : [ 103 ]
+}, {
+  "id" : 2001,
+  "title" : "Hunky Dory",
+  "artistId" : "2",
+  "songs" : [ 201, 202 ]
+}, {
+  "id" : 2002,
+  "title" : "The Rise and Fall of Ziggy Stardust",
+  "artistId" : "2",
+  "songs" : [ 203 ]
+} ]

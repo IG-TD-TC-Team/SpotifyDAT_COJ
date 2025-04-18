@@ -3,6 +3,10 @@ package subscription;
 //Strategy
 public interface SubscriptionPlan {
 
-    boolean showAds();
+    boolean hasAds();
     boolean skipTracks();
+    int maxSkipsPerHour();
+    boolean canListenOffline();
+    boolean downloadSongs();
+    boolean shuffleOnly();
 }

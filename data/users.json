@@ -1,0 +1,42 @@
+[
+  {
+    "userID": 1,
+    "username": "alice123",
+    "email": "alice@example.com",
+    "password": "hashedpassword1",
+    "firstName": "Alice",
+    "lastName": "Smith",
+    "dateOfBirth": "1995-05-10T00:00:00.000+00:00",
+    "accountCreationDate": "2024-04-01T00:00:00.000+00:00",
+    "subscriptionPlan": {
+      "type": "FreePlan"
+    },
+    "subscriptionInfo": {
+      "startDate": "2024-04-01T00:00:00.000+00:00",
+      "endDate": null
+    },
+    "active": true,
+    "followedUsers": [],
+    "followers": []
+  },
+  {
+    "userID": 2,
+    "username": "bob456",
+    "email": "bob@example.com",
+    "password": "hashedpassword2",
+    "firstName": "Bob",
+    "lastName": "Johnson",
+    "dateOfBirth": "1990-09-21T00:00:00.000+00:00",
+    "accountCreationDate": "2024-04-01T00:00:00.000+00:00",
+    "subscriptionPlan": {
+      "type": "PremiumPlan"
+    },
+    "subscriptionInfo": {
+      "startDate": "2024-04-01T00:00:00.000+00:00",
+      "endDate": "2025-04-01T00:00:00.000+00:00"
+    },
+    "active": true,
+    "followedUsers": [],
+    "followers": []
+  }
+]

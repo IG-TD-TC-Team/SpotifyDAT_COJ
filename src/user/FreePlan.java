@@ -1,34 +1,29 @@
-package subscription;
+package user;
 
 //Concrete strategy
-public class PremiumPlan implements SubscriptionPlan {
+public class FreePlan implements SubscriptionPlan {
     @Override
     public boolean hasAds() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean skipTracks() {
-        return true;
-    }
-
-    @Override
-    public int maxSkipsPerHour() {
-        return Integer.MAX_VALUE;
+        return false;
     }
 
     @Override
     public boolean canListenOffline() {
-        return true;
+        return false;
     }
 
     @Override
     public boolean downloadSongs() {
-        return true;
+        return false;
     }
 
     @Override
     public boolean shuffleOnly() {
-        return false;
+        return true;
     }
 }

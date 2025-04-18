@@ -1,12 +1,23 @@
-package subscription;
+package user;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 public class User {
 
-    public User(int userID) {
+    public User(int userID, String username, String email, String password,Date accountCreationDate) {
         this.userID = userID;
+        this.username = username;
+        this.email = email;
+        this.password = password;
+        this.accountCreationDate = accountCreationDate;
+        this.isActive = true;
+        //to-do subscription
+
+        //Initialize follows to empty
+        this.followedUsers = new ArrayList<>();
+        this.followers = new ArrayList<>();
     }
 
     //Identifier
@@ -74,8 +85,11 @@ public class User {
 
     //Account information
     private Date accountCreationDate;
-    private SubscriptionPlan subscription;
     private boolean isActive;
+    //What the user can do
+    private SubscriptionPlan subscriptionPlan;
+    //Time-related data about subscription
+    private SubscriptionInfo subscriptionInfo;
 
     public Date getAccountCreationDate() {
         return accountCreationDate;
@@ -85,12 +99,12 @@ public class User {
         this.accountCreationDate = accountCreationDate;
     }
 
-    public SubscriptionPlan getSubscription() {
-        return subscription;
+    public SubscriptionPlan getSubscriptionPlan() {
+        return subscriptionPlan;
     }
 
-    public void setSubscription(SubscriptionPlan subscription) {
-        this.subscription = subscription;
+    public void setSubscriptionPlan(SubscriptionPlan subscription) {
+        this.subscriptionPlan = subscription;
     }
 
     public boolean isActive() {
@@ -101,9 +115,32 @@ public class User {
         isActive = active;
     }
 
+    public SubscriptionInfo getSubscriptionInfo() {
+        return subscriptionInfo;
+    }
+
+    public void setSubscriptionInfo(SubscriptionInfo subscriptionInfo) {
+        this.subscriptionInfo = subscriptionInfo;
+    }
+
     //Followed Users
     private List<User> followedUsers;
-    private List<User> followByUsers;
+    private List<User> followers;
 
+    public List<User> getFollowedUsers() {
+        return followedUsers;
+    }
+
+    public void setFollowedUsers(List<User> followedUsers) {
+        this.followedUsers = followedUsers;
+    }
+
+    public List<User> getFollowers() {
+        return followers;
+    }
+
+    public void setFollowers(List<User> followers) {
+        this.followers = followers;
+    }
 
 }

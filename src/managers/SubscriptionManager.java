@@ -1,5 +1,8 @@
 package managers;
 
+import user.SubscriptionPlan;
+import user.User;
+
 public class SubscriptionManager {
 
     //Singleton instance
@@ -16,20 +19,25 @@ public class SubscriptionManager {
         return instance;
     }
 
+    private User user;
+
+    public void createSubscription(User user, SubscriptionPlan subscriptionPlan, int days) {
+
+    }
+
     public boolean isExpired() {
+        //Check dates
         return false;
     }
-    //When creating check that enddate is after startdate
 
-    public void renew(int months){}
+    public void renew(User user, int days){}
 
-    public void downgradeToFree(){}
+    public void downgradeToFree(User user){}
 
-    public void upgradeToPremium(){}
+    public void upgradeToPremium(User user){}
 
-    //public void cancel(){}
 
-    public int daysRemaining() {
+    public int getSubscriptionInfos(User user) {
         return 0;
     }
 

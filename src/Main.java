@@ -98,19 +98,19 @@ public class Main {
         }
 
         // Demonstrate album repository functions
-        System.out.println("\nAlbums by Daft Punk:");
+       /* System.out.println("\nAlbums by Daft Punk:");
         List<Album> daftPunkAlbums = albumRepo.findByArtistId("1");
         for (Album album : daftPunkAlbums) {
             System.out.println("- " + album.getTitle());
-        }
+        }*/
 
         // Demonstrate adding a song to an album
-        System.out.println("\nAdding a song to Random Access Memories...");
+        /*System.out.println("\nAdding a song to Random Access Memories...");
         albumRepo.addSongToAlbum(1001, 103);
         Album updatedAlbum = albumRepo.findById(1001).orElse(null);
         if (updatedAlbum != null) {
             System.out.println("Updated album now has " + updatedAlbum.getSongs().size() + " songs");
-        }
+        }*/
 
         // Demonstrate finding songs by genre
         System.out.println("\nAll ROCK songs:");

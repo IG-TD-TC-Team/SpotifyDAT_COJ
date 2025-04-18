@@ -22,7 +22,7 @@ public class UserManager {
     //Void for the moment
 
     //Basic user methods
-    void createUser(){}
+    void createUser(){} //manage unique ID + userrepo checks email exist before adding a new user
     void login(){}
     void logout(){}
 

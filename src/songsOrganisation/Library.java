@@ -1,12 +1,29 @@
 package songsOrganisation;
 
+import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Library class represents a user's music library.
+ * It contains a list of playlists and the user ID associated with the library.
+ */
 public class Library {
 
     private int userID;
     private List<Playlist> playlists;
 
+    /**
+     * Default constructor for Jackson deserialization.
+     */
+    public Library() {
+        this.playlists = new ArrayList<>();
+    }
+
+    /**
+     * Constructor to create a Library object with the specified user ID and playlists.
+     * @param userID The ID of the user.
+     * @param playlists The list of playlists associated with the user.
+     */
     public Library(int userID, List<Playlist> playlists) {
         this.userID = userID;
         this.playlists = playlists;

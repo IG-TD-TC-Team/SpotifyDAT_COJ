@@ -1,6 +1,13 @@
 package user;
 
-//Concrete strategy
+import com.fasterxml.jackson.annotation.JsonTypeName;
+
+/**
+ * Concrete implementation of SubscriptionPlan for free users.
+ * The JsonTypeName annotation works with the JsonTypeInfo in the interface
+ * to enable proper polymorphic serialization/deserialization.
+ */
+@JsonTypeName("FreePlan")
 public class FreePlan implements SubscriptionPlan {
     @Override
     public boolean hasAds() {

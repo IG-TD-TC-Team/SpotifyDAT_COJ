@@ -2,8 +2,21 @@ package user;
 
 import java.util.Date;
 
+/**
+ *
+ */
 public class SubscriptionInfo {
+    /**
+     * Default constructor for Jackson deserialization.
+     */
+    public SubscriptionInfo() {
 
+    }
+    /**
+     * Constructor to create a SubscriptionInfo object with start and end dates.
+     * @param start The start date of the subscription.
+     * @param end The end date of the subscription.
+     */
     public SubscriptionInfo(Date start, Date end) {
         startDate = start;
         endDate = end;

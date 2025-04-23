@@ -31,4 +31,29 @@ public class ArtistRepository extends JsonRepository<Artist> {
                 .findFirst()
                 .orElse(null);
     }
+
+    /**
+     * Updates an existing artist in the repository.
+     *
+     * @param artist The artist with updated fields.
+     * @return true if the artist was found and updated, false otherwise.
+     */
+    public boolean update(Artist artist) {
+        List<Artist> artists = findAll();
+        boolean found = false;
+
+        for (int i = 0; i < artists.size(); i++) {
+            if (artists.get(i).getArtistID() == artist.getArtistID()) {
+                artists.set(i, artist);
+                found = true;
+                break;
+            }
+        }
+
+        if (found) {
+            saveAll(artists);
+        }
+
+        return found;
+    }
 }

@@ -1,6 +1,7 @@
 package persistence;
 
-import songsAndArtists.Song;
+
+import songsAndArtists.*;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -36,9 +37,9 @@ public class SongRepository extends JsonRepository<Song> {
      * @param artistId The ID of the artist whose songs to find.
      * @return A List of songs by the specified artist.
      */
-    public List<Song> findByArtistId(String artistId) {
+    public List<Song> findByArtistId(int artistId) {
         return findAll().stream()
-                .filter(song -> song.getArtistId().equals(artistId))
+                .filter(song -> song.getArtistId() == artistId)
                 .collect(Collectors.toList());
     }
 
@@ -48,7 +49,7 @@ public class SongRepository extends JsonRepository<Song> {
      * @param genre The genre to filter songs by.
      * @return A List of songs of the specified genre.
      */
-    public List<Song> findByGenre(String genre) {
+    public List<Song> findByGenre(Genre genre) {
         return findAll().stream()
                 .filter(song -> song.getGenre().equals(genre))
                 .collect(Collectors.toList());

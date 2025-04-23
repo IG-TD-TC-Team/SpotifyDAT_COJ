@@ -3,7 +3,15 @@ package user;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
+
+/**
+ * User class represents a user in the system.
+ * It contains personal information, account information, and subscription details.
+ * It also manages the user's followed users and followers.
+ */
 public class User {
 
     public User(int userID, String username, String email, String password,Date accountCreationDate) {
@@ -16,8 +24,8 @@ public class User {
         //to-do subscription
 
         //Initialize follows to empty
-        this.followedUsers = new ArrayList<>();
-        this.followers = new ArrayList<>();
+        this.followedUsersIDs = new ArrayList<>();
+        this.followersIDs = new ArrayList<>();
     }
 
     //Identifier
@@ -124,23 +132,23 @@ public class User {
     }
 
     //Followed Users
-    private List<User> followedUsers;
-    private List<User> followers;
+    private List<Integer> followedUsersIDs;
+    private List<Integer> followersIDs;
 
-    public List<User> getFollowedUsers() {
-        return followedUsers;
+    public List<Integer> getFollowedUsersIDs() {
+        return followedUsersIDs;
     }
 
-    public void setFollowedUsers(List<User> followedUsers) {
-        this.followedUsers = followedUsers;
+    public void setFollowedUsersIDs(List<Integer> followedUsersIDs) {
+        this.followedUsersIDs = followedUsersIDs;
     }
 
-    public List<User> getFollowers() {
-        return followers;
+    public List<Integer> getFollowersIDs() {
+        return followersIDs;
     }
 
-    public void setFollowers(List<User> followers) {
-        this.followers = followers;
+    public void setFollowersIDs(List<Integer> followersIDs) {
+        this.followersIDs = followersIDs;
     }
 
 }

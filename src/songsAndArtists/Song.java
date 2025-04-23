@@ -9,13 +9,13 @@ public class Song {
      * */
     private int songId;
     private String title;
-    private String artistId;
-    private String albumId;
+    private int artistId;
+    private int albumId;
     private Genre genre;
     private int durationSeconds;
     public String filePath;
 
-    public Song(int songId, String title, String artistId, String albumId, Genre genre, int durationSeconds, String filePath) {
+    public Song(int songId, String title, int artistId, int albumId, Genre genre, int durationSeconds, String filePath) {
         this.songId = songId;
         this.title = title;
         this.artistId = artistId;
@@ -40,16 +40,16 @@ public class Song {
     public void setTitle(String title) {
         this.title = title;
     }
-    public String getArtistId() {
+    public int getArtistId() {
         return artistId;
     }
-    public void setArtistId(String artistId) {
+    public void setArtistId(int artistId) {
         this.artistId = artistId;
     }
-    public String getAlbumId() {
+    public int getAlbumId() {
         return albumId;
     }
-    public void setAlbumId(String albumId) {
+    public void setAlbumId(int albumId) {
         this.albumId = albumId;
     }
     public Genre getGenre() {

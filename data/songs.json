@@ -1,57 +1,137 @@
 [ {
   "songId" : 203,
   "title" : "Life on Mars?",
-  "artistId" : "2",
-  "albumId" : "2002",
+  "artistId" : 2,
+  "albumId" : 2002,
   "genre" : "ROCK",
   "durationSeconds" : 236,
   "filePath" : "/music/lifeonmars.mp3"
 }, {
   "songId" : 101,
   "title" : "Get Lucky",
-  "artistId" : "1",
-  "albumId" : "1001",
+  "artistId" : 1,
+  "albumId" : 1001,
   "genre" : "ELECTRONIC",
   "durationSeconds" : 248,
   "filePath" : "/music/getlucky.mp3"
 }, {
   "songId" : 102,
   "title" : "Harder, Better, Faster, Stronger",
-  "artistId" : "1",
-  "albumId" : "1001",
+  "artistId" : 1,
+  "albumId" : 1001,
   "genre" : "ELECTRONIC",
   "durationSeconds" : 224,
   "filePath" : "/music/harder.mp3"
 }, {
   "songId" : 103,
   "title" : "Around the World",
-  "artistId" : "1",
-  "albumId" : "1002",
+  "artistId" : 1,
+  "albumId" : 1002,
   "genre" : "ELECTRONIC",
   "durationSeconds" : 429,
   "filePath" : "/music/aroundtheworld.mp3"
 }, {
   "songId" : 201,
   "title" : "Space Oddity",
-  "artistId" : "2",
-  "albumId" : "2001",
+  "artistId" : 2,
+  "albumId" : 2001,
   "genre" : "ROCK",
   "durationSeconds" : 315,
   "filePath" : "/music/spaceoddity.mp3"
 }, {
   "songId" : 202,
   "title" : "Heroes",
-  "artistId" : "2",
-  "albumId" : "2001",
+  "artistId" : 2,
+  "albumId" : 2001,
   "genre" : "ROCK",
   "durationSeconds" : 371,
   "filePath" : "/music/heroes.mp3"
 }, {
   "songId" : 203,
   "title" : "Life on Mars?",
-  "artistId" : "2",
-  "albumId" : "2002",
+  "artistId" : 2,
+  "albumId" : 2002,
   "genre" : "ROCK",
   "durationSeconds" : 236,
   "filePath" : "/music/lifeonmars.mp3"
+}, {
+  "songId" : 301,
+  "title" : "Imagine",
+  "artistId" : 3,
+  "albumId" : 3001,
+  "genre" : "ROCK",
+  "durationSeconds" : 180,
+  "filePath" : "/music/imagine.mp3"
+}, {
+  "songId" : 401,
+  "title" : "Blank Space",
+  "artistId" : 4,
+  "albumId" : 4001,
+  "genre" : "POP",
+  "durationSeconds" : 231,
+  "filePath" : "/music/blankspace.mp3"
+}, {
+  "songId" : 501,
+  "title" : "Yellow",
+  "artistId" : 5,
+  "albumId" : 5001,
+  "genre" : "ROCK",
+  "durationSeconds" : 265,
+  "filePath" : "/music/yellow.mp3"
+}, {
+  "songId" : 502,
+  "title" : "Paradise",
+  "artistId" : 5,
+  "albumId" : 5001,
+  "genre" : "ROCK",
+  "durationSeconds" : 278,
+  "filePath" : "/music/paradise.mp3"
+}, {
+  "songId" : 503,
+  "title" : "Fix You",
+  "artistId" : 5,
+  "albumId" : 5002,
+  "genre" : "ROCK",
+  "durationSeconds" : 296,
+  "filePath" : "/music/fixyou.mp3"
+}, {
+  "songId" : 301,
+  "title" : "Imagine",
+  "artistId" : 3,
+  "albumId" : 3001,
+  "genre" : "ROCK",
+  "durationSeconds" : 183,
+  "filePath" : "/music/imagine.mp3"
+}, {
+  "songId" : 401,
+  "title" : "Blank Space",
+  "artistId" : 4,
+  "albumId" : 4001,
+  "genre" : "POP",
+  "durationSeconds" : 231,
+  "filePath" : "/music/blankspace.mp3"
+}, {
+  "songId" : 501,
+  "title" : "Yellow",
+  "artistId" : 5,
+  "albumId" : 5001,
+  "genre" : "ROCK",
+  "durationSeconds" : 265,
+  "filePath" : "/music/yellow.mp3"
+}, {
+  "songId" : 502,
+  "title" : "Paradise",
+  "artistId" : 5,
+  "albumId" : 5001,
+  "genre" : "ROCK",
+  "durationSeconds" : 278,
+  "filePath" : "/music/paradise.mp3"
+}, {
+  "songId" : 503,
+  "title" : "Fix You",
+  "artistId" : 5,
+  "albumId" : 5002,
+  "genre" : "ROCK",
+  "durationSeconds" : 296,
+  "filePath" : "/music/fixyou.mp3"
 } ]

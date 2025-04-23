@@ -1,42 +1,112 @@
-[
-  {
-    "userID": 1,
-    "username": "alice123",
-    "email": "alice@example.com",
-    "password": "hashedpassword1",
-    "firstName": "Alice",
-    "lastName": "Smith",
-    "dateOfBirth": "1995-05-10T00:00:00.000+00:00",
-    "accountCreationDate": "2024-04-01T00:00:00.000+00:00",
-    "subscriptionPlan": {
-      "type": "FreePlan"
-    },
-    "subscriptionInfo": {
-      "startDate": "2024-04-01T00:00:00.000+00:00",
-      "endDate": null
-    },
-    "active": true,
-    "followedUsers": [],
-    "followers": []
+[ {
+  "userID" : 1,
+  "username" : "alice123",
+  "email" : "alice@example.com",
+  "password" : "hashedpassword1",
+  "firstName" : "Alice",
+  "lastName" : "Smith",
+  "dateOfBirth" : 800064000000,
+  "accountCreationDate" : 1711929600000,
+  "subscriptionPlan" : {
+    "type" : "FreePlan"
   },
-  {
-    "userID": 2,
-    "username": "bob456",
-    "email": "bob@example.com",
-    "password": "hashedpassword2",
-    "firstName": "Bob",
-    "lastName": "Johnson",
-    "dateOfBirth": "1990-09-21T00:00:00.000+00:00",
-    "accountCreationDate": "2024-04-01T00:00:00.000+00:00",
-    "subscriptionPlan": {
-      "type": "PremiumPlan"
-    },
-    "subscriptionInfo": {
-      "startDate": "2024-04-01T00:00:00.000+00:00",
-      "endDate": "2025-04-01T00:00:00.000+00:00"
-    },
-    "active": true,
-    "followedUsers": [],
-    "followers": []
-  }
-]
+  "subscriptionInfo" : {
+    "startDate" : 1711929600000,
+    "endDate" : null
+  },
+  "followedUsersIDs" : [ ],
+  "followersIDs" : [ ],
+  "active" : true
+}, {
+  "userID" : 2,
+  "username" : "bob456",
+  "email" : "bob@example.com",
+  "password" : "hashedpassword2",
+  "firstName" : "Bob",
+  "lastName" : "Johnson",
+  "dateOfBirth" : 653875200000,
+  "accountCreationDate" : 1711929600000,
+  "subscriptionPlan" : {
+    "type" : "PremiumPlan"
+  },
+  "subscriptionInfo" : {
+    "startDate" : 1711929600000,
+    "endDate" : 1743465600000
+  },
+  "followedUsersIDs" : [ ],
+  "followersIDs" : [ ],
+  "active" : true
+}, {
+  "userID" : 3,
+  "username" : "johnlennon",
+  "email" : "john.lennon@beatles.com",
+  "password" : "password123",
+  "firstName" : "John",
+  "lastName" : "Lennon",
+  "dateOfBirth" : -922410000000,
+  "accountCreationDate" : 1745439236373,
+  "subscriptionPlan" : {
+    "type" : "PremiumPlan"
+  },
+  "subscriptionInfo" : {
+    "startDate" : 1745439236374,
+    "endDate" : 1748031236374
+  },
+  "followedUsersIDs" : [ 4 ],
+  "followersIDs" : [ ],
+  "active" : true
+}, {
+  "userID" : 4,
+  "username" : "taylorswift",
+  "email" : "taylor@swift.com",
+  "password" : "password456",
+  "firstName" : "Taylor",
+  "lastName" : "Swift",
+  "dateOfBirth" : 629506800000,
+  "accountCreationDate" : 1745439236374,
+  "subscriptionPlan" : {
+    "type" : "FreePlan"
+  },
+  "subscriptionInfo" : {
+    "startDate" : 1745439236375,
+    "endDate" : null
+  },
+  "followedUsersIDs" : [ ],
+  "followersIDs" : [ 3 ],
+  "active" : true
+}, {
+  "userID" : 5,
+  "username" : "charlie",
+  "email" : "charlie@example.com",
+  "password" : "password789",
+  "firstName" : "Charlie",
+  "lastName" : "Brown",
+  "dateOfBirth" : null,
+  "accountCreationDate" : 1745438932275,
+  "subscriptionPlan" : {
+    "type" : "PremiumPlan"
+  },
+  "subscriptionInfo" : null,
+  "followedUsersIDs" : [ ],
+  "followersIDs" : [ ],
+  "active" : true
+}, {
+  "userID" : 3,
+  "username" : "johnlennon",
+  "email" : "john@beatles.com",
+  "password" : "password123",
+  "firstName" : "John",
+  "lastName" : "Lennon",
+  "dateOfBirth" : -922410000000,
+  "accountCreationDate" : 1745439236373,
+  "subscriptionPlan" : {
+    "type" : "PremiumPlan"
+  },
+  "subscriptionInfo" : {
+    "startDate" : 1745439236374,
+    "endDate" : 1748031236374
+  },
+  "followedUsersIDs" : [ ],
+  "followersIDs" : [ ],
+  "active" : true
+} ]

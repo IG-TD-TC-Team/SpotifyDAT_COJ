@@ -68,4 +68,46 @@
   "birthDate" : -725245200000,
   "countryOfBirth" : "UK",
   "songs" : null
+}, {
+  "artistID" : 3,
+  "firstName" : "John",
+  "lastName" : "Lennon",
+  "birthDate" : -922410000000,
+  "countryOfBirth" : "United Kingdom",
+  "songs" : null
+}, {
+  "artistID" : 4,
+  "firstName" : "Taylor",
+  "lastName" : "Swift",
+  "birthDate" : 629506800000,
+  "countryOfBirth" : "USA",
+  "songs" : null
+}, {
+  "artistID" : 5,
+  "firstName" : "Coldplay",
+  "lastName" : "",
+  "birthDate" : 820450800000,
+  "countryOfBirth" : "UK",
+  "songs" : [ 501, 502, 503 ]
+}, {
+  "artistID" : 3,
+  "firstName" : "John",
+  "lastName" : "Lennon",
+  "birthDate" : -922410000000,
+  "countryOfBirth" : "UK",
+  "songs" : null
+}, {
+  "artistID" : 4,
+  "firstName" : "Taylor",
+  "lastName" : "Swift",
+  "birthDate" : 629506800000,
+  "countryOfBirth" : "USA",
+  "songs" : null
+}, {
+  "artistID" : 5,
+  "firstName" : "Coldplay",
+  "lastName" : "",
+  "birthDate" : 820450800000,
+  "countryOfBirth" : "UK",
+  "songs" : null
 } ]

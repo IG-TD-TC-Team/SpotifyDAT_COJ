@@ -58,4 +58,34 @@
   "title" : "The Rise and Fall of Ziggy Stardust",
   "artistId" : "2",
   "songs" : [ 203 ]
+}, {
+  "id" : 4001,
+  "title" : "1989",
+  "artistId" : "4",
+  "songs" : [ 401 ]
+}, {
+  "id" : 5001,
+  "title" : "Parachutes",
+  "artistId" : "5",
+  "songs" : [ 501, 502 ]
+}, {
+  "id" : 5002,
+  "title" : "X&Y",
+  "artistId" : "5",
+  "songs" : [ 503 ]
+}, {
+  "id" : 4001,
+  "title" : "1989",
+  "artistId" : "4",
+  "songs" : [ 401, 402 ]
+}, {
+  "id" : 5001,
+  "title" : "Parachutes",
+  "artistId" : "5",
+  "songs" : [ 501, 502 ]
+}, {
+  "id" : 5002,
+  "title" : "X&Y",
+  "artistId" : "5",
+  "songs" : [ 503 ]
 } ]

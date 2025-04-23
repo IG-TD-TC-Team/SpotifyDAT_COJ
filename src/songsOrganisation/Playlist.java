@@ -1,5 +1,6 @@
 package songsOrganisation;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import songsAndArtists.*;
 import user.User;
 
@@ -16,6 +17,20 @@ public class Playlist {
     private LinkedList<Song> songs;
     private int ownerID;
     private List<Integer> iDsOfUsersSharedWith;
+
+    /**
+     * Default constructor for Jackson deserialization.
+     */
+    public Playlist() {
+        this.songs = new LinkedList<>();
+        this.iDsOfUsersSharedWith = new ArrayList<>();
+    }
+
+    /**
+     * Constructor to create a Playlist object with the specified name and owner ID.
+     * @param name The name of the playlist.
+     * @param ownerID The ID of the user who owns the playlist.
+     */
 
     public Playlist(String name, int ownerID) {
         this.name = name;
@@ -113,6 +128,7 @@ public class Playlist {
      * Gets the first song in the playlist.
      * @return The first song or null if the playlist is empty.
      */
+    @JsonIgnore // Prevent serialization of this method as a property
     public Song getFirstSong() {
         if (songs.isEmpty()) {
             return null;
@@ -124,6 +140,7 @@ public class Playlist {
      * Gets the last song in the playlist.
      * @return The last song or null if the playlist is empty.
      */
+    @JsonIgnore // Prevent serialization of this method as a property
     public Song getLastSong() {
         if (songs.isEmpty()) {
             return null;
@@ -163,6 +180,7 @@ public class Playlist {
      * Retrieves the number of songs in the playlist.
      * @return The number of songs in the playlist.
      */
+    @JsonIgnore // Prevent serialization of this method as a property
     public int getSongCount() {
         return songs.size();
     }
@@ -172,6 +190,7 @@ public class Playlist {
      * @param index The index of the song to retrieve.
      * @return The song at the specified index, or null if the index is out of bounds.
      */
+    @JsonIgnore // Prevent serialization of this method as a property
     public Song getSongAt(int index) {
         if (index >= 0 && index < songs.size()) {
             return songs.get(index);
@@ -186,6 +205,7 @@ public class Playlist {
      * Converts the playlist to a list of songs.
      * @return A list of songs in the playlist.
      */
+    @JsonIgnore // Prevent serialization of this method as a property
     public List<Song> toList() {
         return new ArrayList<>(songs);
     }
@@ -251,16 +271,25 @@ public class Playlist {
 
     /**
      * Retrieves the list of users with whom the playlist is shared.
-     * @return An unmodifiable list of users with whom the playlist is shared.
+     * @return The list of users with whom the playlist is shared.
      */
     public List<Integer> getSharedWith() {
-        return Collections.unmodifiableList(iDsOfUsersSharedWith);
+        return iDsOfUsersSharedWith;  // Return the actual list, not an unmodifiable view
+    }
+
+    /**
+     * Sets the shared users list.
+     * @param sharedWith The new list of users with whom to share the playlist.
+     */
+    public void setSharedWith(List<Integer> sharedWith) {
+        this.iDsOfUsersSharedWith = sharedWith;
     }
 
     /**
      * Calculates the total duration of the playlist in seconds.
      * @return The total duration of the playlist in seconds.
      */
+    @JsonIgnore // Prevent serialization of this method as a property
     public int getTotalDuration() {
         int totalDuration = 0;
         for (Song song : songs) {
@@ -274,6 +303,7 @@ public class Playlist {
      * @param artistID The ID of the artist to search for.
      * @return A list of songs by the specified artist.
      */
+    @JsonIgnore // Prevent serialization of this method as a property
     public List<Song> findSongsByArtistID(int artistID) {
         List<Song> result = new ArrayList<>();
         for (Song song : songs) {
@@ -289,6 +319,7 @@ public class Playlist {
      * @param genre The genre to search for.
      * @return A list of songs of the specified genre.
      */
+    @JsonIgnore // Prevent serialization of this method as a property
     public List<Song> findSongsByGenre(String genre) {
         List<Song> result = new ArrayList<>();
         for (Song song : songs) {

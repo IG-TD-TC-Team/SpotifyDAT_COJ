@@ -21,7 +21,7 @@ public class JsonRepository<T> {
     private final Path storagePath;
 
     // Jackson's ObjectMapper for converting objects to/from JSON.
-    private final ObjectMapper mapper = new ObjectMapper();
+    private final ObjectMapper mapper = JacksonConfig.getConfiguredMapper();
 
     /**
      * Constructor that initializes the repository.

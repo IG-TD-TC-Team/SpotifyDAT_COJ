@@ -14,9 +14,9 @@ public class Main {
      */
     public static void main(String[] args) {
         // Set up repositories
-        JsonRepository<Artist> artistRepo = new JsonRepository<>(Artist.class, "artists.json");
-        JsonRepository<Song> songRepo = new JsonRepository<>(Song.class, "songs.json");
-        JsonRepository<Album> albumRepo = new JsonRepository<>(Album.class, "albums.json");
+        JsonRepository<Artist> artistRepo = new ArtistRepository();
+        JsonRepository<Song> songRepo = new SongRepository();
+        JsonRepository<Album> albumRepo = new AlbumRepository();
 
         // Create and add artists
         Artist daftPunk = new Artist(
@@ -40,14 +40,14 @@ public class Main {
         artistRepo.add(davidBowie);
 
         // Create and add songs for Daft Punk - now using Genre enum
-        Song song1 = new Song(101, "Get Lucky", "1", "1001", Genre.ELECTRONIC, 248, "/music/getlucky.mp3");
-        Song song2 = new Song(102, "Harder, Better, Faster, Stronger", "1", "1001", Genre.ELECTRONIC, 224, "/music/harder.mp3");
-        Song song3 = new Song(103, "Around the World", "1", "1002", Genre.ELECTRONIC, 429, "/music/aroundtheworld.mp3");
+        Song song1 = new Song(101, "Get Lucky", 1, 1001, Genre.ELECTRONIC, 248, "/music/getlucky.mp3");
+        Song song2 = new Song(102, "Harder, Better, Faster, Stronger", 1, 1001, Genre.ELECTRONIC, 224, "/music/harder.mp3");
+        Song song3 = new Song(103, "Around the World", 1, 1002, Genre.ELECTRONIC, 429, "/music/aroundtheworld.mp3");
 
         // Create and add songs for David Bowie - now using Genre enum
-        Song song4 = new Song(201, "Space Oddity", "2", "2001", Genre.ROCK, 315, "/music/spaceoddity.mp3");
-        Song song5 = new Song(202, "Heroes", "2", "2001", Genre.ROCK, 371, "/music/heroes.mp3");
-        Song song6 = new Song(203, "Life on Mars?", "2", "2002", Genre.ROCK, 236, "/music/lifeonmars.mp3");
+        Song song4 = new Song(201, "Space Oddity", 2, 2001, Genre.ROCK, 315, "/music/spaceoddity.mp3");
+        Song song5 = new Song(202, "Heroes", 2, 2001, Genre.ROCK, 371, "/music/heroes.mp3");
+        Song song6 = new Song(203, "Life on Mars?", 2, 2002, Genre.ROCK, 236, "/music/lifeonmars.mp3");
 
         // Add songs to repository
         songRepo.add(song1);

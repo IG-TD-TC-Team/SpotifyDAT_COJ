@@ -24,7 +24,7 @@ public class Artist {
     private String lastName;
     private Date birthDate;
     private String countryOfBirth;
-    private List<Integer> songs;
+    private List<Integer> songsIDs;
 
     public int getArtistID() {return artistID; }
     public void setArtistID(int artistID) {
@@ -55,10 +55,10 @@ public class Artist {
         this.countryOfBirth = countryOfBirth;
     }
     public List<Integer> getSongs() {
-        return songs;
+        return songsIDs;
     }
-    public void setSongs(List<Integer> songs) {
-        this.songs = songs;
+    public void setSongs(List<Integer> songsIDs) {
+        this.songsIDs = songsIDs;
     }
 
 }

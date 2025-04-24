@@ -117,4 +117,134 @@
   } ],
   "ownerID" : 5,
   "sharedWith" : [ ]
+}, {
+  "name" : "Rock Classics",
+  "songs" : [ {
+    "songId" : 203,
+    "title" : "Life on Mars?",
+    "artistId" : 2,
+    "albumId" : 2002,
+    "genre" : "ROCK",
+    "durationSeconds" : 236,
+    "filePath" : "/music/lifeonmars.mp3"
+  }, {
+    "songId" : 201,
+    "title" : "Space Oddity",
+    "artistId" : 2,
+    "albumId" : 2001,
+    "genre" : "ROCK",
+    "durationSeconds" : 315,
+    "filePath" : "/music/spaceoddity.mp3"
+  }, {
+    "songId" : 202,
+    "title" : "Heroes",
+    "artistId" : 2,
+    "albumId" : 2001,
+    "genre" : "ROCK",
+    "durationSeconds" : 371,
+    "filePath" : "/music/heroes.mp3"
+  }, {
+    "songId" : 203,
+    "title" : "Life on Mars?",
+    "artistId" : 2,
+    "albumId" : 2002,
+    "genre" : "ROCK",
+    "durationSeconds" : 236,
+    "filePath" : "/music/lifeonmars.mp3"
+  }, {
+    "songId" : 301,
+    "title" : "Imagine",
+    "artistId" : 3,
+    "albumId" : 3001,
+    "genre" : "ROCK",
+    "durationSeconds" : 180,
+    "filePath" : "/music/imagine.mp3"
+  }, {
+    "songId" : 501,
+    "title" : "Yellow",
+    "artistId" : 5,
+    "albumId" : 5001,
+    "genre" : "ROCK",
+    "durationSeconds" : 265,
+    "filePath" : "/music/yellow.mp3"
+  }, {
+    "songId" : 502,
+    "title" : "Paradise",
+    "artistId" : 5,
+    "albumId" : 5001,
+    "genre" : "ROCK",
+    "durationSeconds" : 278,
+    "filePath" : "/music/paradise.mp3"
+  }, {
+    "songId" : 503,
+    "title" : "Fix You",
+    "artistId" : 5,
+    "albumId" : 5002,
+    "genre" : "ROCK",
+    "durationSeconds" : 296,
+    "filePath" : "/music/fixyou.mp3"
+  }, {
+    "songId" : 301,
+    "title" : "Imagine",
+    "artistId" : 3,
+    "albumId" : 3001,
+    "genre" : "ROCK",
+    "durationSeconds" : 183,
+    "filePath" : "/music/imagine.mp3"
+  }, {
+    "songId" : 501,
+    "title" : "Yellow",
+    "artistId" : 5,
+    "albumId" : 5001,
+    "genre" : "ROCK",
+    "durationSeconds" : 265,
+    "filePath" : "/music/yellow.mp3"
+  }, {
+    "songId" : 502,
+    "title" : "Paradise",
+    "artistId" : 5,
+    "albumId" : 5001,
+    "genre" : "ROCK",
+    "durationSeconds" : 278,
+    "filePath" : "/music/paradise.mp3"
+  }, {
+    "songId" : 503,
+    "title" : "Fix You",
+    "artistId" : 5,
+    "albumId" : 5002,
+    "genre" : "ROCK",
+    "durationSeconds" : 296,
+    "filePath" : "/music/fixyou.mp3"
+  }, {
+    "songId" : 301,
+    "title" : "Imagine",
+    "artistId" : 3,
+    "albumId" : 3001,
+    "genre" : "ROCK",
+    "durationSeconds" : 183,
+    "filePath" : "/music/imagine.mp3"
+  } ],
+  "ownerID" : 3,
+  "sharedWith" : [ 4 ]
+}, {
+  "name" : "Coldplay Favorites",
+  "songs" : [ {
+    "songId" : 501,
+    "title" : "Yellow",
+    "artistId" : 5,
+    "albumId" : 5001,
+    "genre" : "ROCK",
+    "durationSeconds" : 265,
+    "filePath" : "/music/yellow.mp3"
+  }, {
+    "songId" : 503,
+    "title" : "Fix You",
+    "artistId" : 5,
+    "albumId" : 5002,
+    "genre" : "ROCK",
+    "durationSeconds" : 296,
+    "filePath" : "/music/fixyou.mp3"
+  } ],
+  "ownerID" : 5,
+  "sharedWith" : [ ]
 } ]

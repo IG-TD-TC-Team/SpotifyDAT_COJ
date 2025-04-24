@@ -44,13 +44,13 @@
   "firstName" : "John",
   "lastName" : "Lennon",
   "dateOfBirth" : -922410000000,
-  "accountCreationDate" : 1745439236373,
+  "accountCreationDate" : 1745439808914,
   "subscriptionPlan" : {
     "type" : "PremiumPlan"
   },
   "subscriptionInfo" : {
-    "startDate" : 1745439236374,
-    "endDate" : 1748031236374
+    "startDate" : 1745439808915,
+    "endDate" : 1748031808915
   },
   "followedUsersIDs" : [ 4 ],
   "followersIDs" : [ ],
@@ -63,12 +63,12 @@
   "firstName" : "Taylor",
   "lastName" : "Swift",
   "dateOfBirth" : 629506800000,
-  "accountCreationDate" : 1745439236374,
+  "accountCreationDate" : 1745439808915,
   "subscriptionPlan" : {
     "type" : "FreePlan"
   },
   "subscriptionInfo" : {
-    "startDate" : 1745439236375,
+    "startDate" : 1745439808916,
     "endDate" : null
   },
   "followedUsersIDs" : [ ],

@@ -2,6 +2,7 @@ package managers;
 import songsOrganisation.*;
 import songsAndArtists.*;
 import persistence.*;
+import persistence.interfaces.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,9 +14,9 @@ public class SongManager {
     private static SongManager instance;
 
     // Repositories
-    private ArtistRepository artisRepo;
-    private SongRepository songRepo;
-    private AlbumRepository albumRepo;
+    private final JsonRepository<Artist> artistRepo;
+    private final JsonRepository<Song> songRepo;
+    private final JsonRepository<Album> albumRepo;
 
     // Music data
     private List<Song> songs;
@@ -28,9 +29,9 @@ public class SongManager {
 
 
         // Initialize repositories
-        JsonRepository<Artist> artistRepo = new JsonRepository<>(Artist.class, "artists.json");
-        JsonRepository<Song> songRepo = new JsonRepository<>(Song.class, "songs.json");
-        JsonRepository<Album> albumRepo = new JsonRepository<>(Album.class, "albums.json");
+        artistRepo = new ArtistRepository();
+        songRepo = new SongRepository();
+        albumRepo = new AlbumRepository();
 
         //Charge all the data from the JSON files in a list of objects List<T>
         songs = new ArrayList<>();

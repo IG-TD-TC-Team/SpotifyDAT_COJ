@@ -134,4 +134,44 @@
   "genre" : "ROCK",
   "durationSeconds" : 296,
   "filePath" : "/music/fixyou.mp3"
+}, {
+  "songId" : 301,
+  "title" : "Imagine",
+  "artistId" : 3,
+  "albumId" : 3001,
+  "genre" : "ROCK",
+  "durationSeconds" : 183,
+  "filePath" : "/music/imagine.mp3"
+}, {
+  "songId" : 401,
+  "title" : "Blank Space",
+  "artistId" : 4,
+  "albumId" : 4001,
+  "genre" : "POP",
+  "durationSeconds" : 231,
+  "filePath" : "/music/blankspace.mp3"
+}, {
+  "songId" : 501,
+  "title" : "Yellow",
+  "artistId" : 5,
+  "albumId" : 5001,
+  "genre" : "ROCK",
+  "durationSeconds" : 265,
+  "filePath" : "/music/yellow.mp3"
+}, {
+  "songId" : 502,
+  "title" : "Paradise",
+  "artistId" : 5,
+  "albumId" : 5001,
+  "genre" : "ROCK",
+  "durationSeconds" : 278,
+  "filePath" : "/music/paradise.mp3"
+}, {
+  "songId" : 503,
+  "title" : "Fix You",
+  "artistId" : 5,
+  "albumId" : 5002,
+  "genre" : "ROCK",
+  "durationSeconds" : 296,
+  "filePath" : "/music/fixyou.mp3"
 } ]

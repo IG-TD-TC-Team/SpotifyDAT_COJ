@@ -10,6 +10,11 @@ import java.util.*;
 public class Album {
 
     public Album() {}
+    private int id;
+    private String title;
+    private int artistId;
+    private List<Integer> songsIds;
+
     /**
      * Constructor to create an Album object with the specified parameters.
      *
@@ -18,18 +23,13 @@ public class Album {
      * @param artistId The ID of the artist associated with the album.
      * @param songsIds A list of song IDs associated with the album.
      */
-    public Album (int id, String title, String artistId, List<Integer> songsIds) {
+    public Album (int id, String title, int artistId, List<Integer> songsIds) {
         this.id = id;
         this.title = title;
         this.artistId = artistId;
         this.songsIds = songsIds;
     }
 
-
-    private int id;
-    private String title;
-    private String artistId;
-    private List<Integer> songsIds;
 
     /**
      * Getters and Setters for the Album class.
@@ -70,7 +70,7 @@ public class Album {
      * Get the artist ID associated with the album
      * @return the artist ID associated with the album
      */
-    public String getArtistId() {
+    public int getArtistId() {
         return artistId;
     }
 
@@ -78,7 +78,7 @@ public class Album {
      * Set the artist ID associated with the album
      * @param artistId the artist ID associated with the album
      */
-    public void setArtistId(String artistId) {
+    public void setArtistId(int artistId) {
         this.artistId = artistId;
     }
 

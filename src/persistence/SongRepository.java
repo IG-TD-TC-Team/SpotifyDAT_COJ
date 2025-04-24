@@ -1,6 +1,7 @@
 package persistence;
 
 
+import persistence.interfaces.*;
 import songsAndArtists.*;
 import java.util.List;
 import java.util.Optional;
@@ -9,34 +10,24 @@ import java.util.stream.Collectors;
 /**
  * A repository for persisting and retrieving Song objects.
  * Extends the generic JsonRepository to provide Song-specific functionalities.
+ *
  */
-public class SongRepository extends JsonRepository<Song> {
+public class SongRepository extends JsonRepository<Song> implements SongRepositoryInterface {
 
     /**
      * Constructor that initializes the Song repository.
+     * It sets the entity type to Song, the storage file to "songs.json",
      */
     public SongRepository() {
-        super(Song.class, "songs.json");
+        super(Song.class, "songs.json", Song::getSongId);
     }
 
     /**
-     * Finds a song by its ID.
+     * Finds all songs in the repository.
      *
-     * @param songId The ID of the song to find.
-     * @return An Optional containing the song if found, or empty if not found.
+     * @return A list of all songs.
      */
-    public Optional<Song> findById(int songId) {
-        return findAll().stream()
-                .filter(song -> song.getSongId() == songId)
-                .findFirst();
-    }
-
-    /**
-     * Finds songs by artist ID.
-     *
-     * @param artistId The ID of the artist whose songs to find.
-     * @return A List of songs by the specified artist.
-     */
+    @Override
     public List<Song> findByArtistId(int artistId) {
         return findAll().stream()
                 .filter(song -> song.getArtistId() == artistId)
@@ -44,11 +35,11 @@ public class SongRepository extends JsonRepository<Song> {
     }
 
     /**
-     * Finds songs by genre.
+     * Finds all songs in the repository.
      *
-     * @param genre The genre to filter songs by.
-     * @return A List of songs of the specified genre.
+     * @return A list of all songs.
      */
+    @Override
     public List<Song> findByGenre(Genre genre) {
         return findAll().stream()
                 .filter(song -> song.getGenre().equals(genre))
@@ -56,45 +47,14 @@ public class SongRepository extends JsonRepository<Song> {
     }
 
     /**
-     * Updates an existing song in the repository.
+     * Finds all songs in the repository.
      *
-     * @param updatedSong The song with updated fields.
-     * @return true if the song was found and updated, false otherwise.
+     * @return A list of all songs.
      */
-    public boolean update(Song updatedSong) {
-        List<Song> songs = findAll();
-        boolean found = false;
-
-        for (int i = 0; i < songs.size(); i++) {
-            if (songs.get(i).getSongId() == updatedSong.getSongId()) {
-                songs.set(i, updatedSong);
-                found = true;
-                break;
-            }
-        }
-
-        if (found) {
-            saveAll(songs);
-        }
-
-        return found;
-    }
-
-    /**
-     * Deletes a song by its ID.
-     *
-     *
-     * @param songId The ID of the song to delete.
-     * @return true if the song was found and deleted, false otherwise.
-     */
-    public boolean deleteById(int songId) {
-        List<Song> songs = findAll();
-        boolean removed = songs.removeIf(song -> song.getSongId() == songId);
-
-        if (removed) {
-            saveAll(songs);
-        }
-
-        return removed;
+    @Override
+    public List<Song> findByTitle(String title) {
+        return findAll().stream()
+                .filter(song -> song.getTitle().equalsIgnoreCase(title))
+                .collect(Collectors.toList());
     }
 }

@@ -1,59 +1,87 @@
 package persistence;
 
 import songsAndArtists.Artist;
+
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
+
+import persistence.interfaces.ArtistRepositoryInterface;
 
 /**
  * A specific repository for Artist objects.
  * It extends the generic JsonRepository and can contain additional methods specific to Artist.
  */
-public class ArtistRepository extends JsonRepository<Artist> {
+public class ArtistRepository extends JsonRepository<Artist> implements ArtistRepositoryInterface {
 
     /**
      * Default constructor that uses "artists.json" as the storage file.
      */
     public ArtistRepository() {
-        super(Artist.class, "artists.json");
+        super(Artist.class, "artists.json", Artist::getArtistID);
     }
 
-    /**
-     * Finds an Artist in the JSON file by the given artistID.
-     *
-     * @param artistID The ID of the artist to find.
-     * @return The Artist object if found, otherwise null.
-     */
-    public Artist findById(int artistID) {
-        // Retrieve all artists.
-        List<Artist> artists = findAll();
-        // Use Java streams to filter by artistID.
-        return artists.stream()
-                .filter(artist -> artist.getArtistID() == artistID)
-                .findFirst()
-                .orElse(null);
+    @Override
+    public List<Artist> findByName(String name) {
+        return findAll().stream()
+                .filter(artist ->
+                        artist.getFirstName().equalsIgnoreCase(name) ||
+                                artist.getLastName().equalsIgnoreCase(name) ||
+                                (artist.getFirstName() + " " + artist.getLastName()).equalsIgnoreCase(name))
+                .collect(Collectors.toList());
     }
 
-    /**
-     * Updates an existing artist in the repository.
-     *
-     * @param artist The artist with updated fields.
-     * @return true if the artist was found and updated, false otherwise.
-     */
-    public boolean update(Artist artist) {
-        List<Artist> artists = findAll();
-        boolean found = false;
+    @Override
+    public List<Artist> findByCountry(String country) {
+        return findAll().stream()
+                .filter(artist -> artist.getCountryOfBirth().equalsIgnoreCase(country))
+                .collect(Collectors.toList());
+    }
 
-        for (int i = 0; i < artists.size(); i++) {
-            if (artists.get(i).getArtistID() == artist.getArtistID()) {
-                artists.set(i, artist);
-                found = true;
-                break;
+    @Override
+    public boolean addSongToArtist(int artistId, int songId) {
+        Optional<Artist> artistOpt = findById(artistId);
+
+        if (artistOpt.isPresent()) {
+            Artist artist = artistOpt.get();
+            List<Integer> songs = artist.getSongs();
+
+            if (songs == null) {
+                songs = new ArrayList<>();
+                artist.setSongs(songs);
+            }
+
+            if (!songs.contains(songId)) {
+                songs.add(songId);
+                return update(artist).isPresent();
+            }
+            return true; // Song already in artist's list
+        }
+
+        return false; // Artist not found
+    }
+
+    @Override
+    public boolean removeSongFromArtist(int artistId, int songId) {
+        Optional<Artist> artistOpt = findById(artistId);
+
+        if (artistOpt.isPresent()) {
+            Artist artist = artistOpt.get();
+            List<Integer> songs = artist.getSongs();
+
+            if (songs == null) {
+                return false; // No songs to remove
+            }
+
+            boolean removed = songs.removeIf(id -> id == songId);
+
+            if (removed) {
+                return update(artist).isPresent();
             }
         }
 
-        if (found) {
-            saveAll(artists);
-        }
+        return false; // Artist not found or song not in list
 
-        return found;
     }
 }

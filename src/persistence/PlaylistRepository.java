@@ -1,17 +1,19 @@
 package persistence;
 
+import songsAndArtists.Song;
 import songsOrganisation.Playlist;
 import user.*;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+import persistence.interfaces.PlaylistRepositoryInterface;
 
 /**
  * A repository for persisting and retrieving Playlist objects.
  * Extends the generic JsonRepository to provide Playlist-specific functionalities.
  */
-public class PlaylistRepository extends JsonRepository<Playlist> {
+public class PlaylistRepository extends JsonRepository<Playlist> implements PlaylistRepositoryInterface{
 
     /**
      * Constructor that initializes the Playlist repository.
@@ -19,17 +21,16 @@ public class PlaylistRepository extends JsonRepository<Playlist> {
      */
     public PlaylistRepository() {
 
-        super(Playlist.class, "playlists.json");
+        super(Playlist.class, "playlists.json", Playlist::getOwnerID);
 
     }
 
+
     /**
-     * Finds a playlist by its name and owner.
+     * Finds a playlist by its name and owner ID.
      *
-     * @param name  The name of the playlist.
-     * @param ownerID The owner of the playlist.
-     * @return An Optional containing the playlist if found, or empty if not found.
      */
+    @Override
     public Optional<Playlist> findByNameAndOwnerID(String name, int ownerID) {
         return findAll().stream()
                 .filter(playlist -> playlist.getName().equals(name) && playlist.getOwnerID() == ownerID)
@@ -37,11 +38,10 @@ public class PlaylistRepository extends JsonRepository<Playlist> {
     }
 
     /**
-     * Finds playlists by owner.
+     * Finds playlists by owner ID.
      *
-     * @param ownerID The owner whose playlists to find.
-     * @return A List of playlists owned by the specified user.
      */
+    @Override
     public List<Playlist> findByOwnerID(int ownerID) {
         return findAll().stream()
                 .filter(playlist -> playlist.getOwnerID() == ownerID)
@@ -51,9 +51,8 @@ public class PlaylistRepository extends JsonRepository<Playlist> {
     /**
      * Finds playlists shared with a specific user.
      *
-     * @param userID The user to check shared playlists for.
-     * @return A List of playlists shared with the specified user.
      */
+    @Override
     public List<Playlist> findSharedWithUserByID(int userID) {
         return findAll().stream()
                 .filter(playlist -> playlist.getSharedWith().contains(userID))
@@ -61,38 +60,10 @@ public class PlaylistRepository extends JsonRepository<Playlist> {
     }
 
     /**
-     * Updates an existing playlist in the repository.
-     *
-     * @param updatedPlaylist The playlist with updated fields.
-     * @return true if the playlist was found and updated, false otherwise.
-     */
-    public boolean update(Playlist updatedPlaylist) {
-        List<Playlist> playlists = findAll();
-        boolean found = false;
-
-        for (int i = 0; i < playlists.size(); i++) {
-            if (playlists.get(i).getName().equals(updatedPlaylist.getName()) &&
-                    playlists.get(i).getOwnerID() == updatedPlaylist.getOwnerID()) {
-                playlists.set(i, updatedPlaylist);
-                found = true;
-                break;
-            }
-        }
-
-        if (found) {
-            saveAll(playlists);
-        }
-
-        return found;
-    }
-
-    /**
      * Deletes a playlist by its name and owner.
      *
-     * @param name  The name of the playlist to delete.
-     * @param ownerID The owner of the playlist to delete.
-     * @return true if the playlist was found and deleted, false otherwise.
      */
+    @Override
     public boolean deleteByNameAndOwner(String name, int ownerID) {
         List<Playlist> playlists = findAll();
         boolean removed = playlists.removeIf(playlist ->
@@ -104,4 +75,92 @@ public class PlaylistRepository extends JsonRepository<Playlist> {
 
         return removed;
     }
+
+    /**
+     * Adds a song to a playlist.
+     *
+     * @param name
+     * @param ownerID
+     * @param song
+     */
+    @Override
+    public boolean addSongToPlaylist(String name, int ownerID, Song song) {
+        Optional<Playlist> playlistOpt = findByNameAndOwnerID(name, ownerID);
+
+        if (playlistOpt.isPresent()) {
+            Playlist playlist = playlistOpt.get();
+            playlist.addSong(song);
+            update(playlist);
+            return true;
+        }
+
+        return false; // Playlist not found
+    }
+
+    /**
+     * Shares a playlist with a user.
+     *
+     * @param name
+     * @param ownerID
+     * @param userID
+     */
+    @Override
+    public boolean sharePlaylistWithUser(String name, int ownerID, int userID) {
+        Optional<Playlist> playlistOpt = findByNameAndOwnerID(name, ownerID);
+
+        if (playlistOpt.isPresent()) {
+            Playlist playlist = playlistOpt.get();
+
+            if (!playlist.getSharedWith().contains(userID)) {
+                playlist.addUserToShareWith(userID);
+                update(playlist);
+                return true;
+            }
+
+            return true; // Already shared with the user
+        }
+
+        return false; // Playlist not found
+    }
+
+    /**
+     * Unshares a playlist with a user.
+     *
+     * @param name
+     * @param ownerID
+     * @param userID
+     */
+    @Override
+    public boolean unsharePlaylistWithUser(String name, int ownerID, int userID) {
+        Optional<Playlist> playlistOpt = findByNameAndOwnerID(name, ownerID);
+
+        if (playlistOpt.isPresent()) {
+            Playlist playlist = playlistOpt.get();
+
+            if (playlist.getSharedWith().contains(userID)) {
+                playlist.removeSharing(userID);
+                update(playlist);
+                return true;
+            }
+
+            return false; // Not shared with the user
+        }
+
+        return false; // Playlist not found
+    }
+
+    /**
+     * Finds an entity by its unique identifier.
+     *
+     * @param id The unique identifier of the entity
+     * @return An Optional containing the entity if found, or empty if not found
+     */
+    @Override
+    public Optional<Playlist> findById(int id) {
+        return findAll().stream()
+                .filter(playlist -> playlist.getPlaylistID() == id)
+                .findFirst();
+    }
+
+
 }

@@ -16,6 +16,7 @@ public class Playlist {
     private String name;
     private LinkedList<Song> songs;
     private int ownerID;
+    private int playlistID;
     private List<Integer> iDsOfUsersSharedWith;
 
     /**
@@ -260,6 +261,13 @@ public class Playlist {
     public int getOwnerID() {
         return ownerID;
     }
+    /**
+     * Retrieves the ID of the playlist.
+     * @return The ID of the playlist.
+     */
+    public int getPlaylistID() {
+        return playlistID;
+    }
 
     /**
      * Sets the owner of the playlist.
@@ -323,7 +331,7 @@ public class Playlist {
     public List<Song> findSongsByGenre(String genre) {
         List<Song> result = new ArrayList<>();
         for (Song song : songs) {
-            if (song.getGenre() == Genre.valueOf(genre)) {
+            if (song.getGenre().equals(Genre.valueOf(genre)))  {
                 result.add(song);
             }
         }

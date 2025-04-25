@@ -14,15 +14,31 @@ import java.util.Optional;
  * Extends the generic JsonRepository to provide Library-specific functionalities.
  */
 public class LibraryRepository extends JsonRepository<Library> implements LibraryRepositoryInterface  {
+    /**
+     * Singleton instance of LibraryRepository.
+     */
+    private static LibraryRepository instance;
 
     /**
-     * Constructor that initializes the repository.
+     * Private constructor that initializes the repository.
      * This constructor calls the superclass constructor with the Library class type and the JSON file name.
      * It also specifies the method to get the ID of a Library object.
      *
      */
-    public LibraryRepository() {
+    private LibraryRepository() {
         super(Library.class, "Library.json", Library::getUserID);
+    }
+
+    /**
+     * Gets the singleton instance of LibraryRepository.
+     *
+     * @return The singleton instance of LibraryRepository.
+     */
+    public static synchronized LibraryRepository getInstance() {
+        if (instance == null) {
+            instance = new LibraryRepository();
+        }
+        return instance;
     }
 
     /**

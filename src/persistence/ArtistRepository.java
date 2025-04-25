@@ -16,10 +16,27 @@ import persistence.interfaces.ArtistRepositoryInterface;
 public class ArtistRepository extends JsonRepository<Artist> implements ArtistRepositoryInterface {
 
     /**
-     * Default constructor that uses "artists.json" as the storage file.
+     * Singleton instance of ArtistRepository.
      */
-    public ArtistRepository() {
+    private static ArtistRepository instance;
+
+    /**
+     * Private constructor that uses "artists.json" as the storage file.
+     */
+    private ArtistRepository() {
         super(Artist.class, "artists.json", Artist::getArtistID);
+    }
+
+    /**
+     * Gets the singleton instance of Artist Repository.
+     *
+     * @return The singleton instance
+     */
+    public static synchronized ArtistRepository getInstance() {
+        if (instance == null) {
+            instance = new ArtistRepository();
+        }
+        return instance;
     }
 
     @Override

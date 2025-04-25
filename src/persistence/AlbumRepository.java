@@ -14,10 +14,26 @@ import java.util.stream.Collectors;
 public class AlbumRepository extends JsonRepository<Album> implements AlbumRepositoryInterface {
 
     /**
-     * Constructor that initializes the Album repository.
+     * Singleton instance of AlbumRepository.
      */
-    public AlbumRepository() {
+    private static AlbumRepository instance;
+
+    /**
+     * Private constructor that initializes the Album repository.
+     */
+    private AlbumRepository() {
         super(Album.class, "albums.json", Album::getId);
+    }
+    /**
+     * Gets the singleton instance of UserRepository.
+     *
+     * @return The singleton instance
+     */
+    public static synchronized AlbumRepository getInstance() {
+        if (instance == null) {
+            instance = new AlbumRepository();
+        }
+        return instance;
     }
 
     @Override

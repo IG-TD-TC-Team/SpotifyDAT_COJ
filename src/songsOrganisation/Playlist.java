@@ -19,6 +19,7 @@ public class Playlist {
     private int playlistID;
     private List<Integer> iDsOfUsersSharedWith;
 
+
     /**
      * Default constructor for Jackson deserialization.
      */
@@ -267,6 +268,13 @@ public class Playlist {
      */
     public int getPlaylistID() {
         return playlistID;
+    }
+    /**
+     * Sets the ID of the playlist.
+     * @param playlistID The new ID of the playlist.
+     */
+    public void setPlaylistID(int playlistID) {
+        this.playlistID = playlistID;
     }
 
     /**

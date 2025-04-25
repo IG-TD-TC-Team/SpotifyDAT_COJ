@@ -1,106 +1,226 @@
 [ {
   "id" : 1001,
   "title" : "Random Access Memories",
-  "artistId" : "1",
+  "artistId" : 1,
   "songs" : [ 101, 102, 103 ]
 }, {
   "id" : 1002,
   "title" : "Homework",
-  "artistId" : "1",
+  "artistId" : 1,
   "songs" : [ 103 ]
 }, {
   "id" : 2001,
   "title" : "Hunky Dory",
-  "artistId" : "2",
+  "artistId" : 2,
   "songs" : [ 201, 202 ]
 }, {
   "id" : 2002,
   "title" : "The Rise and Fall of Ziggy Stardust",
-  "artistId" : "2",
+  "artistId" : 2,
   "songs" : [ 203 ]
 }, {
   "id" : 1001,
   "title" : "Random Access Memories",
-  "artistId" : "1",
+  "artistId" : 1,
   "songs" : [ 101, 102 ]
 }, {
   "id" : 1002,
   "title" : "Homework",
-  "artistId" : "1",
+  "artistId" : 1,
   "songs" : [ 103 ]
 }, {
   "id" : 2001,
   "title" : "Hunky Dory",
-  "artistId" : "2",
+  "artistId" : 2,
   "songs" : [ 201, 202 ]
 }, {
   "id" : 2002,
   "title" : "The Rise and Fall of Ziggy Stardust",
-  "artistId" : "2",
+  "artistId" : 2,
   "songs" : [ 203 ]
 }, {
   "id" : 1001,
   "title" : "Random Access Memories",
-  "artistId" : "1",
+  "artistId" : 1,
   "songs" : [ 101, 102 ]
 }, {
   "id" : 1002,
   "title" : "Homework",
-  "artistId" : "1",
+  "artistId" : 1,
   "songs" : [ 103 ]
 }, {
   "id" : 2001,
   "title" : "Hunky Dory",
-  "artistId" : "2",
+  "artistId" : 2,
   "songs" : [ 201, 202 ]
 }, {
   "id" : 2002,
   "title" : "The Rise and Fall of Ziggy Stardust",
-  "artistId" : "2",
+  "artistId" : 2,
   "songs" : [ 203 ]
 }, {
   "id" : 4001,
   "title" : "1989",
-  "artistId" : "4",
+  "artistId" : 4,
   "songs" : [ 401 ]
 }, {
   "id" : 5001,
   "title" : "Parachutes",
-  "artistId" : "5",
+  "artistId" : 5,
   "songs" : [ 501, 502 ]
 }, {
   "id" : 5002,
   "title" : "X&Y",
-  "artistId" : "5",
+  "artistId" : 5,
   "songs" : [ 503 ]
 }, {
   "id" : 4001,
   "title" : "1989",
-  "artistId" : "4",
+  "artistId" : 4,
   "songs" : [ 401, 402 ]
 }, {
   "id" : 5001,
   "title" : "Parachutes",
-  "artistId" : "5",
+  "artistId" : 5,
   "songs" : [ 501, 502 ]
 }, {
   "id" : 5002,
   "title" : "X&Y",
-  "artistId" : "5",
+  "artistId" : 5,
   "songs" : [ 503 ]
 }, {
   "id" : 4001,
   "title" : "1989",
-  "artistId" : "4",
+  "artistId" : 4,
   "songs" : [ 401, 402 ]
 }, {
   "id" : 5001,
   "title" : "Parachutes",
-  "artistId" : "5",
+  "artistId" : 5,
   "songs" : [ 501, 502 ]
 }, {
   "id" : 5002,
   "title" : "X&Y",
-  "artistId" : "5",
+  "artistId" : 5,
   "songs" : [ 503 ]
+}, {
+  "id" : 10000,
+  "title" : "Dark Side of the Moon",
+  "artistId" : 101,
+  "songs" : [ ]
+}, {
+  "id" : 10000,
+  "title" : "Dark Side of the Moon",
+  "artistId" : 101,
+  "songs" : [ ]
+}, {
+  "id" : 10001,
+  "title" : "A Night at the Opera",
+  "artistId" : 102,
+  "songs" : [ 1000 ]
+}, {
+  "id" : 10000,
+  "title" : "Dark Side of the Moon",
+  "artistId" : 101,
+  "songs" : [ ]
+}, {
+  "id" : 10001,
+  "title" : "A Night at the Opera",
+  "artistId" : 102,
+  "songs" : [ ]
+}, {
+  "id" : 10002,
+  "title" : "Dark Side of the Moon",
+  "artistId" : 104,
+  "songs" : [ ]
+}, {
+  "id" : 10003,
+  "title" : "A Night at the Opera",
+  "artistId" : 105,
+  "songs" : [ 1001 ]
+}, {
+  "id" : 10004,
+  "title" : "Dark Side of the Moon",
+  "artistId" : 107,
+  "songs" : [ ]
+}, {
+  "id" : 10005,
+  "title" : "A Night at the Opera",
+  "artistId" : 108,
+  "songs" : [ 1002 ]
+}, {
+  "id" : 10006,
+  "title" : "Dark Side of the Moon",
+  "artistId" : 110,
+  "songs" : [ ]
+}, {
+  "id" : 10007,
+  "title" : "A Night at the Opera",
+  "artistId" : 111,
+  "songs" : [ 1003 ]
+}, {
+  "id" : 10008,
+  "title" : "Dark Side of the Moon",
+  "artistId" : 113,
+  "songs" : [ ]
+}, {
+  "id" : 10009,
+  "title" : "A Night at the Opera",
+  "artistId" : 114,
+  "songs" : [ 1004 ]
+}, {
+  "id" : 10010,
+  "title" : "Led Zeppelin IV",
+  "artistId" : 115,
+  "songs" : [ 1005, 1010, 1015, 1020 ]
+}, {
+  "id" : 10011,
+  "title" : "Abbey Road",
+  "artistId" : 116,
+  "songs" : [ 1006, 1007, 1008 ]
+}, {
+  "id" : 10012,
+  "title" : "Dark Side of the Moon",
+  "artistId" : 118,
+  "songs" : [ ]
+}, {
+  "id" : 10013,
+  "title" : "A Night at the Opera",
+  "artistId" : 119,
+  "songs" : [ 1009 ]
+}, {
+  "id" : 10014,
+  "title" : "Abbey Road",
+  "artistId" : 120,
+  "songs" : [ 1011, 1012, 1013 ]
+}, {
+  "id" : 10015,
+  "title" : "Dark Side of the Moon",
+  "artistId" : 122,
+  "songs" : [ ]
+}, {
+  "id" : 10016,
+  "title" : "A Night at the Opera",
+  "artistId" : 123,
+  "songs" : [ 1014 ]
+}, {
+  "id" : 10017,
+  "title" : "Abbey Road",
+  "artistId" : 124,
+  "songs" : [ 1016, 1017, 1018 ]
+}, {
+  "id" : 10018,
+  "title" : "Dark Side of the Moon",
+  "artistId" : 126,
+  "songs" : [ ]
+}, {
+  "id" : 10019,
+  "title" : "A Night at the Opera",
+  "artistId" : 127,
+  "songs" : [ 1019 ]
+}, {
+  "id" : 10020,
+  "title" : "Abbey Road",
+  "artistId" : 128,
+  "songs" : [ 1021, 1022, 1023 ]
 } ]

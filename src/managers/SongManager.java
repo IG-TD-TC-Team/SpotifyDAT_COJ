@@ -29,9 +29,9 @@ public class SongManager {
 
 
         // Initialize repositories
-        artistRepo = new ArtistRepository();
-        songRepo = new SongRepository();
-        albumRepo = new AlbumRepository();
+        artistRepo = ArtistRepository.getInstance();
+        songRepo = SongRepository.getInstance();
+        albumRepo = AlbumRepository.getInstance();
 
         //Charge all the data from the JSON files in a list of objects List<T>
         songs = new ArrayList<>();
@@ -196,6 +196,17 @@ public class SongManager {
             }
         }
         return null;// Album not found
+    }
+
+    /// ----------------------CAHE REFRESH----------------- ///
+    /**
+     * Refreshes the in-memory cache with the latest data from repositories.
+     * Call this after entities are created, updated, or deleted.
+     */
+    public void refreshCache() {
+        songs = songRepo.findAll();
+        artists = artistRepo.findAll();
+        albums = albumRepo.findAll();
     }
 
 }

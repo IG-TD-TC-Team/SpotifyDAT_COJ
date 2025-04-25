@@ -16,13 +16,29 @@ import persistence.interfaces.PlaylistRepositoryInterface;
 public class PlaylistRepository extends JsonRepository<Playlist> implements PlaylistRepositoryInterface{
 
     /**
+     * Singleton instance of PlaylistRepository.
+     */
+    private static PlaylistRepository instance;
+
+    /**
      * Constructor that initializes the Playlist repository.
      * This constructor calls the superclass constructor with the Playlist class type and the JSON file name.
      */
-    public PlaylistRepository() {
+    private PlaylistRepository() {
 
         super(Playlist.class, "playlists.json", Playlist::getOwnerID);
 
+    }
+    /**
+     * Gets the singleton instance of PlaylistRepository.
+     *
+     * @return The singleton instance
+     */
+    public static synchronized PlaylistRepository getInstance() {
+        if (instance == null) {
+            instance = new PlaylistRepository();
+        }
+        return instance;
     }
 
 

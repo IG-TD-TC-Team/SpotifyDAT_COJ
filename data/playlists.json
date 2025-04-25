@@ -18,6 +18,7 @@
     "filePath" : "/music/fixyou.mp3"
   } ],
   "ownerID" : 5,
+  "playlistID" : 0,
   "sharedWith" : [ ]
 }, {
   "name" : "Rock Classics",
@@ -95,6 +96,7 @@
     "filePath" : "/music/imagine.mp3"
   } ],
   "ownerID" : 3,
+  "playlistID" : 0,
   "sharedWith" : [ 4 ]
 }, {
   "name" : "Coldplay Favorites",
@@ -116,6 +118,7 @@
     "filePath" : "/music/fixyou.mp3"
   } ],
   "ownerID" : 5,
+  "playlistID" : 0,
   "sharedWith" : [ ]
 }, {
   "name" : "Rock Classics",
@@ -225,6 +228,7 @@
     "filePath" : "/music/imagine.mp3"
   } ],
   "ownerID" : 3,
+  "playlistID" : 0,
   "sharedWith" : [ 4 ]
 }, {
   "name" : "Coldplay Favorites",
@@ -246,5 +250,6 @@
     "filePath" : "/music/fixyou.mp3"
   } ],
   "ownerID" : 5,
+  "playlistID" : 0,
   "sharedWith" : [ ]
 } ]

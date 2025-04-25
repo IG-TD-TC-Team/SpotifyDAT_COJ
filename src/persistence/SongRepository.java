@@ -15,13 +15,29 @@ import java.util.stream.Collectors;
 public class SongRepository extends JsonRepository<Song> implements SongRepositoryInterface {
 
     /**
+     * Singleton instance of SongRepository.
+     */
+    private static SongRepository instance;
+
+    /**
      * Constructor that initializes the Song repository.
      * It sets the entity type to Song, the storage file to "songs.json",
      */
-    public SongRepository() {
+    private SongRepository() {
         super(Song.class, "songs.json", Song::getSongId);
     }
 
+    /**
+     * Gets the singleton instance of SongRepository.
+     *
+     * @return The singleton instance
+     */
+    public static synchronized SongRepository getInstance() {
+        if (instance == null) {
+            instance = new SongRepository();
+        }
+        return instance;
+    }
     /**
      * Finds all songs in the repository.
      *

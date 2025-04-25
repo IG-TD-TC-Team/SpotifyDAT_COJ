@@ -20,6 +20,7 @@
       "filePath" : "/music/fixyou.mp3"
     } ],
     "ownerID" : 5,
+    "playlistID" : 0,
     "sharedWith" : [ ]
   } ]
 }, {
@@ -44,6 +45,7 @@
       "filePath" : "/music/fixyou.mp3"
     } ],
     "ownerID" : 5,
+    "playlistID" : 0,
     "sharedWith" : [ ]
   } ]
 }, {
@@ -68,6 +70,7 @@
       "filePath" : "/music/fixyou.mp3"
     } ],
     "ownerID" : 5,
+    "playlistID" : 0,
     "sharedWith" : [ ]
   } ]
 }, {
@@ -92,6 +95,7 @@
       "filePath" : "/music/fixyou.mp3"
     } ],
     "ownerID" : 5,
+    "playlistID" : 0,
     "sharedWith" : [ ]
   } ]
 }, {
@@ -116,6 +120,7 @@
       "filePath" : "/music/fixyou.mp3"
     } ],
     "ownerID" : 5,
+    "playlistID" : 0,
     "sharedWith" : [ ]
   } ]
 } ]

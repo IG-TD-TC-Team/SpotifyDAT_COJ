@@ -1,151 +1,4 @@
 [ {
-  "artistID" : 1,
-  "firstName" : "Daft",
-  "lastName" : "Punk",
-  "birthDate" : 97369200000,
-  "countryOfBirth" : "France",
-  "songs" : [ 101, 102, 103 ]
-}, {
-  "artistID" : 2,
-  "firstName" : "David",
-  "lastName" : "Bowie",
-  "birthDate" : -725245200000,
-  "countryOfBirth" : "UK",
-  "songs" : [ 201, 202, 203 ]
-}, {
-  "artistID" : 1,
-  "firstName" : "Daft",
-  "lastName" : "Punk",
-  "birthDate" : 97369200000,
-  "countryOfBirth" : "France",
-  "songs" : [ 101, 102, 103 ]
-}, {
-  "artistID" : 2,
-  "firstName" : "David",
-  "lastName" : "Bowie",
-  "birthDate" : -725245200000,
-  "countryOfBirth" : "UK",
-  "songs" : [ 201, 202, 203 ]
-}, {
-  "artistID" : 1,
-  "firstName" : "Daft",
-  "lastName" : "Punk",
-  "birthDate" : 97369200000,
-  "countryOfBirth" : "France",
-  "songs" : null
-}, {
-  "artistID" : 2,
-  "firstName" : "David",
-  "lastName" : "Bowie",
-  "birthDate" : -725245200000,
-  "countryOfBirth" : "UK",
-  "songs" : null
-}, {
-  "artistID" : 1,
-  "firstName" : "Daft",
-  "lastName" : "Punk",
-  "birthDate" : 97369200000,
-  "countryOfBirth" : "France",
-  "songs" : null
-}, {
-  "artistID" : 2,
-  "firstName" : "David",
-  "lastName" : "Bowie",
-  "birthDate" : -725245200000,
-  "countryOfBirth" : "UK",
-  "songs" : null
-}, {
-  "artistID" : 1,
-  "firstName" : "Daft",
-  "lastName" : "Punk",
-  "birthDate" : 97369200000,
-  "countryOfBirth" : "France",
-  "songs" : null
-}, {
-  "artistID" : 2,
-  "firstName" : "David",
-  "lastName" : "Bowie",
-  "birthDate" : -725245200000,
-  "countryOfBirth" : "UK",
-  "songs" : null
-}, {
-  "artistID" : 3,
-  "firstName" : "John",
-  "lastName" : "Lennon",
-  "birthDate" : -922410000000,
-  "countryOfBirth" : "United Kingdom",
-  "songs" : null
-}, {
-  "artistID" : 4,
-  "firstName" : "Taylor",
-  "lastName" : "Swift",
-  "birthDate" : 629506800000,
-  "countryOfBirth" : "USA",
-  "songs" : null
-}, {
-  "artistID" : 5,
-  "firstName" : "Coldplay",
-  "lastName" : "",
-  "birthDate" : 820450800000,
-  "countryOfBirth" : "UK",
-  "songs" : [ 501, 502, 503 ]
-}, {
-  "artistID" : 3,
-  "firstName" : "John",
-  "lastName" : "Lennon",
-  "birthDate" : -922410000000,
-  "countryOfBirth" : "UK",
-  "songs" : null
-}, {
-  "artistID" : 4,
-  "firstName" : "Taylor",
-  "lastName" : "Swift",
-  "birthDate" : 629506800000,
-  "countryOfBirth" : "USA",
-  "songs" : null
-}, {
-  "artistID" : 5,
-  "firstName" : "Coldplay",
-  "lastName" : "",
-  "birthDate" : 820450800000,
-  "countryOfBirth" : "UK",
-  "songs" : null
-}, {
-  "artistID" : 3,
-  "firstName" : "John",
-  "lastName" : "Lennon",
-  "birthDate" : -922410000000,
-  "countryOfBirth" : "UK",
-  "songs" : null
-}, {
-  "artistID" : 4,
-  "firstName" : "Taylor",
-  "lastName" : "Swift",
-  "birthDate" : 629506800000,
-  "countryOfBirth" : "USA",
-  "songs" : null
-}, {
-  "artistID" : 5,
-  "firstName" : "Coldplay",
-  "lastName" : "",
-  "birthDate" : 820450800000,
-  "countryOfBirth" : "UK",
-  "songs" : null
-}, {
-  "artistID" : 100,
-  "firstName" : "David",
-  "lastName" : "Bowie",
-  "birthDate" : 59232985200000,
-  "countryOfBirth" : "UK",
-  "songs" : [ ]
-}, {
-  "artistID" : 101,
-  "firstName" : "Pink",
-  "lastName" : "Floyd",
-  "birthDate" : 59819983200000,
-  "countryOfBirth" : "UK",
-  "songs" : [ ]
-}, {
   "artistID" : 100,
   "firstName" : "David",
   "lastName" : "Bowie",
@@ -165,285 +18,47 @@
   "lastName" : "",
   "birthDate" : 59973861600000,
   "countryOfBirth" : "UK",
-  "songs" : [ 1000 ]
-}, {
-  "artistID" : 100,
-  "firstName" : "David",
-  "lastName" : "Bowie",
-  "birthDate" : 59232985200000,
-  "countryOfBirth" : "UK",
-  "songs" : [ ]
-}, {
-  "artistID" : 101,
-  "firstName" : "Pink",
-  "lastName" : "Floyd",
-  "birthDate" : 59819983200000,
-  "countryOfBirth" : "UK",
-  "songs" : [ ]
-}, {
-  "artistID" : 102,
-  "firstName" : "Queen",
-  "lastName" : "",
-  "birthDate" : 59973861600000,
-  "countryOfBirth" : "UK",
-  "songs" : [ ]
-}, {
-  "artistID" : 100,
-  "firstName" : "David",
-  "lastName" : "Bowie",
-  "birthDate" : 59232985200000,
-  "countryOfBirth" : "UK",
-  "songs" : [ ]
-}, {
-  "artistID" : 101,
-  "firstName" : "Pink",
-  "lastName" : "Floyd",
-  "birthDate" : 59819983200000,
-  "countryOfBirth" : "UK",
-  "songs" : [ ]
-}, {
-  "artistID" : 102,
-  "firstName" : "Queen",
-  "lastName" : "",
-  "birthDate" : 59973861600000,
-  "countryOfBirth" : "UK",
-  "songs" : [ ]
+  "songs" : [ 1034 ]
 }, {
   "artistID" : 103,
   "firstName" : "Led",
   "lastName" : "Zeppelin",
-  "birthDate" : 1745571652994,
+  "birthDate" : 1745593140611,
   "countryOfBirth" : "Unknown",
-  "songs" : [ ]
-}, {
-  "artistID" : 103,
-  "firstName" : "David",
-  "lastName" : "Bowie",
-  "birthDate" : 59232985200000,
-  "countryOfBirth" : "UK",
-  "songs" : [ ]
+  "songs" : [ 1035, 1040 ]
 }, {
   "artistID" : 104,
-  "firstName" : "Pink",
-  "lastName" : "Floyd",
-  "birthDate" : 59819983200000,
+  "firstName" : "The",
+  "lastName" : "Beatles",
+  "birthDate" : 59645286000000,
   "countryOfBirth" : "UK",
-  "songs" : [ ]
-}, {
-  "artistID" : 103,
-  "firstName" : "David",
-  "lastName" : "Bowie",
-  "birthDate" : 59232985200000,
-  "countryOfBirth" : "UK",
-  "songs" : [ ]
-}, {
-  "artistID" : 104,
-  "firstName" : "Pink",
-  "lastName" : "Floyd",
-  "birthDate" : 59819983200000,
-  "countryOfBirth" : "UK",
-  "songs" : [ ]
+  "songs" : [ 1036, 1037, 1038 ]
 }, {
   "artistID" : 105,
+  "firstName" : "David",
+  "lastName" : "Bowie",
+  "birthDate" : 59232985200000,
+  "countryOfBirth" : "UK",
+  "songs" : [ ]
+}, {
+  "artistID" : 106,
+  "firstName" : "Pink",
+  "lastName" : "Floyd",
+  "birthDate" : 59819983200000,
+  "countryOfBirth" : "UK",
+  "songs" : [ ]
+}, {
+  "artistID" : 107,
   "firstName" : "Queen",
   "lastName" : "",
   "birthDate" : 59973861600000,
   "countryOfBirth" : "UK",
-  "songs" : [ 1001 ]
-}, {
-  "artistID" : 106,
-  "firstName" : "Led",
-  "lastName" : "Zeppelin",
-  "birthDate" : 1745571739080,
-  "countryOfBirth" : "Unknown",
-  "songs" : [ ]
-}, {
-  "artistID" : 106,
-  "firstName" : "David",
-  "lastName" : "Bowie",
-  "birthDate" : 59232985200000,
-  "countryOfBirth" : "UK",
-  "songs" : [ ]
-}, {
-  "artistID" : 107,
-  "firstName" : "Pink",
-  "lastName" : "Floyd",
-  "birthDate" : 59819983200000,
-  "countryOfBirth" : "UK",
-  "songs" : [ ]
-}, {
-  "artistID" : 106,
-  "firstName" : "David",
-  "lastName" : "Bowie",
-  "birthDate" : 59232985200000,
-  "countryOfBirth" : "UK",
-  "songs" : [ ]
-}, {
-  "artistID" : 107,
-  "firstName" : "Pink",
-  "lastName" : "Floyd",
-  "birthDate" : 59819983200000,
-  "countryOfBirth" : "UK",
-  "songs" : [ ]
+  "songs" : [ 1039 ]
 }, {
   "artistID" : 108,
-  "firstName" : "Queen",
-  "lastName" : "",
-  "birthDate" : 59973861600000,
-  "countryOfBirth" : "UK",
-  "songs" : [ 1002 ]
-}, {
-  "artistID" : 109,
-  "firstName" : "Led",
-  "lastName" : "Zeppelin",
-  "birthDate" : 1745571873736,
-  "countryOfBirth" : "Unknown",
-  "songs" : [ ]
-}, {
-  "artistID" : 109,
-  "firstName" : "David",
-  "lastName" : "Bowie",
-  "birthDate" : 59232985200000,
-  "countryOfBirth" : "UK",
-  "songs" : [ ]
-}, {
-  "artistID" : 110,
-  "firstName" : "Pink",
-  "lastName" : "Floyd",
-  "birthDate" : 59819983200000,
-  "countryOfBirth" : "UK",
-  "songs" : [ ]
-}, {
-  "artistID" : 111,
-  "firstName" : "Queen",
-  "lastName" : "",
-  "birthDate" : 59973861600000,
-  "countryOfBirth" : "UK",
-  "songs" : [ 1003 ]
-}, {
-  "artistID" : 112,
-  "firstName" : "Led",
-  "lastName" : "Zeppelin",
-  "birthDate" : 1745571905366,
-  "countryOfBirth" : "Unknown",
-  "songs" : [ ]
-}, {
-  "artistID" : 112,
-  "firstName" : "David",
-  "lastName" : "Bowie",
-  "birthDate" : 59232985200000,
-  "countryOfBirth" : "UK",
-  "songs" : [ ]
-}, {
-  "artistID" : 113,
-  "firstName" : "Pink",
-  "lastName" : "Floyd",
-  "birthDate" : 59819983200000,
-  "countryOfBirth" : "UK",
-  "songs" : [ ]
-}, {
-  "artistID" : 114,
-  "firstName" : "Queen",
-  "lastName" : "",
-  "birthDate" : 59973861600000,
-  "countryOfBirth" : "UK",
-  "songs" : [ 1004 ]
-}, {
-  "artistID" : 115,
-  "firstName" : "Led",
-  "lastName" : "Zeppelin",
-  "birthDate" : 1745572277728,
-  "countryOfBirth" : "Unknown",
-  "songs" : [ 1005, 1010, 1015, 1020 ]
-}, {
-  "artistID" : 116,
   "firstName" : "The",
   "lastName" : "Beatles",
   "birthDate" : 59645286000000,
   "countryOfBirth" : "UK",
-  "songs" : [ 1006, 1007, 1008 ]
-}, {
-  "artistID" : 117,
-  "firstName" : "David",
-  "lastName" : "Bowie",
-  "birthDate" : 59232985200000,
-  "countryOfBirth" : "UK",
-  "songs" : [ ]
-}, {
-  "artistID" : 118,
-  "firstName" : "Pink",
-  "lastName" : "Floyd",
-  "birthDate" : 59819983200000,
-  "countryOfBirth" : "UK",
-  "songs" : [ ]
-}, {
-  "artistID" : 119,
-  "firstName" : "Queen",
-  "lastName" : "",
-  "birthDate" : 59973861600000,
-  "countryOfBirth" : "UK",
-  "songs" : [ 1009 ]
-}, {
-  "artistID" : 120,
-  "firstName" : "The",
-  "lastName" : "Beatles",
-  "birthDate" : 59645286000000,
-  "countryOfBirth" : "UK",
-  "songs" : [ 1011, 1012, 1013 ]
-}, {
-  "artistID" : 121,
-  "firstName" : "David",
-  "lastName" : "Bowie",
-  "birthDate" : 59232985200000,
-  "countryOfBirth" : "UK",
-  "songs" : [ ]
-}, {
-  "artistID" : 122,
-  "firstName" : "Pink",
-  "lastName" : "Floyd",
-  "birthDate" : 59819983200000,
-  "countryOfBirth" : "UK",
-  "songs" : [ ]
-}, {
-  "artistID" : 123,
-  "firstName" : "Queen",
-  "lastName" : "",
-  "birthDate" : 59973861600000,
-  "countryOfBirth" : "UK",
-  "songs" : [ 1014 ]
-}, {
-  "artistID" : 124,
-  "firstName" : "The",
-  "lastName" : "Beatles",
-  "birthDate" : 59645286000000,
-  "countryOfBirth" : "UK",
-  "songs" : [ 1016, 1017, 1018 ]
-}, {
-  "artistID" : 125,
-  "firstName" : "David",
-  "lastName" : "Bowie",
-  "birthDate" : 59232985200000,
-  "countryOfBirth" : "UK",
-  "songs" : [ ]
-}, {
-  "artistID" : 126,
-  "firstName" : "Pink",
-  "lastName" : "Floyd",
-  "birthDate" : 59819983200000,
-  "countryOfBirth" : "UK",
-  "songs" : [ ]
-}, {
-  "artistID" : 127,
-  "firstName" : "Queen",
-  "lastName" : "",
-  "birthDate" : 59973861600000,
-  "countryOfBirth" : "UK",
-  "songs" : [ 1019 ]
-}, {
-  "artistID" : 128,
-  "firstName" : "The",
-  "lastName" : "Beatles",
-  "birthDate" : 59645286000000,
-  "countryOfBirth" : "UK",
-  "songs" : [ 1021, 1022, 1023 ]
+  "songs" : [ 1041, 1042, 1043 ]
 } ]

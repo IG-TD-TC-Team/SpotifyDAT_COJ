@@ -79,6 +79,22 @@ public abstract class JsonRepository<T> implements Repository<T> {
     @Override
     public T save(T entity) {
         List<T> entities = findAll();
+        int entityId = idExtractor.applyAsInt(entity);
+
+        // Check if entity with this ID already exists
+        boolean exists = entities.stream()
+                .anyMatch(e -> idExtractor.applyAsInt(e) == entityId);
+
+        if (exists) {
+            // Notify about duplicate entity
+            System.out.println("NOTIFICATION: Entity of type " + entityType.getSimpleName() +
+                    " with ID " + entityId + " already exists. Updating instead of creating new.");
+
+            // Update the existing entity
+            return update(entity).orElse(entity);
+        }
+
+        // If it doesn't exist, add it
         entities.add(entity);
         saveAll(entities);
         return entity;

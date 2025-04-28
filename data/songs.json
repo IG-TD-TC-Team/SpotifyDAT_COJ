@@ -366,4 +366,164 @@
   "genre" : "ROCK",
   "durationSeconds" : 207,
   "filePath" : "/music/maxwell'ssilverhammer.mp3"
+}, {
+  "songId" : 1024,
+  "title" : "Bohemian Rhapsody",
+  "artistId" : 131,
+  "albumId" : 10022,
+  "genre" : "ROCK",
+  "durationSeconds" : 355,
+  "filePath" : "/music/bohemianrhapsody.mp3"
+}, {
+  "songId" : 1025,
+  "title" : "Stairway to Heaven",
+  "artistId" : 115,
+  "albumId" : 10010,
+  "genre" : "ROCK",
+  "durationSeconds" : 482,
+  "filePath" : "/music/stairwaytoheaven.mp3"
+}, {
+  "songId" : 1026,
+  "title" : "Come Together",
+  "artistId" : 132,
+  "albumId" : 10023,
+  "genre" : "ROCK",
+  "durationSeconds" : 260,
+  "filePath" : "/music/cometogether.mp3"
+}, {
+  "songId" : 1027,
+  "title" : "Something",
+  "artistId" : 132,
+  "albumId" : 10023,
+  "genre" : "ROCK",
+  "durationSeconds" : 182,
+  "filePath" : "/music/something.mp3"
+}, {
+  "songId" : 1028,
+  "title" : "Maxwell's Silver Hammer",
+  "artistId" : 132,
+  "albumId" : 10023,
+  "genre" : "ROCK",
+  "durationSeconds" : 207,
+  "filePath" : "/music/maxwell'ssilverhammer.mp3"
+}, {
+  "songId" : 1029,
+  "title" : "Bohemian Rhapsody",
+  "artistId" : 135,
+  "albumId" : 10025,
+  "genre" : "ROCK",
+  "durationSeconds" : 355,
+  "filePath" : "/music/bohemianrhapsody.mp3"
+}, {
+  "songId" : 1030,
+  "title" : "Stairway to Heaven",
+  "artistId" : 115,
+  "albumId" : 10010,
+  "genre" : "ROCK",
+  "durationSeconds" : 482,
+  "filePath" : "/music/stairwaytoheaven.mp3"
+}, {
+  "songId" : 1031,
+  "title" : "Come Together",
+  "artistId" : 136,
+  "albumId" : 10026,
+  "genre" : "ROCK",
+  "durationSeconds" : 260,
+  "filePath" : "/music/cometogether.mp3"
+}, {
+  "songId" : 1032,
+  "title" : "Something",
+  "artistId" : 136,
+  "albumId" : 10026,
+  "genre" : "ROCK",
+  "durationSeconds" : 182,
+  "filePath" : "/music/something.mp3"
+}, {
+  "songId" : 1033,
+  "title" : "Maxwell's Silver Hammer",
+  "artistId" : 136,
+  "albumId" : 10026,
+  "genre" : "ROCK",
+  "durationSeconds" : 207,
+  "filePath" : "/music/maxwell'ssilverhammer.mp3"
+}, {
+  "songId" : 1034,
+  "title" : "Bohemian Rhapsody",
+  "artistId" : 102,
+  "albumId" : 10028,
+  "genre" : "ROCK",
+  "durationSeconds" : 355,
+  "filePath" : "/music/bohemianrhapsody.mp3"
+}, {
+  "songId" : 1035,
+  "title" : "Stairway to Heaven",
+  "artistId" : 103,
+  "albumId" : 10029,
+  "genre" : "ROCK",
+  "durationSeconds" : 482,
+  "filePath" : "/music/stairwaytoheaven.mp3"
+}, {
+  "songId" : 1036,
+  "title" : "Come Together",
+  "artistId" : 104,
+  "albumId" : 10030,
+  "genre" : "ROCK",
+  "durationSeconds" : 260,
+  "filePath" : "/music/cometogether.mp3"
+}, {
+  "songId" : 1037,
+  "title" : "Something",
+  "artistId" : 104,
+  "albumId" : 10030,
+  "genre" : "ROCK",
+  "durationSeconds" : 182,
+  "filePath" : "/music/something.mp3"
+}, {
+  "songId" : 1038,
+  "title" : "Maxwell's Silver Hammer",
+  "artistId" : 104,
+  "albumId" : 10030,
+  "genre" : "ROCK",
+  "durationSeconds" : 207,
+  "filePath" : "/music/maxwell'ssilverhammer.mp3"
+}, {
+  "songId" : 1039,
+  "title" : "Bohemian Rhapsody",
+  "artistId" : 107,
+  "albumId" : 10032,
+  "genre" : "ROCK",
+  "durationSeconds" : 355,
+  "filePath" : "/music/bohemianrhapsody.mp3"
+}, {
+  "songId" : 1040,
+  "title" : "Stairway to Heaven",
+  "artistId" : 103,
+  "albumId" : 10029,
+  "genre" : "ROCK",
+  "durationSeconds" : 482,
+  "filePath" : "/music/stairwaytoheaven.mp3"
+}, {
+  "songId" : 1041,
+  "title" : "Come Together",
+  "artistId" : 108,
+  "albumId" : 10033,
+  "genre" : "ROCK",
+  "durationSeconds" : 260,
+  "filePath" : "/music/cometogether.mp3"
+}, {
+  "songId" : 1042,
+  "title" : "Something",
+  "artistId" : 108,
+  "albumId" : 10033,
+  "genre" : "ROCK",
+  "durationSeconds" : 182,
+  "filePath" : "/music/something.mp3"
+}, {
+  "songId" : 1043,
+  "title" : "Maxwell's Silver Hammer",
+  "artistId" : 108,
+  "albumId" : 10033,
+  "genre" : "ROCK",
+  "durationSeconds" : 207,
+  "filePath" : "/music/maxwell'ssilverhammer.mp3"
 } ]

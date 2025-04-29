@@ -1,12 +1,22 @@
 package managers;
 
+import persistence.UserRepository;
+import user.User;
+
+import java.util.List;
+
 public class UserManager {
 
     //Singleton instance
     private static UserManager instance;
 
+    // Repository for user data
+    private final UserRepository userRepository;
+
     //Private constructor
-    private UserManager() {}
+    private UserManager() {
+        this.userRepository = UserRepository.getInstance();
+    }
 
     //Return single instance
     public static synchronized UserManager getInstance() {
@@ -16,17 +26,32 @@ public class UserManager {
         return instance;
     }
 
-    //Manage subscription
-    SubscriptionManager manager = SubscriptionManager.getInstance();
+    //Basic get user methods
+    public User getUserById(int id) {
+        return userRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("No user with ID=" + id));
+    }
 
-    //Void for the moment
+    public User getUserByUsername(String username) {
+        return userRepository.findByUsername(username)
+                .orElseThrow(() -> new IllegalArgumentException("No user with username='" + username + "'"));
+    }
 
-    //Basic user methods
-    void findUserByUsername(){}
-    void findUserByEmail(){}
+    public User getUserByEmail(String email) {
+        return userRepository.findByEmail(email)
+                .orElseThrow(() -> new IllegalArgumentException("No user with email='" + email + "'"));
+    }
+
 
     //Followers methods
-    void getFollowers(){}
-    void getFollowedUsers(){}
+    public List<User> getFollowers(String username) {
+        User user = getUserByUsername(username);
+        return userRepository.findFollowers(user);
+    }
+
+    public List<User> getFollowedUsers(String username) {
+        User user = getUserByUsername(username);
+        return userRepository.findFollowedUsers(user);
+    }
 
 }

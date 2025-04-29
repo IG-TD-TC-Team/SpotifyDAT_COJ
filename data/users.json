@@ -166,4 +166,42 @@
   "followedUsersIDs" : [ ],
   "followersIDs" : [ ],
   "active" : true
+}, {
+  "userID" : 9,
+  "username" : "alice1",
+  "email" : "alice@example20251.com",
+  "password" : "pass123",
+  "firstName" : "Alice",
+  "lastName" : "Smith",
+  "dateOfBirth" : null,
+  "accountCreationDate" : 1745951928865,
+  "subscriptionPlan" : {
+    "type" : "FreePlan"
+  },
+  "subscriptionInfo" : {
+    "startDate" : 1745951928865,
+    "endDate" : null
+  },
+  "followedUsersIDs" : [ ],
+  "followersIDs" : [ ],
+  "active" : true
+}, {
+  "userID" : 10,
+  "username" : "bob1",
+  "email" : "bob@example20251.com",
+  "password" : "pass456",
+  "firstName" : "Bob",
+  "lastName" : "Johnson",
+  "dateOfBirth" : null,
+  "accountCreationDate" : 1745951928903,
+  "subscriptionPlan" : {
+    "type" : "FreePlan"
+  },
+  "subscriptionInfo" : {
+    "startDate" : 1745951928903,
+    "endDate" : null
+  },
+  "followedUsersIDs" : [ ],
+  "followersIDs" : [ ],
+  "active" : true
 } ]

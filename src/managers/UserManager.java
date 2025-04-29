@@ -22,9 +22,6 @@ public class UserManager {
     //Void for the moment
 
     //Basic user methods
-    void login(){}
-    void logout(){}
-
     void findUserByUsername(){}
     void findUserByEmail(){}
 

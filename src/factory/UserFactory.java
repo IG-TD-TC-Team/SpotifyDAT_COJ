@@ -3,31 +3,48 @@ package factory;
 import managers.SubscriptionManager;
 import persistence.UserRepository;
 import user.*;
-import persistence.interfaces.*;
 import managers.UserManager;
 import java.util.*;
 
+/**
+ * Factory class responsible for creating, updating, deleting, and managing users and their subscriptions.
+ * Implements the Singleton pattern.
+ */
 public class UserFactory {
-    // Singleton instance
+    /**
+     * Singleton instance of UserFactory.
+     */
     private static UserFactory instance;
 
-    // Repositories for persistence operations
+    /**
+     * Repository for user persistence operations.
+     */
     private final UserRepository userRepository;
 
-    // SongManager for all read operations
+    /**
+     * Manager for user read operations.
+     */
     private final UserManager userManager;
 
-    // Subscription manager
+    /**
+     * Manager for subscription-related operations.
+     */
     private final SubscriptionManager subscriptionManager;
 
-    // Private constructor
+    /**
+     * Private constructor initializing repositories and managers.
+     */
     private UserFactory() {
         this.userRepository = UserRepository.getInstance();
         this.userManager = UserManager.getInstance();
         this.subscriptionManager = SubscriptionManager.getInstance();
     }
 
-    //Return single instance
+    /**
+     * Returns the singleton instance of UserFactory.
+     *
+     * @return the singleton instance
+     */
     public static synchronized UserFactory getInstance() {
         if (instance == null) {
             instance = new UserFactory();
@@ -36,6 +53,18 @@ public class UserFactory {
     }
 
     //Basic user methods
+
+    /**
+     * Creates a new user with a free subscription.
+     *
+     * @param firstName the first name
+     * @param lastName the last name
+     * @param username the username
+     * @param email the email address
+     * @param password the password
+     * @return the created User object
+     * @throws IllegalArgumentException if username or email already exist
+     */
     public User createUser(String firstName, String lastName, String username, String email, String password) {
         //Check email is unique
         if (userRepository.emailExists(email)) {
@@ -74,7 +103,12 @@ public class UserFactory {
         return userRepository.save(user);
     }
 
-    // Delete by ID
+    /**
+     * Deletes a user by their ID.
+     *
+     * @param userID the ID of the user to delete
+     * @throws IllegalArgumentException if no user with the given ID exists
+     */
     public void deleteUser(int userID) {
         // Verify userID exists
         if (!userRepository.userIdExists(userID)) {
@@ -86,7 +120,12 @@ public class UserFactory {
         System.out.println("Deleted user → ID=" + userID);
     }
 
-    // Delete by username
+    /**
+     * Deletes a user by their username.
+     *
+     * @param username the username of the user to delete
+     * @throws IllegalArgumentException if no user with the given username exists
+     */
     public void deleteUser(String username) {
         // Find user by username
         if (!userRepository.usernameExists(username)) {
@@ -101,7 +140,11 @@ public class UserFactory {
         System.out.println("Deleted user → Username=" + user.getUsername());
     }
 
-    // Set isActive to false by userID
+    /**
+     * Disables a user's account by ID.
+     *
+     * @param userID the ID of the user
+     */
     public void disableAccount(int userID){
         // Verify userID exists
         if (!userRepository.userIdExists(userID)) {
@@ -114,7 +157,11 @@ public class UserFactory {
         System.out.println("Account disabled");
     }
 
-    // Set isActive to false by username
+    /**
+     * Disables a user's account by username.
+     *
+     * @param username the username of the user
+     */
     public void disableAccount(String username){
         // Verify username exists
         if (!userRepository.usernameExists(username)) {
@@ -127,7 +174,11 @@ public class UserFactory {
         System.out.println("Account disabled");
     }
 
-    // Set isActive to true by userID
+    /**
+     * Enables a user's account by ID.
+     *
+     * @param userID the ID of the user
+     */
     public void enableAccount(int userID){
         // Verify userID exists
         if (!userRepository.userIdExists(userID)) {
@@ -140,7 +191,11 @@ public class UserFactory {
         System.out.println("Account enabled");
     }
 
-    // Set isActive to true by username
+    /**
+     * Enables a user's account by username.
+     *
+     * @param username the username of the user
+     */
     public void enableAccount(String username){
         // Find user by username
         if (!userRepository.usernameExists(username)) {
@@ -153,6 +208,13 @@ public class UserFactory {
         System.out.println("Account enabled");
     }
 
+    /**
+     * Updates a user's username.
+     *
+     * @param username the current username
+     * @param newUsername the new username
+     * @throws IllegalArgumentException if username not found or new username already exists
+     */
     public void updateUsername(String username, String newUsername) {
         // Find existing username
         if (!userRepository.usernameExists(username)) {
@@ -171,6 +233,12 @@ public class UserFactory {
         System.out.println("Username updated");
     }
 
+    /**
+     * Updates a user's password.
+     *
+     * @param username the username
+     * @param newPassword the new password
+     */
     public void updatePassword(String username, String newPassword) {
         // Find existing username
         if (!userRepository.usernameExists(username)) {
@@ -184,6 +252,13 @@ public class UserFactory {
         System.out.println("Password updated");
     }
 
+    /**
+     * Updates a user's email.
+     *
+     * @param username the username
+     * @param newEmail the new email
+     * @throws IllegalArgumentException if new email already exists
+     */
     public void updateEmail(String username, String newEmail) {
         // Find existing username
         if (!userRepository.usernameExists(username)) {
@@ -202,7 +277,12 @@ public class UserFactory {
         System.out.println("Email updated");
     }
 
-    //Link with SubscriptionManager
+    /**
+     * Subscribes a user to a premium plan for one year.
+     *
+     * @param username the username
+     * @throws IllegalStateException if already subscribed to premium
+     */
     public void subscribeToPremium(String username){
         // Verify username exists
         if (!userRepository.usernameExists(username)) {
@@ -231,6 +311,11 @@ public class UserFactory {
         System.out.println("DEBUG: Upgraded to Premium → username=" + username + ", expires=" + end);
     }
 
+    /**
+     * Downgrades a user's subscription to a free plan.
+     *
+     * @param username the username
+     */
     public void downgradeToFree(String username){
         // Verify username exists
         if (!userRepository.usernameExists(username)) {
@@ -254,6 +339,9 @@ public class UserFactory {
         System.out.println("Downgraded to Free → username=" + username);
     }
 
+    /**
+     * Downgrades users with expired subscriptions to a free plan.
+     */
     // Runs when UserFactory is initialized
     public void downgradeToFreeIfExpired(){
         Date now = new Date();
@@ -273,6 +361,14 @@ public class UserFactory {
     }
 
     //Followers methods
+
+    /**
+     * Makes a user follow another user.
+     *
+     * @param followerUsername the username of the follower
+     * @param followeeUsername the username of the user to follow
+     * @throws IllegalStateException if already following
+     */
     public void followUser(String followerUsername, String followeeUsername){
         // Check usernames
         if (!userRepository.usernameExists(followerUsername) || !userRepository.usernameExists(followeeUsername)) {
@@ -307,6 +403,13 @@ public class UserFactory {
 
     }
 
+    /**
+     * Makes a user unfollow another user.
+     *
+     * @param followerUsername the username of the follower
+     * @param followeeUsername the username of the user to unfollow
+     * @throws IllegalStateException if not currently following
+     */
     public void unfollowUser(String followerUsername, String followeeUsername){
         // Check usernames
         if (!userRepository.usernameExists(followerUsername) || !userRepository.usernameExists(followeeUsername)) {

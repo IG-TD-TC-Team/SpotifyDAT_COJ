@@ -27,6 +27,11 @@ public interface UserRepositoryInterface extends Repository<User> {
     Optional<User> findByEmail(String email);
 
     /**
+     * Returns true if a user with this ID exists.
+     */
+    boolean userIdExists(int userId);
+
+    /**
      * Checks if a username already exists.
      *
      * @param username The username to check

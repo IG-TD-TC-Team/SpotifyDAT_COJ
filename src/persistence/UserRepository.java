@@ -133,6 +133,11 @@ public class UserRepository extends JsonRepository<User> implements UserReposito
                 .anyMatch(user -> user.getEmail().equalsIgnoreCase(email));
     }
 
+    @Override
+    public boolean userIdExists(int userId) {
+        return findById(userId).isPresent();
+    }
+
     /**
      * Check if a username already exists in the repository.
      *

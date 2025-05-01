@@ -2,6 +2,9 @@ package persistence;
 
 import persistence.interfaces.UserRepositoryInterface;
 import user.User;
+import user.security.PasswordHasher;
+import user.security.SHA256Hasher;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,6 +27,8 @@ public class UserRepository extends JsonRepository<User> implements UserReposito
     private UserRepository() {
         super(User.class, "users.json", User::getUserID);
     }
+
+    private final PasswordHasher passwordHasher = new SHA256Hasher();
 
     /**
      * Gets the singleton instance of UserRepository.
@@ -217,7 +222,7 @@ public class UserRepository extends JsonRepository<User> implements UserReposito
     @Override
     public boolean checkCredentialsByUsername(String username, String password) {
         return findByUsername(username)
-                .map(user -> user.getPassword().equals(password))
+                .map(user -> passwordHasher.verify(password, user.getPassword()))
                 .orElse(false);
     }
 
@@ -231,7 +236,7 @@ public class UserRepository extends JsonRepository<User> implements UserReposito
     @Override
     public boolean checkCredentialsByEmail(String email, String password) {
         return findByEmail(email)
-                .map(user -> user.getPassword().equals(password))
+                .map(user -> passwordHasher.verify(password, user.getPassword()))
                 .orElse(false);
     }
 

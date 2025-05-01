@@ -267,7 +267,7 @@
   "id" : 10029,
   "title" : "Led Zeppelin IV",
   "artistId" : 103,
-  "songs" : [ 1035, 1040 ]
+  "songs" : [ 1035, 1040, 1045, 1050 ]
 }, {
   "id" : 10030,
   "title" : "Abbey Road",
@@ -288,4 +288,34 @@
   "title" : "Abbey Road",
   "artistId" : 108,
   "songs" : [ 1041, 1042, 1043 ]
+}, {
+  "id" : 10034,
+  "title" : "Dark Side of the Moon",
+  "artistId" : 110,
+  "songs" : [ ]
+}, {
+  "id" : 10035,
+  "title" : "A Night at the Opera",
+  "artistId" : 111,
+  "songs" : [ 1044 ]
+}, {
+  "id" : 10036,
+  "title" : "Abbey Road",
+  "artistId" : 112,
+  "songs" : [ 1046, 1047, 1048 ]
+}, {
+  "id" : 10037,
+  "title" : "Dark Side of the Moon",
+  "artistId" : 114,
+  "songs" : [ ]
+}, {
+  "id" : 10038,
+  "title" : "A Night at the Opera",
+  "artistId" : 115,
+  "songs" : [ 1049 ]
+}, {
+  "id" : 10039,
+  "title" : "Abbey Road",
+  "artistId" : 116,
+  "songs" : [ 1051, 1052, 1053 ]
 } ]

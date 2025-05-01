@@ -20,9 +20,6 @@ public class MusicFactory {
     private final ArtistRepositoryInterface artistRepository;
     private final AlbumRepositoryInterface albumRepository;
 
-    // SongManager for all read operations
-    private final SongManager songManager;
-
     // ID generators
     private int nextSongId = 1000;
     private int nextArtistId = 100;
@@ -36,9 +33,6 @@ public class MusicFactory {
         this.songRepository = RepositoryFactory.getSongRepository();
         this.artistRepository = RepositoryFactory.getArtistRepository();
         this.albumRepository = RepositoryFactory.getAlbumRepository();
-
-        // Get SongManager instance for all data retrieval
-        this.songManager = SongManager.getInstance();
 
         // Initialize next IDs based on existing data
         initializeNextIds();
@@ -61,21 +55,25 @@ public class MusicFactory {
      */
     private void initializeNextIds() {
         // Get all songs from SongManager
-        List<Song> songs = songManager.getAllSongs();
+        List<Song> songs = songRepository.findAll();
         for (Song song : songs) {
             if (song.getSongId() >= nextSongId) {
                 nextSongId = song.getSongId() + 1;
             }
         }
 
-        for (Song song : songs) {
-            Artist artist = songManager.getArtistById(song.getArtistId());
-            if (artist != null && artist.getArtistID() >= nextArtistId) {
+        // Initialize artist IDs from artists repository
+        List<Artist> artists = artistRepository.findAll();
+        for (Artist artist : artists) {
+            if (artist.getArtistID() >= nextArtistId) {
                 nextArtistId = artist.getArtistID() + 1;
             }
+        }
 
-            Album album = songManager.getAlbumById(song.getAlbumId());
-            if (album != null && album.getId() >= nextAlbumId) {
+        // Initialize album IDs from albums repository
+        List<Album> albums = albumRepository.findAll();
+        for (Album album : albums) {
+            if (album.getId() >= nextAlbumId) {
                 nextAlbumId = album.getId() + 1;
             }
         }
@@ -93,15 +91,15 @@ public class MusicFactory {
      * @return The created Song
      */
     public Song createSong(String title, int artistId, int albumId, Genre genre, int durationSeconds, String filePath) {
-        // Verify that the artist and album exist
-        Artist artist = songManager.getArtistById(artistId);
-        Album album = songManager.getAlbumById(albumId);
+        // Verify that the artist and album exist using repositories
+        Optional<Artist> artistOpt = artistRepository.findById(artistId);
+        Optional<Album> albumOpt = albumRepository.findById(albumId);
 
-        if (artist == null) {
+        if (artistOpt.isEmpty()) {
             throw new IllegalArgumentException("Artist with ID " + artistId + " not found");
         }
 
-        if (album == null) {
+        if (albumOpt.isEmpty()) {
             throw new IllegalArgumentException("Album with ID " + albumId + " not found");
         }
 
@@ -116,9 +114,6 @@ public class MusicFactory {
 
         // Save the song
         songRepository.save(song);
-
-        //Refresh Cache
-        songManager.refreshCache();
 
         return song;
     }
@@ -137,8 +132,7 @@ public class MusicFactory {
         Artist artist = new Artist(artistId, firstName, lastName, birthDate, countryOfBirth);
         artist.setSongs(new ArrayList<>()); // Initialize empty songs list
         artistRepository.save(artist);
-        //Refresh Cache
-        songManager.refreshCache();
+
         return artist;
     }
 
@@ -151,16 +145,15 @@ public class MusicFactory {
      */
     public Album createAlbum(String title, int artistId) {
         // Verify that the artist exists
-        Artist artist = songManager.getArtistById(artistId);
-        if (artist == null) {
+        Optional<Artist> artistOpt = artistRepository.findById(artistId);
+        if (artistOpt.isEmpty()) {
             throw new IllegalArgumentException("Artist with ID " + artistId + " not found");
         }
 
         int albumId = nextAlbumId++;
         Album album = new Album(albumId, title, artistId, new ArrayList<>());
         albumRepository.save(album);
-        //Refresh Cache
-        songManager.refreshCache();
+
         return album;
     }
 
@@ -174,15 +167,13 @@ public class MusicFactory {
      */
     public Artist findOrCreateArtist(String firstName, String lastName) {
         // Look for artists with matching name in songs
-        List<Song> allSongs = songManager.getAllSongs();
-        for (Song song : allSongs) {
-            Artist artist = songManager.getArtistById(song.getArtistId());
-            if (artist != null &&
-                    artist.getFirstName().equalsIgnoreCase(firstName) &&
-                    artist.getLastName().equalsIgnoreCase(lastName)) {
-                return artist;
-            }
+        List<Artist> matchingArtists = artistRepository.findByName(firstName + " " + lastName);
+
+        // Return first matching artist if found
+        if (!matchingArtists.isEmpty()) {
+            return matchingArtists.get(0);
         }
+
 
         // Artist not found, create a new one
         return createArtist(firstName, lastName, new Date(), "Unknown");
@@ -198,11 +189,11 @@ public class MusicFactory {
      * @return The existing or newly created Album
      */
     public Album findOrCreateAlbum(String title, int artistId) {
-        // Look for matching albums in songs
-        List<Song> artistSongs = songManager.getSongsByArtistId(artistId);
-        for (Song song : artistSongs) {
-            Album album = songManager.getAlbumById(song.getAlbumId());
-            if (album != null && album.getTitle().equalsIgnoreCase(title)) {
+        // Find albums by artist ID
+        List<Album> artistAlbums = albumRepository.findByArtistId(artistId);
+
+        for (Album album : artistAlbums) {
+            if (album.getTitle().equalsIgnoreCase(title)) {
                 return album;
             }
         }

@@ -526,4 +526,84 @@
   "genre" : "ROCK",
   "durationSeconds" : 207,
   "filePath" : "/music/maxwell'ssilverhammer.mp3"
+}, {
+  "songId" : 1044,
+  "title" : "Bohemian Rhapsody",
+  "artistId" : 111,
+  "albumId" : 10035,
+  "genre" : "ROCK",
+  "durationSeconds" : 355,
+  "filePath" : "/music/bohemianrhapsody.mp3"
+}, {
+  "songId" : 1045,
+  "title" : "Stairway to Heaven",
+  "artistId" : 103,
+  "albumId" : 10029,
+  "genre" : "ROCK",
+  "durationSeconds" : 482,
+  "filePath" : "/music/stairwaytoheaven.mp3"
+}, {
+  "songId" : 1046,
+  "title" : "Come Together",
+  "artistId" : 112,
+  "albumId" : 10036,
+  "genre" : "ROCK",
+  "durationSeconds" : 260,
+  "filePath" : "/music/cometogether.mp3"
+}, {
+  "songId" : 1047,
+  "title" : "Something",
+  "artistId" : 112,
+  "albumId" : 10036,
+  "genre" : "ROCK",
+  "durationSeconds" : 182,
+  "filePath" : "/music/something.mp3"
+}, {
+  "songId" : 1048,
+  "title" : "Maxwell's Silver Hammer",
+  "artistId" : 112,
+  "albumId" : 10036,
+  "genre" : "ROCK",
+  "durationSeconds" : 207,
+  "filePath" : "/music/maxwell'ssilverhammer.mp3"
+}, {
+  "songId" : 1049,
+  "title" : "Bohemian Rhapsody",
+  "artistId" : 115,
+  "albumId" : 10038,
+  "genre" : "ROCK",
+  "durationSeconds" : 355,
+  "filePath" : "/music/bohemianrhapsody.mp3"
+}, {
+  "songId" : 1050,
+  "title" : "Stairway to Heaven",
+  "artistId" : 103,
+  "albumId" : 10029,
+  "genre" : "ROCK",
+  "durationSeconds" : 482,
+  "filePath" : "/music/stairwaytoheaven.mp3"
+}, {
+  "songId" : 1051,
+  "title" : "Come Together",
+  "artistId" : 116,
+  "albumId" : 10039,
+  "genre" : "ROCK",
+  "durationSeconds" : 260,
+  "filePath" : "/music/cometogether.mp3"
+}, {
+  "songId" : 1052,
+  "title" : "Something",
+  "artistId" : 116,
+  "albumId" : 10039,
+  "genre" : "ROCK",
+  "durationSeconds" : 182,
+  "filePath" : "/music/something.mp3"
+}, {
+  "songId" : 1053,
+  "title" : "Maxwell's Silver Hammer",
+  "artistId" : 116,
+  "albumId" : 10039,
+  "genre" : "ROCK",
+  "durationSeconds" : 207,
+  "filePath" : "/music/maxwell'ssilverhammer.mp3"
 } ]

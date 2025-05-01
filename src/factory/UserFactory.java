@@ -67,17 +67,17 @@ public class UserFactory {
      */
     public User createUser(String firstName, String lastName, String username, String email, String password) {
         //Check email is unique
-        if (userRepository.emailExists(email)) {
+        if (userManager.emailExists(email)) {
             throw new IllegalArgumentException("Email already in use: " + email);
         }
 
         //Check username is unique
-        if (userRepository.usernameExists(username)) {
+        if (userManager.usernameExists(username)) {
             throw new IllegalArgumentException("Username already in use: " + username);
         }
 
         // Create userID
-        int newId = userRepository.findAll().stream()
+        int newId = userManager.getAllUsers().stream()
                 .mapToInt(User::getUserID)
                 .max()
                 .orElse(0) + 1;
@@ -100,7 +100,10 @@ public class UserFactory {
         );
 
         // Save user
-        return userRepository.save(user);
+        User savedUser = userRepository.save(user);
+        // Refresh the user cache after creating a new user
+        userManager.refreshCache();
+        return savedUser;
     }
 
     /**
@@ -111,12 +114,16 @@ public class UserFactory {
      */
     public void deleteUser(int userID) {
         // Verify userID exists
-        if (!userRepository.userIdExists(userID)) {
+        try {
+            userManager.getUserById(userID);
+        } catch (IllegalArgumentException e) {
             throw new IllegalArgumentException("No user with ID=" + userID);
         }
 
         // Delete
         userRepository.deleteById(userID);
+        // Refresh the user cache after deleting a user
+        userManager.refreshCache();
         System.out.println("Deleted user → ID=" + userID);
     }
 
@@ -128,15 +135,17 @@ public class UserFactory {
      */
     public void deleteUser(String username) {
         // Find user by username
-        if (!userRepository.usernameExists(username)) {
+        User user;
+        try {
+            user = userManager.getUserByUsername(username);
+        } catch (IllegalArgumentException e) {
             throw new IllegalArgumentException("No user with username=" + username);
         }
 
-        // Load user
-        User user = userRepository.findByUsername(username).get();
-
         // Delete user
         userRepository.delete(user);
+        // Refresh the user cache after deleting a user
+        userManager.refreshCache();
         System.out.println("Deleted user → Username=" + user.getUsername());
     }
 
@@ -147,13 +156,17 @@ public class UserFactory {
      */
     public void disableAccount(int userID){
         // Verify userID exists
-        if (!userRepository.userIdExists(userID)) {
+        User user;
+        try {
+            user = userManager.getUserById(userID);
+        } catch (IllegalArgumentException e) {
             throw new IllegalArgumentException("No user with ID=" + userID);
         }
 
-        User user = userRepository.findById(userID).get();
         user.setActive(false);
         userRepository.update(user);
+        // Refresh the cache after updating a user
+        userManager.refreshCache();
         System.out.println("Account disabled");
     }
 
@@ -164,13 +177,17 @@ public class UserFactory {
      */
     public void disableAccount(String username){
         // Verify username exists
-        if (!userRepository.usernameExists(username)) {
+        User user;
+        try {
+            user = userManager.getUserByUsername(username);
+        } catch (IllegalArgumentException e) {
             throw new IllegalArgumentException("No user with username=" + username);
         }
 
-        User user = userRepository.findByUsername(username).get();
         user.setActive(false);
         userRepository.update(user);
+        // Refresh the cache after updating a user
+        userManager.refreshCache();
         System.out.println("Account disabled");
     }
 
@@ -181,13 +198,17 @@ public class UserFactory {
      */
     public void enableAccount(int userID){
         // Verify userID exists
-        if (!userRepository.userIdExists(userID)) {
+        User user;
+        try {
+            user = userManager.getUserById(userID);
+        } catch (IllegalArgumentException e) {
             throw new IllegalArgumentException("No user with ID=" + userID);
         }
 
-        User user = userRepository.findById(userID).get();
         user.setActive(true);
         userRepository.update(user);
+        // Refresh the cache after updating a user
+        userManager.refreshCache();
         System.out.println("Account enabled");
     }
 
@@ -198,13 +219,17 @@ public class UserFactory {
      */
     public void enableAccount(String username){
         // Find user by username
-        if (!userRepository.usernameExists(username)) {
+        User user;
+        try {
+            user = userManager.getUserByUsername(username);
+        } catch (IllegalArgumentException e) {
             throw new IllegalArgumentException("No user with username=" + username);
         }
 
-        User user = userRepository.findByUsername(username).get();
         user.setActive(true);
         userRepository.update(user);
+        // Refresh the cache after updating a user
+        userManager.refreshCache();
         System.out.println("Account enabled");
     }
 
@@ -217,19 +242,23 @@ public class UserFactory {
      */
     public void updateUsername(String username, String newUsername) {
         // Find existing username
-        if (!userRepository.usernameExists(username)) {
+        User user;
+        try {
+            user = userManager.getUserByUsername(username);
+        } catch (IllegalArgumentException e) {
             throw new IllegalArgumentException("No user with username=" + username);
         }
 
         // Check new username isn't taken
-        if (userRepository.usernameExists(newUsername)) {
+        if (userManager.usernameExists(newUsername)) {
             throw new IllegalArgumentException("Username already in use: " + newUsername);
         }
 
         // Update
-        User user = userRepository.findByUsername(username).get();
         user.setUsername(newUsername);
         userRepository.update(user);
+        // Refresh the cache after updating a user
+        userManager.refreshCache();
         System.out.println("Username updated");
     }
 
@@ -241,14 +270,18 @@ public class UserFactory {
      */
     public void updatePassword(String username, String newPassword) {
         // Find existing username
-        if (!userRepository.usernameExists(username)) {
+        User user;
+        try {
+            user = userManager.getUserByUsername(username);
+        } catch (IllegalArgumentException e) {
             throw new IllegalArgumentException("No user with username=" + username);
         }
 
         // Update
-        User user = userRepository.findByUsername(username).get();
         user.setPassword(newPassword);
         userRepository.update(user);
+        // Refresh the cache after updating a user
+        userManager.refreshCache();
         System.out.println("Password updated");
     }
 
@@ -261,19 +294,23 @@ public class UserFactory {
      */
     public void updateEmail(String username, String newEmail) {
         // Find existing username
-        if (!userRepository.usernameExists(username)) {
+        User user;
+        try {
+            user = userManager.getUserByUsername(username);
+        } catch (IllegalArgumentException e) {
             throw new IllegalArgumentException("No user with username=" + username);
         }
 
         // Check new email isn't used
-        if (userRepository.emailExists(newEmail)) {
+        if (userManager.emailExists(newEmail)) {
             throw new IllegalArgumentException("Email already in use: " + newEmail);
         }
 
         // Update
-        User user = userRepository.findByUsername(username).get();
         user.setEmail(newEmail);
         userRepository.update(user);
+        // Refresh the cache after updating a user
+        userManager.refreshCache();
         System.out.println("Email updated");
     }
 
@@ -285,11 +322,12 @@ public class UserFactory {
      */
     public void subscribeToPremium(String username){
         // Verify username exists
-        if (!userRepository.usernameExists(username)) {
+        User user;
+        try {
+            user = userManager.getUserByUsername(username);
+        } catch (IllegalArgumentException e) {
             throw new IllegalArgumentException("No user with username=" + username);
         }
-
-        User user = userRepository.findByUsername(username).get();
 
         // Check if it's already Premium
         if (user.getSubscriptionPlan() instanceof PremiumPlan) {
@@ -307,6 +345,8 @@ public class UserFactory {
         user.setSubscriptionPlan(premium);
         user.setSubscriptionInfo(new SubscriptionInfo(start, end));
         userRepository.update(user);
+        // Refresh the cache after updating a user
+        userManager.refreshCache();
 
         System.out.println("DEBUG: Upgraded to Premium → username=" + username + ", expires=" + end);
     }
@@ -318,11 +358,12 @@ public class UserFactory {
      */
     public void downgradeToFree(String username){
         // Verify username exists
-        if (!userRepository.usernameExists(username)) {
+        User user;
+        try {
+            user = userManager.getUserByUsername(username);
+        } catch (IllegalArgumentException e) {
             throw new IllegalArgumentException("No user with username=" + username);
         }
-
-        User user = userRepository.findByUsername(username).get();
 
         // Check if it's already free
         if (user.getSubscriptionPlan() instanceof FreePlan) {
@@ -335,6 +376,8 @@ public class UserFactory {
         user.setSubscriptionPlan(freePlan);
         user.setSubscriptionInfo(new SubscriptionInfo(now, null));
         userRepository.update(user);
+        // Refresh the cache after updating a user
+        userManager.refreshCache();
 
         System.out.println("Downgraded to Free → username=" + username);
     }
@@ -345,7 +388,9 @@ public class UserFactory {
     // Runs when UserFactory is initialized
     public void downgradeToFreeIfExpired(){
         Date now = new Date();
-        List<User> allUsers = userRepository.findAll();
+        List<User> allUsers = userManager.getAllUsers();
+        boolean anyChanges = false;
+
         for (User user : allUsers) {
             SubscriptionInfo info = user.getSubscriptionInfo();
             if (info != null && info.getEndDate() != null && info.getEndDate().before(now)) {
@@ -354,9 +399,15 @@ public class UserFactory {
                     user.setSubscriptionPlan(freePlan);
                     user.setSubscriptionInfo(new SubscriptionInfo(now, null));
                     userRepository.update(user);
+                    anyChanges = true;
                     System.out.println("Downgraded expired subscription → username=" + user.getUsername());
                 }
             }
+        }
+
+        // Only refresh the cache if any changes were made
+        if (anyChanges) {
+            userManager.refreshCache();
         }
     }
 
@@ -371,16 +422,17 @@ public class UserFactory {
      */
     public void followUser(String followerUsername, String followeeUsername){
         // Check usernames
-        if (!userRepository.usernameExists(followerUsername) || !userRepository.usernameExists(followeeUsername)) {
+        User follower, followee;
+        try {
+            follower = userManager.getUserByUsername(followerUsername);
+            followee = userManager.getUserByUsername(followeeUsername);
+        } catch (IllegalArgumentException e) {
             throw new IllegalArgumentException("Invalid usernames provided");
         }
+
         if (followerUsername.equals(followeeUsername)) {
             throw new IllegalArgumentException("User cannot follow themselves");
         }
-
-        // Load users
-        User follower = userRepository.findByUsername(followerUsername).get();
-        User followee = userRepository.findByUsername(followeeUsername).get();
 
         // Check if already following
         List<Integer> follows = follower.getFollowedUsersIDs();
@@ -398,9 +450,10 @@ public class UserFactory {
 
         userRepository.update(follower);
         userRepository.update(followee);
+        // Refresh the cache after updating users
+        userManager.refreshCache();
 
         System.out.println(followerUsername + " now follows " + followeeUsername);
-
     }
 
     /**
@@ -412,16 +465,17 @@ public class UserFactory {
      */
     public void unfollowUser(String followerUsername, String followeeUsername){
         // Check usernames
-        if (!userRepository.usernameExists(followerUsername) || !userRepository.usernameExists(followeeUsername)) {
+        User follower, followee;
+        try {
+            follower = userManager.getUserByUsername(followerUsername);
+            followee = userManager.getUserByUsername(followeeUsername);
+        } catch (IllegalArgumentException e) {
             throw new IllegalArgumentException("Invalid usernames provided");
         }
+
         if (followerUsername.equals(followeeUsername)) {
             throw new IllegalArgumentException("User cannot follow themselves");
         }
-
-        // Load users
-        User follower = userRepository.findByUsername(followerUsername).get();
-        User followee = userRepository.findByUsername(followeeUsername).get();
 
         // Check if already unfollowing
         List<Integer> follows = follower.getFollowedUsersIDs();
@@ -438,6 +492,8 @@ public class UserFactory {
 
         userRepository.update(follower);
         userRepository.update(followee);
+        // Refresh the cache after updating users
+        userManager.refreshCache();
 
         System.out.println(followerUsername + " unfollowed " + followeeUsername);
     }

@@ -3,12 +3,14 @@ package managers;
 import persistence.UserRepository;
 import user.User;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Manages user-related operations such as retrieving user information
  * and handling followers and followed users.
  * Implements the Singleton pattern to ensure only one instance exists.
+ * Uses an in-memory cache to improve performance.
  */
 public class UserManager {
 
@@ -23,11 +25,18 @@ public class UserManager {
     private final UserRepository userRepository;
 
     /**
+     * Cache of users to improve performance.
+     */
+    private List<User> users;
+
+    /**
      * Private constructor to prevent external instantiation.
-     * Initializes the UserRepository instance.
+     * Initializes the UserRepository instance and loads the user cache.
      */
     private UserManager() {
         this.userRepository = UserRepository.getInstance();
+        this.users = new ArrayList<>();
+        refreshCache();
     }
 
     /**
@@ -43,6 +52,14 @@ public class UserManager {
     }
 
     /**
+     * Refreshes the in-memory cache with the latest data from the repository.
+     * Call this after users are created, updated, or deleted.
+     */
+    public void refreshCache() {
+        this.users = userRepository.findAll();
+    }
+
+    /**
      * Retrieves a user by their unique ID.
      *
      * @param id the ID of the user
@@ -50,8 +67,13 @@ public class UserManager {
      * @throws IllegalArgumentException if no user with the specified ID exists
      */
     public User getUserById(int id) {
-        return userRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("No user with ID=" + id));
+        refreshCache();
+        for (User user : users) {
+            if (user.getUserID() == id) {
+                return user;
+            }
+        }
+        throw new IllegalArgumentException("No user with ID=" + id);
     }
 
     /**
@@ -62,8 +84,13 @@ public class UserManager {
      * @throws IllegalArgumentException if no user with the specified username exists
      */
     public User getUserByUsername(String username) {
-        return userRepository.findByUsername(username)
-                .orElseThrow(() -> new IllegalArgumentException("No user with username='" + username + "'"));
+        refreshCache();
+        for (User user : users) {
+            if (user.getUsername().equals(username)) {
+                return user;
+            }
+        }
+        throw new IllegalArgumentException("No user with username='" + username + "'");
     }
 
     /**
@@ -74,8 +101,13 @@ public class UserManager {
      * @throws IllegalArgumentException if no user with the specified email exists
      */
     public User getUserByEmail(String email) {
-        return userRepository.findByEmail(email)
-                .orElseThrow(() -> new IllegalArgumentException("No user with email='" + email + "'"));
+        refreshCache();
+        for (User user : users) {
+            if (user.getEmail().equals(email)) {
+                return user;
+            }
+        }
+        throw new IllegalArgumentException("No user with email='" + email + "'");
     }
 
     /**
@@ -85,8 +117,23 @@ public class UserManager {
      * @return the list of users who follow the specified user
      */
     public List<User> getFollowers(String username) {
+        refreshCache();
         User user = getUserByUsername(username);
-        return userRepository.findFollowers(user);
+        List<User> followers = new ArrayList<>();
+        List<Integer> followerIds = user.getFollowersIDs();
+
+        if (followerIds != null) {
+            for (Integer followerId : followerIds) {
+                for (User follower : users) {
+                    if (follower.getUserID() == followerId) {
+                        followers.add(follower);
+                        break;
+                    }
+                }
+            }
+        }
+
+        return followers;
     }
 
     /**
@@ -96,8 +143,117 @@ public class UserManager {
      * @return the list of users followed by the specified user
      */
     public List<User> getFollowedUsers(String username) {
+        refreshCache();
         User user = getUserByUsername(username);
-        return userRepository.findFollowedUsers(user);
+        List<User> followedUsers = new ArrayList<>();
+        List<Integer> followedIds = user.getFollowedUsersIDs();
+
+        if (followedIds != null) {
+            for (Integer followedId : followedIds) {
+                for (User followedUser : users) {
+                    if (followedUser.getUserID() == followedId) {
+                        followedUsers.add(followedUser);
+                        break;
+                    }
+                }
+            }
+        }
+
+        return followedUsers;
     }
 
+    /**
+     * Returns all users in the system.
+     *
+     * @return a list of all users
+     */
+    public List<User> getAllUsers() {
+        refreshCache();
+        return new ArrayList<>(users);
+    }
+
+    /**
+     * Checks if a user with the given username exists.
+     *
+     * @param username the username to check
+     * @return true if a user with the username exists, false otherwise
+     */
+    public boolean usernameExists(String username) {
+        refreshCache();
+        for (User user : users) {
+            if (user.getUsername().equals(username)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Checks if a user with the given email exists.
+     *
+     * @param email the email to check
+     * @return true if a user with the email exists, false otherwise
+     */
+    public boolean emailExists(String email) {
+        refreshCache();
+        for (User user : users) {
+            if (user.getEmail().equals(email)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Finds users by their first name.
+     *
+     * @param firstName the first name to search for
+     * @return a list of users with the given first name
+     */
+    public List<User> findUsersByFirstName(String firstName) {
+        refreshCache();
+        List<User> result = new ArrayList<>();
+        for (User user : users) {
+            if (user.getFirstName() != null && user.getFirstName().equalsIgnoreCase(firstName)) {
+                result.add(user);
+            }
+        }
+        return result;
+    }
+
+    /**
+     * Finds users by their last name.
+     *
+     * @param lastName the last name to search for
+     * @return a list of users with the given last name
+     */
+    public List<User> findUsersByLastName(String lastName) {
+        refreshCache();
+        List<User> result = new ArrayList<>();
+        for (User user : users) {
+            if (user.getLastName() != null && user.getLastName().equalsIgnoreCase(lastName)) {
+                result.add(user);
+            }
+        }
+        return result;
+    }
+
+    /**
+     * Finds users by their full name.
+     *
+     * @param firstName the first name to search for
+     * @param lastName the last name to search for
+     * @return a list of users with the given full name
+     */
+    public List<User> findUsersByFullName(String firstName, String lastName) {
+        refreshCache();
+        List<User> result = new ArrayList<>();
+        for (User user : users) {
+            if (user.getFirstName() != null && user.getFirstName().equalsIgnoreCase(firstName) &&
+                    user.getLastName() != null && user.getLastName().equalsIgnoreCase(lastName)) {
+                result.add(user);
+            }
+        }
+        return result;
+    }
 }

@@ -286,4 +286,76 @@
   "followedUsersIDs" : [ ],
   "followersIDs" : [ 11 ],
   "active" : true
+}, {
+  "userID" : 13,
+  "username" : "docker_costa1",
+  "email" : "docker1@example.com",
+  "password" : "dockPass123",
+  "firstName" : "Docker",
+  "lastName" : "Costa",
+  "dateOfBirth" : null,
+  "accountCreationDate" : 1746126872320,
+  "subscriptionPlan" : {
+    "type" : "FreePlan"
+  },
+  "subscriptionInfo" : {
+    "startDate" : 1746126872320,
+    "endDate" : null
+  },
+  "library" : {
+    "userID" : 13,
+    "playlists" : [ {
+      "name" : "Favorites",
+      "songs" : [ ],
+      "ownerID" : 13,
+      "playlistID" : 0,
+      "sharedWith" : [ ]
+    } ]
+  },
+  "defaultPlaylist" : {
+    "name" : "Favorites",
+    "songs" : [ ],
+    "ownerID" : 13,
+    "playlistID" : 0,
+    "sharedWith" : [ ]
+  },
+  "followedUsersIDs" : [ ],
+  "followersIDs" : [ ],
+  "active" : true
+}, {
+  "userID" : 14,
+  "username" : "bianca_costa1",
+  "email" : "bianca1@example.com",
+  "password" : "biancaPass456",
+  "firstName" : "Bianca",
+  "lastName" : "Costa",
+  "dateOfBirth" : null,
+  "accountCreationDate" : 1746126872379,
+  "subscriptionPlan" : {
+    "type" : "FreePlan"
+  },
+  "subscriptionInfo" : {
+    "startDate" : 1746126872379,
+    "endDate" : null
+  },
+  "library" : {
+    "userID" : 14,
+    "playlists" : [ {
+      "name" : "Favorites",
+      "songs" : [ ],
+      "ownerID" : 14,
+      "playlistID" : 0,
+      "sharedWith" : [ ]
+    } ]
+  },
+  "defaultPlaylist" : {
+    "name" : "Favorites",
+    "songs" : [ ],
+    "ownerID" : 14,
+    "playlistID" : 0,
+    "sharedWith" : [ ]
+  },
+  "followedUsersIDs" : [ ],
+  "followersIDs" : [ ],
+  "active" : true
 } ]

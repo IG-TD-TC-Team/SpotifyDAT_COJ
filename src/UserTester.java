@@ -56,9 +56,9 @@ public class UserTester {
         System.out.println("docker2025 follows:       " + followees.stream().map(User::getUsername).toList());
 
         // 8. Delete operations
-        System.out.println("\n=== Deleting Users ===");
-        uf.deleteUser("bianca_costa");            // by username
-        uf.deleteUser(docker.getUserID());        // by ID
+        //System.out.println("\n=== Deleting Users ===");
+        //uf.deleteUser("bianca_costa");            // by username
+        //uf.deleteUser(docker.getUserID());        // by ID
 
         System.out.println("\n=== All tests completed ===");
     }

@@ -14,6 +14,8 @@
     "startDate" : 1711929600000,
     "endDate" : null
   },
+  "library" : null,
+  "defaultPlaylist" : null,
   "followedUsersIDs" : [ ],
   "followersIDs" : [ ],
   "active" : true
@@ -33,6 +35,8 @@
     "startDate" : 1745948601898,
     "endDate" : null
   },
+  "library" : null,
+  "defaultPlaylist" : null,
   "followedUsersIDs" : [ ],
   "followersIDs" : [ ],
   "active" : true
@@ -52,6 +56,8 @@
     "startDate" : 1745439808915,
     "endDate" : 1748031808915
   },
+  "library" : null,
+  "defaultPlaylist" : null,
   "followedUsersIDs" : [ 4 ],
   "followersIDs" : [ ],
   "active" : true
@@ -71,6 +77,8 @@
     "startDate" : 1745439808916,
     "endDate" : null
   },
+  "library" : null,
+  "defaultPlaylist" : null,
   "followedUsersIDs" : [ ],
   "followersIDs" : [ 3 ],
   "active" : true
@@ -87,6 +95,8 @@
     "type" : "PremiumPlan"
   },
   "subscriptionInfo" : null,
+  "library" : null,
+  "defaultPlaylist" : null,
   "followedUsersIDs" : [ ],
   "followersIDs" : [ ],
   "active" : true
@@ -106,6 +116,8 @@
     "startDate" : 1745439236374,
     "endDate" : 1748031236374
   },
+  "library" : null,
+  "defaultPlaylist" : null,
   "followedUsersIDs" : [ ],
   "followersIDs" : [ ],
   "active" : true
@@ -125,6 +137,8 @@
     "startDate" : 1745948636866,
     "endDate" : null
   },
+  "library" : null,
+  "defaultPlaylist" : null,
   "followedUsersIDs" : [ ],
   "followersIDs" : [ ],
   "active" : true
@@ -144,6 +158,8 @@
     "startDate" : 1745948636729,
     "endDate" : null
   },
+  "library" : null,
+  "defaultPlaylist" : null,
   "followedUsersIDs" : [ ],
   "followersIDs" : [ ],
   "active" : true
@@ -163,6 +179,8 @@
     "startDate" : 1745948642141,
     "endDate" : null
   },
+  "library" : null,
+  "defaultPlaylist" : null,
   "followedUsersIDs" : [ ],
   "followersIDs" : [ ],
   "active" : true
@@ -182,6 +200,8 @@
     "startDate" : 1745951928865,
     "endDate" : null
   },
+  "library" : null,
+  "defaultPlaylist" : null,
   "followedUsersIDs" : [ ],
   "followersIDs" : [ ],
   "active" : true
@@ -201,7 +221,69 @@
     "startDate" : 1745951928903,
     "endDate" : null
   },
+  "library" : null,
+  "defaultPlaylist" : null,
   "followedUsersIDs" : [ ],
   "followersIDs" : [ ],
+  "active" : true
+}, {
+  "userID" : 11,
+  "username" : "docker2025",
+  "email" : "docker2025@example.com",
+  "password" : "newDockPass!",
+  "firstName" : "Docker",
+  "lastName" : "Costa",
+  "dateOfBirth" : null,
+  "accountCreationDate" : 1746090348382,
+  "subscriptionPlan" : {
+    "type" : "FreePlan"
+  },
+  "subscriptionInfo" : {
+    "startDate" : 1746090348648,
+    "endDate" : null
+  },
+  "library" : {
+    "userID" : 0,
+    "playlists" : [ ]
+  },
+  "defaultPlaylist" : {
+    "name" : null,
+    "songs" : [ ],
+    "ownerID" : 0,
+    "playlistID" : 0,
+    "sharedWith" : [ ]
+  },
+  "followedUsersIDs" : [ 12 ],
+  "followersIDs" : [ ],
+  "active" : true
+}, {
+  "userID" : 12,
+  "username" : "bianca_costa",
+  "email" : "bianca@example.com",
+  "password" : "biancaPass456",
+  "firstName" : "Bianca",
+  "lastName" : "Costa",
+  "dateOfBirth" : null,
+  "accountCreationDate" : 1746090348473,
+  "subscriptionPlan" : {
+    "type" : "FreePlan"
+  },
+  "subscriptionInfo" : {
+    "startDate" : 1746090348473,
+    "endDate" : null
+  },
+  "library" : {
+    "userID" : 0,
+    "playlists" : [ ]
+  },
+  "defaultPlaylist" : {
+    "name" : null,
+    "songs" : [ ],
+    "ownerID" : 0,
+    "playlistID" : 0,
+    "sharedWith" : [ ]
+  },
+  "followedUsersIDs" : [ ],
+  "followersIDs" : [ 11 ],
   "active" : true
 } ]

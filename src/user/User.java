@@ -5,6 +5,8 @@ import java.util.Date;
 import java.util.List;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import songsOrganisation.Library;
+import songsOrganisation.Playlist;
 
 
 /**
@@ -19,6 +21,11 @@ public class User {
      */
     public User() {
         // Initialize empty lists to avoid null pointer exceptions
+        List<Playlist> playlists = new ArrayList<>();
+
+        // Create the library using the list
+        this.library = new Library(userID, playlists);
+
         this.followedUsersIDs = new ArrayList<>();
         this.followersIDs = new ArrayList<>();
     }
@@ -30,7 +37,16 @@ public class User {
         this.password = password;
         this.accountCreationDate = accountCreationDate;
         this.isActive = true;
-        //to-do subscription
+
+        // Create default playlist and assign it
+        this.defaultPlaylist = new Playlist("Favorites", userID);
+
+        // Create a list with the default playlist
+        List<Playlist> playlists = new ArrayList<>();
+        playlists.add(defaultPlaylist);
+
+        // Create the library using the list
+        this.library = new Library(userID, playlists);
 
         //Initialize follows to empty
         this.followedUsersIDs = new ArrayList<>();
@@ -138,6 +154,22 @@ public class User {
 
     public void setSubscriptionInfo(SubscriptionInfo subscriptionInfo) {
         this.subscriptionInfo = subscriptionInfo;
+    }
+
+    // Library and playlist
+    private final Library library;
+    private Playlist defaultPlaylist;
+
+    public Library getLibrary() {
+        return library;
+    }
+
+    public Playlist getDefaultPlaylist() {
+        return defaultPlaylist;
+    }
+
+    public void setDefaultPlaylist(Playlist defaultPlaylist) {
+        this.defaultPlaylist = defaultPlaylist;
     }
 
     //Followed Users

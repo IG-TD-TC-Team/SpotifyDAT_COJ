@@ -4,6 +4,9 @@ import managers.SubscriptionManager;
 import persistence.UserRepository;
 import user.*;
 import managers.UserManager;
+import user.security.PasswordHasher;
+import user.security.SHA256Hasher;
+
 import java.util.*;
 
 /**
@@ -30,6 +33,8 @@ public class UserFactory {
      * Manager for subscription-related operations.
      */
     private final SubscriptionManager subscriptionManager;
+
+    private final PasswordHasher passwordHasher = new SHA256Hasher();
 
     /**
      * Private constructor initializing repositories and managers.
@@ -82,8 +87,11 @@ public class UserFactory {
                 .max()
                 .orElse(0) + 1;
 
+        // Hash password
+        String hashed = passwordHasher.hash(password);
+
         // Create user object
-        User user = new User(newId, username, email, password, new Date());
+        User user = new User(newId, username, email, hashed, new Date());
         user.setFirstName(firstName);
         user.setLastName(lastName);
 
@@ -278,7 +286,8 @@ public class UserFactory {
         }
 
         // Update
-        user.setPassword(newPassword);
+        String hashed = passwordHasher.hash(newPassword);
+        user.setPassword(hashed);
         userRepository.update(user);
         // Refresh the cache after updating a user
         userManager.refreshCache();

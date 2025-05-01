@@ -59,7 +59,7 @@ public class SongManager {
      * @return The song with the specified ID, or null if not found.
      */
     public Song getSongById(int songId) {
-
+        refreshCache();
         for (Song song : songs) {
             if (song.getSongId() == songId) {
                 return song;
@@ -74,6 +74,7 @@ public class SongManager {
      * @return A list of songs with the specified name.
      */
     public List<Song> getSongsByTitle(String songTitle) {
+        refreshCache();
         List<Song> result = new ArrayList<>();
         for (Song song : songs) {
             if (song.getTitle().equalsIgnoreCase(songTitle)) {
@@ -89,6 +90,7 @@ public class SongManager {
      * @return A list of songs by the specified artist.
      */
     public List<Song> getSongsByArtistId(int artistId) {
+        refreshCache();
         List<Song> result = new ArrayList<>();
         for (Song song : songs) {
             if (song.getArtistId() == artistId) {
@@ -105,6 +107,7 @@ public class SongManager {
      * @return A list of songs by the specified artist.
      */
     public List<Song> getSongByArtistName(String artistName) {
+        refreshCache();
         List<Song> result = new ArrayList<>();
         for (Song song : songs) {
             Artist artist = getArtistById(song.getArtistId());
@@ -121,6 +124,7 @@ public class SongManager {
      * @return A list of songs by the specified album.
      */
     public List<Song> getSongsByAlbumId(int albumId) {
+        refreshCache();
         List<Song> result = new ArrayList<>();
         for (Song song : songs) {
             if (song.getAlbumId() == albumId) {
@@ -136,6 +140,7 @@ public class SongManager {
      * @return A list of songs by the specified album.
      */
     public List<Song> getSongsByAlbumName(String albumName) {
+        refreshCache();
         List<Song> result = new ArrayList<>();
         for (Song song : songs) {
             Album album = getAlbumById(song.getAlbumId());
@@ -152,6 +157,7 @@ public class SongManager {
      * @return A list of songs with the specified genre.
      */
     public List<Song> getSongsByGenre(Genre genre) {
+        refreshCache();
         List<Song> result = new ArrayList<>();
         for (Song song : songs) {
             if (song.getGenre() == genre) {
@@ -165,6 +171,7 @@ public class SongManager {
      * @return A list of all songs.
      */
     public List<Song> getAllSongs() {
+        refreshCache();
         return songs;
     }
 
@@ -175,6 +182,7 @@ public class SongManager {
      * @return The artist with the specified ID, or null if not found.
      */
     public Artist getArtistById(int artistId) {
+        refreshCache();
         for (Artist artist : artists) {
             if (artist.getArtistID() == artistId) {
                 return artist;
@@ -190,6 +198,7 @@ public class SongManager {
      * @return The album with the specified ID, or null if not found.
      */
     public Album getAlbumById(int albumId) {
+        refreshCache();
         for (Album album : albums) {
             if (album.getId() == albumId) {
                 return album;

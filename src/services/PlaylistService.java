@@ -1,6 +1,7 @@
 package services;
 
 import persistence.PlaylistRepository;
+import services.userServices.UserService;
 import songsAndArtists.Genre;
 import songsOrganisation.Playlist;
 import user.User;

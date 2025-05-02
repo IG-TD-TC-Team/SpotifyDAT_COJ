@@ -1,4 +1,4 @@
-package services;
+package services.userServices;
 
 public class AuthenticationService {
     void login(){}

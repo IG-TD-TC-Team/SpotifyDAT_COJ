@@ -1,7 +1,7 @@
 package factory;
 
-import services.SubscriptionService;
-import services.UserService;
+import services.userServices.SubscriptionService;
+import services.userServices.UserService;
 import persistence.UserRepository;
 import user.*;
 import user.security.PasswordHasher;
@@ -87,7 +87,7 @@ public class UserFactory {
                 .orElse(0) + 1;
 
         // Hash password
-        String hashed = passwordHasher.hash(password);
+        String hashed = passwordHasher.hashWithSalt(password);
 
         // Create user object
         User user = new User(newId, username, email, hashed, new Date());
@@ -252,7 +252,7 @@ public class UserFactory {
         User user = userService.getUserByUsername(username);
 
         // Update
-        String hashed = passwordHasher.hash(newPassword);
+        String hashed = passwordHasher.hashWithSalt(newPassword);
         user.setPassword(hashed);
         userRepository.update(user);
 

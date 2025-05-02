@@ -1,6 +1,6 @@
 import factory.PlaylistFactory;
 import factory.RepositoryFactory;
-import managers.PlaylistService;
+import services.PlaylistService;
 import persistence.interfaces.PlaylistRepositoryInterface;
 import persistence.interfaces.SongRepositoryInterface;
 import songsAndArtists.Genre;

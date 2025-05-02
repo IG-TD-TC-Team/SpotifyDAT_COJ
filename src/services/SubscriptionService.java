@@ -1,7 +1,11 @@
-package managers;
+package services;
 
 import persistence.UserRepository;
 import user.*;
+import user.subscription.FreeSubscription;
+import user.subscription.PremiumSubscription;
+import user.subscription.SubscriptionInfo;
+import user.subscription.SubscriptionPlan;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -26,7 +30,7 @@ public class SubscriptionService {
     /**
      * Create or replace a subscription for the given user.
      * @param user the user to update
-     * @param plan subscription plan (FreePlan or PremiumPlan)
+     * @param plan subscription plan (FreeSubscription or PremiumSubscription)
      * @param days duration in days; zero or negative means no end date
      */
     public void createSubscription(User user, SubscriptionPlan plan, int days) {
@@ -42,14 +46,14 @@ public class SubscriptionService {
      * Upgrade the user to a 1-year premium subscription.
      */
     public void upgradeToPremium(User user) {
-        createSubscription(user, new PremiumPlan(), 365);
+        createSubscription(user, new PremiumSubscription(), 365);
     }
 
     /**
      * Downgrade the user to a free plan (no expiration).
      */
     public void downgradeToFree(User user) {
-        createSubscription(user, new FreePlan(), 0);
+        createSubscription(user, new FreeSubscription(), 0);
     }
 
     /**
@@ -117,7 +121,7 @@ public class SubscriptionService {
         }
 
         SubscriptionPlan plan = user.getSubscriptionPlan();
-        if (plan == null || !(plan instanceof PremiumPlan)) {
+        if (plan == null || !(plan instanceof PremiumSubscription)) {
             throw new IllegalStateException("Premium subscription required for this operation");
         }
 

@@ -1,4 +1,4 @@
-package user;
+package user.subscription;
 
 import com.fasterxml.jackson.annotation.JsonTypeName;
 
@@ -7,8 +7,13 @@ import com.fasterxml.jackson.annotation.JsonTypeName;
  * The JsonTypeName annotation works with the JsonTypeInfo in the interface
  * to enable proper polymorphic serialization/deserialization.
  */
-@JsonTypeName("FreePlan")
-public class FreePlan implements SubscriptionPlan {
+@JsonTypeName("FreeSubscription")
+public class FreeSubscription extends AbstractSubscriptionPlan {
+
+    public FreeSubscription() {
+        super(SubscriptionType.FREE);
+    }
+
     @Override
     public boolean hasAds() {
         return true;
@@ -32,5 +37,10 @@ public class FreePlan implements SubscriptionPlan {
     @Override
     public boolean shuffleOnly() {
         return true;
+    }
+
+    @Override
+    public int getMaxQuality() {
+        return 128;
     }
 }

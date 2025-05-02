@@ -1,11 +1,14 @@
 package factory;
 
-import managers.SubscriptionService;
-import managers.UserService;
+import services.SubscriptionService;
+import services.UserService;
 import persistence.UserRepository;
 import user.*;
 import user.security.PasswordHasher;
 import user.security.SHA256Hasher;
+import user.subscription.FreeSubscription;
+import user.subscription.PremiumSubscription;
+import user.subscription.SubscriptionInfo;
 
 import java.util.*;
 
@@ -92,7 +95,7 @@ public class UserFactory {
         user.setLastName(lastName);
 
         // Assign a free subscription by default
-        FreePlan freeplan = new FreePlan();
+        FreeSubscription freeplan = new FreeSubscription();
         user.setSubscriptionPlan(freeplan);
         user.setSubscriptionInfo(new SubscriptionInfo(new Date(), null));
 
@@ -292,7 +295,7 @@ public class UserFactory {
         User user = userService.getUserByUsername(username);
 
         // Check if it's already Premium
-        if (subscriptionService.hasActiveSubscription(user, PremiumPlan.class)) {
+        if (subscriptionService.hasActiveSubscription(user, PremiumSubscription.class)) {
             throw new IllegalStateException("User " + username + " already has Premium plan");
         }
 
@@ -314,7 +317,7 @@ public class UserFactory {
         User user = userService.getUserByUsername(username);
 
         // Check if it's already free
-        if (subscriptionService.hasActiveSubscription(user, FreePlan.class)) {
+        if (subscriptionService.hasActiveSubscription(user, FreeSubscription.class)) {
             throw new IllegalStateException("User " + username + " already has Free plan");
         }
 

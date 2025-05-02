@@ -305,7 +305,7 @@ public class RepositoryTester {
         user.setFirstName("Test");
         user.setLastName("User");
 
-        // Skip setting the subscription plan for now to avoid FreePlan instantiation issue
+        // Skip setting the subscription plan for now to avoid FreeSubscription instantiation issue
         // The User object should still be valid for the repository tests
 
         return user;

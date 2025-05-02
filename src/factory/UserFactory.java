@@ -1,9 +1,9 @@
 package factory;
 
-import managers.SubscriptionManager;
+import managers.SubscriptionService;
+import managers.UserService;
 import persistence.UserRepository;
 import user.*;
-import managers.UserManager;
 import user.security.PasswordHasher;
 import user.security.SHA256Hasher;
 
@@ -27,12 +27,12 @@ public class UserFactory {
     /**
      * Manager for user read operations.
      */
-    private final UserManager userManager;
+    private final UserService userService;
 
     /**
      * Manager for subscription-related operations.
      */
-    private final SubscriptionManager subscriptionManager;
+    private final SubscriptionService subscriptionService;
 
     private final PasswordHasher passwordHasher = new SHA256Hasher();
 
@@ -41,8 +41,8 @@ public class UserFactory {
      */
     private UserFactory() {
         this.userRepository = UserRepository.getInstance();
-        this.userManager = UserManager.getInstance();
-        this.subscriptionManager = SubscriptionManager.getInstance();
+        this.userService = UserService.getInstance();
+        this.subscriptionService = SubscriptionService.getInstance();
     }
 
     /**
@@ -72,13 +72,13 @@ public class UserFactory {
      */
     public User createUser(String firstName, String lastName, String username, String email, String password) {
         //Check email is unique
-        userManager.validateEmailAvailable(email);
+        userService.validateEmailAvailable(email);
 
         //Check username is unique
-        userManager.validateUsernameAvailable(username);
+        userService.validateUsernameAvailable(username);
 
         // Create userID
-        int newId = userManager.getAllUsers().stream()
+        int newId = userService.getAllUsers().stream()
                 .mapToInt(User::getUserID)
                 .max()
                 .orElse(0) + 1;
@@ -107,7 +107,7 @@ public class UserFactory {
         User savedUser = userRepository.save(user);
 
         // Refresh the user cache after creating a new user
-        userManager.refreshCache();
+        userService.refreshCache();
         return savedUser;
     }
 
@@ -119,13 +119,13 @@ public class UserFactory {
      */
     public void deleteUser(int userID) {
         // Verify userID exists
-        userManager.getUserById(userID);
+        userService.getUserById(userID);
 
         // Delete
         userRepository.deleteById(userID);
 
         // Refresh the user cache after deleting a user
-        userManager.refreshCache();
+        userService.refreshCache();
         System.out.println("Deleted user → ID=" + userID);
     }
 
@@ -137,13 +137,13 @@ public class UserFactory {
      */
     public void deleteUser(String username) {
         // Find user by username
-        User user = userManager.getUserByUsername(username);
+        User user = userService.getUserByUsername(username);
 
         // Delete user
         userRepository.delete(user);
 
         // Refresh the user cache after deleting a user
-        userManager.refreshCache();
+        userService.refreshCache();
         System.out.println("Deleted user → Username=" + user.getUsername());
     }
 
@@ -154,13 +154,13 @@ public class UserFactory {
      */
     public void disableAccount(int userID){
         // Verify userID exists
-        User user = userManager.getUserById(userID);
+        User user = userService.getUserById(userID);
 
         user.setActive(false);
         userRepository.update(user);
 
         // Refresh the cache after updating a user
-        userManager.refreshCache();
+        userService.refreshCache();
         System.out.println("Account disabled");
     }
 
@@ -171,13 +171,13 @@ public class UserFactory {
      */
     public void disableAccount(String username){
         // Verify username exists
-        User user = userManager.getUserByUsername(username);
+        User user = userService.getUserByUsername(username);
 
         user.setActive(false);
         userRepository.update(user);
 
         // Refresh the cache after updating a user
-        userManager.refreshCache();
+        userService.refreshCache();
         System.out.println("Account disabled");
     }
 
@@ -188,13 +188,13 @@ public class UserFactory {
      */
     public void enableAccount(int userID){
         // Verify userID exists
-        User user = userManager.getUserById(userID);
+        User user = userService.getUserById(userID);
 
         user.setActive(true);
         userRepository.update(user);
 
         // Refresh the cache after updating a user
-        userManager.refreshCache();
+        userService.refreshCache();
         System.out.println("Account enabled");
     }
 
@@ -205,13 +205,13 @@ public class UserFactory {
      */
     public void enableAccount(String username){
         // Find user by username
-        User user = userManager.getUserByUsername(username);
+        User user = userService.getUserByUsername(username);
 
         user.setActive(true);
         userRepository.update(user);
 
         // Refresh the cache after updating a user
-        userManager.refreshCache();
+        userService.refreshCache();
         System.out.println("Account enabled");
     }
 
@@ -224,17 +224,17 @@ public class UserFactory {
      */
     public void updateUsername(String username, String newUsername) {
         // Find existing username
-        User user = userManager.getUserByUsername(username);
+        User user = userService.getUserByUsername(username);
 
         // Check new username isn't taken
-        userManager.validateUsernameAvailable(newUsername);
+        userService.validateUsernameAvailable(newUsername);
 
         // Update
         user.setUsername(newUsername);
         userRepository.update(user);
 
         // Refresh the cache after updating a user
-        userManager.refreshCache();
+        userService.refreshCache();
         System.out.println("Username updated");
     }
 
@@ -246,7 +246,7 @@ public class UserFactory {
      */
     public void updatePassword(String username, String newPassword) {
         // Find existing username
-        User user = userManager.getUserByUsername(username);
+        User user = userService.getUserByUsername(username);
 
         // Update
         String hashed = passwordHasher.hash(newPassword);
@@ -254,7 +254,7 @@ public class UserFactory {
         userRepository.update(user);
 
         // Refresh the cache after updating a user
-        userManager.refreshCache();
+        userService.refreshCache();
         System.out.println("Password updated");
     }
 
@@ -267,17 +267,17 @@ public class UserFactory {
      */
     public void updateEmail(String username, String newEmail) {
         // Find existing username
-        User user = userManager.getUserByUsername(username);
+        User user = userService.getUserByUsername(username);
 
         // Check new email isn't used
-        userManager.validateEmailAvailable(newEmail);
+        userService.validateEmailAvailable(newEmail);
 
         // Update
         user.setEmail(newEmail);
         userRepository.update(user);
 
         // Refresh the cache after updating a user
-        userManager.refreshCache();
+        userService.refreshCache();
         System.out.println("Email updated");
     }
 
@@ -289,15 +289,15 @@ public class UserFactory {
      */
     public void subscribeToPremium(String username){
         // Verify username exists
-        User user = userManager.getUserByUsername(username);
+        User user = userService.getUserByUsername(username);
 
         // Check if it's already Premium
-        if (subscriptionManager.hasActiveSubscription(user, PremiumPlan.class)) {
+        if (subscriptionService.hasActiveSubscription(user, PremiumPlan.class)) {
             throw new IllegalStateException("User " + username + " already has Premium plan");
         }
 
         // Update to premium for 1 year + refresh + update
-        subscriptionManager.upgradeToPremium(user);
+        subscriptionService.upgradeToPremium(user);
 
         System.out.println("Upgraded to Premium → username=" + username );
     }
@@ -311,15 +311,15 @@ public class UserFactory {
      */
     public void downgradeToFree(String username) {
         // Verify username exists
-        User user = userManager.getUserByUsername(username);
+        User user = userService.getUserByUsername(username);
 
         // Check if it's already free
-        if (subscriptionManager.hasActiveSubscription(user, FreePlan.class)) {
+        if (subscriptionService.hasActiveSubscription(user, FreePlan.class)) {
             throw new IllegalStateException("User " + username + " already has Free plan");
         }
 
         // Downgrade + refresh + update
-        subscriptionManager.downgradeToFree(user);
+        subscriptionService.downgradeToFree(user);
 
         System.out.println("Downgraded to Free → username=" + username);
     }
@@ -330,12 +330,12 @@ public class UserFactory {
      * Runs when UserFactory is initialized.
      */
     public void downgradeToFreeIfExpired() {
-        List<User> allUsers = userManager.getAllUsers();
+        List<User> allUsers = userService.getAllUsers();
         boolean anyExpired = false;
 
         for (User user : allUsers) {
-            if (subscriptionManager.isExpired(user)) {
-                subscriptionManager.downgradeToFree(user);
+            if (subscriptionService.isExpired(user)) {
+                subscriptionService.downgradeToFree(user);
                 anyExpired = true;
                 System.out.println("Downgraded expired subscription → username=" + user.getUsername());
             }
@@ -343,7 +343,7 @@ public class UserFactory {
 
         // Refresh if any changes were made
         if (anyExpired) {
-            userManager.refreshCache();
+            userService.refreshCache();
         }
     }
 
@@ -356,19 +356,19 @@ public class UserFactory {
      */
     public void renewPremium(String username) {
         // Verify user exists
-        User user = userManager.getUserByUsername(username);
+        User user = userService.getUserByUsername(username);
 
         // Ensure user currently on Premium
         try {
-            subscriptionManager.validatePremiumSubscription(user);
+            subscriptionService.validatePremiumSubscription(user);
         } catch (IllegalStateException e) {
-            if (!subscriptionManager.isExpired(user)) {
+            if (!subscriptionService.isExpired(user)) {
                 throw new IllegalStateException("User " + username + " does not have a Premium plan, renewing it.");
             }
         }
 
-        // Delegate to SubscriptionManager
-        subscriptionManager.renew(user, 365);
+        // Delegate to SubscriptionService
+        subscriptionService.renew(user, 365);
 
         // Debug
         Date newExpiry = user.getSubscriptionInfo().getEndDate();
@@ -387,7 +387,7 @@ public class UserFactory {
      */
     public void followUser(String followerUsername, String followeeUsername){
         // Check relations
-        User[] users = userManager.validateFollowRelationship(followerUsername, followeeUsername);
+        User[] users = userService.validateFollowRelationship(followerUsername, followeeUsername);
         User follower = users[0];
         User followee = users[1];
 
@@ -406,7 +406,7 @@ public class UserFactory {
         userRepository.update(followee);
 
         // Refresh the cache after updating users
-        userManager.refreshCache();
+        userService.refreshCache();
 
         System.out.println(followerUsername + " now follows " + followeeUsername);
     }
@@ -420,7 +420,7 @@ public class UserFactory {
      */
     public void unfollowUser(String followerUsername, String followeeUsername){
         // Check relations
-        User[] users = userManager.validateUnfollowRelationship(followerUsername, followeeUsername);
+        User[] users = userService.validateUnfollowRelationship(followerUsername, followeeUsername);
         User follower = users[0];
         User followee = users[1];
 
@@ -439,7 +439,7 @@ public class UserFactory {
         userRepository.update(followee);
 
         // Refresh the cache after updating users
-        userManager.refreshCache();
+        userService.refreshCache();
 
         System.out.println(followerUsername + " unfollowed " + followeeUsername);
     }

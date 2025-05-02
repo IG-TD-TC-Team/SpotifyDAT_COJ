@@ -14,10 +14,10 @@
     "startDate" : 1711929600000,
     "endDate" : null
   },
-  "library" : null,
-  "defaultPlaylist" : null,
   "followedUsersIDs" : [ ],
   "followersIDs" : [ ],
+  "library" : null,
+  "defaultPlaylist" : null,
   "active" : true
 }, {
   "userID" : 2,
@@ -35,10 +35,10 @@
     "startDate" : 1745948601898,
     "endDate" : null
   },
-  "library" : null,
-  "defaultPlaylist" : null,
   "followedUsersIDs" : [ ],
   "followersIDs" : [ ],
+  "library" : null,
+  "defaultPlaylist" : null,
   "active" : true
 }, {
   "userID" : 3,
@@ -56,10 +56,10 @@
     "startDate" : 1745439808915,
     "endDate" : 1748031808915
   },
-  "library" : null,
-  "defaultPlaylist" : null,
   "followedUsersIDs" : [ 4 ],
   "followersIDs" : [ ],
+  "library" : null,
+  "defaultPlaylist" : null,
   "active" : true
 }, {
   "userID" : 4,
@@ -77,10 +77,10 @@
     "startDate" : 1745439808916,
     "endDate" : null
   },
-  "library" : null,
-  "defaultPlaylist" : null,
   "followedUsersIDs" : [ ],
   "followersIDs" : [ 3 ],
+  "library" : null,
+  "defaultPlaylist" : null,
   "active" : true
 }, {
   "userID" : 5,
@@ -95,10 +95,10 @@
     "type" : "PremiumPlan"
   },
   "subscriptionInfo" : null,
-  "library" : null,
-  "defaultPlaylist" : null,
   "followedUsersIDs" : [ ],
   "followersIDs" : [ ],
+  "library" : null,
+  "defaultPlaylist" : null,
   "active" : true
 }, {
   "userID" : 3,
@@ -116,10 +116,10 @@
     "startDate" : 1745439236374,
     "endDate" : 1748031236374
   },
-  "library" : null,
-  "defaultPlaylist" : null,
   "followedUsersIDs" : [ ],
   "followersIDs" : [ ],
+  "library" : null,
+  "defaultPlaylist" : null,
   "active" : true
 }, {
   "userID" : 6,
@@ -137,10 +137,10 @@
     "startDate" : 1745948636866,
     "endDate" : null
   },
-  "library" : null,
-  "defaultPlaylist" : null,
   "followedUsersIDs" : [ ],
   "followersIDs" : [ ],
+  "library" : null,
+  "defaultPlaylist" : null,
   "active" : true
 }, {
   "userID" : 7,
@@ -158,10 +158,10 @@
     "startDate" : 1745948636729,
     "endDate" : null
   },
-  "library" : null,
-  "defaultPlaylist" : null,
   "followedUsersIDs" : [ ],
   "followersIDs" : [ ],
+  "library" : null,
+  "defaultPlaylist" : null,
   "active" : true
 }, {
   "userID" : 8,
@@ -179,10 +179,10 @@
     "startDate" : 1745948642141,
     "endDate" : null
   },
-  "library" : null,
-  "defaultPlaylist" : null,
   "followedUsersIDs" : [ ],
   "followersIDs" : [ ],
+  "library" : null,
+  "defaultPlaylist" : null,
   "active" : true
 }, {
   "userID" : 9,
@@ -200,10 +200,10 @@
     "startDate" : 1745951928865,
     "endDate" : null
   },
-  "library" : null,
-  "defaultPlaylist" : null,
   "followedUsersIDs" : [ ],
   "followersIDs" : [ ],
+  "library" : null,
+  "defaultPlaylist" : null,
   "active" : true
 }, {
   "userID" : 10,
@@ -221,10 +221,10 @@
     "startDate" : 1745951928903,
     "endDate" : null
   },
-  "library" : null,
-  "defaultPlaylist" : null,
   "followedUsersIDs" : [ ],
   "followersIDs" : [ ],
+  "library" : null,
+  "defaultPlaylist" : null,
   "active" : true
 }, {
   "userID" : 11,
@@ -242,6 +242,8 @@
     "startDate" : 1746090348648,
     "endDate" : null
   },
+  "followedUsersIDs" : [ 12 ],
+  "followersIDs" : [ ],
   "library" : {
     "userID" : 0,
     "playlists" : [ ]
@@ -253,8 +255,6 @@
     "playlistID" : 0,
     "sharedWith" : [ ]
   },
-  "followedUsersIDs" : [ 12 ],
-  "followersIDs" : [ ],
   "active" : true
 }, {
   "userID" : 12,
@@ -272,6 +272,8 @@
     "startDate" : 1746090348473,
     "endDate" : null
   },
+  "followedUsersIDs" : [ ],
+  "followersIDs" : [ 11 ],
   "library" : {
     "userID" : 0,
     "playlists" : [ ]
@@ -283,8 +285,6 @@
     "playlistID" : 0,
     "sharedWith" : [ ]
   },
-  "followedUsersIDs" : [ ],
-  "followersIDs" : [ 11 ],
   "active" : true
 }, {
   "userID" : 13,
@@ -302,6 +302,8 @@
     "startDate" : 1746126872320,
     "endDate" : null
   },
+  "followedUsersIDs" : [ ],
+  "followersIDs" : [ ],
   "library" : {
     "userID" : 13,
     "playlists" : [ {
@@ -319,8 +321,6 @@
     "playlistID" : 0,
     "sharedWith" : [ ]
   },
-  "followedUsersIDs" : [ ],
-  "followersIDs" : [ ],
   "active" : true
 }, {
   "userID" : 14,
@@ -338,6 +338,8 @@
     "startDate" : 1746126872379,
     "endDate" : null
   },
+  "followedUsersIDs" : [ ],
+  "followersIDs" : [ ],
   "library" : {
     "userID" : 14,
     "playlists" : [ {
@@ -355,7 +357,5 @@
     "playlistID" : 0,
     "sharedWith" : [ ]
   },
-  "followedUsersIDs" : [ ],
-  "followersIDs" : [ ],
   "active" : true
 } ]

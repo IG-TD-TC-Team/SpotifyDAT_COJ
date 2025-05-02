@@ -1,6 +1,6 @@
 package spotifyServer;
 
-import managers.SongManager;
+import managers.SongService;
 import songsAndArtists.Song;
 
 import java.io.*;
@@ -87,7 +87,7 @@ public class SpotifySocketServer {
 
         /// --------- BUSINESS LOGIC --------- ///
 
-        SongManager songManager = SongManager.getInstance();
+        SongService songService = SongService.getInstance();
 
         private String processCommand(String command) {
             // For now, simple command processing
@@ -100,7 +100,7 @@ public class SpotifySocketServer {
             } else if ("exit".equalsIgnoreCase(command)) {
                 return "Goodbye! Closing connection.";
             } else if (command.startsWith("GetSongs")) {
-                return formatSongList(songManager.getAllSongs());
+                return formatSongList(songService.getAllSongs());
 
             } else {
                 // This is where you'll route commands to your business layer

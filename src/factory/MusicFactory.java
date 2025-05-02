@@ -2,12 +2,12 @@ package factory;
 
 import songsAndArtists.*;
 import persistence.interfaces.*;
-import managers.SongManager;
+
 import java.util.*;
 
 /**
  * Factory specifically for creating music-related entities (songs, artists, albums).
- * This factory delegates all data retrieval to the SongManager and focuses solely
+ * This factory delegates all data retrieval to the SongService and focuses solely
  * on entity creation and persistence.
  */
 public class MusicFactory {
@@ -54,7 +54,7 @@ public class MusicFactory {
      * Initializes the next ID values based on existing data.
      */
     private void initializeNextIds() {
-        // Get all songs from SongManager
+        // Get all songs from SongService
         List<Song> songs = songRepository.findAll();
         for (Song song : songs) {
             if (song.getSongId() >= nextSongId) {
@@ -159,7 +159,7 @@ public class MusicFactory {
 
     /**
      * Finds an artist by name or creates a new one if not found.
-     * Uses SongManager for lookup.
+     * Uses SongService for lookup.
      *
      * @param firstName The first name of the artist
      * @param lastName The last name of the artist
@@ -182,7 +182,7 @@ public class MusicFactory {
 
     /**
      * Finds an album by title and artist ID or creates a new one if not found.
-     * Uses SongManager for lookup.
+     * Uses SongService for lookup.
      *
      * @param title The title of the album
      * @param artistId The ID of the artist

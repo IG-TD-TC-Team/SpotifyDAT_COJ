@@ -1,9 +1,7 @@
 
 import songsAndArtists.*;
-import songsOrganisation.*;
 import factory.*;
 import managers.*;
-import user.*;
 
 import java.util.*;
 
@@ -19,30 +17,30 @@ public class FactoryManagerTest {
 
         // Get factory and manager instances
         MusicFactory musicFactory = MusicFactory.getInstance();
-        SongManager songManager = SongManager.getInstance();
+        SongService songService = SongService.getInstance();
         //UserFactory userFactory = UserFactory.getInstance();
-        UserManager userManager = UserManager.getInstance();
+        UserService userService = UserService.getInstance();
 
         // Test case 1: Create and retrieve an artist
-        testCreateAndRetrieveArtist(musicFactory, songManager);
+        testCreateAndRetrieveArtist(musicFactory, songService);
 
         // Test case 2: Create and retrieve an album
-        testCreateAndRetrieveAlbum(musicFactory, songManager);
+        testCreateAndRetrieveAlbum(musicFactory, songService);
 
         // Test case 3: Create and retrieve a song
-        testCreateAndRetrieveSong(musicFactory, songManager);
+        testCreateAndRetrieveSong(musicFactory, songService);
 
         // Test case 4: Create a complete song (with auto-created artist and album)
-        testCreateCompleteSong(musicFactory, songManager);
+        testCreateCompleteSong(musicFactory, songService);
 
         // Test case 5: Create and retrieve a user
-        //testCreateAndRetrieveUser(userFactory, userManager);
+        //testCreateAndRetrieveUser(userFactory, userService);
 
         // Test case 6: Test user following relationship
-        //testUserFollowing(userFactory, userManager);
+        //testUserFollowing(userFactory, userService);
 
         // Test case 7: Test song search by various criteria
-        testSongSearchCriteria(musicFactory, songManager);
+        testSongSearchCriteria(musicFactory, songService);
 
         System.out.println("All tests completed.");
     }
@@ -50,7 +48,7 @@ public class FactoryManagerTest {
     /**
      * Tests creating an artist with the factory and retrieving it with the manager.
      */
-    private static void testCreateAndRetrieveArtist(MusicFactory musicFactory, SongManager songManager) {
+    private static void testCreateAndRetrieveArtist(MusicFactory musicFactory, SongService songService) {
         System.out.println("\n=== Testing Artist Creation and Retrieval ===");
 
         // Create a new artist using the factory
@@ -64,10 +62,10 @@ public class FactoryManagerTest {
                 " (ID: " + artist.getArtistID() + ")");
 
         //Refresh manager to ensure we have the latest data
-        songManager.refreshCache();
+        songService.refreshCache();
 
         // Retrieve the artist using the manager
-        Artist retrievedArtist = songManager.getArtistById(artist.getArtistID());
+        Artist retrievedArtist = songService.getArtistById(artist.getArtistID());
 
         // Validate that we got the same artist
         if (retrievedArtist != null) {
@@ -84,7 +82,7 @@ public class FactoryManagerTest {
     /**
      * Tests creating an album with the factory and retrieving it with the manager.
      */
-    private static void testCreateAndRetrieveAlbum(MusicFactory musicFactory, SongManager songManager) {
+    private static void testCreateAndRetrieveAlbum(MusicFactory musicFactory, SongService songService) {
         System.out.println("\n=== Testing Album Creation and Retrieval ===");
 
         // First create an artist for the album
@@ -99,7 +97,7 @@ public class FactoryManagerTest {
 
 
         // Retrieve the album using the manager
-        Album retrievedAlbum = songManager.getAlbumById(album.getId());
+        Album retrievedAlbum = songService.getAlbumById(album.getId());
 
         // Validate that we got the same album
         if (retrievedAlbum != null) {
@@ -114,7 +112,7 @@ public class FactoryManagerTest {
     /**
      * Tests creating a song with the factory and retrieving it with the manager.
      */
-    private static void testCreateAndRetrieveSong(MusicFactory musicFactory, SongManager songManager) {
+    private static void testCreateAndRetrieveSong(MusicFactory musicFactory, SongService songService) {
         System.out.println("\n=== Testing Song Creation and Retrieval ===");
 
         // First create an artist and album for the song
@@ -139,7 +137,7 @@ public class FactoryManagerTest {
 
 
         // Retrieve the song using the manager
-        Song retrievedSong = songManager.getSongById(song.getSongId());
+        Song retrievedSong = songService.getSongById(song.getSongId());
 
         // Validate that we got the same song
         if (retrievedSong != null) {
@@ -154,7 +152,7 @@ public class FactoryManagerTest {
     /**
      * Tests creating a complete song (with automatic artist and album creation).
      */
-    private static void testCreateCompleteSong(MusicFactory musicFactory, SongManager songManager) {
+    private static void testCreateCompleteSong(MusicFactory musicFactory, SongService songService) {
         System.out.println("\n=== Testing Complete Song Creation ===");
 
         // Create a complete song (artist and album will be created automatically)
@@ -182,12 +180,12 @@ public class FactoryManagerTest {
 
 
         // Test retrieving by ID
-        Song retrievedSong = songManager.getSongById(song.getSongId());
+        Song retrievedSong = songService.getSongById(song.getSongId());
 
         // Verify song was created correctly
         if (retrievedSong != null) {
-            Artist artist = songManager.getArtistById(retrievedSong.getArtistId());
-            Album album = songManager.getAlbumById(retrievedSong.getAlbumId());
+            Artist artist = songService.getArtistById(retrievedSong.getArtistId());
+            Album album = songService.getAlbumById(retrievedSong.getAlbumId());
 
             boolean artistCorrect = artist != null &&
                     artist.getFirstName().equals(artistFirstName) &&
@@ -206,7 +204,7 @@ public class FactoryManagerTest {
     /**
      * Tests searching for songs using various criteria.
      */
-    private static void testSongSearchCriteria(MusicFactory musicFactory, SongManager songManager) {
+    private static void testSongSearchCriteria(MusicFactory musicFactory, SongService songService) {
         System.out.println("\n=== Testing Song Search Criteria ===");
 
         // Create test data
@@ -221,22 +219,22 @@ public class FactoryManagerTest {
         System.out.println("Created test songs for The Beatles");
 
         // Test search by artist
-        List<Song> songsByArtist = songManager.getSongsByArtistId(artist.getArtistID());
+        List<Song> songsByArtist = songService.getSongsByArtistId(artist.getArtistID());
         System.out.println("Found " + songsByArtist.size() + " songs by artist ID " + artist.getArtistID());
         System.out.println("Search by artist ID: " + (songsByArtist.size() >= 3 ? "PASSED" : "FAILED"));
 
         // Test search by album
-        List<Song> songsByAlbum = songManager.getSongsByAlbumId(album.getId());
+        List<Song> songsByAlbum = songService.getSongsByAlbumId(album.getId());
         System.out.println("Found " + songsByAlbum.size() + " songs in album ID " + album.getId());
         System.out.println("Search by album ID: " + (songsByAlbum.size() >= 3 ? "PASSED" : "FAILED"));
 
         // Test search by title
-        List<Song> songsByTitle = songManager.getSongsByTitle("Something");
+        List<Song> songsByTitle = songService.getSongsByTitle("Something");
         System.out.println("Found " + songsByTitle.size() + " songs with title 'Something'");
         System.out.println("Search by title: " + (songsByTitle.size() >= 1 ? "PASSED" : "FAILED"));
 
         // Test search by genre
-        List<Song> songsByGenre = songManager.getSongsByGenre(Genre.ROCK);
+        List<Song> songsByGenre = songService.getSongsByGenre(Genre.ROCK);
         System.out.println("Found " + songsByGenre.size() + " rock songs");
         System.out.println("Search by genre: " + (songsByGenre.size() >= 3 ? "PASSED" : "FAILED"));
     }

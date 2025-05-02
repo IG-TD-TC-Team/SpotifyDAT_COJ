@@ -13,12 +13,12 @@ import java.util.stream.Collectors;
  * and providing filtering functionality.
  * Implements the Singleton pattern to ensure only one instance exists.
  */
-public class PlaylistManager {
+public class PlaylistService {
 
     /**
-     * Singleton instance of PlaylistManager.
+     * Singleton instance of PlaylistService.
      */
-    private static PlaylistManager instance;
+    private static PlaylistService instance;
 
     /**
      * Repository for accessing playlist data.
@@ -34,19 +34,19 @@ public class PlaylistManager {
      * Private constructor to prevent external instantiation.
      * Initializes the PlaylistRepository instance and loads all playlists.
      */
-    private PlaylistManager() {
+    private PlaylistService() {
         this.playlistRepository = PlaylistRepository.getInstance();
         refreshCache();
     }
 
     /**
-     * Returns the single instance of PlaylistManager, creating it if it doesn't exist.
+     * Returns the single instance of PlaylistService, creating it if it doesn't exist.
      *
-     * @return the singleton instance of PlaylistManager
+     * @return the singleton instance of PlaylistService
      */
-    public static synchronized PlaylistManager getInstance() {
+    public static synchronized PlaylistService getInstance() {
         if (instance == null) {
-            instance = new PlaylistManager();
+            instance = new PlaylistService();
         }
         return instance;
     }
@@ -115,12 +115,12 @@ public class PlaylistManager {
      * Retrieves all playlists owned by a specific user by username.
      *
      * @param username the username of the owner
-     * @param userManager the UserManager instance to resolve username to ID
+     * @param userService the UserService instance to resolve username to ID
      * @return a list of playlists owned by the specified user
      */
-    public List<Playlist> getPlaylistsByOwnerUsername(String username, UserManager userManager) {
+    public List<Playlist> getPlaylistsByOwnerUsername(String username, UserService userService) {
 
-        User user = userManager.getUserByUsername(username);
+        User user = userService.getUserByUsername(username);
         return getPlaylistsByOwner(user.getUserID());
     }
 

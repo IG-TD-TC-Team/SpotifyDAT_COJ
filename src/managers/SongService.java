@@ -1,17 +1,14 @@
 package managers;
-import songsOrganisation.*;
 import songsAndArtists.*;
 import persistence.*;
-import persistence.interfaces.*;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 
-public class SongManager {
+public class SongService {
     // Singleton instance
-    private static SongManager instance;
+    private static SongService instance;
 
     // Repositories
     private final JsonRepository<Artist> artistRepo;
@@ -25,7 +22,7 @@ public class SongManager {
 
 
 
-    private SongManager() {
+    private SongService() {
 
 
         // Initialize repositories
@@ -45,9 +42,9 @@ public class SongManager {
 
     }
     /// Public method to get the singleton instance
-    public static synchronized SongManager getInstance() {
+    public static synchronized SongService getInstance() {
         if (instance == null) {
-            instance = new SongManager();
+            instance = new SongService();
         }
         return instance;
     }

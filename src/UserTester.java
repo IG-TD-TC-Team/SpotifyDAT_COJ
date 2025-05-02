@@ -1,5 +1,5 @@
 import factory.UserFactory;
-import managers.UserManager;
+import managers.UserService;
 import user.User;
 import user.security.PasswordHasher;
 import user.security.SHA256Hasher;
@@ -9,7 +9,7 @@ import java.util.List;
 public class UserTester {
     public static void main(String[] args) {
         UserFactory uf = UserFactory.getInstance();
-        UserManager um = UserManager.getInstance();
+        UserService um = UserService.getInstance();
         PasswordHasher hasher = new SHA256Hasher();
 
         // 1. Create users
@@ -48,8 +48,8 @@ public class UserTester {
         uf.followUser("liam2025", "emma_smith");
         uf.unfollowUser("liam2025", "emma_smith");
 
-        // 7. Lookup via UserManager
-        System.out.println("\n=== Lookup via UserManager ===");
+        // 7. Lookup via UserService
+        System.out.println("\n=== Lookup via UserService ===");
         User byId       = um.getUserById(liam.getUserID());
         User byUsername = um.getUserByUsername("emma_smith");
         User byEmail    = um.getUserByEmail("liam2025@mail.com");
@@ -57,8 +57,8 @@ public class UserTester {
         System.out.println("Found by username: " + byUsername.getUsername());
         System.out.println("Found by email:    " + byEmail.getUsername());
 
-        // 8. Followers lookup via UserManager
-        System.out.println("\n=== Followers via UserManager ===");
+        // 8. Followers lookup via UserService
+        System.out.println("\n=== Followers via UserService ===");
         uf.followUser("liam2025", "emma_smith");
         List<User> followers = um.getFollowers("emma_smith");
         List<User> followees = um.getFollowedUsers("liam2025");

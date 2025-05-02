@@ -6,18 +6,18 @@ import user.*;
 import java.util.Calendar;
 import java.util.Date;
 
-public class SubscriptionManager {
+public class SubscriptionService {
 
     //Singleton instance
-    private static SubscriptionManager instance;
+    private static SubscriptionService instance;
 
     //Private constructor
-    private SubscriptionManager() {}
+    private SubscriptionService() {}
 
     //Return single instance
-    public static synchronized SubscriptionManager getInstance() {
+    public static synchronized SubscriptionService getInstance() {
         if (instance == null) {
-            instance = new SubscriptionManager();
+            instance = new SubscriptionService();
         }
         return instance;
     }
@@ -97,7 +97,7 @@ public class SubscriptionManager {
     // Persist user changes and refresh cache
     private void persistAndRefresh(User user) {
         UserRepository.getInstance().update(user);
-        UserManager.getInstance().refreshCache();
+        UserService.getInstance().refreshCache();
     }
 
     public boolean hasActiveSubscription(User user, Class<? extends SubscriptionPlan> planClass) {

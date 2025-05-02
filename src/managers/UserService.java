@@ -12,12 +12,12 @@ import java.util.List;
  * Implements the Singleton pattern to ensure only one instance exists.
  * Uses an in-memory cache to improve performance.
  */
-public class UserManager {
+public class UserService {
 
     /**
-     * Singleton instance of UserManager.
+     * Singleton instance of UserService.
      */
-    private static UserManager instance;
+    private static UserService instance;
 
     /**
      * Repository for accessing user data.
@@ -33,20 +33,20 @@ public class UserManager {
      * Private constructor to prevent external instantiation.
      * Initializes the UserRepository instance and loads the user cache.
      */
-    private UserManager() {
+    private UserService() {
         this.userRepository = UserRepository.getInstance();
         this.users = new ArrayList<>();
         refreshCache();
     }
 
     /**
-     * Returns the single instance of UserManager, creating it if it doesn't exist.
+     * Returns the single instance of UserService, creating it if it doesn't exist.
      *
-     * @return the singleton instance of UserManager
+     * @return the singleton instance of UserService
      */
-    public static synchronized UserManager getInstance() {
+    public static synchronized UserService getInstance() {
         if (instance == null) {
-            instance = new UserManager();
+            instance = new UserService();
         }
         return instance;
     }

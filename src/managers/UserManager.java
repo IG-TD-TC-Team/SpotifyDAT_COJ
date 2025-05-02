@@ -173,6 +173,36 @@ public class UserManager {
     }
 
     /**
+     * Checks if a username is available (not already in use).
+     *
+     * @param username the username to check
+     * @throws IllegalArgumentException if the username is already in use
+     */
+    public void validateUsernameAvailable(String username) {
+        refreshCache();
+        for (User user : users) {
+            if (user.getUsername().equals(username)) {
+                throw new IllegalArgumentException("Username already in use: " + username);
+            }
+        }
+    }
+
+    /**
+     * Checks if an email is available (not already in use).
+     *
+     * @param email the email to check
+     * @throws IllegalArgumentException if the email is already in use
+     */
+    public void validateEmailAvailable(String email) {
+        refreshCache();
+        for (User user : users) {
+            if (user.getEmail().equals(email)) {
+                throw new IllegalArgumentException("Email already in use: " + email);
+            }
+        }
+    }
+
+    /**
      * Checks if a user with the given username exists.
      *
      * @param username the username to check
@@ -255,5 +285,57 @@ public class UserManager {
             }
         }
         return result;
+    }
+
+    /**
+     * Validates that a follower-followee relationship can be established.
+     *
+     * @param followerUsername the username of the follower
+     * @param followeeUsername the username of the user to follow
+     * @return array containing both User objects [follower, followee]
+     * @throws IllegalArgumentException if either username is invalid or if attempting to self-follow
+     * @throws IllegalStateException if already following
+     */
+    public User[] validateFollowRelationship(String followerUsername, String followeeUsername) {
+        if (followerUsername.equals(followeeUsername)) {
+            throw new IllegalArgumentException("User cannot follow themselves");
+        }
+
+        User follower = getUserByUsername(followerUsername);
+        User followee = getUserByUsername(followeeUsername);
+
+        // Check if already following
+        List<Integer> follows = follower.getFollowedUsersIDs();
+        if (follows.contains(followee.getUserID())) {
+            throw new IllegalStateException(followerUsername + " already follows " + followeeUsername);
+        }
+
+        return new User[] {follower, followee};
+    }
+
+    /**
+     * Validates that a follower-followee relationship can be removed.
+     *
+     * @param followerUsername the username of the follower
+     * @param followeeUsername the username of the user to unfollow
+     * @return array containing both User objects [follower, followee]
+     * @throws IllegalArgumentException if either username is invalid or if attempting to self-unfollow
+     * @throws IllegalStateException if not currently following
+     */
+    public User[] validateUnfollowRelationship(String followerUsername, String followeeUsername) {
+        if (followerUsername.equals(followeeUsername)) {
+            throw new IllegalArgumentException("User cannot unfollow themselves");
+        }
+
+        User follower = getUserByUsername(followerUsername);
+        User followee = getUserByUsername(followeeUsername);
+
+        // Check if not following
+        List<Integer> follows = follower.getFollowedUsersIDs();
+        if (!follows.contains(followee.getUserID())) {
+            throw new IllegalStateException(followerUsername + " does not follow " + followeeUsername);
+        }
+
+        return new User[] {follower, followee};
     }
 }

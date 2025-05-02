@@ -3,8 +3,7 @@ package user;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import songsOrganisation.Library;
 import songsOrganisation.Playlist;
 

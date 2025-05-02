@@ -12,12 +12,12 @@ import java.util.List;
  * Implements the Singleton pattern to ensure only one instance exists.
  * Uses an in-memory cache to improve performance.
  */
-public class UserManager {
+public class UserService {
 
     /**
-     * Singleton instance of UserManager.
+     * Singleton instance of UserService.
      */
-    private static UserManager instance;
+    private static UserService instance;
 
     /**
      * Repository for accessing user data.
@@ -33,20 +33,20 @@ public class UserManager {
      * Private constructor to prevent external instantiation.
      * Initializes the UserRepository instance and loads the user cache.
      */
-    private UserManager() {
+    private UserService() {
         this.userRepository = UserRepository.getInstance();
         this.users = new ArrayList<>();
         refreshCache();
     }
 
     /**
-     * Returns the single instance of UserManager, creating it if it doesn't exist.
+     * Returns the single instance of UserService, creating it if it doesn't exist.
      *
-     * @return the singleton instance of UserManager
+     * @return the singleton instance of UserService
      */
-    public static synchronized UserManager getInstance() {
+    public static synchronized UserService getInstance() {
         if (instance == null) {
-            instance = new UserManager();
+            instance = new UserService();
         }
         return instance;
     }
@@ -173,6 +173,36 @@ public class UserManager {
     }
 
     /**
+     * Checks if a username is available (not already in use).
+     *
+     * @param username the username to check
+     * @throws IllegalArgumentException if the username is already in use
+     */
+    public void validateUsernameAvailable(String username) {
+        refreshCache();
+        for (User user : users) {
+            if (user.getUsername().equals(username)) {
+                throw new IllegalArgumentException("Username already in use: " + username);
+            }
+        }
+    }
+
+    /**
+     * Checks if an email is available (not already in use).
+     *
+     * @param email the email to check
+     * @throws IllegalArgumentException if the email is already in use
+     */
+    public void validateEmailAvailable(String email) {
+        refreshCache();
+        for (User user : users) {
+            if (user.getEmail().equals(email)) {
+                throw new IllegalArgumentException("Email already in use: " + email);
+            }
+        }
+    }
+
+    /**
      * Checks if a user with the given username exists.
      *
      * @param username the username to check
@@ -255,5 +285,57 @@ public class UserManager {
             }
         }
         return result;
+    }
+
+    /**
+     * Validates that a follower-followee relationship can be established.
+     *
+     * @param followerUsername the username of the follower
+     * @param followeeUsername the username of the user to follow
+     * @return array containing both User objects [follower, followee]
+     * @throws IllegalArgumentException if either username is invalid or if attempting to self-follow
+     * @throws IllegalStateException if already following
+     */
+    public User[] validateFollowRelationship(String followerUsername, String followeeUsername) {
+        if (followerUsername.equals(followeeUsername)) {
+            throw new IllegalArgumentException("User cannot follow themselves");
+        }
+
+        User follower = getUserByUsername(followerUsername);
+        User followee = getUserByUsername(followeeUsername);
+
+        // Check if already following
+        List<Integer> follows = follower.getFollowedUsersIDs();
+        if (follows.contains(followee.getUserID())) {
+            throw new IllegalStateException(followerUsername + " already follows " + followeeUsername);
+        }
+
+        return new User[] {follower, followee};
+    }
+
+    /**
+     * Validates that a follower-followee relationship can be removed.
+     *
+     * @param followerUsername the username of the follower
+     * @param followeeUsername the username of the user to unfollow
+     * @return array containing both User objects [follower, followee]
+     * @throws IllegalArgumentException if either username is invalid or if attempting to self-unfollow
+     * @throws IllegalStateException if not currently following
+     */
+    public User[] validateUnfollowRelationship(String followerUsername, String followeeUsername) {
+        if (followerUsername.equals(followeeUsername)) {
+            throw new IllegalArgumentException("User cannot unfollow themselves");
+        }
+
+        User follower = getUserByUsername(followerUsername);
+        User followee = getUserByUsername(followeeUsername);
+
+        // Check if not following
+        List<Integer> follows = follower.getFollowedUsersIDs();
+        if (!follows.contains(followee.getUserID())) {
+            throw new IllegalStateException(followerUsername + " does not follow " + followeeUsername);
+        }
+
+        return new User[] {follower, followee};
     }
 }

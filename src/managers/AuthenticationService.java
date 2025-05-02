@@ -1,6 +1,6 @@
 package managers;
 
-public class AuthenticationManager {
+public class AuthenticationService {
     void login(){}
     void logout(){}
 }

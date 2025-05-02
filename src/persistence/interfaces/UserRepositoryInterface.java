@@ -81,6 +81,7 @@ public interface UserRepositoryInterface extends Repository<User> {
      */
     List<User> findUsersByLastName(String lastName);
 
+
     /**
      * Finds users by full name (first and last name).
      *
@@ -91,92 +92,32 @@ public interface UserRepositoryInterface extends Repository<User> {
     List<User> findUsersByFullName(String firstName, String lastName);
 
     /**
-     * Gets all followers of a user.
-     *
-     * @param user The user whose followers to retrieve
-     * @return A list of users who follow the specified user
+     * Finds all active users.
      */
-    List<User> findFollowers(User user);
+    List<User> findActiveUsers();
 
     /**
-     * Gets all users that a user follows.
-     *
-     * @param user The user whose followed users to retrieve
-     * @return A list of users followed by the specified user
+     * Finds all inactive users.
      */
-    List<User> findFollowedUsers(User user);
+    List<User> findInactiveUsers();
 
     /**
-     * Finds a follower by username.
-     *
-     * @param user The user whose followers to search
-     * @param username The username of the follower to find
-     * @return An Optional containing the user if found, or empty if not found
+     * Gets all followers of a user by user ID.
      */
-    Optional<User> findFollowerByUsername(User user, String username);
+    List<Integer> getFollowerIds(int userId);
 
     /**
-     * Finds followers by first name.
-     *
-     * @param user The user whose followers to search
-     * @param firstName The first name to search for
-     * @return A list of followers with the matching first name
+     * Gets all users that a user follows by user ID.
      */
-    List<User> findFollowersByFirstName(User user, String firstName);
+    List<Integer> getFollowedUserIds(int userId);
 
     /**
-     * Finds followers by last name.
-     *
-     * @param user The user whose followers to search
-     * @param lastName The last name to search for
-     * @return A list of followers with the matching last name
+     * Adds a follower relationship.
      */
-    List<User> findFollowersByLastName(User user, String lastName);
+    boolean addFollower(int userId, int followerId);
 
     /**
-     * Finds followers by full name.
-     *
-     * @param user The user whose followers to search
-     * @param firstName The first name to search for
-     * @param lastName The last name to search for
-     * @return A list of followers with the matching full name
+     * Removes a follower relationship.
      */
-    List<User> findFollowersByFullName(User user, String firstName, String lastName);
-
-    /**
-     * Finds followed users by first name.
-     *
-     * @param user The user whose followed users to search
-     * @param firstName The first name to search for
-     * @return A list of followed users with the matching first name
-     */
-    List<User> findFollowedUsersByFirstName(User user, String firstName);
-
-    /**
-     * Finds followed users by last name.
-     *
-     * @param user The user whose followed users to search
-     * @param lastName The last name to search for
-     * @return A list of followed users with the matching last name
-     */
-    List<User> findFollowedUsersByLastName(User user, String lastName);
-
-    /**
-     * Finds followed users by full name.
-     *
-     * @param user The user whose followed users to search
-     * @param firstName The first name to search for
-     * @param lastName The last name to search for
-     * @return A list of followed users with the matching full name
-     */
-    List<User> findFollowedUsersByFullName(User user, String firstName, String lastName);
-
-    /**
-     * Finds a followed user by username.
-     *
-     * @param user The user whose followed users to search
-     * @param username The username to search for
-     * @return An Optional containing the user if found, or empty if not found
-     */
-    Optional<User> findFollowedUserByUsername(User user, String username);
+    boolean removeFollower(int userId, int followerId);
 }

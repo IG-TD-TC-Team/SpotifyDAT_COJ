@@ -1,24 +1,23 @@
 import factory.PlaylistFactory;
 import factory.RepositoryFactory;
-import managers.PlaylistManager;
+import managers.PlaylistService;
 import persistence.interfaces.PlaylistRepositoryInterface;
 import persistence.interfaces.SongRepositoryInterface;
 import songsAndArtists.Genre;
 import songsAndArtists.Song;
 import songsOrganisation.Playlist;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 /**
- * Test class for demonstrating the PlaylistManager and PlaylistFactory functionality.
+ * Test class for demonstrating the PlaylistService and PlaylistFactory functionality.
  */
 public class PlaylistTester {
 
     public static void main(String[] args) {
         // Get manager, factory, and repositories
-        PlaylistManager playlistManager = PlaylistManager.getInstance();
+        PlaylistService playlistManager = PlaylistService.getInstance();
         PlaylistFactory playlistFactory = PlaylistFactory.getInstance();
         PlaylistRepositoryInterface playlistRepository = RepositoryFactory.getPlaylistRepository();
         SongRepositoryInterface songRepository = RepositoryFactory.getSongRepository();

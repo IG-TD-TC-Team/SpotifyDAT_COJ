@@ -1,6 +1,6 @@
 package spotifyServer;
 
-import managers.SongService;
+import services.SongService;
 import songsAndArtists.Song;
 
 import java.io.*;

@@ -1,5 +1,5 @@
 import factory.UserFactory;
-import managers.UserService;
+import services.UserService;
 import user.User;
 import user.security.PasswordHasher;
 import user.security.SHA256Hasher;

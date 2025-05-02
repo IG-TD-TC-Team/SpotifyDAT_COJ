@@ -1,13 +1,14 @@
-package user;
+package user.subscription;
 
 import com.fasterxml.jackson.annotation.JsonTypeName;
-/**
- * Concrete implementation of SubscriptionPlan for premium users.
- * The JsonTypeName annotation works with the JsonTypeInfo in the interface
- * to enable proper polymorphic serialization/deserialization.
- */
-@JsonTypeName("PremiumPlan")
-public class PremiumPlan implements SubscriptionPlan {
+
+@JsonTypeName("StudentSubscription")
+public class StudentSubscription extends AbstractSubscriptionPlan {
+
+    public StudentSubscription() {
+        super(SubscriptionType.STUDENT);
+    }
+
     @Override
     public boolean hasAds() {
         return false;
@@ -31,5 +32,15 @@ public class PremiumPlan implements SubscriptionPlan {
     @Override
     public boolean shuffleOnly() {
         return false;
+    }
+
+    @Override
+    public int getMaxQuality() {
+        return 256; // Medium-high quality (kbps)
+    }
+
+    @Override
+    public int getDeviceLimit() {
+        return 3; // Student gets moderate device limit
     }
 }

@@ -1,4 +1,4 @@
-package managers;
+package services;
 
 import persistence.PlaylistRepository;
 import songsAndArtists.Genre;

@@ -5,6 +5,8 @@ import java.util.Date;
 import java.util.List;
 import songsOrganisation.Library;
 import songsOrganisation.Playlist;
+import user.subscription.SubscriptionInfo;
+import user.subscription.SubscriptionPlan;
 
 public class User {
     // Identity fields

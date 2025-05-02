@@ -1,4 +1,4 @@
-package managers;
+package services;
 
 public class AuthenticationService {
     void login(){}

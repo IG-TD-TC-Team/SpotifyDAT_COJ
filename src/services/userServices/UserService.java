@@ -1,16 +1,20 @@
 package services.userServices;
 
-import persistence.UserRepository;
+import factory.RepositoryFactory;
+import persistence.interfaces.UserRepositoryInterface;
+import services.userServices.exceptions.DuplicateUserException;
+import services.userServices.exceptions.UserNotFoundException;
+import services.userServices.exceptions.UserValidationException;
 import user.User;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Manages user-related operations such as retrieving user information
  * and handling followers and followed users.
  * Implements the Singleton pattern to ensure only one instance exists.
- * Uses an in-memory cache to improve performance.
  */
 public class UserService {
 
@@ -22,21 +26,14 @@ public class UserService {
     /**
      * Repository for accessing user data.
      */
-    private final UserRepository userRepository;
-
-    /**
-     * Cache of users to improve performance.
-     */
-    private List<User> users;
+    private final UserRepositoryInterface userRepository;
 
     /**
      * Private constructor to prevent external instantiation.
-     * Initializes the UserRepository instance and loads the user cache.
+     * Initializes the UserRepository instance using RepositoryFactory.
      */
-    private UserService() {
-        this.userRepository = UserRepository.getInstance();
-        this.users = new ArrayList<>();
-        refreshCache();
+    private UserService(UserRepositoryInterface userRepository) {
+        this.userRepository = userRepository;
     }
 
     /**
@@ -46,34 +43,32 @@ public class UserService {
      */
     public static synchronized UserService getInstance() {
         if (instance == null) {
-            instance = new UserService();
+            instance = new UserService(RepositoryFactory.getUserRepository());
         }
         return instance;
     }
 
     /**
-     * Refreshes the in-memory cache with the latest data from the repository.
-     * Call this after users are created, updated, or deleted.
+     * Refreshes the repository data with the latest changes.
+     * Used after operations that modify user data in other services.
      */
     public void refreshCache() {
-        this.users = userRepository.findAll();
+        // We'll implement caching in a future iteration
     }
 
     /**
      * Retrieves a user by their unique ID.
      *
-     * @param id the ID of the user
+     * @param userId the ID of the user
      * @return the User object
-     * @throws IllegalArgumentException if no user with the specified ID exists
+     * @throws UserNotFoundException if no user with the specified ID exists
      */
-    public User getUserById(int id) {
-        refreshCache();
-        for (User user : users) {
-            if (user.getUserID() == id) {
-                return user;
-            }
+    public User getUserById(int userId) {
+        Optional<User> userOpt = userRepository.findById(userId);
+        if (userOpt.isEmpty()) {
+            throw new UserNotFoundException(userId);
         }
-        throw new IllegalArgumentException("No user with ID=" + id);
+        return userOpt.get();
     }
 
     /**
@@ -81,16 +76,14 @@ public class UserService {
      *
      * @param username the username of the user
      * @return the User object
-     * @throws IllegalArgumentException if no user with the specified username exists
+     * @throws UserNotFoundException if no user with the specified username exists
      */
     public User getUserByUsername(String username) {
-        refreshCache();
-        for (User user : users) {
-            if (user.getUsername().equals(username)) {
-                return user;
-            }
+        Optional<User> userOpt = userRepository.findByUsername(username);
+        if (userOpt.isEmpty()) {
+            throw new UserNotFoundException("username", username);
         }
-        throw new IllegalArgumentException("No user with username='" + username + "'");
+        return userOpt.get();
     }
 
     /**
@@ -98,38 +91,241 @@ public class UserService {
      *
      * @param email the email of the user
      * @return the User object
-     * @throws IllegalArgumentException if no user with the specified email exists
+     * @throws UserNotFoundException if no user with the specified email exists
      */
     public User getUserByEmail(String email) {
-        refreshCache();
-        for (User user : users) {
-            if (user.getEmail().equals(email)) {
-                return user;
-            }
+        Optional<User> userOpt = userRepository.findByEmail(email);
+        if (userOpt.isEmpty()) {
+            throw new UserNotFoundException("email", email);
         }
-        throw new IllegalArgumentException("No user with email='" + email + "'");
+        return userOpt.get();
+    }
+
+    /**
+     * Updates a user's basic profile information.
+     *
+     * @param userId the ID of the user to update
+     * @param firstName the new first name (or null to leave unchanged)
+     * @param lastName the new last name (or null to leave unchanged)
+     * @return the updated User object
+     * @throws UserNotFoundException if no user with the specified ID exists
+     */
+    public User updateUserProfile(int userId, String firstName, String lastName) {
+        User user = getUserById(userId);
+
+        if (firstName != null) {
+            user.setFirstName(firstName);
+        }
+
+        if (lastName != null) {
+            user.setLastName(lastName);
+        }
+
+        Optional<User> updatedUserOpt = userRepository.update(user);
+        if (updatedUserOpt.isEmpty()) {
+            throw new RuntimeException("Failed to update user profile");
+        }
+
+        return updatedUserOpt.get();
+    }
+
+    /**
+     * Updates a user's basic profile information.
+     *
+     * @param username the username of the user to update
+     * @param firstName the new first name (or null to leave unchanged)
+     * @param lastName the new last name (or null to leave unchanged)
+     * @return the updated User object
+     * @throws UserNotFoundException if no user with the specified username exists
+     */
+    public User updateUserProfile(String username, String firstName, String lastName) {
+        User user = getUserByUsername(username);
+        return updateUserProfile(user.getUserID(), firstName, lastName);
+    }
+
+    /**
+     * Updates a user's username.
+     *
+     * @param userId the ID of the user to update
+     * @param newUsername the new username
+     * @return the updated User object
+     * @throws UserNotFoundException if no user with the specified ID exists
+     * @throws DuplicateUserException if the new username is already in use
+     */
+    public User updateUsername(int userId, String newUsername) {
+        if (newUsername == null || newUsername.trim().isEmpty()) {
+            throw new UserValidationException("username", "Username cannot be empty");
+        }
+
+        // Check if username is already taken
+        if (userRepository.usernameExists(newUsername)) {
+            throw new DuplicateUserException("username", newUsername);
+        }
+
+        User user = getUserById(userId);
+        user.setUsername(newUsername);
+
+        Optional<User> updatedUserOpt = userRepository.update(user);
+        if (updatedUserOpt.isEmpty()) {
+            throw new RuntimeException("Failed to update username");
+        }
+
+        return updatedUserOpt.get();
+    }
+
+    /**
+     * Updates a user's username.
+     *
+     * @param currentUsername the current username of the user
+     * @param newUsername the new username
+     * @return the updated User object
+     * @throws UserNotFoundException if no user with the specified username exists
+     * @throws DuplicateUserException if the new username is already in use
+     */
+    public User updateUsername(String currentUsername, String newUsername) {
+        User user = getUserByUsername(currentUsername);
+        return updateUsername(user.getUserID(), newUsername);
+    }
+
+    /**
+     * Updates a user's email address.
+     *
+     * @param userId the ID of the user to update
+     * @param newEmail the new email address
+     * @return the updated User object
+     * @throws UserNotFoundException if no user with the specified ID exists
+     * @throws DuplicateUserException if the new email is already in use
+     */
+    public User updateEmail(int userId, String newEmail) {
+        if (newEmail == null || newEmail.trim().isEmpty()) {
+            throw new UserValidationException("email", "Email cannot be empty");
+        }
+
+        // Check if email is already taken
+        if (userRepository.emailExists(newEmail)) {
+            throw new DuplicateUserException("email", newEmail);
+        }
+
+        User user = getUserById(userId);
+        user.setEmail(newEmail);
+
+        Optional<User> updatedUserOpt = userRepository.update(user);
+        if (updatedUserOpt.isEmpty()) {
+            throw new RuntimeException("Failed to update email");
+        }
+
+        return updatedUserOpt.get();
+    }
+
+    /**
+     * Updates a user's email address.
+     *
+     * @param username the username of the user to update
+     * @param newEmail the new email address
+     * @return the updated User object
+     * @throws UserNotFoundException if no user with the specified username exists
+     * @throws DuplicateUserException if the new email is already in use
+     */
+    public User updateEmail(String username, String newEmail) {
+        User user = getUserByUsername(username);
+        return updateEmail(user.getUserID(), newEmail);
+    }
+
+    /**
+     * Activates a user account.
+     *
+     * @param userId the ID of the user to activate
+     * @throws UserNotFoundException if no user with the specified ID exists
+     */
+    public void activateAccount(int userId) {
+        User user = getUserById(userId);
+        user.setActive(true);
+        userRepository.update(user);
+    }
+
+    /**
+     * Activates a user account.
+     *
+     * @param username the username of the user to activate
+     * @throws UserNotFoundException if no user with the specified username exists
+     */
+    public void activateAccount(String username) {
+        User user = getUserByUsername(username);
+        activateAccount(user.getUserID());
+    }
+
+    /**
+     * Deactivates a user account.
+     *
+     * @param userId the ID of the user to deactivate
+     * @throws UserNotFoundException if no user with the specified ID exists
+     */
+    public void deactivateAccount(int userId) {
+        User user = getUserById(userId);
+        user.setActive(false);
+        userRepository.update(user);
+    }
+
+    /**
+     * Deactivates a user account.
+     *
+     * @param username the username of the user to deactivate
+     * @throws UserNotFoundException if no user with the specified username exists
+     */
+    public void deactivateAccount(String username) {
+        User user = getUserByUsername(username);
+        deactivateAccount(user.getUserID());
+    }
+
+    /**
+     * Permanently deletes a user account.
+     *
+     * @param userId the ID of the user to delete
+     * @return true if the user was deleted, false otherwise
+     * @throws UserNotFoundException if no user with the specified ID exists
+     */
+    public boolean deleteUser(int userId) {
+        // Check if user exists
+        getUserById(userId);
+
+        // Delete user
+        return userRepository.deleteById(userId);
+    }
+
+    /**
+     * Permanently deletes a user account.
+     *
+     * @param username the username of the user to delete
+     * @return true if the user was deleted, false otherwise
+     * @throws UserNotFoundException if no user with the specified username exists
+     */
+    public boolean deleteUser(String username) {
+        User user = getUserByUsername(username);
+        return deleteUser(user.getUserID());
     }
 
     /**
      * Retrieves the list of followers for the specified user.
      *
-     * @param username the username of the user
+     * @param userId the ID of the user
      * @return the list of users who follow the specified user
+     * @throws UserNotFoundException if no user with the specified ID exists
      */
-    public List<User> getFollowers(String username) {
-        refreshCache();
-        User user = getUserByUsername(username);
-        List<User> followers = new ArrayList<>();
-        List<Integer> followerIds = user.getFollowersIDs();
+    public List<User> getFollowers(int userId) {
+        // Ensure user exists
+        getUserById(userId);
 
-        if (followerIds != null) {
-            for (Integer followerId : followerIds) {
-                for (User follower : users) {
-                    if (follower.getUserID() == followerId) {
-                        followers.add(follower);
-                        break;
-                    }
-                }
+        // Get follower IDs
+        List<Integer> followerIds = userRepository.getFollowerIds(userId);
+
+        // Convert IDs to User objects
+        List<User> followers = new ArrayList<>();
+        for (Integer followerId : followerIds) {
+            try {
+                User follower = getUserById(followerId);
+                followers.add(follower);
+            } catch (UserNotFoundException e) {
+                // Skip invalid follower IDs
             }
         }
 
@@ -137,29 +333,138 @@ public class UserService {
     }
 
     /**
-     * Retrieves the list of users that the specified user is following.
+     * Retrieves the list of followers for the specified user.
      *
      * @param username the username of the user
-     * @return the list of users followed by the specified user
+     * @return the list of users who follow the specified user
+     * @throws UserNotFoundException if no user with the specified username exists
      */
-    public List<User> getFollowedUsers(String username) {
-        refreshCache();
+    public List<User> getFollowers(String username) {
         User user = getUserByUsername(username);
-        List<User> followedUsers = new ArrayList<>();
-        List<Integer> followedIds = user.getFollowedUsersIDs();
+        return getFollowers(user.getUserID());
+    }
 
-        if (followedIds != null) {
-            for (Integer followedId : followedIds) {
-                for (User followedUser : users) {
-                    if (followedUser.getUserID() == followedId) {
-                        followedUsers.add(followedUser);
-                        break;
-                    }
-                }
+    /**
+     * Retrieves the list of users that the specified user is following.
+     *
+     * @param userId the ID of the user
+     * @return the list of users followed by the specified user
+     * @throws UserNotFoundException if no user with the specified ID exists
+     */
+    public List<User> getFollowedUsers(int userId) {
+        // Ensure user exists
+        getUserById(userId);
+
+        // Get followed user IDs
+        List<Integer> followedIds = userRepository.getFollowedUserIds(userId);
+
+        // Convert IDs to User objects
+        List<User> followedUsers = new ArrayList<>();
+        for (Integer followedId : followedIds) {
+            try {
+                User followed = getUserById(followedId);
+                followedUsers.add(followed);
+            } catch (UserNotFoundException e) {
+                // Skip invalid followed IDs
             }
         }
 
         return followedUsers;
+    }
+
+    /**
+     * Retrieves the list of users that the specified user is following.
+     *
+     * @param username the username of the user
+     * @return the list of users followed by the specified user
+     * @throws UserNotFoundException if no user with the specified username exists
+     */
+    public List<User> getFollowedUsers(String username) {
+        User user = getUserByUsername(username);
+        return getFollowedUsers(user.getUserID());
+    }
+
+    /**
+     * Makes one user follow another.
+     *
+     * @param followerId the ID of the follower
+     * @param followedId the ID of the user to follow
+     * @return true if the follow operation was successful, false otherwise
+     * @throws UserNotFoundException if either user ID is invalid
+     * @throws IllegalArgumentException if a user tries to follow themselves
+     */
+    public boolean followUser(int followerId, int followedId) {
+        // Check if either user doesn't exist
+        User follower = getUserById(followerId);
+        User followed = getUserById(followedId);
+
+        // Check if user is trying to follow themselves
+        if (followerId == followedId) {
+            throw new IllegalArgumentException("User cannot follow themselves");
+        }
+
+        // Check if already following
+        List<Integer> followedUsers = follower.getFollowedUsersIDs();
+        if (followedUsers != null && followedUsers.contains(followedId)) {
+            return true; // Already following
+        }
+
+        // Add follower relationship
+        return userRepository.addFollower(followedId, followerId);
+    }
+
+    /**
+     * Makes one user follow another.
+     *
+     * @param followerUsername the username of the follower
+     * @param followedUsername the username of the user to follow
+     * @return true if the follow operation was successful, false otherwise
+     * @throws UserNotFoundException if either username is invalid
+     * @throws IllegalArgumentException if a user tries to follow themselves
+     */
+    public boolean followUser(String followerUsername, String followedUsername) {
+        User follower = getUserByUsername(followerUsername);
+        User followed = getUserByUsername(followedUsername);
+
+        return followUser(follower.getUserID(), followed.getUserID());
+    }
+
+    /**
+     * Makes one user unfollow another.
+     *
+     * @param followerId the ID of the follower
+     * @param followedId the ID of the user to unfollow
+     * @return true if the unfollow operation was successful, false otherwise
+     * @throws UserNotFoundException if either user ID is invalid
+     */
+    public boolean unfollowUser(int followerId, int followedId) {
+        // Check if either user doesn't exist
+        User follower = getUserById(followerId);
+        User followed = getUserById(followedId);
+
+        // Check if not following
+        List<Integer> followedUsers = follower.getFollowedUsersIDs();
+        if (followedUsers == null || !followedUsers.contains(followedId)) {
+            return false; // Not following
+        }
+
+        // Remove follower relationship
+        return userRepository.removeFollower(followedId, followerId);
+    }
+
+    /**
+     * Makes one user unfollow another.
+     *
+     * @param followerUsername the username of the follower
+     * @param followedUsername the username of the user to unfollow
+     * @return true if the unfollow operation was successful, false otherwise
+     * @throws UserNotFoundException if either username is invalid
+     */
+    public boolean unfollowUser(String followerUsername, String followedUsername) {
+        User follower = getUserByUsername(followerUsername);
+        User followed = getUserByUsername(followedUsername);
+
+        return unfollowUser(follower.getUserID(), followed.getUserID());
     }
 
     /**
@@ -168,70 +473,25 @@ public class UserService {
      * @return a list of all users
      */
     public List<User> getAllUsers() {
-        refreshCache();
-        return new ArrayList<>(users);
+        return userRepository.findAll();
     }
 
     /**
-     * Checks if a username is available (not already in use).
+     * Returns all active users in the system.
      *
-     * @param username the username to check
-     * @throws IllegalArgumentException if the username is already in use
+     * @return a list of all active users
      */
-    public void validateUsernameAvailable(String username) {
-        refreshCache();
-        for (User user : users) {
-            if (user.getUsername().equals(username)) {
-                throw new IllegalArgumentException("Username already in use: " + username);
-            }
-        }
+    public List<User> getAllActiveUsers() {
+        return userRepository.findActiveUsers();
     }
 
     /**
-     * Checks if an email is available (not already in use).
+     * Returns all inactive users in the system.
      *
-     * @param email the email to check
-     * @throws IllegalArgumentException if the email is already in use
+     * @return a list of all inactive users
      */
-    public void validateEmailAvailable(String email) {
-        refreshCache();
-        for (User user : users) {
-            if (user.getEmail().equals(email)) {
-                throw new IllegalArgumentException("Email already in use: " + email);
-            }
-        }
-    }
-
-    /**
-     * Checks if a user with the given username exists.
-     *
-     * @param username the username to check
-     * @return true if a user with the username exists, false otherwise
-     */
-    public boolean usernameExists(String username) {
-        refreshCache();
-        for (User user : users) {
-            if (user.getUsername().equals(username)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    /**
-     * Checks if a user with the given email exists.
-     *
-     * @param email the email to check
-     * @return true if a user with the email exists, false otherwise
-     */
-    public boolean emailExists(String email) {
-        refreshCache();
-        for (User user : users) {
-            if (user.getEmail().equals(email)) {
-                return true;
-            }
-        }
-        return false;
+    public List<User> getAllInactiveUsers() {
+        return userRepository.findInactiveUsers();
     }
 
     /**
@@ -241,14 +501,7 @@ public class UserService {
      * @return a list of users with the given first name
      */
     public List<User> findUsersByFirstName(String firstName) {
-        refreshCache();
-        List<User> result = new ArrayList<>();
-        for (User user : users) {
-            if (user.getFirstName() != null && user.getFirstName().equalsIgnoreCase(firstName)) {
-                result.add(user);
-            }
-        }
-        return result;
+        return userRepository.findUsersByFirstName(firstName);
     }
 
     /**
@@ -258,14 +511,7 @@ public class UserService {
      * @return a list of users with the given last name
      */
     public List<User> findUsersByLastName(String lastName) {
-        refreshCache();
-        List<User> result = new ArrayList<>();
-        for (User user : users) {
-            if (user.getLastName() != null && user.getLastName().equalsIgnoreCase(lastName)) {
-                result.add(user);
-            }
-        }
-        return result;
+        return userRepository.findUsersByLastName(lastName);
     }
 
     /**
@@ -276,66 +522,26 @@ public class UserService {
      * @return a list of users with the given full name
      */
     public List<User> findUsersByFullName(String firstName, String lastName) {
-        refreshCache();
-        List<User> result = new ArrayList<>();
-        for (User user : users) {
-            if (user.getFirstName() != null && user.getFirstName().equalsIgnoreCase(firstName) &&
-                    user.getLastName() != null && user.getLastName().equalsIgnoreCase(lastName)) {
-                result.add(user);
-            }
-        }
-        return result;
+        return userRepository.findUsersByFullName(firstName, lastName);
     }
 
     /**
-     * Validates that a follower-followee relationship can be established.
+     * Checks if a username is available (not already in use).
      *
-     * @param followerUsername the username of the follower
-     * @param followeeUsername the username of the user to follow
-     * @return array containing both User objects [follower, followee]
-     * @throws IllegalArgumentException if either username is invalid or if attempting to self-follow
-     * @throws IllegalStateException if already following
+     * @param username the username to check
+     * @return true if the username is available, false otherwise
      */
-    public User[] validateFollowRelationship(String followerUsername, String followeeUsername) {
-        if (followerUsername.equals(followeeUsername)) {
-            throw new IllegalArgumentException("User cannot follow themselves");
-        }
-
-        User follower = getUserByUsername(followerUsername);
-        User followee = getUserByUsername(followeeUsername);
-
-        // Check if already following
-        List<Integer> follows = follower.getFollowedUsersIDs();
-        if (follows.contains(followee.getUserID())) {
-            throw new IllegalStateException(followerUsername + " already follows " + followeeUsername);
-        }
-
-        return new User[] {follower, followee};
+    public boolean isUsernameAvailable(String username) {
+        return !userRepository.usernameExists(username);
     }
 
     /**
-     * Validates that a follower-followee relationship can be removed.
+     * Checks if an email is available (not already in use).
      *
-     * @param followerUsername the username of the follower
-     * @param followeeUsername the username of the user to unfollow
-     * @return array containing both User objects [follower, followee]
-     * @throws IllegalArgumentException if either username is invalid or if attempting to self-unfollow
-     * @throws IllegalStateException if not currently following
+     * @param email the email to check
+     * @return true if the email is available, false otherwise
      */
-    public User[] validateUnfollowRelationship(String followerUsername, String followeeUsername) {
-        if (followerUsername.equals(followeeUsername)) {
-            throw new IllegalArgumentException("User cannot unfollow themselves");
-        }
-
-        User follower = getUserByUsername(followerUsername);
-        User followee = getUserByUsername(followeeUsername);
-
-        // Check if not following
-        List<Integer> follows = follower.getFollowedUsersIDs();
-        if (!follows.contains(followee.getUserID())) {
-            throw new IllegalStateException(followerUsername + " does not follow " + followeeUsername);
-        }
-
-        return new User[] {follower, followee};
+    public boolean isEmailAvailable(String email) {
+        return !userRepository.emailExists(email);
     }
 }

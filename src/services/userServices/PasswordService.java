@@ -10,6 +10,8 @@ import user.security.SHA256Hasher;
 
 import java.util.Optional;
 
+//Implement cache
+
 /**
  * Service class for password-related operations.
  * Follows the repository-service pattern by using the UserRepository

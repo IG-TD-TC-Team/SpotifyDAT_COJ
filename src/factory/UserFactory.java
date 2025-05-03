@@ -1,6 +1,6 @@
 package factory;
 
-import persistence.UserRepository;
+import persistence.interfaces.UserRepositoryInterface;
 import user.*;
 import user.security.PasswordHasher;
 import user.security.SHA256Hasher;
@@ -23,7 +23,7 @@ public class UserFactory {
     /**
      * Repository for user persistence operations.
      */
-    private final UserRepository userRepository;
+    private final UserRepositoryInterface userRepository;
 
     /**
      * Password hasher for securely storing passwords.
@@ -31,10 +31,10 @@ public class UserFactory {
     private final PasswordHasher passwordHasher;
 
     /**
-     * Private constructor initializing repositories.
+     * Private constructor initializing repositories through RepositoryFactory.
      */
     private UserFactory() {
-        this.userRepository = UserRepository.getInstance();
+        this.userRepository = RepositoryFactory.getUserRepository();
         this.passwordHasher = new SHA256Hasher();
     }
 

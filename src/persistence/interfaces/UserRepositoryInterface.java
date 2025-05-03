@@ -48,24 +48,6 @@ public interface UserRepositoryInterface extends Repository<User> {
     boolean emailExists(String email);
 
     /**
-     * Validates user credentials by username.
-     *
-     * @param username The username to check
-     * @param password The password to check
-     * @return true if the credentials are valid, false otherwise
-     */
-    boolean checkCredentialsByUsername(String username, String password);
-
-    /**
-     * Validates user credentials by email.
-     *
-     * @param email The email to check
-     * @param password The password to check
-     * @return true if the credentials are valid, false otherwise
-     */
-    boolean checkCredentialsByEmail(String email, String password);
-
-    /**
      * Finds users by first name.
      *
      * @param firstName The first name to search for

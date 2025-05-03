@@ -2,8 +2,6 @@ package persistence;
 
 import persistence.interfaces.UserRepositoryInterface;
 import user.User;
-import user.security.PasswordHasher;
-import user.security.SHA256Hasher;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,11 +10,11 @@ import java.util.stream.Collectors;
 
 /**
  * UserRepository implements UserRepositoryInterface for persisting User entities.
+ * Follows pure repository pattern by focusing only on data access operations.
  */
 public class UserRepository extends JsonRepository<User> implements UserRepositoryInterface {
 
     private static UserRepository instance;
-    private final PasswordHasher passwordHasher = new SHA256Hasher();
 
     private UserRepository() {
         super(User.class, "users.json", User::getUserID);
@@ -58,20 +56,6 @@ public class UserRepository extends JsonRepository<User> implements UserReposito
     public boolean emailExists(String email) {
         return findAll().stream()
                 .anyMatch(user -> user.getEmail().equalsIgnoreCase(email));
-    }
-
-    @Override
-    public boolean checkCredentialsByUsername(String username, String password) {
-        return findByUsername(username)
-                .map(user -> passwordHasher.verify(password, user.getPassword()))
-                .orElse(false);
-    }
-
-    @Override
-    public boolean checkCredentialsByEmail(String email, String password) {
-        return findByEmail(email)
-                .map(user -> passwordHasher.verify(password, user.getPassword()))
-                .orElse(false);
     }
 
     @Override
@@ -198,23 +182,18 @@ public class UserRepository extends JsonRepository<User> implements UserReposito
 
     @Override
     public User save(User user) {
-        if (emailExists(user.getEmail())) {
-            throw new IllegalArgumentException("Email already exists: " + user.getEmail());
-        }
+        // No validation here - moved to service layer
         return super.save(user);
     }
 
     @Override
     public Optional<User> update(User user) {
-        if (findById(user.getUserID()).isPresent()) {
-            return super.update(user);
-        }
-        throw new IllegalArgumentException("User with ID " + user.getUserID() + " not found.");
+        // No validation here - moved to service layer
+        return super.update(user);
     }
 
-    public void delete(User user) {
-        if (!deleteById(user.getUserID())) {
-            throw new IllegalArgumentException("User with ID " + user.getUserID() + " not found.");
-        }
+    @Override
+    public boolean deleteById(int userId) {
+        return super.deleteById(userId);
     }
 }

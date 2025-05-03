@@ -11,6 +11,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+//Cache not implemented
+
 /**
  * Manages user-related operations such as retrieving user information
  * and handling followers and followed users.

@@ -1,13 +1,11 @@
 package factory;
 
-import services.userServices.SubscriptionService;
-import services.userServices.UserService;
 import persistence.UserRepository;
 import user.*;
 import user.security.PasswordHasher;
 import user.security.SHA256Hasher;
+import user.subscription.*;
 import user.subscription.FreeSubscription;
-import user.subscription.PremiumSubscription;
 import user.subscription.SubscriptionInfo;
 
 import java.util.*;
@@ -28,24 +26,16 @@ public class UserFactory {
     private final UserRepository userRepository;
 
     /**
-     * Manager for user read operations.
+     * Password hasher for securely storing passwords.
      */
-    private final UserService userService;
+    private final PasswordHasher passwordHasher;
 
     /**
-     * Manager for subscription-related operations.
-     */
-    private final SubscriptionService subscriptionService;
-
-    private final PasswordHasher passwordHasher = new SHA256Hasher();
-
-    /**
-     * Private constructor initializing repositories and managers.
+     * Private constructor initializing repositories.
      */
     private UserFactory() {
         this.userRepository = UserRepository.getInstance();
-        this.userService = UserService.getInstance();
-        this.subscriptionService = SubscriptionService.getInstance();
+        this.passwordHasher = new SHA256Hasher();
     }
 
     /**
@@ -71,379 +61,110 @@ public class UserFactory {
      * @param email the email address
      * @param password the password
      * @return the created User object
-     * @throws IllegalArgumentException if username or email already exist
      */
     public User createUser(String firstName, String lastName, String username, String email, String password) {
-        //Check email is unique
-        userService.validateEmailAvailable(email);
-
-        //Check username is unique
-        userService.validateUsernameAvailable(username);
-
-        // Create userID
-        int newId = userService.getAllUsers().stream()
-                .mapToInt(User::getUserID)
-                .max()
-                .orElse(0) + 1;
+        // Get next available ID
+        int newId = generateNextUserId();
 
         // Hash password
-        String hashed = passwordHasher.hashWithSalt(password);
+        String hashedPassword = passwordHasher.hash(password);
 
         // Create user object
-        User user = new User(newId, username, email, hashed, new Date());
+        User user = new User(newId, username, email, hashedPassword, new Date());
         user.setFirstName(firstName);
         user.setLastName(lastName);
 
-        // Assign a free subscription by default
-        FreeSubscription freeplan = new FreeSubscription();
-        user.setSubscriptionPlan(freeplan);
-        user.setSubscriptionInfo(new SubscriptionInfo(new Date(), null));
+        // Set default values for a new user
+        user.setActive(true);
+        user.setFollowedUsersIDs(new ArrayList<>());
+        user.setFollowersIDs(new ArrayList<>());
 
-        System.out.println("Saved user → "
-                + "ID="   + user.getUserID()
-                + ", username=" + user.getUsername()
-                + ", email="    + user.getEmail()
-                + ", created="  + user.getAccountCreationDate()
-        );
+        // Assign a free subscription by default
+        FreeSubscription freePlan = new FreeSubscription();
+        user.setSubscriptionPlan(freePlan);
+        user.setSubscriptionInfo(new SubscriptionInfo(new Date(), null));
 
         // Save user
         User savedUser = userRepository.save(user);
 
-        // Refresh the user cache after creating a new user
-        userService.refreshCache();
+        System.out.println("Created user → ID=" + savedUser.getUserID()
+                + ", username=" + savedUser.getUsername());
+
         return savedUser;
     }
 
     /**
-     * Deletes a user by their ID.
+     * Creates a new user with a specified subscription plan.
      *
-     * @param userID the ID of the user to delete
-     * @throws IllegalArgumentException if no user with the given ID exists
+     * @param firstName the first name
+     * @param lastName the last name
+     * @param username the username
+     * @param email the email address
+     * @param password the password
+     * @param subscriptionPlan the subscription plan to assign
+     * @param subscriptionDays duration in days; zero or negative means no end date
+     * @return the created User object
      */
-    public void deleteUser(int userID) {
-        // Verify userID exists
-        userService.getUserById(userID);
+    public User createUser(
+            String firstName,
+            String lastName,
+            String username,
+            String email,
+            String password,
+            SubscriptionPlan subscriptionPlan,
+            int subscriptionDays) {
 
-        // Delete
-        userRepository.deleteById(userID);
+        // Get next available ID
+        int newId = generateNextUserId();
 
-        // Refresh the user cache after deleting a user
-        userService.refreshCache();
-        System.out.println("Deleted user → ID=" + userID);
-    }
+        // Hash password
+        String hashedPassword = passwordHasher.hash(password);
 
-    /**
-     * Deletes a user by their username.
-     *
-     * @param username the username of the user to delete
-     * @throws IllegalArgumentException if no user with the given username exists
-     */
-    public void deleteUser(String username) {
-        // Find user by username
-        User user = userService.getUserByUsername(username);
+        // Create user object
+        User user = new User(newId, username, email, hashedPassword, new Date());
+        user.setFirstName(firstName);
+        user.setLastName(lastName);
 
-        // Delete user
-        userRepository.delete(user);
-
-        // Refresh the user cache after deleting a user
-        userService.refreshCache();
-        System.out.println("Deleted user → Username=" + user.getUsername());
-    }
-
-    /**
-     * Disables a user's account by ID.
-     *
-     * @param userID the ID of the user
-     */
-    public void disableAccount(int userID){
-        // Verify userID exists
-        User user = userService.getUserById(userID);
-
-        user.setActive(false);
-        userRepository.update(user);
-
-        // Refresh the cache after updating a user
-        userService.refreshCache();
-        System.out.println("Account disabled");
-    }
-
-    /**
-     * Disables a user's account by username.
-     *
-     * @param username the username of the user
-     */
-    public void disableAccount(String username){
-        // Verify username exists
-        User user = userService.getUserByUsername(username);
-
-        user.setActive(false);
-        userRepository.update(user);
-
-        // Refresh the cache after updating a user
-        userService.refreshCache();
-        System.out.println("Account disabled");
-    }
-
-    /**
-     * Enables a user's account by ID.
-     *
-     * @param userID the ID of the user
-     */
-    public void enableAccount(int userID){
-        // Verify userID exists
-        User user = userService.getUserById(userID);
-
+        // Set default values for a new user
         user.setActive(true);
-        userRepository.update(user);
+        user.setFollowedUsersIDs(new ArrayList<>());
+        user.setFollowersIDs(new ArrayList<>());
 
-        // Refresh the cache after updating a user
-        userService.refreshCache();
-        System.out.println("Account enabled");
-    }
-
-    /**
-     * Enables a user's account by username.
-     *
-     * @param username the username of the user
-     */
-    public void enableAccount(String username){
-        // Find user by username
-        User user = userService.getUserByUsername(username);
-
-        user.setActive(true);
-        userRepository.update(user);
-
-        // Refresh the cache after updating a user
-        userService.refreshCache();
-        System.out.println("Account enabled");
-    }
-
-    /**
-     * Updates a user's username.
-     *
-     * @param username the current username
-     * @param newUsername the new username
-     * @throws IllegalArgumentException if username not found or new username already exists
-     */
-    public void updateUsername(String username, String newUsername) {
-        // Find existing username
-        User user = userService.getUserByUsername(username);
-
-        // Check new username isn't taken
-        userService.validateUsernameAvailable(newUsername);
-
-        // Update
-        user.setUsername(newUsername);
-        userRepository.update(user);
-
-        // Refresh the cache after updating a user
-        userService.refreshCache();
-        System.out.println("Username updated");
-    }
-
-    /**
-     * Updates a user's password.
-     *
-     * @param username the username
-     * @param newPassword the new password
-     */
-    public void updatePassword(String username, String newPassword) {
-        // Find existing username
-        User user = userService.getUserByUsername(username);
-
-        // Update
-        String hashed = passwordHasher.hashWithSalt(newPassword);
-        user.setPassword(hashed);
-        userRepository.update(user);
-
-        // Refresh the cache after updating a user
-        userService.refreshCache();
-        System.out.println("Password updated");
-    }
-
-    /**
-     * Updates a user's email.
-     *
-     * @param username the username
-     * @param newEmail the new email
-     * @throws IllegalArgumentException if new email already exists
-     */
-    public void updateEmail(String username, String newEmail) {
-        // Find existing username
-        User user = userService.getUserByUsername(username);
-
-        // Check new email isn't used
-        userService.validateEmailAvailable(newEmail);
-
-        // Update
-        user.setEmail(newEmail);
-        userRepository.update(user);
-
-        // Refresh the cache after updating a user
-        userService.refreshCache();
-        System.out.println("Email updated");
-    }
-
-    /**
-     * Subscribes a user to a premium plan for one year.
-     *
-     * @param username the username
-     * @throws IllegalStateException if already subscribed to premium
-     */
-    public void subscribeToPremium(String username){
-        // Verify username exists
-        User user = userService.getUserByUsername(username);
-
-        // Check if it's already Premium
-        if (subscriptionService.hasActiveSubscription(user, PremiumSubscription.class)) {
-            throw new IllegalStateException("User " + username + " already has Premium plan");
+        // Calculate subscription end date
+        Date startDate = new Date();
+        Date endDate = null;
+        if (subscriptionDays > 0) {
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(startDate);
+            calendar.add(Calendar.DAY_OF_MONTH, subscriptionDays);
+            endDate = calendar.getTime();
         }
 
-        // Update to premium for 1 year + refresh + update
-        subscriptionService.upgradeToPremium(user);
+        // Assign the specified subscription
+        user.setSubscriptionPlan(subscriptionPlan);
+        user.setSubscriptionInfo(new SubscriptionInfo(startDate, endDate));
 
-        System.out.println("Upgraded to Premium → username=" + username );
+        // Save user
+        User savedUser = userRepository.save(user);
+
+        System.out.println("Created user → ID=" + savedUser.getUserID()
+                + ", username=" + savedUser.getUsername()
+                + ", subscription=" + subscriptionPlan.getType());
+
+        return savedUser;
     }
 
     /**
-     * Downgrades a user's subscription to a free plan.
+     * Generates the next available user ID.
      *
-     * @param username the username
-     * @throws IllegalArgumentException if no such user
-     * @throws IllegalStateException    if already on Free
+     * @return the next available user ID
      */
-    public void downgradeToFree(String username) {
-        // Verify username exists
-        User user = userService.getUserByUsername(username);
-
-        // Check if it's already free
-        if (subscriptionService.hasActiveSubscription(user, FreeSubscription.class)) {
-            throw new IllegalStateException("User " + username + " already has Free plan");
-        }
-
-        // Downgrade + refresh + update
-        subscriptionService.downgradeToFree(user);
-
-        System.out.println("Downgraded to Free → username=" + username);
+    private int generateNextUserId() {
+        return userRepository.findAll().stream()
+                .mapToInt(User::getUserID)
+                .max()
+                .orElse(0) + 1;
     }
 
 
-    /**
-     * Downgrades users with expired subscriptions to a free plan.
-     * Runs when UserFactory is initialized.
-     */
-    public void downgradeToFreeIfExpired() {
-        List<User> allUsers = userService.getAllUsers();
-        boolean anyExpired = false;
-
-        for (User user : allUsers) {
-            if (subscriptionService.isExpired(user)) {
-                subscriptionService.downgradeToFree(user);
-                anyExpired = true;
-                System.out.println("Downgraded expired subscription → username=" + user.getUsername());
-            }
-        }
-
-        // Refresh if any changes were made
-        if (anyExpired) {
-            userService.refreshCache();
-        }
-    }
-
-    /**
-     * Renews a user's premium subscription for one more year.
-     *
-     * @param username the username of the user to renew
-     * @throws IllegalArgumentException if no user with the given username exists
-     * @throws IllegalStateException    if the user does not currently have a Premium plan
-     */
-    public void renewPremium(String username) {
-        // Verify user exists
-        User user = userService.getUserByUsername(username);
-
-        // Ensure user currently on Premium
-        try {
-            subscriptionService.validatePremiumSubscription(user);
-        } catch (IllegalStateException e) {
-            if (!subscriptionService.isExpired(user)) {
-                throw new IllegalStateException("User " + username + " does not have a Premium plan, renewing it.");
-            }
-        }
-
-        // Delegate to SubscriptionService
-        subscriptionService.renew(user, 365);
-
-        // Debug
-        Date newExpiry = user.getSubscriptionInfo().getEndDate();
-        System.out.println("Renewed Premium → username=" + username + ", new expires=" + newExpiry);
-    }
-
-
-    //Followers methods
-
-    /**
-     * Makes a user follow another user.
-     *
-     * @param followerUsername the username of the follower
-     * @param followeeUsername the username of the user to follow
-     * @throws IllegalStateException if already following
-     */
-    public void followUser(String followerUsername, String followeeUsername){
-        // Check relations
-        User[] users = userService.validateFollowRelationship(followerUsername, followeeUsername);
-        User follower = users[0];
-        User followee = users[1];
-
-        // Update follower's followed list
-        List<Integer> follows = follower.getFollowedUsersIDs();
-        follows.add(followee.getUserID());
-        follower.setFollowedUsersIDs(follows);
-
-        // Update followee's followers list
-        List<Integer> followers = followee.getFollowersIDs();
-        followers.add(follower.getUserID());
-        followee.setFollowersIDs(followers);
-
-        // Save
-        userRepository.update(follower);
-        userRepository.update(followee);
-
-        // Refresh the cache after updating users
-        userService.refreshCache();
-
-        System.out.println(followerUsername + " now follows " + followeeUsername);
-    }
-
-    /**
-     * Makes a user unfollow another user.
-     *
-     * @param followerUsername the username of the follower
-     * @param followeeUsername the username of the user to unfollow
-     * @throws IllegalStateException if not currently following
-     */
-    public void unfollowUser(String followerUsername, String followeeUsername){
-        // Check relations
-        User[] users = userService.validateUnfollowRelationship(followerUsername, followeeUsername);
-        User follower = users[0];
-        User followee = users[1];
-
-        // Update follower's followed list
-        List<Integer> follows = follower.getFollowedUsersIDs();
-        follows.remove((Integer) followee.getUserID());
-        follower.setFollowedUsersIDs(follows);
-
-        // Update followee's followers list
-        List<Integer> followers = followee.getFollowersIDs();
-        followers.remove((Integer) follower.getUserID());
-        followee.setFollowersIDs(followers);
-
-        // Save
-        userRepository.update(follower);
-        userRepository.update(followee);
-
-        // Refresh the cache after updating users
-        userService.refreshCache();
-
-        System.out.println(followerUsername + " unfollowed " + followeeUsername);
-    }
 }

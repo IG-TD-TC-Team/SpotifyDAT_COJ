@@ -1,4 +1,4 @@
-package services;
+package services.playlistServices;
 
 import persistence.PlaylistRepository;
 import services.userServices.UserService;

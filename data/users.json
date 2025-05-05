@@ -975,4 +975,563 @@
     "sharedWith" : [ ]
   },
   "active" : true
+}, {
+  "userID" : 29,
+  "username" : "bob_s",
+  "email" : "bob@test.com",
+  "password" : "c6ba91b90d922e159893f46c387e5dc1b3dc5c101a5a4522f03b987177a24a91",
+  "firstName" : "Bob",
+  "lastName" : "Smith",
+  "dateOfBirth" : null,
+  "accountCreationDate" : 1746460470441,
+  "subscriptionPlan" : {
+    "type" : "PremiumPlan",
+    "type" : "PREMIUM",
+    "maxQuality" : 320,
+    "deviceLimit" : 5
+  },
+  "subscriptionInfo" : {
+    "startDate" : 1746460470441,
+    "endDate" : 1754236470441,
+    "lastBillingDate" : 1746460470441,
+    "paymentMethod" : null,
+    "autoRenew" : true,
+    "price" : 0.0
+  },
+  "followedUsersIDs" : [ ],
+  "followersIDs" : [ ],
+  "library" : {
+    "userID" : 29,
+    "playlists" : [ {
+      "name" : "Favorites",
+      "songs" : [ ],
+      "ownerID" : 29,
+      "playlistID" : 0,
+      "sharedWith" : [ ]
+    } ]
+  },
+  "defaultPlaylist" : {
+    "name" : "Favorites",
+    "songs" : [ ],
+    "ownerID" : 29,
+    "playlistID" : 0,
+    "sharedWith" : [ ]
+  },
+  "active" : true
+}, {
+  "userID" : 30,
+  "username" : "chris_w",
+  "email" : "chris@test.com",
+  "password" : "HVXntwuvXGjF5LTTJz1CVVk68l+q49DIaR2bJbt6YKoe0zN68Yy/ALTQoR10Q4rd",
+  "firstName" : "Chris",
+  "lastName" : "Wilson",
+  "dateOfBirth" : null,
+  "accountCreationDate" : 1746460470548,
+  "subscriptionPlan" : {
+    "type" : "FreePlan",
+    "type" : "FREE",
+    "maxQuality" : 128,
+    "deviceLimit" : 1
+  },
+  "subscriptionInfo" : {
+    "startDate" : 1746460470548,
+    "endDate" : null,
+    "lastBillingDate" : 1746460470548,
+    "paymentMethod" : null,
+    "autoRenew" : true,
+    "price" : 0.0
+  },
+  "followedUsersIDs" : [ ],
+  "followersIDs" : [ ],
+  "library" : {
+    "userID" : 30,
+    "playlists" : [ {
+      "name" : "Favorites",
+      "songs" : [ ],
+      "ownerID" : 30,
+      "playlistID" : 0,
+      "sharedWith" : [ ]
+    } ]
+  },
+  "defaultPlaylist" : {
+    "name" : "Favorites",
+    "songs" : [ ],
+    "ownerID" : 30,
+    "playlistID" : 0,
+    "sharedWith" : [ ]
+  },
+  "active" : true
+}, {
+  "userID" : 31,
+  "username" : "diana_p",
+  "email" : "diana@test.com",
+  "password" : "ef92b778bafe771e89245b89ecbc08a44a4e166c06659911881f383d4473e94f",
+  "firstName" : "Diana",
+  "lastName" : "Prince",
+  "dateOfBirth" : null,
+  "accountCreationDate" : 1746460470600,
+  "subscriptionPlan" : {
+    "type" : "PremiumPlan",
+    "type" : "PREMIUM",
+    "maxQuality" : 320,
+    "deviceLimit" : 5
+  },
+  "subscriptionInfo" : {
+    "startDate" : 1746460470676,
+    "endDate" : 1754236470676,
+    "lastBillingDate" : 1746460470691,
+    "paymentMethod" : null,
+    "autoRenew" : true,
+    "price" : 0.0
+  },
+  "followedUsersIDs" : [ ],
+  "followersIDs" : [ ],
+  "library" : {
+    "userID" : 31,
+    "playlists" : [ {
+      "name" : "Favorites",
+      "songs" : [ ],
+      "ownerID" : 31,
+      "playlistID" : 0,
+      "sharedWith" : [ ]
+    } ]
+  },
+  "defaultPlaylist" : {
+    "name" : "Favorites",
+    "songs" : [ ],
+    "ownerID" : 31,
+    "playlistID" : 0,
+    "sharedWith" : [ ]
+  },
+  "active" : true
+}, {
+  "userID" : 32,
+  "username" : "eve_a",
+  "email" : "eve@test.com",
+  "password" : "9b8769a4a742959a2d0298c36fb70623f2dfacda8436237df08d8dfd5b37374c",
+  "firstName" : "Eve",
+  "lastName" : "Adams",
+  "dateOfBirth" : null,
+  "accountCreationDate" : 1746460470705,
+  "subscriptionPlan" : {
+    "type" : "FreePlan",
+    "type" : "FREE",
+    "maxQuality" : 128,
+    "deviceLimit" : 1
+  },
+  "subscriptionInfo" : {
+    "startDate" : 1746460470705,
+    "endDate" : null,
+    "lastBillingDate" : 1746460470705,
+    "paymentMethod" : null,
+    "autoRenew" : true,
+    "price" : 0.0
+  },
+  "followedUsersIDs" : [ ],
+  "followersIDs" : [ ],
+  "library" : {
+    "userID" : 32,
+    "playlists" : [ {
+      "name" : "Favorites",
+      "songs" : [ ],
+      "ownerID" : 32,
+      "playlistID" : 0,
+      "sharedWith" : [ ]
+    } ]
+  },
+  "defaultPlaylist" : {
+    "name" : "Favorites",
+    "songs" : [ ],
+    "ownerID" : 32,
+    "playlistID" : 0,
+    "sharedWith" : [ ]
+  },
+  "active" : true
+}, {
+  "userID" : 33,
+  "username" : "frank_w",
+  "email" : "frank@test.com",
+  "password" : "1d4598d1949b47f7f211134b639ec32238ce73086a83c2f745713b3f12f817e5",
+  "firstName" : "Frank",
+  "lastName" : "Wright",
+  "dateOfBirth" : null,
+  "accountCreationDate" : 1746460470721,
+  "subscriptionPlan" : {
+    "type" : "FreePlan",
+    "type" : "FREE",
+    "maxQuality" : 128,
+    "deviceLimit" : 1
+  },
+  "subscriptionInfo" : {
+    "startDate" : 1746460470721,
+    "endDate" : null,
+    "lastBillingDate" : 1746460470721,
+    "paymentMethod" : null,
+    "autoRenew" : true,
+    "price" : 0.0
+  },
+  "followedUsersIDs" : [ ],
+  "followersIDs" : [ ],
+  "library" : {
+    "userID" : 33,
+    "playlists" : [ {
+      "name" : "Favorites",
+      "songs" : [ ],
+      "ownerID" : 33,
+      "playlistID" : 0,
+      "sharedWith" : [ ]
+    } ]
+  },
+  "defaultPlaylist" : {
+    "name" : "Favorites",
+    "songs" : [ ],
+    "ownerID" : 33,
+    "playlistID" : 0,
+    "sharedWith" : [ ]
+  },
+  "active" : true
+}, {
+  "userID" : 34,
+  "username" : "grace_k",
+  "email" : "grace@test.com",
+  "password" : "9dbd5c893b5b573a1aa909c8cade58df194310e411c590d9fb0d63431841fd67",
+  "firstName" : "Grace",
+  "lastName" : "Kim",
+  "dateOfBirth" : null,
+  "accountCreationDate" : 1746460470735,
+  "subscriptionPlan" : {
+    "type" : "FreePlan",
+    "type" : "FREE",
+    "maxQuality" : 128,
+    "deviceLimit" : 1
+  },
+  "subscriptionInfo" : {
+    "startDate" : 1746460470735,
+    "endDate" : null,
+    "lastBillingDate" : 1746460470735,
+    "paymentMethod" : null,
+    "autoRenew" : true,
+    "price" : 0.0
+  },
+  "followedUsersIDs" : [ ],
+  "followersIDs" : [ ],
+  "library" : {
+    "userID" : 34,
+    "playlists" : [ {
+      "name" : "Favorites",
+      "songs" : [ ],
+      "ownerID" : 34,
+      "playlistID" : 0,
+      "sharedWith" : [ ]
+    } ]
+  },
+  "defaultPlaylist" : {
+    "name" : "Favorites",
+    "songs" : [ ],
+    "ownerID" : 34,
+    "playlistID" : 0,
+    "sharedWith" : [ ]
+  },
+  "active" : true
+}, {
+  "userID" : 35,
+  "username" : "hannah_l",
+  "email" : "hannah@test.com",
+  "password" : "9b8769a4a742959a2d0298c36fb70623f2dfacda8436237df08d8dfd5b37374c",
+  "firstName" : "Hannah",
+  "lastName" : "Lee",
+  "dateOfBirth" : null,
+  "accountCreationDate" : 1746460470811,
+  "subscriptionPlan" : {
+    "type" : "FreePlan",
+    "type" : "FREE",
+    "maxQuality" : 128,
+    "deviceLimit" : 1
+  },
+  "subscriptionInfo" : {
+    "startDate" : 1746460470811,
+    "endDate" : null,
+    "lastBillingDate" : 1746460470811,
+    "paymentMethod" : null,
+    "autoRenew" : true,
+    "price" : 0.0
+  },
+  "followedUsersIDs" : [ 36, 37 ],
+  "followersIDs" : [ ],
+  "library" : {
+    "userID" : 35,
+    "playlists" : [ {
+      "name" : "Favorites",
+      "songs" : [ ],
+      "ownerID" : 35,
+      "playlistID" : 0,
+      "sharedWith" : [ ]
+    } ]
+  },
+  "defaultPlaylist" : {
+    "name" : "Favorites",
+    "songs" : [ ],
+    "ownerID" : 35,
+    "playlistID" : 0,
+    "sharedWith" : [ ]
+  },
+  "active" : true
+}, {
+  "userID" : 36,
+  "username" : "isaac_n",
+  "email" : "isaac@test.com",
+  "password" : "1d4598d1949b47f7f211134b639ec32238ce73086a83c2f745713b3f12f817e5",
+  "firstName" : "Isaac",
+  "lastName" : "Newton",
+  "dateOfBirth" : null,
+  "accountCreationDate" : 1746460470826,
+  "subscriptionPlan" : {
+    "type" : "FreePlan",
+    "type" : "FREE",
+    "maxQuality" : 128,
+    "deviceLimit" : 1
+  },
+  "subscriptionInfo" : {
+    "startDate" : 1746460470826,
+    "endDate" : null,
+    "lastBillingDate" : 1746460470826,
+    "paymentMethod" : null,
+    "autoRenew" : true,
+    "price" : 0.0
+  },
+  "followedUsersIDs" : [ 37, 38 ],
+  "followersIDs" : [ 35 ],
+  "library" : {
+    "userID" : 36,
+    "playlists" : [ {
+      "name" : "Favorites",
+      "songs" : [ ],
+      "ownerID" : 36,
+      "playlistID" : 0,
+      "sharedWith" : [ ]
+    } ]
+  },
+  "defaultPlaylist" : {
+    "name" : "Favorites",
+    "songs" : [ ],
+    "ownerID" : 36,
+    "playlistID" : 0,
+    "sharedWith" : [ ]
+  },
+  "active" : true
+}, {
+  "userID" : 37,
+  "username" : "julia_m",
+  "email" : "julia@test.com",
+  "password" : "9dbd5c893b5b573a1aa909c8cade58df194310e411c590d9fb0d63431841fd67",
+  "firstName" : "Julia",
+  "lastName" : "Moore",
+  "dateOfBirth" : null,
+  "accountCreationDate" : 1746460470842,
+  "subscriptionPlan" : {
+    "type" : "FreePlan",
+    "type" : "FREE",
+    "maxQuality" : 128,
+    "deviceLimit" : 1
+  },
+  "subscriptionInfo" : {
+    "startDate" : 1746460470842,
+    "endDate" : null,
+    "lastBillingDate" : 1746460470842,
+    "paymentMethod" : null,
+    "autoRenew" : true,
+    "price" : 0.0
+  },
+  "followedUsersIDs" : [ 38 ],
+  "followersIDs" : [ 35, 36 ],
+  "library" : {
+    "userID" : 37,
+    "playlists" : [ {
+      "name" : "Favorites",
+      "songs" : [ ],
+      "ownerID" : 37,
+      "playlistID" : 0,
+      "sharedWith" : [ ]
+    } ]
+  },
+  "defaultPlaylist" : {
+    "name" : "Favorites",
+    "songs" : [ ],
+    "ownerID" : 37,
+    "playlistID" : 0,
+    "sharedWith" : [ ]
+  },
+  "active" : true
+}, {
+  "userID" : 38,
+  "username" : "kevin_p",
+  "email" : "kevin@test.com",
+  "password" : "1c6b4f2278067b875faa584b186908eb8c93289fbcb1ae3b057f66fc3c48853a",
+  "firstName" : "Kevin",
+  "lastName" : "Park",
+  "dateOfBirth" : null,
+  "accountCreationDate" : 1746460470862,
+  "subscriptionPlan" : {
+    "type" : "FreePlan",
+    "type" : "FREE",
+    "maxQuality" : 128,
+    "deviceLimit" : 1
+  },
+  "subscriptionInfo" : {
+    "startDate" : 1746460470862,
+    "endDate" : null,
+    "lastBillingDate" : 1746460470862,
+    "paymentMethod" : null,
+    "autoRenew" : true,
+    "price" : 0.0
+  },
+  "followedUsersIDs" : [ ],
+  "followersIDs" : [ 36, 37 ],
+  "library" : {
+    "userID" : 38,
+    "playlists" : [ {
+      "name" : "Favorites",
+      "songs" : [ ],
+      "ownerID" : 38,
+      "playlistID" : 0,
+      "sharedWith" : [ ]
+    } ]
+  },
+  "defaultPlaylist" : {
+    "name" : "Favorites",
+    "songs" : [ ],
+    "ownerID" : 38,
+    "playlistID" : 0,
+    "sharedWith" : [ ]
+  },
+  "active" : true
+}, {
+  "userID" : 39,
+  "username" : "leonard_c",
+  "email" : "leonard@test.com",
+  "password" : "ef92b778bafe771e89245b89ecbc08a44a4e166c06659911881f383d4473e94f",
+  "firstName" : "Leonard",
+  "lastName" : "Cohen",
+  "dateOfBirth" : null,
+  "accountCreationDate" : 1746460471032,
+  "subscriptionPlan" : {
+    "type" : "PremiumPlan",
+    "type" : "PREMIUM",
+    "maxQuality" : 320,
+    "deviceLimit" : 5
+  },
+  "subscriptionInfo" : {
+    "startDate" : 1746460471032,
+    "endDate" : 1777996471032,
+    "lastBillingDate" : 1746460471032,
+    "paymentMethod" : null,
+    "autoRenew" : true,
+    "price" : 0.0
+  },
+  "followedUsersIDs" : [ 40 ],
+  "followersIDs" : [ ],
+  "library" : {
+    "userID" : 39,
+    "playlists" : [ {
+      "name" : "Favorites",
+      "songs" : [ ],
+      "ownerID" : 39,
+      "playlistID" : 0,
+      "sharedWith" : [ ]
+    } ]
+  },
+  "defaultPlaylist" : {
+    "name" : "Favorites",
+    "songs" : [ ],
+    "ownerID" : 39,
+    "playlistID" : 0,
+    "sharedWith" : [ ]
+  },
+  "active" : true
+}, {
+  "userID" : 40,
+  "username" : "maya_a",
+  "email" : "maya@test.com",
+  "password" : "7ZCDT7HBdt/kEGO3jcGoh9dbs7MfTzuvfXWFYHo5M7YyWmxm06Os9tqh4qkpNrp0",
+  "firstName" : "Maya",
+  "lastName" : "Angelou",
+  "dateOfBirth" : null,
+  "accountCreationDate" : 1746460471043,
+  "subscriptionPlan" : {
+    "type" : "StudentPlan",
+    "type" : "STUDENT",
+    "maxQuality" : 256,
+    "deviceLimit" : 3
+  },
+  "subscriptionInfo" : {
+    "startDate" : 1746460471043,
+    "endDate" : 1762016071043,
+    "lastBillingDate" : 1746460471043,
+    "paymentMethod" : null,
+    "autoRenew" : true,
+    "price" : 0.0
+  },
+  "followedUsersIDs" : [ ],
+  "followersIDs" : [ 39 ],
+  "library" : {
+    "userID" : 40,
+    "playlists" : [ {
+      "name" : "Favorites",
+      "songs" : [ ],
+      "ownerID" : 40,
+      "playlistID" : 0,
+      "sharedWith" : [ ]
+    } ]
+  },
+  "defaultPlaylist" : {
+    "name" : "Favorites",
+    "songs" : [ ],
+    "ownerID" : 40,
+    "playlistID" : 0,
+    "sharedWith" : [ ]
+  },
+  "active" : true
+}, {
+  "userID" : 41,
+  "username" : "testuser",
+  "email" : "test@example.com",
+  "password" : "13d249f2cb4127b40cfa757866850278793f814ded3c587fe5889e889a7a9f6c",
+  "firstName" : "testuser",
+  "lastName" : "TestUser",
+  "dateOfBirth" : null,
+  "accountCreationDate" : 1746478532603,
+  "subscriptionPlan" : {
+    "type" : "FreePlan",
+    "type" : "FREE",
+    "maxQuality" : 128,
+    "deviceLimit" : 1
+  },
+  "subscriptionInfo" : {
+    "startDate" : 1746478532603,
+    "endDate" : null,
+    "lastBillingDate" : 1746478532603,
+    "paymentMethod" : null,
+    "autoRenew" : true,
+    "price" : 0.0
+  },
+  "followedUsersIDs" : [ ],
+  "followersIDs" : [ ],
+  "library" : {
+    "userID" : 41,
+    "playlists" : [ {
+      "name" : "Favorites",
+      "songs" : [ ],
+      "ownerID" : 41,
+      "playlistID" : 0,
+      "sharedWith" : [ ]
+    } ]
+  },
+  "defaultPlaylist" : {
+    "name" : "Favorites",
+    "songs" : [ ],
+    "ownerID" : 41,
+    "playlistID" : 0,
+    "sharedWith" : [ ]
+  },
+  "active" : true
 } ]

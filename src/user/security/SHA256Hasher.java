@@ -48,14 +48,26 @@ public class SHA256Hasher implements PasswordHasher {
 
     @Override
     public boolean verify(String rawPassword, String hashedPassword) {
-        // For backward compatibility with unsalted hashes
-        if (hashedPassword.length() == 64) {
+        // For simple hex hashes (no salt)
+        if (hashedPassword.length() == 64 && hashedPassword.matches("[0-9a-f]+")) {
             return hash(rawPassword).equals(hashedPassword);
         }
 
         try {
-            // Decode from base64
-            byte[] combined = Base64.getDecoder().decode(hashedPassword);
+            // Try to decode from base64
+            byte[] combined;
+            try {
+                combined = Base64.getDecoder().decode(hashedPassword);
+            } catch (IllegalArgumentException e) {
+                // If it's not base64, try direct comparison as a fallback
+                return hash(rawPassword).equals(hashedPassword);
+            }
+
+            // Make sure we have enough bytes for salt + hash
+            if (combined.length <= SALT_LENGTH) {
+                // Not enough data for salt + hash, try direct comparison
+                return hash(rawPassword).equals(hashedPassword);
+            }
 
             // Extract salt
             byte[] salt = new byte[SALT_LENGTH];
@@ -72,8 +84,8 @@ public class SHA256Hasher implements PasswordHasher {
 
             // Compare hashes
             return MessageDigest.isEqual(encodedHash, expectedHash);
-        } catch (IllegalArgumentException | NoSuchAlgorithmException e) {
-            return false; // Invalid format or algorithm
+        } catch (NoSuchAlgorithmException e) {
+            return false; // Invalid algorithm
         }
     }
 }

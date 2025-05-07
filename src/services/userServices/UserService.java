@@ -45,7 +45,7 @@ public class UserService {
      */
     public static synchronized UserService getInstance() {
         if (instance == null) {
-            instance = new UserService(RepositoryFactory.getUserRepository());
+            instance = new UserService(RepositoryFactory.getInstance().getUserRepository());
         }
         return instance;
     }

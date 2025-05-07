@@ -30,9 +30,9 @@ public class MusicFactory {
      */
     private MusicFactory() {
         // Get repositories from RepositoryFactory
-        this.songRepository = RepositoryFactory.getSongRepository();
-        this.artistRepository = RepositoryFactory.getArtistRepository();
-        this.albumRepository = RepositoryFactory.getAlbumRepository();
+        this.songRepository = RepositoryFactory.getInstance().getSongRepository();
+        this.artistRepository = RepositoryFactory.getInstance().getArtistRepository();
+        this.albumRepository = RepositoryFactory.getInstance().getAlbumRepository();
 
         // Initialize next IDs based on existing data
         initializeNextIds();
@@ -240,25 +240,5 @@ public class MusicFactory {
         return createSongWithAutoPath(title, artist.getArtistID(), album.getId(), genre, durationSeconds);
     }
 
-    /**
-     * Adds a song to an album.
-     *
-     * @param songId The ID of the song
-     * @param albumId The ID of the album
-     * @return true if successful, false otherwise
-     */
-    public boolean addSongToAlbum(int songId, int albumId) {
-        return albumRepository.addSongToAlbum(albumId, songId);
-    }
 
-    /**
-     * Removes a song from an album.
-     *
-     * @param songId The ID of the song
-     * @param albumId The ID of the album
-     * @return true if successful, false otherwise
-     */
-    public boolean removeSongFromAlbum(int songId, int albumId) {
-        return albumRepository.removeSongFromAlbum(albumId, songId);
-    }
 }

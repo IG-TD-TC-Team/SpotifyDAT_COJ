@@ -34,7 +34,7 @@ public class UserFactory {
      * Private constructor initializing repositories through RepositoryFactory.
      */
     private UserFactory() {
-        this.userRepository = RepositoryFactory.getUserRepository();
+        this.userRepository = RepositoryFactory.getInstance().getUserRepository();
         this.passwordHasher = new SHA256Hasher();
     }
 

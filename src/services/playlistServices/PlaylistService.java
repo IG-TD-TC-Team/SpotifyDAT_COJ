@@ -1,12 +1,17 @@
 package services.playlistServices;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import factory.PlaylistFactory;
+import factory.RepositoryFactory;
 import persistence.PlaylistRepository;
+import persistence.interfaces.PlaylistRepositoryInterface;
 import services.userServices.UserService;
 import songsAndArtists.Genre;
+import songsAndArtists.Song;
 import songsOrganisation.Playlist;
 import user.User;
 
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -24,19 +29,24 @@ public class PlaylistService {
     /**
      * Repository for accessing playlist data.
      */
-    private final PlaylistRepository playlistRepository;
+    private final PlaylistRepositoryInterface playlistRepository;
 
     /**
      * Cache of all playlists for faster retrieval.
      */
     private List<Playlist> playlists;
 
+
+
+
     /**
      * Private constructor to prevent external instantiation.
      * Initializes the PlaylistRepository instance and loads all playlists.
      */
     private PlaylistService() {
-        this.playlistRepository = PlaylistRepository.getInstance();
+
+
+        this.playlistRepository = RepositoryFactory.getInstance().getPlaylistRepository();
         refreshCache();
     }
 
@@ -52,6 +62,7 @@ public class PlaylistService {
         return instance;
     }
 
+    /// ------------------- CACHE REFRESH ----------------- ///
     /**
      * Refreshes the in-memory cache with the latest data from repositories.
      * Call this after playlists are created, updated, or deleted.
@@ -60,6 +71,8 @@ public class PlaylistService {
         playlists = playlistRepository.findAll();
     }
 
+
+    /// ------------------ PLAYLIST RETRIEVAL ----------------- ///
     /**
      * Retrieves all playlists.
      *
@@ -125,18 +138,6 @@ public class PlaylistService {
         return getPlaylistsByOwner(user.getUserID());
     }
 
-    /**
-     * Retrieves all playlists shared with a specific user.
-     *
-     * @param userID the ID of the user
-     * @return a list of playlists shared with the specified user
-     */
-    public List<Playlist> getPlaylistsSharedWithUser(int userID) {
-        refreshCache();
-        return playlists.stream()
-                .filter(playlist -> playlist.getSharedWith().contains(userID))
-                .collect(Collectors.toList());
-    }
 
     /**
      * Retrieves all playlists that contain a specific song.
@@ -207,19 +208,47 @@ public class PlaylistService {
         return playlist.getTotalDuration();
     }
 
+
+
+    /// ---------------PLAYLIST UPDATE ----------------- ///
     /**
-     * Checks if a specific song is in a playlist.
+     * Renames a playlist.
      *
      * @param playlistId the ID of the playlist
-     * @param songId the ID of the song
-     * @return true if the song is in the playlist, false otherwise
+     * @param newName the new name for the playlist
+     * @return true if the playlist was renamed, false otherwise
      */
-    public boolean isInPlaylist(int playlistId, int songId) {
-        Playlist playlist = getPlaylistById(playlistId);
-        if (playlist == null) {
+    public boolean renamePlaylist(int playlistId, String newName) {
+        Optional<Playlist> playlistOpt = playlistRepository.findById(playlistId);
+        if (playlistOpt.isEmpty()) {
             return false;
         }
-        return playlist.getSongs().stream()
-                .anyMatch(song -> song.getSongId() == songId);
+
+        Playlist playlist = playlistOpt.get();
+
+        // Check if new name already exists for this owner
+        Optional<Playlist> existingPlaylist = playlistRepository.findByNameAndOwnerID(newName, playlist.getOwnerID());
+        if (existingPlaylist.isPresent() && existingPlaylist.get().getPlaylistID() != playlistId) {
+            throw new IllegalArgumentException("A playlist with name '" + newName + "' already exists for this user");
+        }
+
+        playlist.setName(newName);
+        playlistRepository.update(playlist);
+
+        return true;
     }
+
+    /// ------------------ PLAYLIST DELETION ----------------- ///
+
+
+    /**
+     * Deletes a playlist.
+     *
+     * @param playlistId the ID of the playlist
+     * @return true if the playlist was deleted, false otherwise
+     */
+    public boolean deletePlaylist(int playlistId) {
+        return playlistRepository.deleteById(playlistId);
+    }
+
 }

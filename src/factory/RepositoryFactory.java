@@ -11,15 +11,24 @@ import persistence.interfaces.*;
  */
 public class RepositoryFactory {
 
+    private static RepositoryFactory instance;
     // Private constructor to prevent instantiation
-    private RepositoryFactory() {}
+    private RepositoryFactory() {
 
+    }
+
+    public static synchronized RepositoryFactory getInstance() {
+        if (instance == null) {
+            instance = new RepositoryFactory();
+        }
+        return instance;
+    }
     /**
      * Gets the UserRepository singleton instance.
      *
      * @return The UserRepository instance
      */
-    public static UserRepositoryInterface getUserRepository() {
+    public UserRepositoryInterface getUserRepository() {
         return UserRepository.getInstance();
     }
 
@@ -28,7 +37,7 @@ public class RepositoryFactory {
      *
      * @return A SongRepository instance
      */
-    public static SongRepositoryInterface getSongRepository() {
+    public SongRepositoryInterface getSongRepository() {
         return SongRepository.getInstance();
     }
 
@@ -37,7 +46,7 @@ public class RepositoryFactory {
      *
      * @return An ArtistRepository instance
      */
-    public static ArtistRepositoryInterface getArtistRepository() {
+    public ArtistRepositoryInterface getArtistRepository() {
         return ArtistRepository.getInstance();
     }
 
@@ -46,7 +55,7 @@ public class RepositoryFactory {
      *
      * @return An AlbumRepository instance
      */
-    public static AlbumRepositoryInterface getAlbumRepository() {
+    public AlbumRepositoryInterface getAlbumRepository() {
         return AlbumRepository.getInstance();
     }
 
@@ -55,7 +64,7 @@ public class RepositoryFactory {
      *
      * @return A PlaylistRepository instance
      */
-    public static PlaylistRepositoryInterface getPlaylistRepository() {
+    public PlaylistRepositoryInterface getPlaylistRepository() {
         return PlaylistRepository.getInstance();
     }
 
@@ -64,7 +73,7 @@ public class RepositoryFactory {
      *
      * @return A LibraryRepository instance
      */
-    public static LibraryRepositoryInterface getLibraryRepository() {
+    public LibraryRepositoryInterface getLibraryRepository() {
         return LibraryRepository.getInstance();
     }
 }

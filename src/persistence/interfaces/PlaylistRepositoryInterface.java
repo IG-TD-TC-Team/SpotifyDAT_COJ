@@ -27,6 +27,15 @@ public interface PlaylistRepositoryInterface extends Repository<Playlist> {
     List<Playlist> findSharedWithUserByID(int userID);
 
     /**
+     *
+     * Checks if a playlist is shared with a specific user.
+     * @param playlistId
+     * @param userId
+     * @return
+     */
+    boolean isPlaylistSharedWithUser(int playlistId, int userId);
+
+    /**
      * Deletes a playlist by its name and owner.
      */
     boolean deleteByNameAndOwner(String name, int ownerID);

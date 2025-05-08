@@ -1,8 +1,10 @@
 
+import services.songServices.AlbumService;
+import services.songServices.ArtistService;
+import services.songServices.SongService;
 import services.userServices.UserService;
 import songsAndArtists.*;
 import factory.*;
-import services.*;
 
 import java.util.*;
 
@@ -66,7 +68,7 @@ public class FactoryManagerTest {
         songService.refreshCache();
 
         // Retrieve the artist using the manager
-        Artist retrievedArtist = songService.getArtistById(artist.getArtistID());
+        Artist retrievedArtist = ArtistService.getInstance().getArtistById(artist.getArtistID());
 
         // Validate that we got the same artist
         if (retrievedArtist != null) {
@@ -98,7 +100,7 @@ public class FactoryManagerTest {
 
 
         // Retrieve the album using the manager
-        Album retrievedAlbum = songService.getAlbumById(album.getId());
+        Album retrievedAlbum = AlbumService.getInstance().getAlbumById(album.getId());
 
         // Validate that we got the same album
         if (retrievedAlbum != null) {
@@ -185,8 +187,8 @@ public class FactoryManagerTest {
 
         // Verify song was created correctly
         if (retrievedSong != null) {
-            Artist artist = songService.getArtistById(retrievedSong.getArtistId());
-            Album album = songService.getAlbumById(retrievedSong.getAlbumId());
+            Artist artist = ArtistService.getInstance().getArtistById(retrievedSong.getArtistId());
+            Album album = AlbumService.getInstance().getAlbumById(retrievedSong.getAlbumId());
 
             boolean artistCorrect = artist != null &&
                     artist.getFirstName().equals(artistFirstName) &&

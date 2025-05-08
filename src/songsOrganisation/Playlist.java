@@ -41,143 +41,26 @@ public class Playlist {
         this.iDsOfUsersSharedWith = new ArrayList<>();
     }
 
+/// --------------------- PLAYLIST SOCIAL GET/SET ----------------- ///
+
     /**
-     * Adds a song to the playlist.
-     * @param song The song to be added.
+     * Retrieves the list of users with whom the playlist is shared.
+     * @return The list of users with whom the playlist is shared.
      */
-    public void addSong(Song song) {
-        songs.add(song);
+    public List<Integer> getSharedWith() {
+        return iDsOfUsersSharedWith;  // Return the actual list, not an unmodifiable view
     }
 
     /**
-     * Adds a song to the beginning of the playlist.
-     * @param song The song to be added at the beginning.
+     * Sets the shared users list.
+     * @param sharedWith The new list of users with whom to share the playlist.
      */
-    public void addSongToBeginning(Song song) {
-        songs.addFirst(song);
-    }
-
-    /**
-     * Adds a song to the end of the playlist.
-     * @param song The song to be added at the end.
-     */
-    public void addSongToEnd(Song song) {
-        songs.addLast(song);
-    }
-
-    /**
-     * Removes a song from the playlist.
-     * @param song The song to be removed.
-     */
-    public void removeSong(Song song) {
-        songs.remove(song);
-    }
-
-    /**
-     * Removes the first song from the playlist.
-     * @return The removed song or null if the playlist is empty.
-     */
-    public Song removeFirstSong() {
-        if (songs.isEmpty()) {
-            return null;
-        }
-        return songs.removeFirst();
-    }
-
-    /**
-     * Removes the last song from the playlist.
-     * @return The removed song or null if the playlist is empty.
-     */
-    public Song removeLastSong() {
-        if (songs.isEmpty()) {
-            return null;
-        }
-        return songs.removeLast();
+    public void setSharedWith(List<Integer> sharedWith) {
+        this.iDsOfUsersSharedWith = sharedWith;
     }
 
 
-    /**
-     * Moves a song forward one position in the playlist.
-     * @param song The song to be moved forward.
-     *
-     * This method finds the specified song in the playlist and swaps it with the song
-     * immediately after it, effectively moving it one position forward in the list.
-     * If the song is already at the end of the playlist, no movement occurs.
-     */
-    public void moveNext(Song song) {
-        int index = songs.indexOf(song);
-        if (index < songs.size() - 1) {
-            Collections.swap(songs, index, index + 1);
-        }
-    }
-
-    /**
-     * Moves a song backward one position in the playlist.
-     * @param song The song to be moved backward.
-     *
-     * This method finds the specified song in the playlist and swaps it with the song
-     * immediately before it, effectively moving it one position backward in the list.
-     * If the song is already at the beginning of the playlist, no movement occurs.
-     */
-    public void movePrevious(Song song) {
-        int index = songs.indexOf(song);
-        if (index > 0) {
-            Collections.swap(songs, index, index - 1);
-        }
-    }
-
-    /**
-     * Gets the first song in the playlist.
-     * @return The first song or null if the playlist is empty.
-     */
-    @JsonIgnore // Prevent serialization of this method as a property
-    public Song getFirstSong() {
-        if (songs.isEmpty()) {
-            return null;
-        }
-        return songs.getFirst();
-    }
-
-    /**
-     * Gets the last song in the playlist.
-     * @return The last song or null if the playlist is empty.
-     */
-    @JsonIgnore // Prevent serialization of this method as a property
-    public Song getLastSong() {
-        if (songs.isEmpty()) {
-            return null;
-        }
-        return songs.getLast();
-    }
-
-    /**
-     * Checks if the playlist is shared with a specific user.
-     * @param userID The user to check.
-     * @return true if the playlist is shared with the user, false otherwise.
-     */
-    public boolean isSharedWith(int userID) {
-        return iDsOfUsersSharedWith.contains(userID);
-    }
-
-    /**
-     * Shares the playlist with another user.
-     * @param userID The user to share the playlist with.
-     */
-    public void addUserToShareWith(int userID) {
-        if (!iDsOfUsersSharedWith.contains(userID)) {
-            iDsOfUsersSharedWith.add(userID);
-        }
-    }
-
-    /**
-     * Removes a user from the shared list.
-     * @param userID The user to remove from the shared list.
-     */
-    public void removeSharing(int userID) {
-        iDsOfUsersSharedWith.remove(userID);
-    }
-
-
+/// ---------------------- PLAYLIST SONGS GET/SET ----------------- ///
     /**
      * Retrieves the number of songs in the playlist.
      * @return The number of songs in the playlist.
@@ -199,29 +82,21 @@ public class Playlist {
         }
         return null;
     }
-
-
-    /// Helper method to convert to a list for JSON persistence
-    /// This method is used when saving the playlist to JSON
     /**
-     * Converts the playlist to a list of songs.
-     * @return A list of songs in the playlist.
+     * Retrieves the list of songs in the playlist.
+     * @return An unmodifiable list of songs in the playlist.
      */
-    @JsonIgnore // Prevent serialization of this method as a property
-    public List<Song> toList() {
-        return new ArrayList<>(songs);
+    public LinkedList<Song> getSongs() {
+
+        return songs;
     }
 
-    /// Helper method to rebuild from a list (after loading from JSON)
     /**
-     * Rebuilds the playlist from a list of songs.
-     * @param songs The list of songs to set in the playlist.
+     * Adds the songs to the playlist.
+     * @param songs The songs to set.
      */
-    public void fromList(List<Song> songs) {
-        clear(); // Clear current playlist
-        for (Song song : songs) {
-            addSong(song);
-        }
+    public void setSongs(LinkedList<Song> songs) {
+        this.songs = songs;
     }
 
     /**
@@ -231,7 +106,7 @@ public class Playlist {
         songs.clear();
     }
 
-    // Getters and setters
+    /// --------------------- PLAYLIST GET/SET ----------------- ///
     /**
      * Retrieves the name of the playlist.
      */
@@ -247,13 +122,6 @@ public class Playlist {
         this.name = name;
     }
 
-    /**
-     * Retrieves the list of songs in the playlist.
-     * @return An unmodifiable list of songs in the playlist.
-     */
-    public List<Song> getSongs() {
-        return Collections.unmodifiableList(songs);
-    }
 
     /**
      * Retrieves the owner of the playlist.
@@ -285,21 +153,6 @@ public class Playlist {
         this.ownerID = ownerID;
     }
 
-    /**
-     * Retrieves the list of users with whom the playlist is shared.
-     * @return The list of users with whom the playlist is shared.
-     */
-    public List<Integer> getSharedWith() {
-        return iDsOfUsersSharedWith;  // Return the actual list, not an unmodifiable view
-    }
-
-    /**
-     * Sets the shared users list.
-     * @param sharedWith The new list of users with whom to share the playlist.
-     */
-    public void setSharedWith(List<Integer> sharedWith) {
-        this.iDsOfUsersSharedWith = sharedWith;
-    }
 
     /**
      * Calculates the total duration of the playlist in seconds.
@@ -314,37 +167,7 @@ public class Playlist {
         return totalDuration;
     }
 
-    /**
-     * Finds songs by a specific artist in the playlist.
-     * @param artistID The ID of the artist to search for.
-     * @return A list of songs by the specified artist.
-     */
-    @JsonIgnore // Prevent serialization of this method as a property
-    public List<Song> findSongsByArtistID(int artistID) {
-        List<Song> result = new ArrayList<>();
-        for (Song song : songs) {
-            if (song.getArtistId() == artistID) {
-                result.add(song);
-            }
-        }
-        return result;
-    }
 
-    /**
-     * Finds songs by a specific genre in the playlist.
-     * @param genre The genre to search for.
-     * @return A list of songs of the specified genre.
-     */
-    @JsonIgnore // Prevent serialization of this method as a property
-    public List<Song> findSongsByGenre(String genre) {
-        List<Song> result = new ArrayList<>();
-        for (Song song : songs) {
-            if (song.getGenre().equals(Genre.valueOf(genre)))  {
-                result.add(song);
-            }
-        }
-        return result;
-    }
 
 
     @Override
@@ -356,4 +179,30 @@ public class Playlist {
                 ", sharedWith=" + iDsOfUsersSharedWith.size() +
                 '}';
     }
+
+/// ---------------------- PLAYLIST HELPER METHODS ----------------- ///
+    /// Helper method to rebuild from a list (after loading from JSON)
+    /**
+     * Rebuilds the playlist from a list of songs.
+     * @param songsList The list of songs to set in the playlist.
+     */
+    public void fromList(List<Song> songsList) {
+        clear(); // Clear current playlist
+
+        this.songs.addAll(songsList);
+    }
+
+    /// Helper method to convert to a list for JSON persistence
+    /// This method is used when saving the playlist to JSON
+    /**
+     * Converts the playlist to a list of songs.
+     * @return A list of songs in the playlist.
+     */
+    @JsonIgnore // Prevent serialization of this method as a property
+    public List<Song> toList() {
+        return new ArrayList<>(songs);
+    }
+
+
+
 }

@@ -47,7 +47,7 @@ public class PasswordService {
             // Using RepositoryFactory to get the repository instance
             instance = new PasswordService(
                     new SHA256Hasher(),
-                    RepositoryFactory.getUserRepository()
+                    RepositoryFactory.getInstance().getUserRepository()
             );
         }
         return instance;

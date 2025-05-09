@@ -46,7 +46,7 @@ public class SubscriptionService {
         if (instance == null) {
             // Using RepositoryFactory to get the repository instance
             instance = new SubscriptionService(
-                    RepositoryFactory.getUserRepository()
+                    RepositoryFactory.getInstance().getUserRepository()
             );
         }
         return instance;

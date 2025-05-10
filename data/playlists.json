@@ -1,14 +1,6 @@
 [ {
   "name" : "Copy of Test Rock Playlist",
   "songs" : [ {
-    "songId" : 201,
-    "title" : "Space Oddity",
-    "artistId" : 2,
-    "albumId" : 2001,
-    "genre" : "ROCK",
-    "durationSeconds" : 315,
-    "filePath" : "/music/spaceoddity.mp3"
-  }, {
     "songId" : 203,
     "title" : "Life on Mars?",
     "artistId" : 2,
@@ -16,6 +8,14 @@
     "genre" : "ROCK",
     "durationSeconds" : 236,
     "filePath" : "/music/lifeonmars.mp3"
+  }, {
+    "songId" : 201,
+    "title" : "Space Oddity",
+    "artistId" : 2,
+    "albumId" : 2001,
+    "genre" : "ROCK",
+    "durationSeconds" : 315,
+    "filePath" : "/music/spaceoddity.mp3"
   }, {
     "songId" : 202,
     "title" : "Heroes",
@@ -34,6 +34,6 @@
     "filePath" : "/music/imagine.mp3"
   } ],
   "ownerID" : 5,
-  "playlistID" : 4,
+  "playlistID" : 2,
   "sharedWith" : [ ]
 } ]

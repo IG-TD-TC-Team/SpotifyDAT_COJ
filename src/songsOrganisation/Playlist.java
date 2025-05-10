@@ -99,12 +99,7 @@ public class Playlist {
         this.songs = songs;
     }
 
-    /**
-     * Clears the playlist by removing all songs.
-     */
-    public void clear() {
-        songs.clear();
-    }
+
 
     /// --------------------- PLAYLIST GET/SET ----------------- ///
     /**
@@ -201,6 +196,13 @@ public class Playlist {
     @JsonIgnore // Prevent serialization of this method as a property
     public List<Song> toList() {
         return new ArrayList<>(songs);
+    }
+
+    /**
+     * Clears the playlist by removing all songs.
+     */
+    public void clear() {
+        songs.clear();
     }
 
 

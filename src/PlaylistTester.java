@@ -19,8 +19,8 @@ public class PlaylistTester {
         // Get manager, factory, and repositories
         PlaylistService playlistManager = PlaylistService.getInstance();
         PlaylistFactory playlistFactory = PlaylistFactory.getInstance();
-        PlaylistRepositoryInterface playlistRepository = RepositoryFactory.getPlaylistRepository();
-        SongRepositoryInterface songRepository = RepositoryFactory.getSongRepository();
+        PlaylistRepositoryInterface playlistRepository = RepositoryFactory.getInstance().getPlaylistRepository();
+        SongRepositoryInterface songRepository = RepositoryFactory.getInstance().getSongRepository();
 
         // Print all existing playlists
         System.out.println("\n=== Existing Playlists ===");

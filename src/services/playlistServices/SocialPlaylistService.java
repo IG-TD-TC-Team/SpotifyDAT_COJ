@@ -147,8 +147,8 @@ public class SocialPlaylistService {
             return true;
         }
 
-        // Playlist is from a user they follow and is shared publicly
-        if (!playlist.getSharedWith().isEmpty() &&
+        // Playlist is publicly shareable and user follows the owner
+        if (playlist.isPubliclyShareable() &&
                 socialService.isFollowing(userId, playlist.getOwnerID())) {
             return true;
         }

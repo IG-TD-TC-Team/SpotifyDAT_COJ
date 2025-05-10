@@ -8,8 +8,8 @@ import spotifyServer.commandProcessor.*;
 
 public class SpotifySocketServer {
     // Port constants
-    public static final int COMMAND_PORT = 8888;
-    public static final int STREAMING_PORT = 8889;
+    public static final int COMMAND_PORT = 45000;
+    public static final int STREAMING_PORT = 45001;
 
     private CommandServer commandServer;
     private StreamingServer streamingServer;
@@ -24,11 +24,14 @@ public class SpotifySocketServer {
     public SpotifySocketServer() {
         // Create a thread pool to manage client connections
         this.threadPool = Executors.newCachedThreadPool();
-        // Initialize command processor with chain of handlers
+
+        // Initialize StreamingServer FIRST
+        this.streamingServer = StreamingServer.getInstance(STREAMING_PORT, threadPool);
+        // Initialize command processor
         AbstractProcessor commandProcessor = initializeCommandProcessor();
         // Create servers
         this.commandServer = new CommandServer(COMMAND_PORT, threadPool, commandProcessor);
-        this.streamingServer = StreamingServer.getInstance(STREAMING_PORT, threadPool);
+
     }
 
     /**

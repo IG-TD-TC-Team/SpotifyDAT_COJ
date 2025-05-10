@@ -11,6 +11,7 @@ public class MusicStreamHandler implements Runnable {
         this.clientSocket = socket;
         this.musicStreamer = musicStreamer;
     }
+
     // Alternative constructor that creates its own streamer
     public MusicStreamHandler(Socket socket) {
         this.clientSocket = socket;
@@ -51,26 +52,43 @@ public class MusicStreamHandler implements Runnable {
                     Thread.sleep(500);
                 }
 
-                out.println("PLAYLIST_COMPLETE");
+                try {
+                    // Check if socket is still open before trying to write
+                    if (!clientSocket.isClosed()) {
+                        out.println("PLAYLIST_COMPLETE");
+                    }
+                } catch (Exception e) {
+                    System.out.println("Note: Client closed connection after playlist streaming completed");
+                }
             } else if (request.startsWith("STREAM|")) {
                 // It's a single song - format: STREAM|filepath|Song Title|Artist ID
                 String[] parts = request.split("\\|", 4);
-                String filePath = parts[1];
-                String songTitle = parts[2];
+                if (parts.length >= 4) {
+                    String filePath = parts[1];
+                    String songTitle = parts[2];
+                    String artistId = parts[3];
 
-                out.println("STREAMING_START|" + songTitle);
+                    out.println("STREAMING_START|" + songTitle);
 
-                // Stream the requested song
-                boolean success = musicStreamer.streamAudioFile(filePath, clientSocket);
+                    // Stream the requested song
+                    boolean success = musicStreamer.streamAudioFile(filePath, clientSocket);
 
-                if (!success) {
-                    out.println("ERROR: Failed to stream " + songTitle);
+                    try {
+                        // Check if socket is still open before trying to write
+                        if (!clientSocket.isClosed() && success) {
+                            out.println("STREAMING_COMPLETE");
+                        }
+                    } catch (Exception e) {
+                        // Socket was closed by client, log but don't treat as error
+                        System.out.println("Note: Client closed connection after streaming completed");
+                    }
                 } else {
-                    out.println("STREAMING_COMPLETE");
+                    out.println("ERROR: Invalid STREAM command format");
                 }
             } else {
-                out.println("ERROR: Invalid streaming request format");
+                out.println("ERROR: Unknown streaming command");
             }
+
         } catch (IOException e) {
             System.err.println("Error in streaming handler: " + e.getMessage());
         } catch (InterruptedException e) {

@@ -30,9 +30,8 @@ public class PasswordService {
      * Private constructor with dependency injection.
      *
      * @param passwordHasher The password hasher implementation to use
-     * @param userRepository The user repository to use
      */
-    private PasswordService(PasswordHasher passwordHasher, UserRepositoryInterface userRepository) {
+    private PasswordService(PasswordHasher passwordHasher) {
         this.passwordHasher = passwordHasher;
         this.userRepository = RepositoryFactory.getInstance().getUserRepository();
     }
@@ -46,8 +45,7 @@ public class PasswordService {
         if (instance == null) {
             // Using RepositoryFactory to get the repository instance
             instance = new PasswordService(
-                    new SHA256Hasher(),
-                    RepositoryFactory.getInstance().getUserRepository()
+                    new SHA256Hasher()
             );
         }
         return instance;

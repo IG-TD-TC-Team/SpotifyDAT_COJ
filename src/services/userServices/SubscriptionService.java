@@ -30,10 +30,8 @@ public class SubscriptionService {
 
     /**
      * Private constructor with dependency injection.
-     *
-     * @param userRepository The user repository to use
      */
-    private SubscriptionService(UserRepositoryInterface userRepository) {
+    private SubscriptionService() {
         this.userRepository = RepositoryFactory.getInstance().getUserRepository();
     }
 
@@ -45,9 +43,7 @@ public class SubscriptionService {
     public static synchronized SubscriptionService getInstance() {
         if (instance == null) {
             // Using RepositoryFactory to get the repository instance
-            instance = new SubscriptionService(
-                    RepositoryFactory.getInstance().getUserRepository()
-            );
+            instance = new SubscriptionService();
         }
         return instance;
     }

@@ -34,7 +34,7 @@ public class PasswordService {
      */
     private PasswordService(PasswordHasher passwordHasher, UserRepositoryInterface userRepository) {
         this.passwordHasher = passwordHasher;
-        this.userRepository = userRepository;
+        this.userRepository = RepositoryFactory.getInstance().getUserRepository();
     }
 
     /**

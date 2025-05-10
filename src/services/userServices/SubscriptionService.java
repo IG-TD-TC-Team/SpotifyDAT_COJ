@@ -34,7 +34,7 @@ public class SubscriptionService {
      * @param userRepository The user repository to use
      */
     private SubscriptionService(UserRepositoryInterface userRepository) {
-        this.userRepository = userRepository;
+        this.userRepository = RepositoryFactory.getInstance().getUserRepository();
     }
 
     /**

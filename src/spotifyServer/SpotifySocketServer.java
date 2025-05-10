@@ -1,7 +1,9 @@
 package spotifyServer;
 
+import services.playlistServices.PlaylistService;
 import services.songServices.SongService;
 import songsAndArtists.Song;
+import songsOrganisation.Playlist;
 
 import java.io.*;
 import java.net.*;
@@ -88,24 +90,38 @@ public class SpotifySocketServer {
         /// --------- BUSINESS LOGIC --------- ///
 
         SongService songService = SongService.getInstance();
+        PlaylistService playlistService = PlaylistService.getInstance();
+
 
         private String processCommand(String command) {
             // For now, simple command processing
             command = command.trim();
 
-            if ("help".equalsIgnoreCase(command)) {
-                return "Available commands: help, time, exit";
-            } else if ("time".equalsIgnoreCase(command)) {
-                return "Server time: " + LocalDateTime.now();
-            } else if ("exit".equalsIgnoreCase(command)) {
-                return "Goodbye! Closing connection.";
-            } else if (command.startsWith("GetSongs")) {
-                return formatSongList(songService.getAllSongs());
-
-            } else {
-                // This is where you'll route commands to your business layer
-                return "Received command: " + command + " (Not implemented yet)";
+            switch (command) {
+                case "help":
+                    return "Available commands: help, time, exit";
+                case "time":
+                    return "Server time: " + LocalDateTime.now();
+                case "exit":
+                    return "Goodbye! Closing connection.";
+                case "list songs":
+                    List<Song> songs = songService.getAllSongs();
+                    return formatSongList(songs);
+                case "list playlists":
+                    List<Playlist> playlists = playlistService.getAllPlaylists();
+                    StringBuilder result = new StringBuilder("Playlists found:\n");
+                    for (Playlist playlist : playlists) {
+                        result.append(playlist.getPlaylistID())
+                                .append(": ")
+                                .append(playlist.getName())
+                                .append(" - Owner ID: ")
+                                .append(playlist.getOwnerID())
+                                .append("\n");
+                    }
+                    default:
+                    break;
             }
+            //return "Unknown command: " + command;
         }
 
         private String formatSongList(List<Song> songs) {

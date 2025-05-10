@@ -2,7 +2,6 @@ package songsOrganisation;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import songsAndArtists.*;
-import user.User;
 
 import java.util.*;
 
@@ -17,7 +16,9 @@ public class Playlist {
     private LinkedList<Song> songs;
     private int ownerID;
     private int playlistID;
-    private List<Integer> iDsOfUsersSharedWith;
+    private List<Integer> IDsOfUsersSharedWith;
+    private List<Integer> likedByUsers;
+    private boolean isPubliclyShareable;
 
 
     /**
@@ -25,7 +26,9 @@ public class Playlist {
      */
     public Playlist() {
         this.songs = new LinkedList<>();
-        this.iDsOfUsersSharedWith = new ArrayList<>();
+        this.IDsOfUsersSharedWith = new ArrayList<>();
+        this.likedByUsers = new ArrayList<>();
+        this.isPubliclyShareable = false;
     }
 
     /**
@@ -38,7 +41,9 @@ public class Playlist {
         this.name = name;
         this.ownerID = ownerID;
         this.songs = new LinkedList<>();
-        this.iDsOfUsersSharedWith = new ArrayList<>();
+        this.IDsOfUsersSharedWith = new ArrayList<>();
+        this.likedByUsers = new ArrayList<>();
+        this.isPubliclyShareable = false;
     }
 
 /// --------------------- PLAYLIST SOCIAL GET/SET ----------------- ///
@@ -48,7 +53,7 @@ public class Playlist {
      * @return The list of users with whom the playlist is shared.
      */
     public List<Integer> getSharedWith() {
-        return iDsOfUsersSharedWith;  // Return the actual list, not an unmodifiable view
+        return IDsOfUsersSharedWith;  // Return the actual list, not an unmodifiable view
     }
 
     /**
@@ -56,7 +61,7 @@ public class Playlist {
      * @param sharedWith The new list of users with whom to share the playlist.
      */
     public void setSharedWith(List<Integer> sharedWith) {
-        this.iDsOfUsersSharedWith = sharedWith;
+        this.IDsOfUsersSharedWith = sharedWith;
     }
 
 
@@ -162,8 +167,21 @@ public class Playlist {
         return totalDuration;
     }
 
+    public List<Integer> getLikedByUsers() {
+        return likedByUsers;
+    }
 
+    public void setLikedByUsers(List<Integer> likedByUsers) {
+        this.likedByUsers = likedByUsers;
+    }
 
+    public boolean isPubliclyShareable() {
+        return isPubliclyShareable;
+    }
+
+    public void setPubliclyShareable(boolean publiclyShareable) {
+        this.isPubliclyShareable = publiclyShareable;
+    }
 
     @Override
     public String toString() {
@@ -171,7 +189,7 @@ public class Playlist {
                 "name='" + name + '\'' +
                 ", songs=" + songs.size() +
                 //", owner=" + owner.getUsername() +
-                ", sharedWith=" + iDsOfUsersSharedWith.size() +
+                ", sharedWith=" + IDsOfUsersSharedWith.size() +
                 '}';
     }
 

@@ -1,6 +1,7 @@
 package persistence;
 
 
+import services.playlistServices.SocialPlaylistService;
 import songsOrganisation.Library;
 import persistence.interfaces.LibraryRepositoryInterface;
 import songsOrganisation.Playlist;
@@ -141,5 +142,26 @@ public class LibraryRepository extends JsonRepository<Library> implements Librar
         save(library);
         return library;
 
+    }
+
+    /**
+     * Gets all playlists that should appear in a user's library (owned + liked)
+     */
+    public List<Playlist> getAllLibraryPlaylistsForUser(int userId) {
+        Library library = createLibrary(userId);
+        List<Playlist> libraryPlaylists = new ArrayList<>(library.getPlaylists());
+
+        // Get liked playlists using SocialPlaylistService
+        SocialPlaylistService socialService = SocialPlaylistService.getInstance();
+        List<Playlist> likedPlaylists = socialService.getLikedPlaylistsByUser(userId);
+
+        // Add liked playlists that aren't already in the library
+        for (Playlist likedPlaylist : likedPlaylists) {
+            if (!libraryPlaylists.stream().anyMatch(p -> p.getPlaylistID() == likedPlaylist.getPlaylistID())) {
+                libraryPlaylists.add(likedPlaylist);
+            }
+        }
+
+        return libraryPlaylists;
     }
 }

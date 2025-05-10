@@ -26,7 +26,7 @@ public class SocialService {
      * Private constructor to prevent external instantiation.
      */
     private SocialService() {
-        this.userRepository = RepositoryFactory.getUserRepository();
+        this.userRepository = RepositoryFactory.getInstance().getUserRepository();
     }
 
     /**

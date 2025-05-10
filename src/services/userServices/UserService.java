@@ -35,7 +35,7 @@ public class UserService {
      * Initializes the UserRepository instance using RepositoryFactory.
      */
     private UserService(UserRepositoryInterface userRepository) {
-        this.userRepository = userRepository;
+        this.userRepository = RepositoryFactory.getInstance().getUserRepository();
     }
 
     /**

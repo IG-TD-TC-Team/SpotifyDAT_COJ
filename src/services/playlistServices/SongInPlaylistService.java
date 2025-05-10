@@ -1,6 +1,7 @@
 package services.playlistServices;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import factory.RepositoryFactory;
 import persistence.interfaces.PlaylistRepositoryInterface;
 import songsAndArtists.Song;
 import songsOrganisation.Playlist;
@@ -34,7 +35,7 @@ public class SongInPlaylistService {
      * Initializes the PlaylistRepository instance and loads all playlists.
      */
     private SongInPlaylistService(PlaylistRepositoryInterface playlistRepository) {
-        this.playlistRepository = playlistRepository;
+        this.playlistRepository = RepositoryFactory.getInstance().getPlaylistRepository();
         this.playlistService = PlaylistService.getInstance();
         refreshCache();
     }

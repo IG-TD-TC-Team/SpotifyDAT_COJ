@@ -57,7 +57,7 @@ public class AuthenticationService {
     private AuthenticationService() {
         this.userService = UserService.getInstance();
         this.passwordService = PasswordService.getInstance();
-        this.userRepository = RepositoryFactory.getUserRepository();
+        this.userRepository = RepositoryFactory.getInstance().getUserRepository();
     }
 
     /**

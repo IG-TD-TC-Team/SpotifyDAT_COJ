@@ -39,19 +39,19 @@ public class MusicStreamer {
         }
 
         try (
-                FileInputStream fileInputStream = new FileInputStream(file);
+                BufferedInputStream bufferedInputStream = new BufferedInputStream(new FileInputStream(file));
                 OutputStream outputStream = clientSocket.getOutputStream()
         ) {
             System.out.println("Starting to stream MP3 file: " + filePath);
 
             // Skip ID3 tags if present (to start streaming from actual audio data)
-            long startPosition = skipID3Tags(fileInputStream);
+            long startPosition = skipID3Tags(bufferedInputStream);
 
-            // Reset file position after scanning for ID3 tags
-            fileInputStream.getChannel().position(startPosition);
+            // Reset file position after scanning for ID3 tags (not needed with this method)
+            // bufferedInputStream is already positioned correctly after skipID3Tags
 
             // Create a Bitstream to allow frame-by-frame processing
-            Bitstream bitstream = new Bitstream(fileInputStream);
+            Bitstream bitstream = new Bitstream(bufferedInputStream);
 
             // Stream file frame by frame
             streamMP3Frames(bitstream, outputStream);
@@ -86,8 +86,10 @@ public class MusicStreamer {
      * @return the position after any ID3 tags
      * @throws IOException if an I/O error occurs
      */
-    private long skipID3Tags(FileInputStream inputStream) throws IOException {
+    private long skipID3Tags(BufferedInputStream inputStream) throws IOException {
         byte[] headerBuffer = new byte[10];
+
+
         inputStream.mark(10);
 
         if (inputStream.read(headerBuffer, 0, 10) == 10) {
@@ -99,6 +101,8 @@ public class MusicStreamer {
                         ((headerBuffer[7] & 0x7F) << 14) |
                         ((headerBuffer[8] & 0x7F) << 7) |
                         (headerBuffer[9] & 0x7F);
+
+
 
                 // Skip over the tag
                 inputStream.reset();

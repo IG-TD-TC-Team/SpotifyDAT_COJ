@@ -2,9 +2,11 @@ package spotifyServer.commandProcessor;
 
 import services.songServices.SongService;
 import songsAndArtists.Song;
+import spotifyServer.SpotifySocketServer;
 import spotifyServer.StreamingServer;
 
 import java.net.Socket;
+import java.util.Arrays;
 
 // Play command processor
 class PlayCommandProcessor extends AbstractProcessor {
@@ -18,9 +20,12 @@ class PlayCommandProcessor extends AbstractProcessor {
     @Override
     public String processCommand(String command) {
         if (command.toLowerCase().startsWith("play ")) {
+
+            System.out.println("Debug: Received play command: " + command); /// DEBUG
             try {
                 // Extract song ID from command
                 String[] parts = command.split(" ", 2);
+                System.out.println("Debug: Parsed command parts: " + Arrays.toString(parts));
                 if (parts.length < 2) {
                     return "Error: Missing song ID. Usage: play <song_id>";
                 }
@@ -29,16 +34,25 @@ class PlayCommandProcessor extends AbstractProcessor {
 
                 // Check if song exists
                 Song song = songService.getSongById(songId);
+                System.out.println("Debug: Found song: " + (song != null ? song.getTitle() : "null"));
                 if (song == null) {
                     return "Error: Song not found with ID: " + songId;
                 }
 
                 // Get current socket from context
                 Socket clientSocket = CommandContext.getInstance().getCurrentSocket();
+                if (clientSocket == null) {
+                    return "Error: Client socket not available";
+                }
+
 
 
                 // Return the streaming instructions to the client
-                return "STREAMING_STARTED|" + song.getTitle() + song.getArtistId();
+                String response = "STREAM_REQUEST|" + SpotifySocketServer.STREAMING_PORT +
+                        "|" + song.getFilePath() + "|" + song.getTitle() + "|" + song.getArtistId();
+                System.out.println("Debug: Sending response: " + response);
+
+                return response;
             } catch (NumberFormatException e) {
                 return "Error: Invalid song ID format. Please provide a number.";
             } catch (Exception e) {

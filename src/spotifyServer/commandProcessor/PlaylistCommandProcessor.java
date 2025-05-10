@@ -2,6 +2,7 @@ package spotifyServer.commandProcessor;
 
 import services.playlistServices.PlaylistService;
 import songsOrganisation.Playlist;
+import spotifyServer.SpotifySocketServer;
 
 // Playlist command processor
 class PlaylistCommandProcessor extends AbstractProcessor {
@@ -33,7 +34,9 @@ class PlaylistCommandProcessor extends AbstractProcessor {
                 }
 
                 // Return the playlist streaming instructions to the client
-                return "PLAYLIST|" + playlistData.toString() + "|" + playlist.getName();
+                return "PLAYLIST_STREAM_REQUEST|" + SpotifySocketServer.STREAMING_PORT +
+                        "|" + playlistData.toString() + "|" + playlist.getName();
+
             } catch (NumberFormatException e) {
                 return "Error: Invalid playlist ID format. Please provide a number.";
             } catch (Exception e) {

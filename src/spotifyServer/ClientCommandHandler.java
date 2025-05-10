@@ -24,6 +24,10 @@ public class ClientCommandHandler implements Runnable {
             in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
             out = new PrintWriter(clientSocket.getOutputStream(), true);
 
+            // Initialize CommandContext with this client socket
+            CommandContext.getInstance().setCurrentClient(clientSocket);
+            System.out.println("Debug: Set client socket in CommandContext: " + clientSocket);
+
             // Send welcome message
             out.println("Welcome to Spotify Server. Send commands or type 'exit' to quit.");
             out.println("Type 'help' for a list of available commands.");

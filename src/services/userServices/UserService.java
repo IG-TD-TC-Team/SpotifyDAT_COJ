@@ -34,7 +34,7 @@ public class UserService {
      * Private constructor to prevent external instantiation.
      * Initializes the UserRepository instance using RepositoryFactory.
      */
-    private UserService(UserRepositoryInterface userRepository) {
+    private UserService() {
         this.userRepository = RepositoryFactory.getInstance().getUserRepository();
     }
 
@@ -45,7 +45,7 @@ public class UserService {
      */
     public static synchronized UserService getInstance() {
         if (instance == null) {
-            instance = new UserService(RepositoryFactory.getInstance().getUserRepository());
+            instance = new UserService();
         }
         return instance;
     }

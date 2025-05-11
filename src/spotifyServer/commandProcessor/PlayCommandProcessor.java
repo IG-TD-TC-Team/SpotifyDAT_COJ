@@ -8,7 +8,11 @@ import spotifyServer.StreamingServer;
 import java.net.Socket;
 import java.util.Arrays;
 
-// Play command processor
+/**
+ * PlayCommandProcessor class processes the "play" command.
+ * It retrieves the song ID from the command, checks if the song exists,
+ * and returns streaming instructions to the client.
+ */
 class PlayCommandProcessor extends AbstractProcessor {
     private final SongService songService = SongService.getInstance();
     private final StreamingServer streamingServer;
@@ -19,6 +23,7 @@ class PlayCommandProcessor extends AbstractProcessor {
 
     @Override
     public String processCommand(String command) {
+        /// Check if the command starts with "play "
         if (command.toLowerCase().startsWith("play ")) {
 
             System.out.println("Debug: Received play command: " + command); /// DEBUG

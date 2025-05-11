@@ -13,7 +13,7 @@
   "albumId" : 1001,
   "genre" : "ELECTRONIC",
   "durationSeconds" : 248,
-  "filePath" : "E:\\\\MusicDB\\\\Juanes\\\\Mi Sangre\\\\04 - La Camisa Negra.mp3"
+  "filePath" : "music/test.mp3"
 }, {
   "songId" : 102,
   "title" : "Harder, Better, Faster, Stronger",

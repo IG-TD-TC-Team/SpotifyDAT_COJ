@@ -14,8 +14,6 @@ public class SpotifySocketServer {
     private CommandServer commandServer;
     private StreamingServer streamingServer;
     private ExecutorService threadPool;
-    private ServerSocket serverSocket;
-    private boolean running = false;
 
     /**
      * Constructor for SpotifySocketServer.
@@ -25,22 +23,21 @@ public class SpotifySocketServer {
         // Create a thread pool to manage client connections
         this.threadPool = Executors.newCachedThreadPool();
 
-        // Initialize StreamingServer FIRST
+        // Initialize StreamingServer
         this.streamingServer = StreamingServer.getInstance(STREAMING_PORT, threadPool);
         // Initialize command processor
         AbstractProcessor commandProcessor = initializeCommandProcessor();
-        // Create servers
-        this.commandServer = new CommandServer(COMMAND_PORT, threadPool, commandProcessor);
+        //Initialize CommandServer
+        this.commandServer = CommandServer.getInstance(COMMAND_PORT, threadPool, commandProcessor);
 
     }
 
     /**
      * Initializes the command processor with a chain of handlers.
-     *
-     *
      * @return CommandProcessor instance with the chain of handlers
      */
     private AbstractProcessor initializeCommandProcessor() {
+
         return CommandProcessorFactory.createProcessorChain();
     }
 

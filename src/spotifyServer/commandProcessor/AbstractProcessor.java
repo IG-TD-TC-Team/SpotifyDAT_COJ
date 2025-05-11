@@ -1,6 +1,5 @@
 package spotifyServer.commandProcessor;
 
-import java.net.Socket;
 
 /**
  * AbstractProcessor class is responsible for processing commands received from the client.

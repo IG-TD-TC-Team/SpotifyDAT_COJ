@@ -4,12 +4,16 @@ import services.playlistServices.PlaylistService;
 import songsOrganisation.Playlist;
 import spotifyServer.SpotifySocketServer;
 
-// Playlist command processor
+/**
+ * PlaylistCommandProcessor class is responsible for handling the "playlist" command.
+ * It retrieves the playlist by ID and prepares the streaming instructions for the client.
+ */
 class PlaylistCommandProcessor extends AbstractProcessor {
     private final PlaylistService playlistService = PlaylistService.getInstance();
 
     @Override
     public String processCommand(String command) {
+        /// Check if the command starts with "playlist "
         if (command.toLowerCase().startsWith("playlist ")) {
             try {
                 // Extract playlist ID from command

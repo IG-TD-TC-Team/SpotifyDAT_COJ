@@ -1,5 +1,9 @@
 package spotifyServer.commandProcessor;
 
+/**
+ * HelpCommandProcessor class is responsible for handling the "help" command.
+ * It provides a list of available commands to the client.
+ */
 class HelpCommandProcessor extends AbstractProcessor {
     @Override
     public String processCommand(String command) {

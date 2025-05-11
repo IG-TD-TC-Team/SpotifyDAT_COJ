@@ -6,6 +6,11 @@ import java.net.Socket;
 import java.util.concurrent.ExecutorService;
 import spotifyServer.commandProcessor.*;
 
+/**
+ * CommandServer class is responsible for accepting incoming client connections
+ * and processing commands using the provided command processor.
+ * It uses a thread pool to handle multiple client connections concurrently.
+ */
 public class CommandServer {
     private final int port;
     private final ExecutorService threadPool;
@@ -13,17 +18,43 @@ public class CommandServer {
     private ServerSocket serverSocket;
     private boolean running = false;
 
+    /// Singleton instance
+    private static CommandServer instance;
+
+
     /**
-     * Constructor for CommandServer.
+     * Private constructor for Singleton pattern.
      *
      * @param port            the port number to listen on
      * @param threadPool      the thread pool to handle client connections
      * @param commandProcessor the command processor to handle incoming commands
      */
-    public CommandServer(int port, ExecutorService threadPool, AbstractProcessor commandProcessor) {
+    private CommandServer(int port, ExecutorService threadPool, AbstractProcessor commandProcessor) {
         this.port = port;
         this.threadPool = threadPool;
         this.commandProcessor = commandProcessor;
+    }
+    /**
+     * Get the singleton instance of CommandServer.
+     *
+     * @param port            the port number to listen on
+     * @param threadPool      the thread pool to handle client connections
+     * @param commandProcessor the command processor to handle incoming commands
+     */
+    public static synchronized CommandServer getInstance(int port, ExecutorService threadPool, AbstractProcessor commandProcessor) {
+        if (instance == null) {
+            instance = new CommandServer(port, threadPool, commandProcessor);
+        }
+        return instance;
+    }
+    /**
+     * Get an existing instance or throw an exception if not initialized.
+     */
+    public static CommandServer getInstance() {
+        if (instance == null) {
+            throw new IllegalStateException("CommandServer not initialized. Call getInstance(port, threadPool, commandProcessor) first.");
+        }
+        return instance;
     }
 
     /**
@@ -40,7 +71,7 @@ public class CommandServer {
                 try {
                     Socket clientSocket = serverSocket.accept();
                     ClientCommandHandler clientHandler = new ClientCommandHandler(clientSocket, commandProcessor);
-                    /// Creates a new thread for each client connection
+                    // Creates a new thread for each client connection
                     threadPool.execute(clientHandler);
                     System.out.println("New command connection accepted from " + clientSocket.getInetAddress());
                 } catch (IOException e) {

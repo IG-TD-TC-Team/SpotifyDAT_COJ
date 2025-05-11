@@ -5,12 +5,17 @@ import songsAndArtists.Song;
 
 import java.util.List;
 
-// Search command processor
+/**
+ * SearchCommandProcessor class processes the "search" command.
+ * It retrieves the search query from the command, searches for songs,
+ * and returns the search results to the client.
+ */
 class SearchCommandProcessor extends AbstractProcessor {
     private final SongService songService = SongService.getInstance();
 
     @Override
     public String processCommand(String command) {
+        /// Check if the command starts with "search "
         if (command.toLowerCase().startsWith("search ")) {
             String query = command.substring(7).trim();
 

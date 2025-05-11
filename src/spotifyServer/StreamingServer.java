@@ -24,6 +24,10 @@ public class StreamingServer {
 
     /**
      * Private constructor for Singleton pattern.
+     *
+     * @param port the port number to listen on
+     * @param threadPool the thread pool to handle client connections
+     * musicStreamer the music streamer instance
      */
     private StreamingServer(int port, ExecutorService threadPool) {
         this.port = port;

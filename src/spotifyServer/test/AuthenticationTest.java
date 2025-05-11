@@ -199,6 +199,7 @@ public class AuthenticationTest {
                 return "No songs found.";
             }
 
+
             StringBuilder result = new StringBuilder("Songs found:\n");
             for (Song song : songs) {
                 result.append(song.getSongId())

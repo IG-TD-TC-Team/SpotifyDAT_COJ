@@ -3,22 +3,40 @@ package spotifyServer;
 import java.io.*;
 import java.net.Socket;
 
+/**
+ * MusicStreamHandler class is responsible for handling music streaming requests from clients.
+ * It reads the requested file path from the client, streams the audio file, and sends responses back to the client.
+ */
 public class MusicStreamHandler implements Runnable {
     private final Socket clientSocket;
     private final MusicStreamer musicStreamer;
 
+    /**
+     * Constructor for MusicStreamHandler.
+     *
+     * @param socket         The client socket to communicate with.
+     * @param musicStreamer  The MusicStreamer instance to handle audio streaming.
+     */
     public MusicStreamHandler(Socket socket, MusicStreamer musicStreamer) {
         this.clientSocket = socket;
         this.musicStreamer = musicStreamer;
     }
 
-    // Alternative constructor that creates its own streamer
+    /**
+     * Constructor for MusicStreamHandler with default MusicStreamer.
+     *
+     * @param socket The client socket to communicate with.
+     */
     public MusicStreamHandler(Socket socket) {
         this.clientSocket = socket;
         this.musicStreamer = new MusicStreamer();
     }
 
     @Override
+    /**
+     * The run method is executed when the thread is started.
+     * It handles the client connection, reads streaming requests, and streams audio files.
+     */
     public void run() {
         try {
             // Read the file path from the client
@@ -33,7 +51,7 @@ public class MusicStreamHandler implements Runnable {
 
             System.out.println("Streaming request: " + request);
 
-            // Check if it's a playlist or single song
+            /// Check if it's a playlist or single song
             if (request.startsWith("PLAYLIST|")) {
                 // It's a playlist - format: PLAYLIST|filepath1,filepath2,...|Playlist Name
                 String[] parts = request.split("\\|", 3);
@@ -60,6 +78,8 @@ public class MusicStreamHandler implements Runnable {
                 } catch (Exception e) {
                     System.out.println("Note: Client closed connection after playlist streaming completed");
                 }
+
+
             } else if (request.startsWith("STREAM|")) {
                 // It's a single song - format: STREAM|filepath|Song Title|Artist ID
                 String[] parts = request.split("\\|", 4);

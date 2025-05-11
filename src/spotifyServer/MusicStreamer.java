@@ -29,46 +29,63 @@ public class MusicStreamer {
      * @param clientSocket the client socket to stream to
      * @return true if streaming was successful, false otherwise
      */
+
     public boolean streamAudioFile(String filePath, Socket clientSocket) {
         File file = new File(filePath);
 
         // Check if file exists and is readable
         if (!file.exists() || !file.canRead()) {
             System.err.println("Error: File does not exist or is not readable: " + filePath);
+            try {
+                PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true);
+                out.println("ERROR|File not found or not readable: " + filePath);
+            } catch (IOException e) {
+                // Ignore
+            }
             return false;
         }
 
+        // SIMPLIFIED APPROACH - direct binary streaming
         try (
-                BufferedInputStream bufferedInputStream = new BufferedInputStream(new FileInputStream(file));
-                OutputStream outputStream = clientSocket.getOutputStream()
+                FileInputStream fileIn = new FileInputStream(file);
+                OutputStream clientOut = clientSocket.getOutputStream();
+                PrintWriter textOut = new PrintWriter(new OutputStreamWriter(clientOut), true)
         ) {
-            System.out.println("Starting to stream MP3 file: " + filePath);
+            // Send header first
+            textOut.println("STREAMING_START|" + file.getName());
+            System.out.println("Started streaming file: " + filePath + " (" + file.length() + " bytes)");
 
-            // Skip ID3 tags if present (to start streaming from actual audio data)
-            long startPosition = skipID3Tags(bufferedInputStream);
+            // Small pause to let client process header
+            Thread.sleep(100);
 
-            // Reset file position after scanning for ID3 tags (not needed with this method)
-            // bufferedInputStream is already positioned correctly after skipID3Tags
+            // Simple buffer-based streaming
+            byte[] buffer = new byte[4096];
+            int bytesRead;
+            long totalSent = 0;
 
-            // Create a Bitstream to allow frame-by-frame processing
-            Bitstream bitstream = new Bitstream(bufferedInputStream);
+            while ((bytesRead = fileIn.read(buffer)) != -1) {
+                clientOut.write(buffer, 0, bytesRead);
+                totalSent += bytesRead;
 
-            // Stream file frame by frame
-            streamMP3Frames(bitstream, outputStream);
-
-            outputStream.flush();
-            System.out.println("Completed streaming file: " + filePath);
-            return true;
-
-        } catch (IOException e) {
-            if (stopRequested.get()) {
-                System.out.println("Streaming was stopped as requested");
-                return true;
-            } else {
-                System.err.println("Error streaming file: " + e.getMessage());
-                e.printStackTrace();
-                return false;
+                // Log progress occasionally
+                if (totalSent % 40960 == 0) { // every ~40KB
+                    System.out.println("Streamed " + totalSent + " of " + file.length() + " bytes");
+                    clientOut.flush(); // Ensure data is sent
+                }
             }
+
+            // Final flush
+            clientOut.flush();
+            System.out.println("Completed streaming file: " + totalSent + " bytes sent");
+
+            // Send completion message
+            textOut.println("STREAMING_COMPLETE");
+
+            return true;
+        } catch (Exception e) {
+            System.err.println("Error streaming file: " + e.getMessage());
+            e.printStackTrace();
+            return false;
         }
     }
 

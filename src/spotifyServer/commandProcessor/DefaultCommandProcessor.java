@@ -1,8 +1,9 @@
 package spotifyServer.commandProcessor;
 
-import java.net.Socket;
-
-// Default command processor (end of chain)
+/**
+ * DefaultCommandProcessor class is responsible for handling unknown commands.
+ * It provides a default response when no other processor can handle the command.
+ */
 class DefaultCommandProcessor extends AbstractProcessor {
     @Override
     public String processCommand(String command) {

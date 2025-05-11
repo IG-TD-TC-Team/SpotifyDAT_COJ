@@ -6,18 +6,33 @@ import java.net.Socket;
 import spotifyServer.commandProcessor.AbstractProcessor;
 import spotifyServer.commandProcessor.*;
 
+/**
+ * ClientCommandHandler class is responsible for handling client commands.
+ * It reads commands from the client, processes them by delegating to the command processor,
+ * and sends responses back to the client.
+ */
 public class ClientCommandHandler implements Runnable {
     private final Socket clientSocket;
     private final AbstractProcessor commandProcessor;
     private BufferedReader in;
     private PrintWriter out;
 
+    /**
+     * Constructor for ClientCommandHandler.
+     *
+     * @param socket          The client socket to communicate with.
+     * @param commandProcessor The command processor to handle commands.
+     */
     public ClientCommandHandler(Socket socket, AbstractProcessor commandProcessor) {
         this.clientSocket = socket;
         this.commandProcessor = commandProcessor;
     }
 
     @Override
+    /**
+     * The run method is executed when the thread is started.
+     * It handles the client connection, reads commands, and sends responses.
+     */
     public void run() {
         try {
             // Set up input and output streams

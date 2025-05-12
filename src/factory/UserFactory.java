@@ -35,7 +35,12 @@ public class UserFactory {
      */
     private UserFactory() {
         this.userRepository = RepositoryFactory.getInstance().getUserRepository();
-        this.passwordHasher = new SHA256Hasher();
+        this.passwordHasher = new SHA256Hasher(); //default
+    }
+
+    public UserFactory(UserRepositoryInterface userRepository, PasswordHasher passwordHasher) {
+        this.userRepository = userRepository;
+        this.passwordHasher = passwordHasher;
     }
 
     /**

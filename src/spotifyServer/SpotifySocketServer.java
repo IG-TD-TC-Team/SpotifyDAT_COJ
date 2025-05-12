@@ -3,6 +3,7 @@ package spotifyServer;
 import java.net.ServerSocket;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import cache.CacheWarmer;
 
 import spotifyServer.commandProcessor.*;
 
@@ -15,11 +16,18 @@ public class SpotifySocketServer {
     private StreamingServer streamingServer;
     private ExecutorService threadPool;
 
+
+    private final CacheWarmer cacheWarmer = CacheWarmer.getInstance();
+
     /**
      * Constructor for SpotifySocketServer.
      * Initializes the command server and streaming server with a thread pool.
      */
     public SpotifySocketServer() {
+        // Warm caches before creating servers
+        System.out.println("Pre-warming caches...");
+        CacheWarmer.warmAllCaches();
+
         // Create a thread pool to manage client connections
         this.threadPool = Executors.newCachedThreadPool();
 
@@ -62,6 +70,7 @@ public class SpotifySocketServer {
     public void stop() {
         commandServer.stop();
         streamingServer.stop();
+        cacheWarmer.shutdown();
         threadPool.shutdown();
         System.out.println("Spotify Server stopped");
     }

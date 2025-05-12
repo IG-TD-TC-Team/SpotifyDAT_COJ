@@ -15,33 +15,15 @@ public class SongService {
     private final SongRepositoryInterface songRepository;
 
 
-    // Music data
-    private List<Song> songs;
-
-
     // Services for related entities
     private ArtistService artistService = ArtistService.getInstance();
     private AlbumService albumService = AlbumService.getInstance();
 
-
-
-
-
     private SongService() {
-
-
         // Initialize repositories
         songRepository = RepositoryFactory.getInstance().getSongRepository();
-
-        //Charge all the data from the JSON files in a list of objects List<T>
-        songs = new ArrayList<>();
-        songs = songRepository.findAll();
-
-
-
-
-
     }
+
     /// Public method to get the singleton instance
     public static synchronized SongService getInstance() {
         if (instance == null) {
@@ -57,13 +39,7 @@ public class SongService {
      * @return The song with the specified ID, or null if not found.
      */
     public Song getSongById(int songId) {
-        refreshCache();
-        for (Song song : songs) {
-            if (song.getSongId() == songId) {
-                return song;
-            }
-        }
-        return null; // Song not found
+        return songRepository.findById(songId).orElse(null); // Song not found
     }
 
     /**
@@ -72,14 +48,7 @@ public class SongService {
      * @return A list of songs with the specified name.
      */
     public List<Song> getSongsByTitle(String songTitle) {
-        refreshCache();
-        List<Song> result = new ArrayList<>();
-        for (Song song : songs) {
-            if (song.getTitle().equalsIgnoreCase(songTitle)) {
-                result.add(song);
-            }
-        }
-        return result;
+        return songRepository.findByTitle(songTitle);
     }
 
     /**
@@ -88,15 +57,7 @@ public class SongService {
      * @return A list of songs by the specified artist.
      */
     public List<Song> getSongsByArtistId(int artistId) {
-        refreshCache();
-        List<Song> result = new ArrayList<>();
-        for (Song song : songs) {
-            if (song.getArtistId() == artistId) {
-                result.add(song);
-            }
-        }
-        return result;
-
+        return songRepository.findByArtistId(artistId);
     }
 
     /**
@@ -105,15 +66,12 @@ public class SongService {
      * @return A list of songs by the specified artist.
      */
     public List<Song> getSongByArtistName(String artistName) {
-        refreshCache();
-        List<Song> result = new ArrayList<>();
-        for (Song song : songs) {
-            Artist artist = artistService.getArtistById(song.getArtistId());
-            if (artist != null && artist.getLastName().equalsIgnoreCase(artistName)) {
-                result.add(song);
-            }
-        }
-        return result;
+        return songRepository.findAll().stream()
+                .filter(song -> {
+                    Artist artist = artistService.getArtistById(song.getArtistId());
+                    return artist != null && artist.getLastName().equalsIgnoreCase(artistName);
+                })
+                .collect(java.util.stream.Collectors.toList());
     }
 
     /**
@@ -122,14 +80,9 @@ public class SongService {
      * @return A list of songs by the specified album.
      */
     public List<Song> getSongsByAlbumId(int albumId) {
-        refreshCache();
-        List<Song> result = new ArrayList<>();
-        for (Song song : songs) {
-            if (song.getAlbumId() == albumId) {
-                result.add(song);
-            }
-        }
-        return result;
+        return songRepository.findAll().stream()
+                .filter(song -> song.getAlbumId() == albumId)
+                .collect(java.util.stream.Collectors.toList());
     }
 
     /**
@@ -138,15 +91,12 @@ public class SongService {
      * @return A list of songs by the specified album.
      */
     public List<Song> getSongsByAlbumName(String albumName) {
-        refreshCache();
-        List<Song> result = new ArrayList<>();
-        for (Song song : songs) {
-            Album album = albumService.getAlbumById(song.getAlbumId());
-            if (album != null && album.getTitle().equalsIgnoreCase(albumName)) {
-                result.add(song);
-            }
-        }
-        return result;
+        return songRepository.findAll().stream()
+                .filter(song -> {
+                    Album album = albumService.getAlbumById(song.getAlbumId());
+                    return album != null && album.getTitle().equalsIgnoreCase(albumName);
+                })
+                .collect(java.util.stream.Collectors.toList());
     }
 
     /**
@@ -155,36 +105,15 @@ public class SongService {
      * @return A list of songs with the specified genre.
      */
     public List<Song> getSongsByGenre(Genre genre) {
-        refreshCache();
-        List<Song> result = new ArrayList<>();
-        for (Song song : songs) {
-            if (song.getGenre() == genre) {
-                result.add(song);
-            }
-        }
-        return result;
+        return songRepository.findByGenre(genre);
     }
+
     /**
      * Retrieves all songs.
      * @return A list of all songs.
      */
     public List<Song> getAllSongs() {
-        refreshCache();
-        return songs;
-    }
-
-
-
-
-
-    /// ----------------------CAHE REFRESH----------------- ///
-    /**
-     * Refreshes the in-memory cache with the latest data from repositories.
-     * Call this after entities are created, updated, or deleted.
-     */
-    public void refreshCache() {
-        songs = songRepository.findAll();
-
+        return songRepository.findAll();
     }
 
 }

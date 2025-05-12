@@ -1,7 +1,12 @@
 package factory;
 
+import cache.*;
 import persistence.*;
 import persistence.interfaces.*;
+import songsAndArtists.Song;
+import user.User;
+
+import java.util.List;
 
 /**
  * Factory for creating repository instances.
@@ -12,9 +17,13 @@ import persistence.interfaces.*;
 public class RepositoryFactory {
 
     private static RepositoryFactory instance;
+    private static boolean isInitialized = false;
+
     // Private constructor to prevent instantiation
     private RepositoryFactory() {
-
+        if (!isInitialized) {
+            isInitialized = true;
+        }
     }
 
     public static synchronized RepositoryFactory getInstance() {
@@ -29,7 +38,19 @@ public class RepositoryFactory {
      * @return The UserRepository instance
      */
     public UserRepositoryInterface getUserRepository() {
-        return UserRepository.getInstance();
+
+        // Create base repository
+        UserRepository baseUserRepo = UserRepository.getInstance();
+
+        // Create cache strategy for users (no cache)
+        CachingStrategy<User> userCache = new NoCacheStrategy<>();
+
+        // Wrap with caching
+        CachedRepository<User> cachedUserRepo = new CachedRepository<>(baseUserRepo, userCache,
+                user -> "user_" + user.getUserID());
+
+        // Return as UserRepositoryInterface
+        return new CachedUserRepositoryWrapper(cachedUserRepo, baseUserRepo);
     }
 
     /**
@@ -38,7 +59,19 @@ public class RepositoryFactory {
      * @return A SongRepository instance
      */
     public SongRepositoryInterface getSongRepository() {
-        return SongRepository.getInstance();
+
+        // Create base repository
+        Repository<Song> baseSongRepo = SongRepository.getInstance();
+
+        // Create cache strategy for songs (in-memory)
+        CachingStrategy<Song> songCache = new InMemoryCacheStrategy<>();
+
+        // Wrap with caching
+        CachedRepository<Song> cachedSongRepo = new CachedRepository<>(baseSongRepo, songCache,
+                song -> "song_" + song.getSongId());
+
+        // Return as SongRepositoryInterface
+        return new CachedSongRepositoryWrapper(cachedSongRepo);
     }
 
     /**
@@ -68,12 +101,4 @@ public class RepositoryFactory {
         return PlaylistRepository.getInstance();
     }
 
-    /**
-     * Gets a new LibraryRepository instance.
-     *
-     * @return A LibraryRepository instance
-     */
-    public LibraryRepositoryInterface getLibraryRepository() {
-        return LibraryRepository.getInstance();
-    }
 }

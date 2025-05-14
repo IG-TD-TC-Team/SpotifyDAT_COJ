@@ -1,12 +1,21 @@
 package spotifyServer;
 
-import java.net.ServerSocket;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import cache.CacheWarmer;
-
 import spotifyServer.commandProcessor.*;
 
+/**
+ * SpotifySocketServer with proper two-port architecture while maintaining
+ * the Chain of Responsibility pattern for command processing.
+ *
+ * Architecture:
+ * - Port 45000: Command processing (text-based protocol)
+ * - Port 45001: Music streaming (binary data)
+ *
+ * The Chain of Responsibility handles only command processing.
+ * Streaming is handled separately to avoid mixing text and binary data.
+ */
 public class SpotifySocketServer {
     // Port constants
     public static final int COMMAND_PORT = 45000;
@@ -15,74 +24,132 @@ public class SpotifySocketServer {
     private CommandServer commandServer;
     private StreamingServer streamingServer;
     private ExecutorService threadPool;
-
-
     private final CacheWarmer cacheWarmer = CacheWarmer.getInstance();
 
     /**
      * Constructor for SpotifySocketServer.
-     * Initializes the command server and streaming server with a thread pool.
+     * Initializes both command and streaming servers.
      */
     public SpotifySocketServer() {
-        // Warm caches before creating servers
+        // Warm caches before starting the server
         System.out.println("Pre-warming caches...");
         CacheWarmer.warmAllCaches();
 
         // Create a thread pool to manage client connections
         this.threadPool = Executors.newCachedThreadPool();
 
-        // Initialize StreamingServer
+        // Initialize StreamingServer first (it's a dependency for some processors)
         this.streamingServer = StreamingServer.getInstance(STREAMING_PORT, threadPool);
-        // Initialize command processor
-        AbstractProcessor commandProcessor = initializeCommandProcessor();
-        //Initialize CommandServer
-        this.commandServer = CommandServer.getInstance(COMMAND_PORT, threadPool, commandProcessor);
 
+        // Initialize the processor chain for command processing
+        AbstractProcessor commandProcessorChain = createProcessorChain();
+
+        // Initialize CommandServer with the processor chain
+        this.commandServer = CommandServer.getInstance(COMMAND_PORT, threadPool, commandProcessorChain);
+
+        System.out.println("Spotify Server initialized with two-port architecture");
+        System.out.println("Command processing uses Chain of Responsibility pattern");
+        System.out.println("Streaming handled separately on dedicated port");
     }
 
     /**
-     * Initializes the command processor with a chain of handlers.
-     * @return CommandProcessor instance with the chain of handlers
+     * Creates the processor chain for handling commands.
+     *
+     * Each processor handles only command processing.
+     * When streaming is needed, processors send instructions to the client
+     * to connect to the streaming port.
+     *
+     * @return The first processor in the chain
      */
-    private AbstractProcessor initializeCommandProcessor() {
+    private AbstractProcessor createProcessorChain() {
+        // Create instances of each processor
+        HelpCommandProcessor helpProcessor = new HelpCommandProcessor();
+        PlayCommandProcessor playProcessor = new PlayCommandProcessor();
+        PlaylistCommandProcessor playlistProcessor = new PlaylistCommandProcessor();
+        SearchCommandProcessor searchProcessor = new SearchCommandProcessor();
+        DefaultCommandProcessor defaultProcessor = new DefaultCommandProcessor();
 
-        return CommandProcessorFactory.createProcessorChain();
+        // Connect the chain in order
+        helpProcessor.setNextProcessor(playProcessor);
+        playProcessor.setNextProcessor(playlistProcessor);
+        playlistProcessor.setNextProcessor(searchProcessor);
+        searchProcessor.setNextProcessor(defaultProcessor);
+
+        System.out.println("Command processor chain created:");
+        System.out.println("  1. HelpCommandProcessor");
+        System.out.println("  2. PlayCommandProcessor");
+        System.out.println("  3. PlaylistCommandProcessor");
+        System.out.println("  4. SearchCommandProcessor");
+        System.out.println("  5. DefaultCommandProcessor");
+
+        return helpProcessor;
     }
 
     /**
-     * Starts the command and streaming servers.
-     * This method starts both servers in separate threads to handle incoming connections.
+     * Starts both the command and streaming servers.
+     *
+     * - Command server handles text-based protocol on port 45000
+     * - Streaming server handles binary MP3 data on port 45001
      */
     public void start() {
-        // Start both servers in separate threads
-        new Thread(() -> commandServer.start()).start();
+        System.out.println("Starting Spotify Server with two-port architecture...");
+
+        // Start the streaming server first
         new Thread(() -> streamingServer.start()).start();
 
-        System.out.println("Spotify Server started:");
+        // Then start the command server
+        new Thread(() -> commandServer.start()).start();
+
+        System.out.println("Spotify Server started successfully!");
         System.out.println("Command server listening on port " + COMMAND_PORT);
         System.out.println("Streaming server listening on port " + STREAMING_PORT);
     }
 
     /**
-     * Stops the command and streaming servers.
-     * This method stops both servers and shuts down the thread pool.
+     * Stops both servers and cleans up resources.
      */
     public void stop() {
+        System.out.println("Stopping Spotify Server...");
+
+        // Stop both servers
         commandServer.stop();
         streamingServer.stop();
+
+        // Shutdown cache warmer
         cacheWarmer.shutdown();
+
+        // Shutdown thread pool
         threadPool.shutdown();
+
         System.out.println("Spotify Server stopped");
     }
 
     /**
      * Main method to start the SpotifySocketServer.
-     * This method creates an instance of SpotifySocketServer and starts it.
      *
-     * @param args command line arguments
+     * @param args command line arguments (not used)
      */
     public static void main(String[] args) {
+        System.out.println("==========================================");
+        System.out.println("  Spotify Server - Two Port Architecture  ");
+        System.out.println("==========================================");
+
+        // Create and start the server
         SpotifySocketServer server = new SpotifySocketServer();
         server.start();
+
+        // Add shutdown hook for graceful shutdown
+        Runtime.getRuntime().addShutdownHook(new Thread(() -> {
+            System.out.println("\nShutdown signal received...");
+            server.stop();
+        }));
+
+        // Keep the main thread alive
+        try {
+            Thread.currentThread().join();
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+            System.out.println("Main thread interrupted");
+        }
     }
 }

@@ -62,27 +62,9 @@ public class SpotifySocketServer {
      * @return The first processor in the chain
      */
     private AbstractProcessor createProcessorChain() {
-        // Create instances of each processor
-        HelpCommandProcessor helpProcessor = new HelpCommandProcessor();
-        PlayCommandProcessor playProcessor = new PlayCommandProcessor();
-        PlaylistCommandProcessor playlistProcessor = new PlaylistCommandProcessor();
-        SearchCommandProcessor searchProcessor = new SearchCommandProcessor();
-        DefaultCommandProcessor defaultProcessor = new DefaultCommandProcessor();
-
-        // Connect the chain in order
-        helpProcessor.setNextProcessor(playProcessor);
-        playProcessor.setNextProcessor(playlistProcessor);
-        playlistProcessor.setNextProcessor(searchProcessor);
-        searchProcessor.setNextProcessor(defaultProcessor);
-
-        System.out.println("Command processor chain created:");
-        System.out.println("  1. HelpCommandProcessor");
-        System.out.println("  2. PlayCommandProcessor");
-        System.out.println("  3. PlaylistCommandProcessor");
-        System.out.println("  4. SearchCommandProcessor");
-        System.out.println("  5. DefaultCommandProcessor");
-
-        return helpProcessor;
+        // Use the factory to create the processor chain
+        // This is like ordering a car from the factory instead of building it yourself
+        return CommandProcessorFactory.getInstance().createProcessorChainInstance();
     }
 
     /**

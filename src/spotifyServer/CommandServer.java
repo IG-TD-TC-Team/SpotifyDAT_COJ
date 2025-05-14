@@ -80,7 +80,7 @@ public class CommandServer {
 
                     // Create a new processor chain instance for this client
                     // This ensures thread safety and client isolation
-                    AbstractProcessor clientProcessorChain = createProcessorChainInstance();
+                    AbstractProcessor clientProcessorChain = CommandProcessorFactory.getInstance().createProcessorChainInstance();
 
                     // Handle the client connection directly through the processor chain
                     threadPool.execute(() -> {
@@ -120,21 +120,8 @@ public class CommandServer {
      *
      * @return A new processor chain instance
      */
-    private AbstractProcessor createProcessorChainInstance() {
-        // Create new instances of each processor
-        HelpCommandProcessor helpProcessor = new HelpCommandProcessor();
-        PlayCommandProcessor playProcessor = new PlayCommandProcessor();
-        PlaylistCommandProcessor playlistProcessor = new PlaylistCommandProcessor();
-        SearchCommandProcessor searchProcessor = new SearchCommandProcessor();
-        DefaultCommandProcessor defaultProcessor = new DefaultCommandProcessor();
-
-        // Connect the chain
-        helpProcessor.setNextProcessor(playProcessor);
-        playProcessor.setNextProcessor(playlistProcessor);
-        playlistProcessor.setNextProcessor(searchProcessor);
-        searchProcessor.setNextProcessor(defaultProcessor);
-
-        return helpProcessor;
+    private AbstractProcessor createProcessorChain() {
+        return CommandProcessorFactory.getInstance().createProcessorChainInstance();
     }
 
     /**

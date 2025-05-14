@@ -66,8 +66,8 @@
   "subscriptionPlan" : {
     "type" : "PremiumPlan",
     "type" : "PREMIUM",
-    "maxQuality" : 320,
-    "deviceLimit" : 5
+    "deviceLimit" : 5,
+    "maxQuality" : 320
   },
   "subscriptionInfo" : {
     "startDate" : 1745439808915,
@@ -122,8 +122,8 @@
   "subscriptionPlan" : {
     "type" : "PremiumPlan",
     "type" : "PREMIUM",
-    "maxQuality" : 320,
-    "deviceLimit" : 5
+    "deviceLimit" : 5,
+    "maxQuality" : 320
   },
   "subscriptionInfo" : null,
   "followedUsersIDs" : [ ],
@@ -143,8 +143,8 @@
   "subscriptionPlan" : {
     "type" : "PremiumPlan",
     "type" : "PREMIUM",
-    "maxQuality" : 320,
-    "deviceLimit" : 5
+    "deviceLimit" : 5,
+    "maxQuality" : 320
   },
   "subscriptionInfo" : {
     "startDate" : 1745439236374,
@@ -333,7 +333,9 @@
     "songs" : [ ],
     "ownerID" : 0,
     "playlistID" : 0,
-    "sharedWith" : [ ]
+    "likedByUsers" : [ ],
+    "sharedWith" : [ ],
+    "publiclyShareable" : false
   },
   "active" : true
 }, {
@@ -370,7 +372,9 @@
     "songs" : [ ],
     "ownerID" : 0,
     "playlistID" : 0,
-    "sharedWith" : [ ]
+    "likedByUsers" : [ ],
+    "sharedWith" : [ ],
+    "publiclyShareable" : false
   },
   "active" : true
 }, {
@@ -405,7 +409,9 @@
       "songs" : [ ],
       "ownerID" : 13,
       "playlistID" : 0,
-      "sharedWith" : [ ]
+      "likedByUsers" : [ ],
+      "sharedWith" : [ ],
+      "publiclyShareable" : false
     } ]
   },
   "defaultPlaylist" : {
@@ -413,7 +419,9 @@
     "songs" : [ ],
     "ownerID" : 13,
     "playlistID" : 0,
-    "sharedWith" : [ ]
+    "likedByUsers" : [ ],
+    "sharedWith" : [ ],
+    "publiclyShareable" : false
   },
   "active" : true
 }, {
@@ -448,7 +456,9 @@
       "songs" : [ ],
       "ownerID" : 14,
       "playlistID" : 0,
-      "sharedWith" : [ ]
+      "likedByUsers" : [ ],
+      "sharedWith" : [ ],
+      "publiclyShareable" : false
     } ]
   },
   "defaultPlaylist" : {
@@ -456,7 +466,9 @@
     "songs" : [ ],
     "ownerID" : 14,
     "playlistID" : 0,
-    "sharedWith" : [ ]
+    "likedByUsers" : [ ],
+    "sharedWith" : [ ],
+    "publiclyShareable" : false
   },
   "active" : true
 }, {
@@ -471,8 +483,8 @@
   "subscriptionPlan" : {
     "type" : "PremiumPlan",
     "type" : "PREMIUM",
-    "maxQuality" : 320,
-    "deviceLimit" : 5
+    "deviceLimit" : 5,
+    "maxQuality" : 320
   },
   "subscriptionInfo" : {
     "startDate" : 1746390257295,
@@ -491,7 +503,9 @@
       "songs" : [ ],
       "ownerID" : 16,
       "playlistID" : 0,
-      "sharedWith" : [ ]
+      "likedByUsers" : [ ],
+      "sharedWith" : [ ],
+      "publiclyShareable" : false
     } ]
   },
   "defaultPlaylist" : {
@@ -499,7 +513,9 @@
     "songs" : [ ],
     "ownerID" : 16,
     "playlistID" : 0,
-    "sharedWith" : [ ]
+    "likedByUsers" : [ ],
+    "sharedWith" : [ ],
+    "publiclyShareable" : false
   },
   "active" : true
 }, {
@@ -534,7 +550,9 @@
       "songs" : [ ],
       "ownerID" : 17,
       "playlistID" : 0,
-      "sharedWith" : [ ]
+      "likedByUsers" : [ ],
+      "sharedWith" : [ ],
+      "publiclyShareable" : false
     } ]
   },
   "defaultPlaylist" : {
@@ -542,7 +560,9 @@
     "songs" : [ ],
     "ownerID" : 17,
     "playlistID" : 0,
-    "sharedWith" : [ ]
+    "likedByUsers" : [ ],
+    "sharedWith" : [ ],
+    "publiclyShareable" : false
   },
   "active" : true
 }, {
@@ -557,8 +577,8 @@
   "subscriptionPlan" : {
     "type" : "PremiumPlan",
     "type" : "PREMIUM",
-    "maxQuality" : 320,
-    "deviceLimit" : 5
+    "deviceLimit" : 5,
+    "maxQuality" : 320
   },
   "subscriptionInfo" : {
     "startDate" : 1746390257565,
@@ -577,7 +597,9 @@
       "songs" : [ ],
       "ownerID" : 18,
       "playlistID" : 0,
-      "sharedWith" : [ ]
+      "likedByUsers" : [ ],
+      "sharedWith" : [ ],
+      "publiclyShareable" : false
     } ]
   },
   "defaultPlaylist" : {
@@ -585,7 +607,9 @@
     "songs" : [ ],
     "ownerID" : 18,
     "playlistID" : 0,
-    "sharedWith" : [ ]
+    "likedByUsers" : [ ],
+    "sharedWith" : [ ],
+    "publiclyShareable" : false
   },
   "active" : true
 }, {
@@ -620,7 +644,9 @@
       "songs" : [ ],
       "ownerID" : 19,
       "playlistID" : 0,
-      "sharedWith" : [ ]
+      "likedByUsers" : [ ],
+      "sharedWith" : [ ],
+      "publiclyShareable" : false
     } ]
   },
   "defaultPlaylist" : {
@@ -628,7 +654,9 @@
     "songs" : [ ],
     "ownerID" : 19,
     "playlistID" : 0,
-    "sharedWith" : [ ]
+    "likedByUsers" : [ ],
+    "sharedWith" : [ ],
+    "publiclyShareable" : false
   },
   "active" : true
 }, {
@@ -663,7 +691,9 @@
       "songs" : [ ],
       "ownerID" : 20,
       "playlistID" : 0,
-      "sharedWith" : [ ]
+      "likedByUsers" : [ ],
+      "sharedWith" : [ ],
+      "publiclyShareable" : false
     } ]
   },
   "defaultPlaylist" : {
@@ -671,7 +701,9 @@
     "songs" : [ ],
     "ownerID" : 20,
     "playlistID" : 0,
-    "sharedWith" : [ ]
+    "likedByUsers" : [ ],
+    "sharedWith" : [ ],
+    "publiclyShareable" : false
   },
   "active" : true
 }, {
@@ -706,7 +738,9 @@
       "songs" : [ ],
       "ownerID" : 21,
       "playlistID" : 0,
-      "sharedWith" : [ ]
+      "likedByUsers" : [ ],
+      "sharedWith" : [ ],
+      "publiclyShareable" : false
     } ]
   },
   "defaultPlaylist" : {
@@ -714,7 +748,9 @@
     "songs" : [ ],
     "ownerID" : 21,
     "playlistID" : 0,
-    "sharedWith" : [ ]
+    "likedByUsers" : [ ],
+    "sharedWith" : [ ],
+    "publiclyShareable" : false
   },
   "active" : true
 }, {
@@ -749,7 +785,9 @@
       "songs" : [ ],
       "ownerID" : 22,
       "playlistID" : 0,
-      "sharedWith" : [ ]
+      "likedByUsers" : [ ],
+      "sharedWith" : [ ],
+      "publiclyShareable" : false
     } ]
   },
   "defaultPlaylist" : {
@@ -757,7 +795,9 @@
     "songs" : [ ],
     "ownerID" : 22,
     "playlistID" : 0,
-    "sharedWith" : [ ]
+    "likedByUsers" : [ ],
+    "sharedWith" : [ ],
+    "publiclyShareable" : false
   },
   "active" : true
 }, {
@@ -792,7 +832,9 @@
       "songs" : [ ],
       "ownerID" : 23,
       "playlistID" : 0,
-      "sharedWith" : [ ]
+      "likedByUsers" : [ ],
+      "sharedWith" : [ ],
+      "publiclyShareable" : false
     } ]
   },
   "defaultPlaylist" : {
@@ -800,7 +842,9 @@
     "songs" : [ ],
     "ownerID" : 23,
     "playlistID" : 0,
-    "sharedWith" : [ ]
+    "likedByUsers" : [ ],
+    "sharedWith" : [ ],
+    "publiclyShareable" : false
   },
   "active" : true
 }, {
@@ -835,7 +879,9 @@
       "songs" : [ ],
       "ownerID" : 24,
       "playlistID" : 0,
-      "sharedWith" : [ ]
+      "likedByUsers" : [ ],
+      "sharedWith" : [ ],
+      "publiclyShareable" : false
     } ]
   },
   "defaultPlaylist" : {
@@ -843,7 +889,9 @@
     "songs" : [ ],
     "ownerID" : 24,
     "playlistID" : 0,
-    "sharedWith" : [ ]
+    "likedByUsers" : [ ],
+    "sharedWith" : [ ],
+    "publiclyShareable" : false
   },
   "active" : true
 }, {
@@ -878,7 +926,9 @@
       "songs" : [ ],
       "ownerID" : 25,
       "playlistID" : 0,
-      "sharedWith" : [ ]
+      "likedByUsers" : [ ],
+      "sharedWith" : [ ],
+      "publiclyShareable" : false
     } ]
   },
   "defaultPlaylist" : {
@@ -886,7 +936,9 @@
     "songs" : [ ],
     "ownerID" : 25,
     "playlistID" : 0,
-    "sharedWith" : [ ]
+    "likedByUsers" : [ ],
+    "sharedWith" : [ ],
+    "publiclyShareable" : false
   },
   "active" : true
 }, {
@@ -901,8 +953,8 @@
   "subscriptionPlan" : {
     "type" : "PremiumPlan",
     "type" : "PREMIUM",
-    "maxQuality" : 320,
-    "deviceLimit" : 5
+    "deviceLimit" : 5,
+    "maxQuality" : 320
   },
   "subscriptionInfo" : {
     "startDate" : 1746390257985,
@@ -921,7 +973,9 @@
       "songs" : [ ],
       "ownerID" : 26,
       "playlistID" : 0,
-      "sharedWith" : [ ]
+      "likedByUsers" : [ ],
+      "sharedWith" : [ ],
+      "publiclyShareable" : false
     } ]
   },
   "defaultPlaylist" : {
@@ -929,7 +983,9 @@
     "songs" : [ ],
     "ownerID" : 26,
     "playlistID" : 0,
-    "sharedWith" : [ ]
+    "likedByUsers" : [ ],
+    "sharedWith" : [ ],
+    "publiclyShareable" : false
   },
   "active" : true
 }, {
@@ -944,8 +1000,8 @@
   "subscriptionPlan" : {
     "type" : "StudentPlan",
     "type" : "STUDENT",
-    "maxQuality" : 256,
-    "deviceLimit" : 3
+    "deviceLimit" : 3,
+    "maxQuality" : 256
   },
   "subscriptionInfo" : {
     "startDate" : 1746390258003,
@@ -964,7 +1020,9 @@
       "songs" : [ ],
       "ownerID" : 27,
       "playlistID" : 0,
-      "sharedWith" : [ ]
+      "likedByUsers" : [ ],
+      "sharedWith" : [ ],
+      "publiclyShareable" : false
     } ]
   },
   "defaultPlaylist" : {
@@ -972,7 +1030,9 @@
     "songs" : [ ],
     "ownerID" : 27,
     "playlistID" : 0,
-    "sharedWith" : [ ]
+    "likedByUsers" : [ ],
+    "sharedWith" : [ ],
+    "publiclyShareable" : false
   },
   "active" : true
 }, {
@@ -987,8 +1047,8 @@
   "subscriptionPlan" : {
     "type" : "PremiumPlan",
     "type" : "PREMIUM",
-    "maxQuality" : 320,
-    "deviceLimit" : 5
+    "deviceLimit" : 5,
+    "maxQuality" : 320
   },
   "subscriptionInfo" : {
     "startDate" : 1746460470441,
@@ -1007,7 +1067,9 @@
       "songs" : [ ],
       "ownerID" : 29,
       "playlistID" : 0,
-      "sharedWith" : [ ]
+      "likedByUsers" : [ ],
+      "sharedWith" : [ ],
+      "publiclyShareable" : false
     } ]
   },
   "defaultPlaylist" : {
@@ -1015,7 +1077,9 @@
     "songs" : [ ],
     "ownerID" : 29,
     "playlistID" : 0,
-    "sharedWith" : [ ]
+    "likedByUsers" : [ ],
+    "sharedWith" : [ ],
+    "publiclyShareable" : false
   },
   "active" : true
 }, {
@@ -1050,7 +1114,9 @@
       "songs" : [ ],
       "ownerID" : 30,
       "playlistID" : 0,
-      "sharedWith" : [ ]
+      "likedByUsers" : [ ],
+      "sharedWith" : [ ],
+      "publiclyShareable" : false
     } ]
   },
   "defaultPlaylist" : {
@@ -1058,7 +1124,9 @@
     "songs" : [ ],
     "ownerID" : 30,
     "playlistID" : 0,
-    "sharedWith" : [ ]
+    "likedByUsers" : [ ],
+    "sharedWith" : [ ],
+    "publiclyShareable" : false
   },
   "active" : true
 }, {
@@ -1073,8 +1141,8 @@
   "subscriptionPlan" : {
     "type" : "PremiumPlan",
     "type" : "PREMIUM",
-    "maxQuality" : 320,
-    "deviceLimit" : 5
+    "deviceLimit" : 5,
+    "maxQuality" : 320
   },
   "subscriptionInfo" : {
     "startDate" : 1746460470676,
@@ -1093,7 +1161,9 @@
       "songs" : [ ],
       "ownerID" : 31,
       "playlistID" : 0,
-      "sharedWith" : [ ]
+      "likedByUsers" : [ ],
+      "sharedWith" : [ ],
+      "publiclyShareable" : false
     } ]
   },
   "defaultPlaylist" : {
@@ -1101,7 +1171,9 @@
     "songs" : [ ],
     "ownerID" : 31,
     "playlistID" : 0,
-    "sharedWith" : [ ]
+    "likedByUsers" : [ ],
+    "sharedWith" : [ ],
+    "publiclyShareable" : false
   },
   "active" : true
 }, {
@@ -1136,7 +1208,9 @@
       "songs" : [ ],
       "ownerID" : 32,
       "playlistID" : 0,
-      "sharedWith" : [ ]
+      "likedByUsers" : [ ],
+      "sharedWith" : [ ],
+      "publiclyShareable" : false
     } ]
   },
   "defaultPlaylist" : {
@@ -1144,7 +1218,9 @@
     "songs" : [ ],
     "ownerID" : 32,
     "playlistID" : 0,
-    "sharedWith" : [ ]
+    "likedByUsers" : [ ],
+    "sharedWith" : [ ],
+    "publiclyShareable" : false
   },
   "active" : true
 }, {
@@ -1179,7 +1255,9 @@
       "songs" : [ ],
       "ownerID" : 33,
       "playlistID" : 0,
-      "sharedWith" : [ ]
+      "likedByUsers" : [ ],
+      "sharedWith" : [ ],
+      "publiclyShareable" : false
     } ]
   },
   "defaultPlaylist" : {
@@ -1187,7 +1265,9 @@
     "songs" : [ ],
     "ownerID" : 33,
     "playlistID" : 0,
-    "sharedWith" : [ ]
+    "likedByUsers" : [ ],
+    "sharedWith" : [ ],
+    "publiclyShareable" : false
   },
   "active" : true
 }, {
@@ -1222,7 +1302,9 @@
       "songs" : [ ],
       "ownerID" : 34,
       "playlistID" : 0,
-      "sharedWith" : [ ]
+      "likedByUsers" : [ ],
+      "sharedWith" : [ ],
+      "publiclyShareable" : false
     } ]
   },
   "defaultPlaylist" : {
@@ -1230,7 +1312,9 @@
     "songs" : [ ],
     "ownerID" : 34,
     "playlistID" : 0,
-    "sharedWith" : [ ]
+    "likedByUsers" : [ ],
+    "sharedWith" : [ ],
+    "publiclyShareable" : false
   },
   "active" : true
 }, {
@@ -1265,7 +1349,9 @@
       "songs" : [ ],
       "ownerID" : 35,
       "playlistID" : 0,
-      "sharedWith" : [ ]
+      "likedByUsers" : [ ],
+      "sharedWith" : [ ],
+      "publiclyShareable" : false
     } ]
   },
   "defaultPlaylist" : {
@@ -1273,7 +1359,9 @@
     "songs" : [ ],
     "ownerID" : 35,
     "playlistID" : 0,
-    "sharedWith" : [ ]
+    "likedByUsers" : [ ],
+    "sharedWith" : [ ],
+    "publiclyShareable" : false
   },
   "active" : true
 }, {
@@ -1308,7 +1396,9 @@
       "songs" : [ ],
       "ownerID" : 36,
       "playlistID" : 0,
-      "sharedWith" : [ ]
+      "likedByUsers" : [ ],
+      "sharedWith" : [ ],
+      "publiclyShareable" : false
     } ]
   },
   "defaultPlaylist" : {
@@ -1316,7 +1406,9 @@
     "songs" : [ ],
     "ownerID" : 36,
     "playlistID" : 0,
-    "sharedWith" : [ ]
+    "likedByUsers" : [ ],
+    "sharedWith" : [ ],
+    "publiclyShareable" : false
   },
   "active" : true
 }, {
@@ -1351,7 +1443,9 @@
       "songs" : [ ],
       "ownerID" : 37,
       "playlistID" : 0,
-      "sharedWith" : [ ]
+      "likedByUsers" : [ ],
+      "sharedWith" : [ ],
+      "publiclyShareable" : false
     } ]
   },
   "defaultPlaylist" : {
@@ -1359,7 +1453,9 @@
     "songs" : [ ],
     "ownerID" : 37,
     "playlistID" : 0,
-    "sharedWith" : [ ]
+    "likedByUsers" : [ ],
+    "sharedWith" : [ ],
+    "publiclyShareable" : false
   },
   "active" : true
 }, {
@@ -1394,7 +1490,9 @@
       "songs" : [ ],
       "ownerID" : 38,
       "playlistID" : 0,
-      "sharedWith" : [ ]
+      "likedByUsers" : [ ],
+      "sharedWith" : [ ],
+      "publiclyShareable" : false
     } ]
   },
   "defaultPlaylist" : {
@@ -1402,7 +1500,9 @@
     "songs" : [ ],
     "ownerID" : 38,
     "playlistID" : 0,
-    "sharedWith" : [ ]
+    "likedByUsers" : [ ],
+    "sharedWith" : [ ],
+    "publiclyShareable" : false
   },
   "active" : true
 }, {
@@ -1417,8 +1517,8 @@
   "subscriptionPlan" : {
     "type" : "PremiumPlan",
     "type" : "PREMIUM",
-    "maxQuality" : 320,
-    "deviceLimit" : 5
+    "deviceLimit" : 5,
+    "maxQuality" : 320
   },
   "subscriptionInfo" : {
     "startDate" : 1746460471032,
@@ -1437,7 +1537,9 @@
       "songs" : [ ],
       "ownerID" : 39,
       "playlistID" : 0,
-      "sharedWith" : [ ]
+      "likedByUsers" : [ ],
+      "sharedWith" : [ ],
+      "publiclyShareable" : false
     } ]
   },
   "defaultPlaylist" : {
@@ -1445,7 +1547,9 @@
     "songs" : [ ],
     "ownerID" : 39,
     "playlistID" : 0,
-    "sharedWith" : [ ]
+    "likedByUsers" : [ ],
+    "sharedWith" : [ ],
+    "publiclyShareable" : false
   },
   "active" : true
 }, {
@@ -1460,8 +1564,8 @@
   "subscriptionPlan" : {
     "type" : "StudentPlan",
     "type" : "STUDENT",
-    "maxQuality" : 256,
-    "deviceLimit" : 3
+    "deviceLimit" : 3,
+    "maxQuality" : 256
   },
   "subscriptionInfo" : {
     "startDate" : 1746460471043,
@@ -1480,7 +1584,9 @@
       "songs" : [ ],
       "ownerID" : 40,
       "playlistID" : 0,
-      "sharedWith" : [ ]
+      "likedByUsers" : [ ],
+      "sharedWith" : [ ],
+      "publiclyShareable" : false
     } ]
   },
   "defaultPlaylist" : {
@@ -1488,7 +1594,9 @@
     "songs" : [ ],
     "ownerID" : 40,
     "playlistID" : 0,
-    "sharedWith" : [ ]
+    "likedByUsers" : [ ],
+    "sharedWith" : [ ],
+    "publiclyShareable" : false
   },
   "active" : true
 }, {
@@ -1523,7 +1631,9 @@
       "songs" : [ ],
       "ownerID" : 41,
       "playlistID" : 0,
-      "sharedWith" : [ ]
+      "likedByUsers" : [ ],
+      "sharedWith" : [ ],
+      "publiclyShareable" : false
     } ]
   },
   "defaultPlaylist" : {
@@ -1531,7 +1641,56 @@
     "songs" : [ ],
     "ownerID" : 41,
     "playlistID" : 0,
-    "sharedWith" : [ ]
+    "likedByUsers" : [ ],
+    "sharedWith" : [ ],
+    "publiclyShareable" : false
+  },
+  "active" : true
+}, {
+  "userID" : 42,
+  "username" : "julcor",
+  "email" : "juliocortes14@gmail.com",
+  "password" : "b43206bb030355e10e4b57108dc726310d9450b76d6f8b9c108d7d001945556a",
+  "firstName" : "Julio",
+  "lastName" : "Cortés",
+  "dateOfBirth" : null,
+  "accountCreationDate" : 1747237750545,
+  "subscriptionPlan" : {
+    "type" : "FreePlan",
+    "type" : "FREE",
+    "maxQuality" : 128,
+    "deviceLimit" : 1
+  },
+  "subscriptionInfo" : {
+    "startDate" : 1747237750545,
+    "endDate" : null,
+    "lastBillingDate" : 1747237750545,
+    "paymentMethod" : null,
+    "autoRenew" : true,
+    "price" : 0.0
+  },
+  "followedUsersIDs" : [ ],
+  "followersIDs" : [ ],
+  "library" : {
+    "userID" : 42,
+    "playlists" : [ {
+      "name" : "Favorites",
+      "songs" : [ ],
+      "ownerID" : 42,
+      "playlistID" : 0,
+      "likedByUsers" : [ ],
+      "sharedWith" : [ ],
+      "publiclyShareable" : false
+    } ]
+  },
+  "defaultPlaylist" : {
+    "name" : "Favorites",
+    "songs" : [ ],
+    "ownerID" : 42,
+    "playlistID" : 0,
+    "likedByUsers" : [ ],
+    "sharedWith" : [ ],
+    "publiclyShareable" : false
   },
   "active" : true
 } ]

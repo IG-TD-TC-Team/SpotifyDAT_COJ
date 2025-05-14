@@ -49,8 +49,8 @@ public class SocialCommandProcessor extends AbstractProcessor {
         String identifier = parts[2];
 
         try {
-            // TODO: Get current user ID from session
-            int currentUserId = 1; // This should come from session
+            // Get current user ID from connection context
+            int currentUserId = getCurrentUserId();
 
             int targetUserId;
 
@@ -93,8 +93,8 @@ public class SocialCommandProcessor extends AbstractProcessor {
         String identifier = parts[2];
 
         try {
-            // TODO: Get current user ID from session
-            int currentUserId = 1; // This should come from session
+            // Get current user ID from connection context
+            int currentUserId = getCurrentUserId();
 
             int targetUserId;
 
@@ -128,7 +128,7 @@ public class SocialCommandProcessor extends AbstractProcessor {
     private String handleGetFollowers() {
         try {
             // TODO: Get current user ID from session
-            int currentUserId = 1; // This should come from session
+            int currentUserId = getCurrentUserId();
 
             List<User> followers = socialService.getFollowers(currentUserId);
 
@@ -162,8 +162,8 @@ public class SocialCommandProcessor extends AbstractProcessor {
      */
     private String handleGetFollowing() {
         try {
-            // TODO: Get current user ID from session
-            int currentUserId = 1; // This should come from session
+
+            int currentUserId = getCurrentUserId();
 
             List<User> following = socialService.getFollowedUsers(currentUserId);
 

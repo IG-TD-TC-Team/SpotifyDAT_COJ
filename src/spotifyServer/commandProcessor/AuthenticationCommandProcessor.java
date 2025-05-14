@@ -52,7 +52,12 @@ public class AuthenticationCommandProcessor extends AbstractProcessor {
             // Attempt to authenticate the user
             String sessionId = authService.login(username, password, clientAddress);
 
-            // TODO: Store session ID in connection context
+            // Get the authenticated user
+            User user = authService.getUserFromSession(sessionId);
+
+            // Update the connection context with authentication info
+            CommandContext.authenticateConnection(clientSocket, sessionId, user.getUserID(), username);
+
             return "SUCCESS: Logged in successfully. Welcome, " + username + "!";
 
         } catch (AuthenticationException e) {
@@ -70,8 +75,19 @@ public class AuthenticationCommandProcessor extends AbstractProcessor {
      */
     private String handleLogout() {
         try {
-            // TODO: Get session ID from connection context
-            // Just return a success message
+            // Check if user is authenticated
+            if (!isAuthenticated()) {
+                return "ERROR: You are not logged in.";
+            }
+
+            // Get session ID from context
+            String sessionId = connectionContext.getSessionId();
+
+            // Logout through authentication service
+            authService.logout(sessionId);
+
+            // Clear authentication from connection context
+            CommandContext.deauthenticateConnection(clientSocket);
             return "SUCCESS: Logged out successfully.";
 
         } catch (Exception e) {

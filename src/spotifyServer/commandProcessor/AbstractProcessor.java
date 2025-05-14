@@ -10,13 +10,15 @@ import java.net.Socket;
  * This implementation:
  * 1. Processes text commands only
  * 2. Does not handle binary streaming directly
- * 3. Instructs clients to connect to the streaming port for binary data
+ * 3. Uses a chain of responsibility pattern for command processing
  */
 public abstract class AbstractProcessor {
     protected AbstractProcessor nextProcessor;
     protected Socket clientSocket;
     protected BufferedReader in;
     protected PrintWriter out;
+    // The connection context for the command
+    protected CommandContext.ConnectionInfo connectionContext;
 
     /**
      * Sets the next processor in the chain.
@@ -36,8 +38,37 @@ public abstract class AbstractProcessor {
      */
     public void setClientSocket(Socket clientSocket) throws IOException {
         this.clientSocket = clientSocket;
+
+        // Try to get existing context or create new one
+        this.connectionContext = CommandContext.getContext(clientSocket);
+        if (this.connectionContext == null) {
+            this.connectionContext = CommandContext.createContext(clientSocket);
+        }
+
+        // Initialize text-based I/O streams
         this.in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
-        this.out = new PrintWriter(clientSocket.getOutputStream(), true);
+        this.out = connectionContext.getOut();
+    }
+
+    /**
+     * Gets the current authenticated user ID from the context
+     */
+    protected Integer getCurrentUserId() {
+        return connectionContext != null ? connectionContext.getUserId() : null;
+    }
+
+    /**
+     * Checks if the current connection is authenticated
+     */
+    protected boolean isAuthenticated() {
+        return connectionContext != null && connectionContext.isAuthenticated();
+    }
+
+    /**
+     * Gets the current username from the context
+     */
+    protected String getCurrentUsername() {
+        return connectionContext != null ? connectionContext.getUsername() : null;
     }
 
     /**
@@ -128,6 +159,9 @@ public abstract class AbstractProcessor {
      */
     protected void closeConnection() {
         try {
+            // Remove the context when closing
+            CommandContext.removeContext(clientSocket);
+
             if (in != null) in.close();
             if (out != null) out.close();
             if (clientSocket != null && !clientSocket.isClosed()) {

@@ -45,7 +45,7 @@ public class MusicStreamer {
             return false;
         }
 
-        // SIMPLIFIED APPROACH - direct binary streaming
+        // Direct binary streaming
         try (
                 FileInputStream fileIn = new FileInputStream(file);
                 OutputStream clientOut = clientSocket.getOutputStream();

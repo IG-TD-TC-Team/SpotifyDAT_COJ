@@ -17,49 +17,50 @@ import java.util.Arrays;
  * 2. Sending streaming instructions to the client (on command port)
  * 3. Letting the client initiate streaming on the streaming port
  */
+
+
 public class PlayCommandProcessor extends AbstractProcessor {
     private final SongService songService = SongService.getInstance();
-    private final StreamingServer streamingServer;
-
-    public PlayCommandProcessor() {
-        // Get the singleton StreamingServer instance
-        this.streamingServer = StreamingServer.getInstance();
-    }
+    private final StreamingServer streamingServer = StreamingServer.getInstance();
 
     @Override
     public String processCommand(String command) {
-        // Check if the command starts with "play "
         if (command.toLowerCase().startsWith("play ")) {
-            System.out.println("Debug: Received play command: " + command);
+            // Check authentication using your existing system
+            if (!isAuthenticated()) {
+                return "ERROR: You must be logged in to play music";
+            }
 
             try {
-                // Extract song ID from command
                 String[] parts = command.split(" ", 2);
-                System.out.println("Debug: Parsed command parts: " + Arrays.toString(parts));
-
                 if (parts.length < 2) {
                     return "Error: Missing song ID. Usage: play <song_id>";
                 }
 
                 int songId = Integer.parseInt(parts[1]);
-
-                // Check if song exists
                 Song song = songService.getSongById(songId);
-                System.out.println("Debug: Found song: " + (song != null ? song.getTitle() : "null"));
 
                 if (song == null) {
                     return "Error: Song not found with ID: " + songId;
                 }
 
-                // IMPORTANT: Instead of streaming directly, we send streaming instructions
-                // The client will connect to the streaming port separately
+                // Get user context from your existing CommandContext system
+                Integer userId = getCurrentUserId();
+                String username = getCurrentUsername();
+
+                if (userId == null) {
+                    return "ERROR: Could not determine user identity";
+                }
+
+                // Include user ID in streaming instructions - this is the key handoff!
                 String response = "STREAM_REQUEST|" + SpotifySocketServer.STREAMING_PORT +
-                        "|" + song.getFilePath() + "|" + song.getTitle() + "|" + song.getArtistId();
+                        "|" + song.getFilePath() + "|" + song.getTitle() +
+                        "|" + song.getArtistId() + "|" + userId; // <-- User ID added here
 
-                System.out.println("Debug: Sending response: " + response);
+                System.out.println("Preparing stream for user " + username + " (ID: " + userId +
+                        "): " + song.getTitle());
 
-                // Optionally, prepare the streaming server for this specific song
-                // This could involve caching the song data or preparing the stream
+                // Prepare streaming server
                 streamingServer.prepareForStreaming(song);
 
                 return response;
@@ -71,7 +72,6 @@ public class PlayCommandProcessor extends AbstractProcessor {
             }
         }
 
-        // If this processor can't handle the command, pass it to the next one
         return handleNext(command);
     }
 }

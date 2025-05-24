@@ -143,45 +143,58 @@ public class StreamingServer {
         }
 
         private void handleSongStream(String request, PrintWriter out) {
-            // Format: STREAM|filepath|title|artistId
-            String[] parts = request.split("\\|", 4);
-            if (parts.length < 4) {
-                out.println("ERROR|Invalid STREAM format");
+            // Updated format: STREAM|filepath|title|artistId|userId
+            String[] parts = request.split("\\|", 5);
+            if (parts.length < 5) {
+                out.println("ERROR|Invalid STREAM format - missing user ID");
                 return;
             }
 
             String filePath = parts[1];
             String title = parts[2];
             String artistId = parts[3];
+            Integer userId;
 
-            System.out.println("Streaming song: " + title);
-            out.println("STREAMING_START|" + title);
+            try {
+                userId = Integer.parseInt(parts[4]);
+            } catch (NumberFormatException e) {
+                out.println("ERROR|Invalid user ID format");
+                return;
+            }
 
-            // Force flush before switching to binary mode
-            out.flush();
+            System.out.println("Streaming " + title + " for user ID: " + userId);
 
-            // Stream the actual MP3 file
-            boolean success = musicStreamer.streamAudioFile(filePath, clientSocket);
+            // Create MusicStreamer and register it with the user ID
+            MusicStreamer streamer = new MusicStreamer();
 
-            if (success) {
-                System.out.println("Successfully streamed: " + title);
-            } else {
-                System.err.println("Failed to stream: " + title);
+            // This connects the CommandContext user ID to the streaming system
+            boolean success = streamer.streamAudioFile(filePath, clientSocket, userId);
+
+            if (!success) {
+                System.err.println("Failed to stream: " + title + " for user: " + userId);
             }
         }
 
         private void handlePlaylistStream(String request, PrintWriter out) {
-            // Format: PLAYLIST|filepath1,filepath2,...|playlistName
-            String[] parts = request.split("\\|", 3);
-            if (parts.length < 3) {
-                out.println("ERROR|Invalid PLAYLIST format");
+            // Format: PLAYLIST|filepath1,filepath2,...|playlistName|userId
+            String[] parts = request.split("\\|", 4);
+            if (parts.length < 4) {
+                out.println("ERROR|Invalid PLAYLIST format - missing user ID");
                 return;
             }
 
             String[] filePaths = parts[1].split(",");
             String playlistName = parts[2];
+            Integer userId;
 
-            System.out.println("Streaming playlist: " + playlistName + " (" + filePaths.length + " songs)");
+            try {
+                userId = Integer.parseInt(parts[3]);
+            } catch (NumberFormatException e) {
+                out.println("ERROR|Invalid user ID format");
+                return;
+            }
+
+            System.out.println("Streaming playlist: " + playlistName + " (" + filePaths.length + " songs) for user ID: " + userId);
             out.println("PLAYLIST_START|" + playlistName + "|" + filePaths.length + " songs");
             out.flush();
 
@@ -194,11 +207,20 @@ public class StreamingServer {
                 out.println("SONG_START|Song " + songCount + " of " + filePaths.length);
                 out.flush();
 
-                // Stream the song
-                boolean success = musicStreamer.streamAudioFile(filePath, clientSocket);
+                // Create a new streamer for each song
+                MusicStreamer streamer = new MusicStreamer();
+                boolean success = streamer.streamAudioFile(filePath, clientSocket, userId);
+
                 if (!success) {
                     out.println("ERROR|Failed to stream song " + songCount);
                     out.flush();
+                    break;
+                }
+
+                // Check if we should continue or if a stop was requested
+                MusicStreamer currentStreamer = MusicStreamer.getStreamerForUser(userId);
+                if (currentStreamer != null && currentStreamer.isStopped()) {
+                    System.out.println("Playlist streaming stopped by user request");
                     break;
                 }
 
@@ -216,6 +238,7 @@ public class StreamingServer {
         }
     }
 
+    /// -----------------------STOP------------------------------------- ///
     public void stop() {
         running = false;
         if (serverSocket != null && !serverSocket.isClosed()) {

@@ -39,18 +39,10 @@
   "sharedWith" : [ ],
   "publiclyShareable" : false
 }, {
-  "name" : "julio",
-  "songs" : [ {
-    "songId" : 101,
-    "title" : "Get Lucky",
-    "artistId" : 1,
-    "albumId" : 1001,
-    "genre" : "ELECTRONIC",
-    "durationSeconds" : 248,
-    "filePath" : "music/test.mp3"
-  } ],
+  "name" : "sofia",
+  "songs" : [ ],
   "ownerID" : 1,
-  "playlistID" : 5,
+  "playlistID" : 6,
   "likedByUsers" : [ ],
   "sharedWith" : [ ],
   "publiclyShareable" : false

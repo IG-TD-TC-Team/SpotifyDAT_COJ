@@ -1,123 +1,4 @@
 [ {
-  "artistID" : 100,
-  "firstName" : "David",
-  "lastName" : "Bowie",
-  "birthDate" : 59232985200000,
-  "countryOfBirth" : "UK",
-  "songs" : [ ]
-}, {
-  "artistID" : 101,
-  "firstName" : "Pink",
-  "lastName" : "Floyd",
-  "birthDate" : 59819983200000,
-  "countryOfBirth" : "UK",
-  "songs" : [ ]
-}, {
-  "artistID" : 102,
-  "firstName" : "Queen",
-  "lastName" : "",
-  "birthDate" : 59973861600000,
-  "countryOfBirth" : "UK",
-  "songs" : [ 1034 ]
-}, {
-  "artistID" : 103,
-  "firstName" : "Led",
-  "lastName" : "Zeppelin",
-  "birthDate" : 1745593140611,
-  "countryOfBirth" : "Unknown",
-  "songs" : [ 1035, 1040, 1045, 1050 ]
-}, {
-  "artistID" : 104,
-  "firstName" : "The",
-  "lastName" : "Beatles",
-  "birthDate" : 59645286000000,
-  "countryOfBirth" : "UK",
-  "songs" : [ 1036, 1037, 1038 ]
-}, {
-  "artistID" : 105,
-  "firstName" : "David",
-  "lastName" : "Bowie",
-  "birthDate" : 59232985200000,
-  "countryOfBirth" : "UK",
-  "songs" : [ ]
-}, {
-  "artistID" : 106,
-  "firstName" : "Pink",
-  "lastName" : "Floyd",
-  "birthDate" : 59819983200000,
-  "countryOfBirth" : "UK",
-  "songs" : [ ]
-}, {
-  "artistID" : 107,
-  "firstName" : "Queen",
-  "lastName" : "",
-  "birthDate" : 59973861600000,
-  "countryOfBirth" : "UK",
-  "songs" : [ 1039 ]
-}, {
-  "artistID" : 108,
-  "firstName" : "The",
-  "lastName" : "Beatles",
-  "birthDate" : 59645286000000,
-  "countryOfBirth" : "UK",
-  "songs" : [ 1041, 1042, 1043 ]
-}, {
-  "artistID" : 109,
-  "firstName" : "David",
-  "lastName" : "Bowie",
-  "birthDate" : 59232985200000,
-  "countryOfBirth" : "UK",
-  "songs" : [ ]
-}, {
-  "artistID" : 110,
-  "firstName" : "Pink",
-  "lastName" : "Floyd",
-  "birthDate" : 59819983200000,
-  "countryOfBirth" : "UK",
-  "songs" : [ ]
-}, {
-  "artistID" : 111,
-  "firstName" : "Queen",
-  "lastName" : "",
-  "birthDate" : 59973861600000,
-  "countryOfBirth" : "UK",
-  "songs" : [ 1044 ]
-}, {
-  "artistID" : 112,
-  "firstName" : "The",
-  "lastName" : "Beatles",
-  "birthDate" : 59645286000000,
-  "countryOfBirth" : "UK",
-  "songs" : [ 1046, 1047, 1048 ]
-}, {
-  "artistID" : 113,
-  "firstName" : "David",
-  "lastName" : "Bowie",
-  "birthDate" : 59232985200000,
-  "countryOfBirth" : "UK",
-  "songs" : [ ]
-}, {
-  "artistID" : 114,
-  "firstName" : "Pink",
-  "lastName" : "Floyd",
-  "birthDate" : 59819983200000,
-  "countryOfBirth" : "UK",
-  "songs" : [ ]
-}, {
-  "artistID" : 115,
-  "firstName" : "Queen",
-  "lastName" : "",
-  "birthDate" : 59973861600000,
-  "countryOfBirth" : "UK",
-  "songs" : [ 1049 ]
-}, {
-  "artistID" : 116,
-  "firstName" : "The",
-  "lastName" : "Beatles",
-  "birthDate" : 59645286000000,
-  "countryOfBirth" : "UK",
-  "songs" : [ 1051, 1052, 1053 ]
-}, {
   "artistID" : 117,
   "firstName" : "Aldebert",
   "lastName" : "",
@@ -146,26 +27,12 @@
   "countryOfBirth" : "Unknown",
   "songs" : [ 1095 ]
 }, {
-  "artistID" : 121,
-  "firstName" : "Monde des",
-  "lastName" : "Titounis",
-  "birthDate" : 1748028096185,
-  "countryOfBirth" : "Unknown",
-  "songs" : [ 1096 ]
-}, {
   "artistID" : 122,
   "firstName" : "Angèle",
   "lastName" : "",
   "birthDate" : 1748028096197,
   "countryOfBirth" : "Unknown",
   "songs" : [ 1097, 1098, 1099, 1100, 1101, 1102, 1103, 1104, 1105, 1106, 1107, 1108, 1109, 1110, 1111, 1112, 1113, 1114, 1115 ]
-}, {
-  "artistID" : 123,
-  "firstName" : "Bénabar",
-  "lastName" : "",
-  "birthDate" : 1748028096370,
-  "countryOfBirth" : "Unknown",
-  "songs" : [ 1116, 1117 ]
 }, {
   "artistID" : 124,
   "firstName" : "Gauvain",
@@ -180,20 +47,6 @@
   "birthDate" : 1748028096521,
   "countryOfBirth" : "Unknown",
   "songs" : [ 1134, 1135, 1136, 1137, 1145, 1146, 1147, 1148 ]
-}, {
-  "artistID" : 126,
-  "firstName" : "Enrique",
-  "lastName" : "Iglesias",
-  "birthDate" : 1748028096557,
-  "countryOfBirth" : "Unknown",
-  "songs" : [ 1138 ]
-}, {
-  "artistID" : 127,
-  "firstName" : "Luis Fonsi",
-  "lastName" : "Demi Lovato",
-  "birthDate" : 1748028096569,
-  "countryOfBirth" : "Unknown",
-  "songs" : [ 1139 ]
 }, {
   "artistID" : 128,
   "firstName" : "Juanes",

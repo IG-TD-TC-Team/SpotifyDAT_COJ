@@ -202,8 +202,11 @@ public class MusicFactory {
         return createAlbum(title, artistId);
     }
 
+    // In MusicFactory.java, update the createSongWithAutoPath method:
+
     /**
      * Creates a new song with an automatically generated file path.
+     * Now properly sanitizes the file path to handle special characters.
      *
      * @param title The title of the song
      * @param artistId The ID of the artist
@@ -213,8 +216,82 @@ public class MusicFactory {
      * @return The created Song
      */
     public Song createSongWithAutoPath(String title, int artistId, int albumId, Genre genre, int durationSeconds) {
-        String filePath = "/music/" + title.toLowerCase().replace(" ", "") + ".mp3";
+        String sanitizedTitle = sanitizeFileName(title);
+        String filePath = "/music/" + sanitizedTitle + ".mp3";
         return createSong(title, artistId, albumId, genre, durationSeconds, filePath);
+    }
+
+    /**
+     * Sanitizes a file name by removing or replacing problematic characters.
+     * This ensures the file path will work across different systems and protocols.
+     *
+     * @param fileName The original file name
+     * @return A sanitized file name safe for use in file paths
+     */
+    private String sanitizeFileName(String fileName) {
+        // Convert to lowercase
+        String sanitized = fileName.toLowerCase();
+
+        // Replace common problematic characters with safe alternatives
+        sanitized = sanitized
+                .replace(" ", "")           // Remove spaces
+                .replace("'", "")           // Remove apostrophes
+                .replace("'", "")           // Remove smart apostrophes
+                .replace("\"", "")          // Remove quotes
+                .replace("?", "")           // Remove question marks
+                .replace("!", "")           // Remove exclamation marks
+                .replace(":", "")           // Remove colons
+                .replace(";", "")           // Remove semicolons
+                .replace("/", "_")          // Replace forward slashes
+                .replace("\\", "_")         // Replace backslashes
+                .replace("*", "")           // Remove asterisks
+                .replace("<", "")           // Remove less than
+                .replace(">", "")           // Remove greater than
+                .replace("|", "")           // Remove pipes
+                .replace(",", "")           // Remove commas
+                .replace(".", "")           // Remove periods (except for extension)
+                .replace("(", "")           // Remove opening parenthesis
+                .replace(")", "")           // Remove closing parenthesis
+                .replace("[", "")           // Remove opening bracket
+                .replace("]", "")           // Remove closing bracket
+                .replace("{", "")           // Remove opening brace
+                .replace("}", "")           // Remove closing brace
+                .replace("&", "and")        // Replace ampersand
+                .replace("@", "at")         // Replace at symbol
+                .replace("#", "")           // Remove hash
+                .replace("$", "")           // Remove dollar sign
+                .replace("%", "")           // Remove percent
+                .replace("^", "")           // Remove caret
+                .replace("=", "")           // Remove equals
+                .replace("+", "")           // Remove plus
+                .replace("~", "")           // Remove tilde
+                .replace("`", "")           // Remove backtick
+                .replace("é", "e")          // Replace accented e
+                .replace("è", "e")          // Replace accented e
+                .replace("ê", "e")          // Replace accented e
+                .replace("ë", "e")          // Replace accented e
+                .replace("à", "a")          // Replace accented a
+                .replace("â", "a")          // Replace accented a
+                .replace("ä", "a")          // Replace accented a
+                .replace("ç", "c")          // Replace c with cedilla
+                .replace("ñ", "n")          // Replace n with tilde
+                .replace("ö", "o")          // Replace accented o
+                .replace("ô", "o")          // Replace accented o
+                .replace("ü", "u")          // Replace accented u
+                .replace("ù", "u")          // Replace accented u
+                .replace("û", "u")          // Replace accented u
+                .replace("ï", "i")          // Replace accented i
+                .replace("î", "i");         // Replace accented i
+
+        // Remove any remaining non-alphanumeric characters (except hyphens and underscores)
+        sanitized = sanitized.replaceAll("[^a-z0-9_-]", "");
+
+        // Ensure the filename is not empty
+        if (sanitized.isEmpty()) {
+            sanitized = "untitled";
+        }
+
+        return sanitized;
     }
 
     /**

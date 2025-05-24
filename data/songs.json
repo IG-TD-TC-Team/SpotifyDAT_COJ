@@ -1,643 +1,11 @@
 [ {
-  "songId" : 203,
-  "title" : "Life on Mars?",
-  "artistId" : 2,
-  "albumId" : 2002,
-  "genre" : "ROCK",
-  "durationSeconds" : 236,
-  "filePath" : "/music/lifeonmars.mp3"
-}, {
-  "songId" : 101,
-  "title" : "Get Lucky",
-  "artistId" : 1,
-  "albumId" : 1001,
-  "genre" : "ELECTRONIC",
-  "durationSeconds" : 248,
-  "filePath" : "music/test.mp3"
-}, {
-  "songId" : 102,
-  "title" : "Harder, Better, Faster, Stronger",
-  "artistId" : 1,
-  "albumId" : 1001,
-  "genre" : "ELECTRONIC",
-  "durationSeconds" : 224,
-  "filePath" : "/music/harder.mp3"
-}, {
-  "songId" : 103,
-  "title" : "Around the World",
-  "artistId" : 1,
-  "albumId" : 1002,
-  "genre" : "ELECTRONIC",
-  "durationSeconds" : 429,
-  "filePath" : "/music/aroundtheworld.mp3"
-}, {
-  "songId" : 201,
-  "title" : "Space Oddity",
-  "artistId" : 2,
-  "albumId" : 2001,
-  "genre" : "ROCK",
-  "durationSeconds" : 315,
-  "filePath" : "/music/spaceoddity.mp3"
-}, {
-  "songId" : 202,
-  "title" : "Heroes",
-  "artistId" : 2,
-  "albumId" : 2001,
-  "genre" : "ROCK",
-  "durationSeconds" : 371,
-  "filePath" : "/music/heroes.mp3"
-}, {
-  "songId" : 203,
-  "title" : "Life on Mars?",
-  "artistId" : 2,
-  "albumId" : 2002,
-  "genre" : "ROCK",
-  "durationSeconds" : 236,
-  "filePath" : "/music/lifeonmars.mp3"
-}, {
-  "songId" : 301,
-  "title" : "Imagine",
-  "artistId" : 3,
-  "albumId" : 3001,
-  "genre" : "ROCK",
-  "durationSeconds" : 180,
-  "filePath" : "/music/imagine.mp3"
-}, {
-  "songId" : 401,
-  "title" : "Blank Space",
-  "artistId" : 4,
-  "albumId" : 4001,
-  "genre" : "POP",
-  "durationSeconds" : 231,
-  "filePath" : "/music/blankspace.mp3"
-}, {
-  "songId" : 501,
-  "title" : "Yellow",
-  "artistId" : 5,
-  "albumId" : 5001,
-  "genre" : "ROCK",
-  "durationSeconds" : 265,
-  "filePath" : "/music/yellow.mp3"
-}, {
-  "songId" : 502,
-  "title" : "Paradise",
-  "artistId" : 5,
-  "albumId" : 5001,
-  "genre" : "ROCK",
-  "durationSeconds" : 278,
-  "filePath" : "/music/paradise.mp3"
-}, {
-  "songId" : 503,
-  "title" : "Fix You",
-  "artistId" : 5,
-  "albumId" : 5002,
-  "genre" : "ROCK",
-  "durationSeconds" : 296,
-  "filePath" : "/music/fixyou.mp3"
-}, {
-  "songId" : 301,
-  "title" : "Imagine",
-  "artistId" : 3,
-  "albumId" : 3001,
-  "genre" : "ROCK",
-  "durationSeconds" : 183,
-  "filePath" : "/music/imagine.mp3"
-}, {
-  "songId" : 401,
-  "title" : "Blank Space",
-  "artistId" : 4,
-  "albumId" : 4001,
-  "genre" : "POP",
-  "durationSeconds" : 231,
-  "filePath" : "/music/blankspace.mp3"
-}, {
-  "songId" : 501,
-  "title" : "Yellow",
-  "artistId" : 5,
-  "albumId" : 5001,
-  "genre" : "ROCK",
-  "durationSeconds" : 265,
-  "filePath" : "/music/yellow.mp3"
-}, {
-  "songId" : 502,
-  "title" : "Paradise",
-  "artistId" : 5,
-  "albumId" : 5001,
-  "genre" : "ROCK",
-  "durationSeconds" : 278,
-  "filePath" : "/music/paradise.mp3"
-}, {
-  "songId" : 503,
-  "title" : "Fix You",
-  "artistId" : 5,
-  "albumId" : 5002,
-  "genre" : "ROCK",
-  "durationSeconds" : 296,
-  "filePath" : "/music/fixyou.mp3"
-}, {
-  "songId" : 301,
-  "title" : "Imagine",
-  "artistId" : 3,
-  "albumId" : 3001,
-  "genre" : "ROCK",
-  "durationSeconds" : 183,
-  "filePath" : "/music/imagine.mp3"
-}, {
-  "songId" : 401,
-  "title" : "Blank Space",
-  "artistId" : 4,
-  "albumId" : 4001,
-  "genre" : "POP",
-  "durationSeconds" : 231,
-  "filePath" : "/music/blankspace.mp3"
-}, {
-  "songId" : 501,
-  "title" : "Yellow",
-  "artistId" : 5,
-  "albumId" : 5001,
-  "genre" : "ROCK",
-  "durationSeconds" : 265,
-  "filePath" : "/music/yellow.mp3"
-}, {
-  "songId" : 502,
-  "title" : "Paradise",
-  "artistId" : 5,
-  "albumId" : 5001,
-  "genre" : "ROCK",
-  "durationSeconds" : 278,
-  "filePath" : "/music/paradise.mp3"
-}, {
-  "songId" : 503,
-  "title" : "Fix You",
-  "artistId" : 5,
-  "albumId" : 5002,
-  "genre" : "ROCK",
-  "durationSeconds" : 296,
-  "filePath" : "/music/fixyou.mp3"
-}, {
-  "songId" : 1000,
-  "title" : "Bohemian Rhapsody",
-  "artistId" : 102,
-  "albumId" : 10001,
-  "genre" : "ROCK",
-  "durationSeconds" : 355,
-  "filePath" : "/music/bohemianrhapsody.mp3"
-}, {
-  "songId" : 1001,
-  "title" : "Bohemian Rhapsody",
-  "artistId" : 105,
-  "albumId" : 10003,
-  "genre" : "ROCK",
-  "durationSeconds" : 355,
-  "filePath" : "/music/bohemianrhapsody.mp3"
-}, {
-  "songId" : 1002,
-  "title" : "Bohemian Rhapsody",
-  "artistId" : 108,
-  "albumId" : 10005,
-  "genre" : "ROCK",
-  "durationSeconds" : 355,
-  "filePath" : "/music/bohemianrhapsody.mp3"
-}, {
-  "songId" : 1003,
-  "title" : "Bohemian Rhapsody",
-  "artistId" : 111,
-  "albumId" : 10007,
-  "genre" : "ROCK",
-  "durationSeconds" : 355,
-  "filePath" : "/music/bohemianrhapsody.mp3"
-}, {
-  "songId" : 1004,
-  "title" : "Bohemian Rhapsody",
-  "artistId" : 114,
-  "albumId" : 10009,
-  "genre" : "ROCK",
-  "durationSeconds" : 355,
-  "filePath" : "/music/bohemianrhapsody.mp3"
-}, {
-  "songId" : 1005,
-  "title" : "Stairway to Heaven",
-  "artistId" : 115,
-  "albumId" : 10010,
-  "genre" : "ROCK",
-  "durationSeconds" : 482,
-  "filePath" : "/music/stairwaytoheaven.mp3"
-}, {
-  "songId" : 1006,
-  "title" : "Come Together",
-  "artistId" : 116,
-  "albumId" : 10011,
-  "genre" : "ROCK",
-  "durationSeconds" : 260,
-  "filePath" : "/music/cometogether.mp3"
-}, {
-  "songId" : 1007,
-  "title" : "Something",
-  "artistId" : 116,
-  "albumId" : 10011,
-  "genre" : "ROCK",
-  "durationSeconds" : 182,
-  "filePath" : "/music/something.mp3"
-}, {
-  "songId" : 1008,
-  "title" : "Maxwell's Silver Hammer",
-  "artistId" : 116,
-  "albumId" : 10011,
-  "genre" : "ROCK",
-  "durationSeconds" : 207,
-  "filePath" : "/music/maxwell'ssilverhammer.mp3"
-}, {
-  "songId" : 1009,
-  "title" : "Bohemian Rhapsody",
-  "artistId" : 119,
-  "albumId" : 10013,
-  "genre" : "ROCK",
-  "durationSeconds" : 355,
-  "filePath" : "/music/bohemianrhapsody.mp3"
-}, {
-  "songId" : 1010,
-  "title" : "Stairway to Heaven",
-  "artistId" : 115,
-  "albumId" : 10010,
-  "genre" : "ROCK",
-  "durationSeconds" : 482,
-  "filePath" : "/music/stairwaytoheaven.mp3"
-}, {
-  "songId" : 1011,
-  "title" : "Come Together",
-  "artistId" : 120,
-  "albumId" : 10014,
-  "genre" : "ROCK",
-  "durationSeconds" : 260,
-  "filePath" : "/music/cometogether.mp3"
-}, {
-  "songId" : 1012,
-  "title" : "Something",
-  "artistId" : 120,
-  "albumId" : 10014,
-  "genre" : "ROCK",
-  "durationSeconds" : 182,
-  "filePath" : "/music/something.mp3"
-}, {
-  "songId" : 1013,
-  "title" : "Maxwell's Silver Hammer",
-  "artistId" : 120,
-  "albumId" : 10014,
-  "genre" : "ROCK",
-  "durationSeconds" : 207,
-  "filePath" : "/music/maxwell'ssilverhammer.mp3"
-}, {
-  "songId" : 1014,
-  "title" : "Bohemian Rhapsody",
-  "artistId" : 123,
-  "albumId" : 10016,
-  "genre" : "ROCK",
-  "durationSeconds" : 355,
-  "filePath" : "/music/bohemianrhapsody.mp3"
-}, {
-  "songId" : 1015,
-  "title" : "Stairway to Heaven",
-  "artistId" : 115,
-  "albumId" : 10010,
-  "genre" : "ROCK",
-  "durationSeconds" : 482,
-  "filePath" : "/music/stairwaytoheaven.mp3"
-}, {
-  "songId" : 1016,
-  "title" : "Come Together",
-  "artistId" : 124,
-  "albumId" : 10017,
-  "genre" : "ROCK",
-  "durationSeconds" : 260,
-  "filePath" : "/music/cometogether.mp3"
-}, {
-  "songId" : 1017,
-  "title" : "Something",
-  "artistId" : 124,
-  "albumId" : 10017,
-  "genre" : "ROCK",
-  "durationSeconds" : 182,
-  "filePath" : "/music/something.mp3"
-}, {
-  "songId" : 1018,
-  "title" : "Maxwell's Silver Hammer",
-  "artistId" : 124,
-  "albumId" : 10017,
-  "genre" : "ROCK",
-  "durationSeconds" : 207,
-  "filePath" : "/music/maxwell'ssilverhammer.mp3"
-}, {
-  "songId" : 1019,
-  "title" : "Bohemian Rhapsody",
-  "artistId" : 127,
-  "albumId" : 10019,
-  "genre" : "ROCK",
-  "durationSeconds" : 355,
-  "filePath" : "/music/bohemianrhapsody.mp3"
-}, {
-  "songId" : 1020,
-  "title" : "Stairway to Heaven",
-  "artistId" : 115,
-  "albumId" : 10010,
-  "genre" : "ROCK",
-  "durationSeconds" : 482,
-  "filePath" : "/music/stairwaytoheaven.mp3"
-}, {
-  "songId" : 1021,
-  "title" : "Come Together",
-  "artistId" : 128,
-  "albumId" : 10020,
-  "genre" : "ROCK",
-  "durationSeconds" : 260,
-  "filePath" : "/music/cometogether.mp3"
-}, {
-  "songId" : 1022,
-  "title" : "Something",
-  "artistId" : 128,
-  "albumId" : 10020,
-  "genre" : "ROCK",
-  "durationSeconds" : 182,
-  "filePath" : "/music/something.mp3"
-}, {
-  "songId" : 1023,
-  "title" : "Maxwell's Silver Hammer",
-  "artistId" : 128,
-  "albumId" : 10020,
-  "genre" : "ROCK",
-  "durationSeconds" : 207,
-  "filePath" : "/music/maxwell'ssilverhammer.mp3"
-}, {
-  "songId" : 1024,
-  "title" : "Bohemian Rhapsody",
-  "artistId" : 131,
-  "albumId" : 10022,
-  "genre" : "ROCK",
-  "durationSeconds" : 355,
-  "filePath" : "/music/bohemianrhapsody.mp3"
-}, {
-  "songId" : 1025,
-  "title" : "Stairway to Heaven",
-  "artistId" : 115,
-  "albumId" : 10010,
-  "genre" : "ROCK",
-  "durationSeconds" : 482,
-  "filePath" : "/music/stairwaytoheaven.mp3"
-}, {
-  "songId" : 1026,
-  "title" : "Come Together",
-  "artistId" : 132,
-  "albumId" : 10023,
-  "genre" : "ROCK",
-  "durationSeconds" : 260,
-  "filePath" : "/music/cometogether.mp3"
-}, {
-  "songId" : 1027,
-  "title" : "Something",
-  "artistId" : 132,
-  "albumId" : 10023,
-  "genre" : "ROCK",
-  "durationSeconds" : 182,
-  "filePath" : "/music/something.mp3"
-}, {
-  "songId" : 1028,
-  "title" : "Maxwell's Silver Hammer",
-  "artistId" : 132,
-  "albumId" : 10023,
-  "genre" : "ROCK",
-  "durationSeconds" : 207,
-  "filePath" : "/music/maxwell'ssilverhammer.mp3"
-}, {
-  "songId" : 1029,
-  "title" : "Bohemian Rhapsody",
-  "artistId" : 135,
-  "albumId" : 10025,
-  "genre" : "ROCK",
-  "durationSeconds" : 355,
-  "filePath" : "/music/bohemianrhapsody.mp3"
-}, {
-  "songId" : 1030,
-  "title" : "Stairway to Heaven",
-  "artistId" : 115,
-  "albumId" : 10010,
-  "genre" : "ROCK",
-  "durationSeconds" : 482,
-  "filePath" : "/music/stairwaytoheaven.mp3"
-}, {
-  "songId" : 1031,
-  "title" : "Come Together",
-  "artistId" : 136,
-  "albumId" : 10026,
-  "genre" : "ROCK",
-  "durationSeconds" : 260,
-  "filePath" : "/music/cometogether.mp3"
-}, {
-  "songId" : 1032,
-  "title" : "Something",
-  "artistId" : 136,
-  "albumId" : 10026,
-  "genre" : "ROCK",
-  "durationSeconds" : 182,
-  "filePath" : "/music/something.mp3"
-}, {
-  "songId" : 1033,
-  "title" : "Maxwell's Silver Hammer",
-  "artistId" : 136,
-  "albumId" : 10026,
-  "genre" : "ROCK",
-  "durationSeconds" : 207,
-  "filePath" : "/music/maxwell'ssilverhammer.mp3"
-}, {
-  "songId" : 1034,
-  "title" : "Bohemian Rhapsody",
-  "artistId" : 102,
-  "albumId" : 10028,
-  "genre" : "ROCK",
-  "durationSeconds" : 355,
-  "filePath" : "/music/bohemianrhapsody.mp3"
-}, {
-  "songId" : 1035,
-  "title" : "Stairway to Heaven",
-  "artistId" : 103,
-  "albumId" : 10029,
-  "genre" : "ROCK",
-  "durationSeconds" : 482,
-  "filePath" : "/music/stairwaytoheaven.mp3"
-}, {
-  "songId" : 1036,
-  "title" : "Come Together",
-  "artistId" : 104,
-  "albumId" : 10030,
-  "genre" : "ROCK",
-  "durationSeconds" : 260,
-  "filePath" : "/music/cometogether.mp3"
-}, {
-  "songId" : 1037,
-  "title" : "Something",
-  "artistId" : 104,
-  "albumId" : 10030,
-  "genre" : "ROCK",
-  "durationSeconds" : 182,
-  "filePath" : "/music/something.mp3"
-}, {
-  "songId" : 1038,
-  "title" : "Maxwell's Silver Hammer",
-  "artistId" : 104,
-  "albumId" : 10030,
-  "genre" : "ROCK",
-  "durationSeconds" : 207,
-  "filePath" : "/music/maxwell'ssilverhammer.mp3"
-}, {
-  "songId" : 1039,
-  "title" : "Bohemian Rhapsody",
-  "artistId" : 107,
-  "albumId" : 10032,
-  "genre" : "ROCK",
-  "durationSeconds" : 355,
-  "filePath" : "/music/bohemianrhapsody.mp3"
-}, {
-  "songId" : 1040,
-  "title" : "Stairway to Heaven",
-  "artistId" : 103,
-  "albumId" : 10029,
-  "genre" : "ROCK",
-  "durationSeconds" : 482,
-  "filePath" : "/music/stairwaytoheaven.mp3"
-}, {
-  "songId" : 1041,
-  "title" : "Come Together",
-  "artistId" : 108,
-  "albumId" : 10033,
-  "genre" : "ROCK",
-  "durationSeconds" : 260,
-  "filePath" : "/music/cometogether.mp3"
-}, {
-  "songId" : 1042,
-  "title" : "Something",
-  "artistId" : 108,
-  "albumId" : 10033,
-  "genre" : "ROCK",
-  "durationSeconds" : 182,
-  "filePath" : "/music/something.mp3"
-}, {
-  "songId" : 1043,
-  "title" : "Maxwell's Silver Hammer",
-  "artistId" : 108,
-  "albumId" : 10033,
-  "genre" : "ROCK",
-  "durationSeconds" : 207,
-  "filePath" : "/music/maxwell'ssilverhammer.mp3"
-}, {
-  "songId" : 1044,
-  "title" : "Bohemian Rhapsody",
-  "artistId" : 111,
-  "albumId" : 10035,
-  "genre" : "ROCK",
-  "durationSeconds" : 355,
-  "filePath" : "/music/bohemianrhapsody.mp3"
-}, {
-  "songId" : 1045,
-  "title" : "Stairway to Heaven",
-  "artistId" : 103,
-  "albumId" : 10029,
-  "genre" : "ROCK",
-  "durationSeconds" : 482,
-  "filePath" : "/music/stairwaytoheaven.mp3"
-}, {
-  "songId" : 1046,
-  "title" : "Come Together",
-  "artistId" : 112,
-  "albumId" : 10036,
-  "genre" : "ROCK",
-  "durationSeconds" : 260,
-  "filePath" : "/music/cometogether.mp3"
-}, {
-  "songId" : 1047,
-  "title" : "Something",
-  "artistId" : 112,
-  "albumId" : 10036,
-  "genre" : "ROCK",
-  "durationSeconds" : 182,
-  "filePath" : "/music/something.mp3"
-}, {
-  "songId" : 1048,
-  "title" : "Maxwell's Silver Hammer",
-  "artistId" : 112,
-  "albumId" : 10036,
-  "genre" : "ROCK",
-  "durationSeconds" : 207,
-  "filePath" : "/music/maxwell'ssilverhammer.mp3"
-}, {
-  "songId" : 1049,
-  "title" : "Bohemian Rhapsody",
-  "artistId" : 115,
-  "albumId" : 10038,
-  "genre" : "ROCK",
-  "durationSeconds" : 355,
-  "filePath" : "/music/bohemianrhapsody.mp3"
-}, {
-  "songId" : 1050,
-  "title" : "Stairway to Heaven",
-  "artistId" : 103,
-  "albumId" : 10029,
-  "genre" : "ROCK",
-  "durationSeconds" : 482,
-  "filePath" : "/music/stairwaytoheaven.mp3"
-}, {
-  "songId" : 1051,
-  "title" : "Come Together",
-  "artistId" : 116,
-  "albumId" : 10039,
-  "genre" : "ROCK",
-  "durationSeconds" : 260,
-  "filePath" : "/music/cometogether.mp3"
-}, {
-  "songId" : 1052,
-  "title" : "Something",
-  "artistId" : 116,
-  "albumId" : 10039,
-  "genre" : "ROCK",
-  "durationSeconds" : 182,
-  "filePath" : "/music/something.mp3"
-}, {
-  "songId" : 1053,
-  "title" : "Maxwell's Silver Hammer",
-  "artistId" : 116,
-  "albumId" : 10039,
-  "genre" : "ROCK",
-  "durationSeconds" : 207,
-  "filePath" : "/music/maxwell'ssilverhammer.mp3"
-}, {
-  "songId" : 1054,
-  "title" : "E2 dans l'espace (Live)",
-  "artistId" : 117,
-  "albumId" : 10040,
-  "genre" : "POP",
-  "durationSeconds" : 180,
-  "filePath" : "/music/e2dansl'espace(live).mp3"
-}, {
-  "songId" : 1055,
-  "title" : "Mon petit doigt m'a dit (Live)",
-  "artistId" : 117,
-  "albumId" : 10040,
-  "genre" : "POP",
-  "durationSeconds" : 240,
-  "filePath" : "/music/monpetitdoigtm'adit(live).mp3"
-}, {
-  "songId" : 1056,
-  "title" : "Mon père il est tellement fort (Live)",
-  "artistId" : 117,
-  "albumId" : 10040,
-  "genre" : "POP",
-  "durationSeconds" : 270,
-  "filePath" : "/music/monpèreilesttellementfort(live).mp3"
-}, {
   "songId" : 1057,
   "title" : "Les amoureux (Live)",
   "artistId" : 117,
   "albumId" : 10040,
   "genre" : "POP",
   "durationSeconds" : 235,
-  "filePath" : "/music/lesamoureux(live).mp3"
+  "filePath" : "D:\\DATAFiles\\Codes\\SpotifyDAT_COJ\\music\\lesamoureuxlive.mp3"
 }, {
   "songId" : 1058,
   "title" : "Super Mamie (Live)",
@@ -645,7 +13,7 @@
   "albumId" : 10040,
   "genre" : "POP",
   "durationSeconds" : 285,
-  "filePath" : "/music/supermamie(live).mp3"
+  "filePath" : "D:\\DATAFiles\\Codes\\SpotifyDAT_COJ\\music\\supermamielive.mp3"
 }, {
   "songId" : 1059,
   "title" : "Le dragon (Live)",
@@ -653,39 +21,7 @@
   "albumId" : 10040,
   "genre" : "POP",
   "durationSeconds" : 225,
-  "filePath" : "/music/ledragon(live).mp3"
-}, {
-  "songId" : 1060,
-  "title" : "Le p'tit veut faire de la trompette (Live)",
-  "artistId" : 117,
-  "albumId" : 10040,
-  "genre" : "POP",
-  "durationSeconds" : 250,
-  "filePath" : "/music/lep'titveutfairedelatrompette(live).mp3"
-}, {
-  "songId" : 1061,
-  "title" : "La vie d'écolier (Live)",
-  "artistId" : 117,
-  "albumId" : 10040,
-  "genre" : "POP",
-  "durationSeconds" : 295,
-  "filePath" : "/music/lavied'écolier(live).mp3"
-}, {
-  "songId" : 1062,
-  "title" : "Pour louper l'école (Live)",
-  "artistId" : 117,
-  "albumId" : 10040,
-  "genre" : "POP",
-  "durationSeconds" : 300,
-  "filePath" : "/music/pourlouperl'école(live).mp3"
-}, {
-  "songId" : 1063,
-  "title" : "Dans la maison de mon arrière-grand-père (Live)",
-  "artistId" : 117,
-  "albumId" : 10040,
-  "genre" : "POP",
-  "durationSeconds" : 205,
-  "filePath" : "/music/danslamaisondemonarrière-grand-père(live).mp3"
+  "filePath" : "D:\\DATAFiles\\Codes\\SpotifyDAT_COJ\\music\\ledragonlive.mp3"
 }, {
   "songId" : 1064,
   "title" : "Samir le fakir (Live)",
@@ -693,23 +29,7 @@
   "albumId" : 10040,
   "genre" : "POP",
   "durationSeconds" : 290,
-  "filePath" : "/music/samirlefakir(live).mp3"
-}, {
-  "songId" : 1065,
-  "title" : "Y'a rien qui va (Live)",
-  "artistId" : 117,
-  "albumId" : 10040,
-  "genre" : "POP",
-  "durationSeconds" : 220,
-  "filePath" : "/music/y'arienquiva(live).mp3"
-}, {
-  "songId" : 1066,
-  "title" : "On ne peut rien faire quand on est petit (Live)",
-  "artistId" : 117,
-  "albumId" : 10040,
-  "genre" : "POP",
-  "durationSeconds" : 200,
-  "filePath" : "/music/onnepeutrienfairequandonestpetit(live).mp3"
+  "filePath" : "D:\\DATAFiles\\Codes\\SpotifyDAT_COJ\\music\\samirlefakirlive.mp3"
 }, {
   "songId" : 1067,
   "title" : "La soucoupe volante (Live)",
@@ -717,7 +37,7 @@
   "albumId" : 10040,
   "genre" : "POP",
   "durationSeconds" : 300,
-  "filePath" : "/music/lasoucoupevolante(live).mp3"
+  "filePath" : "D:\\DATAFiles\\Codes\\SpotifyDAT_COJ\\music\\lasoucoupevolantelive.mp3"
 }, {
   "songId" : 1068,
   "title" : "Du gros son (Live)",
@@ -725,7 +45,7 @@
   "albumId" : 10040,
   "genre" : "POP",
   "durationSeconds" : 315,
-  "filePath" : "/music/dugrosson(live).mp3"
+  "filePath" : "D:\\DATAFiles\\Codes\\SpotifyDAT_COJ\\music\\dugrossonlive.mp3"
 }, {
   "songId" : 1069,
   "title" : "Plus tard quand tu seras grand (Live)",
@@ -733,15 +53,7 @@
   "albumId" : 10040,
   "genre" : "POP",
   "durationSeconds" : 260,
-  "filePath" : "/music/plustardquandtuserasgrand(live).mp3"
-}, {
-  "songId" : 1070,
-  "title" : "Qu'est-ce qu'on va faire de moi ? (Live)",
-  "artistId" : 117,
-  "albumId" : 10040,
-  "genre" : "POP",
-  "durationSeconds" : 280,
-  "filePath" : "/music/qu'est-cequ'onvafairedemoi?(live).mp3"
+  "filePath" : "D:\\DATAFiles\\Codes\\SpotifyDAT_COJ\\music\\plustardquandtuserasgrandlive.mp3"
 }, {
   "songId" : 1071,
   "title" : "Ah les crocodiles",
@@ -749,15 +61,7 @@
   "albumId" : 10041,
   "genre" : "CLASSICAL",
   "durationSeconds" : 180,
-  "filePath" : "/music/ahlescrocodiles.mp3"
-}, {
-  "songId" : 1072,
-  "title" : "Pirouette, cacahuète",
-  "artistId" : 118,
-  "albumId" : 10041,
-  "genre" : "CLASSICAL",
-  "durationSeconds" : 120,
-  "filePath" : "/music/pirouette,cacahuète.mp3"
+  "filePath" : "D:\\DATAFiles\\Codes\\SpotifyDAT_COJ\\music\\ahlescrocodiles.mp3"
 }, {
   "songId" : 1073,
   "title" : "Au claire de la lune",
@@ -765,7 +69,7 @@
   "albumId" : 10041,
   "genre" : "CLASSICAL",
   "durationSeconds" : 110,
-  "filePath" : "/music/auclairedelalune.mp3"
+  "filePath" : "D:\\DATAFiles\\Codes\\SpotifyDAT_COJ\\music\\auclairedelalune.mp3"
 }, {
   "songId" : 1074,
   "title" : "Une souris verte",
@@ -773,7 +77,7 @@
   "albumId" : 10041,
   "genre" : "CLASSICAL",
   "durationSeconds" : 60,
-  "filePath" : "/music/une souris verte.mp3"
+  "filePath" : "D:\\DATAFiles\\Codes\\SpotifyDAT_COJ\\music\\unesourisverte.mp3"
 }, {
   "songId" : 1075,
   "title" : "Promenons-nous dans les bois",
@@ -781,47 +85,7 @@
   "albumId" : 10041,
   "genre" : "CLASSICAL",
   "durationSeconds" : 105,
-  "filePath" : "/music/promenons-nousdanslesbois.mp3"
-}, {
-  "songId" : 1076,
-  "title" : "Pomme de reinette et pomme d'api",
-  "artistId" : 118,
-  "albumId" : 10041,
-  "genre" : "CLASSICAL",
-  "durationSeconds" : 55,
-  "filePath" : "/music/pommedereinetteetpommed'api.mp3"
-}, {
-  "songId" : 1077,
-  "title" : "Frère Jacques",
-  "artistId" : 118,
-  "albumId" : 10041,
-  "genre" : "CLASSICAL",
-  "durationSeconds" : 75,
-  "filePath" : "/music/frèrejacques.mp3"
-}, {
-  "songId" : 1078,
-  "title" : "Alouette, gentille alouette",
-  "artistId" : 118,
-  "albumId" : 10041,
-  "genre" : "CLASSICAL",
-  "durationSeconds" : 110,
-  "filePath" : "/music/alouette,gentillealouette.mp3"
-}, {
-  "songId" : 1079,
-  "title" : "Un éléphant qui se balançait",
-  "artistId" : 118,
-  "albumId" : 10041,
-  "genre" : "CLASSICAL",
-  "durationSeconds" : 140,
-  "filePath" : "/music/unéléphantquisebalançait.mp3"
-}, {
-  "songId" : 1080,
-  "title" : "Il était un petit navire",
-  "artistId" : 118,
-  "albumId" : 10041,
-  "genre" : "CLASSICAL",
-  "durationSeconds" : 305,
-  "filePath" : "/music/ilétaitunpetitnavire.mp3"
+  "filePath" : "D:\\DATAFiles\\Codes\\SpotifyDAT_COJ\\music\\promenons-nousdanslesbois.mp3"
 }, {
   "songId" : 1081,
   "title" : "Ainsi font font font",
@@ -829,7 +93,7 @@
   "albumId" : 10041,
   "genre" : "CLASSICAL",
   "durationSeconds" : 95,
-  "filePath" : "/music/ainsifontfontfont.mp3"
+  "filePath" : "D:\\DATAFiles\\Codes\\SpotifyDAT_COJ\\music\\ainsifontfontfont.mp3"
 }, {
   "songId" : 1082,
   "title" : "Un grand cerf",
@@ -837,23 +101,7 @@
   "albumId" : 10041,
   "genre" : "CLASSICAL",
   "durationSeconds" : 80,
-  "filePath" : "/music/ungrandcerf.mp3"
-}, {
-  "songId" : 1083,
-  "title" : "Sur le pont d'Avignon",
-  "artistId" : 118,
-  "albumId" : 10041,
-  "genre" : "CLASSICAL",
-  "durationSeconds" : 110,
-  "filePath" : "/music/surlepontd'avignon.mp3"
-}, {
-  "songId" : 1084,
-  "title" : "Fais dodo, Colas mon p'tit frère",
-  "artistId" : 118,
-  "albumId" : 10041,
-  "genre" : "CLASSICAL",
-  "durationSeconds" : 130,
-  "filePath" : "/music/faisdodo,colasmonp'titfrère.mp3"
+  "filePath" : "D:\\DATAFiles\\Codes\\SpotifyDAT_COJ\\music\\ungrandcerf.mp3"
 }, {
   "songId" : 1085,
   "title" : "Este Dedito/Mis Deditos",
@@ -861,7 +109,7 @@
   "albumId" : 10042,
   "genre" : "POP",
   "durationSeconds" : 140,
-  "filePath" : "/music/estededito/misdeditos.mp3"
+  "filePath" : "D:\\DATAFiles\\Codes\\SpotifyDAT_COJ\\music\\estededito_misdeditos.mp3"
 }, {
   "songId" : 1086,
   "title" : "Vamos a Jugar",
@@ -869,15 +117,7 @@
   "albumId" : 10042,
   "genre" : "POP",
   "durationSeconds" : 150,
-  "filePath" : "/music/vamosajugar.mp3"
-}, {
-  "songId" : 1087,
-  "title" : "Carnavalito del Ciempiés",
-  "artistId" : 119,
-  "albumId" : 10042,
-  "genre" : "POP",
-  "durationSeconds" : 135,
-  "filePath" : "/music/carnavalitodelciempiés.mp3"
+  "filePath" : "D:\\DATAFiles\\Codes\\SpotifyDAT_COJ\\music\\vamosajugar.mp3"
 }, {
   "songId" : 1088,
   "title" : "La Vaquita Loca",
@@ -885,15 +125,7 @@
   "albumId" : 10042,
   "genre" : "POP",
   "durationSeconds" : 160,
-  "filePath" : "/music/lavaquitaloca.mp3"
-}, {
-  "songId" : 1089,
-  "title" : "Mazamorra del Poroto Coscorrón",
-  "artistId" : 119,
-  "albumId" : 10042,
-  "genre" : "POP",
-  "durationSeconds" : 165,
-  "filePath" : "/music/mazamorradelporotocoscorrón.mp3"
+  "filePath" : "D:\\DATAFiles\\Codes\\SpotifyDAT_COJ\\music\\lavaquitaloca.mp3"
 }, {
   "songId" : 1090,
   "title" : "Chapecao de Segundo",
@@ -901,7 +133,7 @@
   "albumId" : 10042,
   "genre" : "POP",
   "durationSeconds" : 160,
-  "filePath" : "/music/chapecaodesegundo.mp3"
+  "filePath" : "D:\\DATAFiles\\Codes\\SpotifyDAT_COJ\\music\\chapecaodesegundo.mp3"
 }, {
   "songId" : 1091,
   "title" : "Payas del Rezongo",
@@ -909,31 +141,7 @@
   "albumId" : 10042,
   "genre" : "POP",
   "durationSeconds" : 195,
-  "filePath" : "/music/payasdelrezongo.mp3"
-}, {
-  "songId" : 1092,
-  "title" : "Canción Araucana",
-  "artistId" : 119,
-  "albumId" : 10042,
-  "genre" : "POP",
-  "durationSeconds" : 165,
-  "filePath" : "/music/canciónaraucana.mp3"
-}, {
-  "songId" : 1093,
-  "title" : "Jerónimo",
-  "artistId" : 119,
-  "albumId" : 10042,
-  "genre" : "POP",
-  "durationSeconds" : 205,
-  "filePath" : "/music/jerónimo.mp3"
-}, {
-  "songId" : 1094,
-  "title" : "Esta Noche Bailaré",
-  "artistId" : 119,
-  "albumId" : 10042,
-  "genre" : "POP",
-  "durationSeconds" : 105,
-  "filePath" : "/music/estanochebailaré.mp3"
+  "filePath" : "D:\\DATAFiles\\Codes\\SpotifyDAT_COJ\\music\\payasdelrezongo.mp3"
 }, {
   "songId" : 1095,
   "title" : "Ah! Les crocodiles",
@@ -941,15 +149,7 @@
   "albumId" : 10043,
   "genre" : "POP",
   "durationSeconds" : 150,
-  "filePath" : "/music/ah!lescrocodiles.mp3"
-}, {
-  "songId" : 1096,
-  "title" : "Comptines, Vol. 2",
-  "artistId" : 121,
-  "albumId" : 10044,
-  "genre" : "CLASSICAL",
-  "durationSeconds" : 300,
-  "filePath" : "/music/comptines,vol.2.mp3"
+  "filePath" : "D:\\DATAFiles\\Codes\\SpotifyDAT_COJ\\music\\ahlescrocodiles.mp3"
 }, {
   "songId" : 1097,
   "title" : "La thune",
@@ -957,7 +157,7 @@
   "albumId" : 10045,
   "genre" : "POP",
   "durationSeconds" : 230,
-  "filePath" : "/music/lathune.mp3"
+  "filePath" : "D:\\DATAFiles\\Codes\\SpotifyDAT_COJ\\music\\lathune.mp3"
 }, {
   "songId" : 1098,
   "title" : "Balance ton quoi",
@@ -965,7 +165,7 @@
   "albumId" : 10045,
   "genre" : "POP",
   "durationSeconds" : 215,
-  "filePath" : "/music/balancetonquoi.mp3"
+  "filePath" : "D:\\DATAFiles\\Codes\\SpotifyDAT_COJ\\music\\balancetonquoi.mp3"
 }, {
   "songId" : 1099,
   "title" : "Perdus",
@@ -973,7 +173,7 @@
   "albumId" : 10046,
   "genre" : "POP",
   "durationSeconds" : 210,
-  "filePath" : "/music/perdus.mp3"
+  "filePath" : "D:\\DATAFiles\\Codes\\SpotifyDAT_COJ\\music\\perdus.mp3"
 }, {
   "songId" : 1100,
   "title" : "Oui ou non",
@@ -981,7 +181,7 @@
   "albumId" : 10046,
   "genre" : "POP",
   "durationSeconds" : 225,
-  "filePath" : "/music/ouiounon.mp3"
+  "filePath" : "D:\\DATAFiles\\Codes\\SpotifyDAT_COJ\\music\\ouiounon.mp3"
 }, {
   "songId" : 1101,
   "title" : "Insomnies",
@@ -989,7 +189,7 @@
   "albumId" : 10046,
   "genre" : "POP",
   "durationSeconds" : 240,
-  "filePath" : "/music/insomnies.mp3"
+  "filePath" : "D:\\DATAFiles\\Codes\\SpotifyDAT_COJ\\music\\insomnies.mp3"
 }, {
   "songId" : 1102,
   "title" : "Jalousie",
@@ -997,7 +197,7 @@
   "albumId" : 10046,
   "genre" : "POP",
   "durationSeconds" : 255,
-  "filePath" : "/music/jalousie.mp3"
+  "filePath" : "D:\\DATAFiles\\Codes\\SpotifyDAT_COJ\\music\\jalousie.mp3"
 }, {
   "songId" : 1103,
   "title" : "Tout oublier",
@@ -1005,7 +205,7 @@
   "albumId" : 10046,
   "genre" : "POP",
   "durationSeconds" : 230,
-  "filePath" : "/music/toutoublier.mp3"
+  "filePath" : "D:\\DATAFiles\\Codes\\SpotifyDAT_COJ\\music\\toutoublier.mp3"
 }, {
   "songId" : 1104,
   "title" : "Tu me regardes",
@@ -1013,15 +213,7 @@
   "albumId" : 10046,
   "genre" : "POP",
   "durationSeconds" : 220,
-  "filePath" : "/music/tumeregardes.mp3"
-}, {
-  "songId" : 1105,
-  "title" : "J'entends",
-  "artistId" : 122,
-  "albumId" : 10046,
-  "genre" : "POP",
-  "durationSeconds" : 245,
-  "filePath" : "/music/j'entends.mp3"
+  "filePath" : "D:\\DATAFiles\\Codes\\SpotifyDAT_COJ\\music\\tumeregardes.mp3"
 }, {
   "songId" : 1106,
   "title" : "La loi de Murphy",
@@ -1029,7 +221,7 @@
   "albumId" : 10046,
   "genre" : "POP",
   "durationSeconds" : 220,
-  "filePath" : "/music/laloidemurphy.mp3"
+  "filePath" : "D:\\DATAFiles\\Codes\\SpotifyDAT_COJ\\music\\laloidemurphy.mp3"
 }, {
   "songId" : 1107,
   "title" : "Nombreux",
@@ -1037,15 +229,7 @@
   "albumId" : 10046,
   "genre" : "POP",
   "durationSeconds" : 220,
-  "filePath" : "/music/nombreux.mp3"
-}, {
-  "songId" : 1108,
-  "title" : "Que du love (feat. Kiddy Smile)",
-  "artistId" : 122,
-  "albumId" : 10046,
-  "genre" : "POP",
-  "durationSeconds" : 175,
-  "filePath" : "/music/quedulove(feat.kiddysmile).mp3"
+  "filePath" : "D:\\DATAFiles\\Codes\\SpotifyDAT_COJ\\music\\nombreux.mp3"
 }, {
   "songId" : 1109,
   "title" : "Ta reine (Version orchestrale)",
@@ -1053,15 +237,7 @@
   "albumId" : 10046,
   "genre" : "POP",
   "durationSeconds" : 310,
-  "filePath" : "/music/tareine(versionorchestrale).mp3"
-}, {
-  "songId" : 1110,
-  "title" : "Victime des réseaux",
-  "artistId" : 122,
-  "albumId" : 10046,
-  "genre" : "POP",
-  "durationSeconds" : 230,
-  "filePath" : "/music/victimedesréseaux.mp3"
+  "filePath" : "D:\\DATAFiles\\Codes\\SpotifyDAT_COJ\\music\\tareineversionorchestrale.mp3"
 }, {
   "songId" : 1111,
   "title" : "Les matins",
@@ -1069,7 +245,7 @@
   "albumId" : 10046,
   "genre" : "POP",
   "durationSeconds" : 200,
-  "filePath" : "/music/lesmatins.mp3"
+  "filePath" : "D:\\DATAFiles\\Codes\\SpotifyDAT_COJ\\music\\lesmatins.mp3"
 }, {
   "songId" : 1112,
   "title" : "Je veux tes yeux",
@@ -1077,7 +253,7 @@
   "albumId" : 10046,
   "genre" : "POP",
   "durationSeconds" : 235,
-  "filePath" : "/music/jeveuxtesyeux.mp3"
+  "filePath" : "D:\\DATAFiles\\Codes\\SpotifyDAT_COJ\\music\\jeveuxtesyeux.mp3"
 }, {
   "songId" : 1113,
   "title" : "Ta reine",
@@ -1085,7 +261,7 @@
   "albumId" : 10046,
   "genre" : "POP",
   "durationSeconds" : 240,
-  "filePath" : "/music/tareine.mp3"
+  "filePath" : "D:\\DATAFiles\\Codes\\SpotifyDAT_COJ\\music\\tareine.mp3"
 }, {
   "songId" : 1114,
   "title" : "Flemme",
@@ -1093,7 +269,7 @@
   "albumId" : 10046,
   "genre" : "POP",
   "durationSeconds" : 290,
-  "filePath" : "/music/flemme.mp3"
+  "filePath" : "D:\\DATAFiles\\Codes\\SpotifyDAT_COJ\\music\\flemme.mp3"
 }, {
   "songId" : 1115,
   "title" : "Flou",
@@ -1101,31 +277,7 @@
   "albumId" : 10046,
   "genre" : "POP",
   "durationSeconds" : 225,
-  "filePath" : "/music/flou.mp3"
-}, {
-  "songId" : 1116,
-  "title" : "Le dîner",
-  "artistId" : 123,
-  "albumId" : 10047,
-  "genre" : "POP",
-  "durationSeconds" : 205,
-  "filePath" : "/music/ledîner.mp3"
-}, {
-  "songId" : 1117,
-  "title" : "L'effet papillon",
-  "artistId" : 123,
-  "albumId" : 10048,
-  "genre" : "POP",
-  "durationSeconds" : 285,
-  "filePath" : "/music/l'effetpapillon.mp3"
-}, {
-  "songId" : 1118,
-  "title" : "Les oubliés",
-  "artistId" : 124,
-  "albumId" : 10049,
-  "genre" : "POP",
-  "durationSeconds" : 240,
-  "filePath" : "/music/lesoubliés.mp3"
+  "filePath" : "D:\\DATAFiles\\Codes\\SpotifyDAT_COJ\\music\\flou.mp3"
 }, {
   "songId" : 1119,
   "title" : "Ton jean bleu",
@@ -1133,31 +285,7 @@
   "albumId" : 10049,
   "genre" : "POP",
   "durationSeconds" : 265,
-  "filePath" : "/music/tonjeanbleu.mp3"
-}, {
-  "songId" : 1120,
-  "title" : "La langue de Prévert",
-  "artistId" : 124,
-  "albumId" : 10049,
-  "genre" : "POP",
-  "durationSeconds" : 215,
-  "filePath" : "/music/lalanguedeprévert.mp3"
-}, {
-  "songId" : 1121,
-  "title" : "L'épaule d'un copain",
-  "artistId" : 124,
-  "albumId" : 10049,
-  "genre" : "POP",
-  "durationSeconds" : 250,
-  "filePath" : "/music/l'épauled'uncopain.mp3"
-}, {
-  "songId" : 1122,
-  "title" : "La boîte à chaussures",
-  "artistId" : 124,
-  "albumId" : 10049,
-  "genre" : "POP",
-  "durationSeconds" : 235,
-  "filePath" : "/music/laboîteàchaussures.mp3"
+  "filePath" : "D:\\DATAFiles\\Codes\\SpotifyDAT_COJ\\music\\tonjeanbleu.mp3"
 }, {
   "songId" : 1123,
   "title" : "Excuse-moi mon amour",
@@ -1165,15 +293,7 @@
   "albumId" : 10049,
   "genre" : "POP",
   "durationSeconds" : 215,
-  "filePath" : "/music/excuse-moimonamour.mp3"
-}, {
-  "songId" : 1124,
-  "title" : "Au pays des Lumières",
-  "artistId" : 124,
-  "albumId" : 10049,
-  "genre" : "POP",
-  "durationSeconds" : 245,
-  "filePath" : "/music/aupaysdeslumières.mp3"
+  "filePath" : "D:\\DATAFiles\\Codes\\SpotifyDAT_COJ\\music\\excuse-moimonamour.mp3"
 }, {
   "songId" : 1125,
   "title" : "Le tiroir",
@@ -1181,7 +301,7 @@
   "albumId" : 10049,
   "genre" : "POP",
   "durationSeconds" : 205,
-  "filePath" : "/music/letiroir.mp3"
+  "filePath" : "D:\\DATAFiles\\Codes\\SpotifyDAT_COJ\\music\\letiroir.mp3"
 }, {
   "songId" : 1126,
   "title" : "Changement de programme",
@@ -1189,7 +309,7 @@
   "albumId" : 10049,
   "genre" : "POP",
   "durationSeconds" : 280,
-  "filePath" : "/music/changementdeprogramme.mp3"
+  "filePath" : "D:\\DATAFiles\\Codes\\SpotifyDAT_COJ\\music\\changementdeprogramme.mp3"
 }, {
   "songId" : 1127,
   "title" : "Petite piaule",
@@ -1197,7 +317,7 @@
   "albumId" : 10049,
   "genre" : "POP",
   "durationSeconds" : 225,
-  "filePath" : "/music/petitepiaule.mp3"
+  "filePath" : "D:\\DATAFiles\\Codes\\SpotifyDAT_COJ\\music\\petitepiaule.mp3"
 }, {
   "songId" : 1128,
   "title" : "Tu sais mon grand",
@@ -1205,31 +325,7 @@
   "albumId" : 10049,
   "genre" : "POP",
   "durationSeconds" : 240,
-  "filePath" : "/music/tusaismongrand.mp3"
-}, {
-  "songId" : 1129,
-  "title" : "L'étudiante",
-  "artistId" : 124,
-  "albumId" : 10049,
-  "genre" : "POP",
-  "durationSeconds" : 270,
-  "filePath" : "/music/l'étudiante.mp3"
-}, {
-  "songId" : 1130,
-  "title" : "Y'a pas de retraite pour les artistes",
-  "artistId" : 124,
-  "albumId" : 10049,
-  "genre" : "POP",
-  "durationSeconds" : 235,
-  "filePath" : "/music/y'apasderetraitepourlesartistes.mp3"
-}, {
-  "songId" : 1131,
-  "title" : "Que restera-t-il de nous ?",
-  "artistId" : 124,
-  "albumId" : 10049,
-  "genre" : "POP",
-  "durationSeconds" : 330,
-  "filePath" : "/music/querestera-t-ildenous?.mp3"
+  "filePath" : "D:\\DATAFiles\\Codes\\SpotifyDAT_COJ\\music\\tusaismongrand.mp3"
 }, {
   "songId" : 1132,
   "title" : "Pourvu",
@@ -1237,7 +333,7 @@
   "albumId" : 10050,
   "genre" : "POP",
   "durationSeconds" : 230,
-  "filePath" : "/music/pourvu.mp3"
+  "filePath" : "D:\\DATAFiles\\Codes\\SpotifyDAT_COJ\\music\\pourvu.mp3"
 }, {
   "songId" : 1133,
   "title" : "Dans mes poches",
@@ -1245,15 +341,7 @@
   "albumId" : 10050,
   "genre" : "POP",
   "durationSeconds" : 225,
-  "filePath" : "/music/dansmespoches.mp3"
-}, {
-  "songId" : 1134,
-  "title" : "Bouge de là",
-  "artistId" : 125,
-  "albumId" : 10051,
-  "genre" : "HIP_HOP",
-  "durationSeconds" : 210,
-  "filePath" : "/music/bougedelà.mp3"
+  "filePath" : "D:\\DATAFiles\\Codes\\SpotifyDAT_COJ\\music\\dansmespoches.mp3"
 }, {
   "songId" : 1135,
   "title" : "Victime de la mode",
@@ -1261,7 +349,7 @@
   "albumId" : 10051,
   "genre" : "HIP_HOP",
   "durationSeconds" : 195,
-  "filePath" : "/music/victimedelamode.mp3"
+  "filePath" : "D:\\DATAFiles\\Codes\\SpotifyDAT_COJ\\music\\victimedelamode.mp3"
 }, {
   "songId" : 1136,
   "title" : "Les temps changent",
@@ -1269,7 +357,7 @@
   "albumId" : 10051,
   "genre" : "HIP_HOP",
   "durationSeconds" : 245,
-  "filePath" : "/music/lestempschangent.mp3"
+  "filePath" : "D:\\DATAFiles\\Codes\\SpotifyDAT_COJ\\music\\lestempschangent.mp3"
 }, {
   "songId" : 1137,
   "title" : "Caroline",
@@ -1277,23 +365,7 @@
   "albumId" : 10051,
   "genre" : "HIP_HOP",
   "durationSeconds" : 350,
-  "filePath" : "/music/caroline.mp3"
-}, {
-  "songId" : 1138,
-  "title" : "EL BAÑO (feat. Bad Bunny)",
-  "artistId" : 126,
-  "albumId" : 10052,
-  "genre" : "POP",
-  "durationSeconds" : 260,
-  "filePath" : "/music/elbaño(feat.badbunny).mp3"
-}, {
-  "songId" : 1139,
-  "title" : "Échame La Culpa",
-  "artistId" : 127,
-  "albumId" : 10053,
-  "genre" : "POP",
-  "durationSeconds" : 200,
-  "filePath" : "/music/échamelaculpa.mp3"
+  "filePath" : "D:\\DATAFiles\\Codes\\SpotifyDAT_COJ\\music\\caroline.mp3"
 }, {
   "songId" : 1140,
   "title" : "Fuego",
@@ -1301,7 +373,7 @@
   "albumId" : 10054,
   "genre" : "ROCK",
   "durationSeconds" : 190,
-  "filePath" : "/music/fuego.mp3"
+  "filePath" : "D:\\DATAFiles\\Codes\\SpotifyDAT_COJ\\music\\fuego.mp3"
 }, {
   "songId" : 1141,
   "title" : "La Camisa Negra",
@@ -1309,15 +381,7 @@
   "albumId" : 10055,
   "genre" : "ROCK",
   "durationSeconds" : 245,
-  "filePath" : "/music/lacamisanegra.mp3"
-}, {
-  "songId" : 1142,
-  "title" : "Amárrame (feat. Juanes)",
-  "artistId" : 129,
-  "albumId" : 10056,
-  "genre" : "POP",
-  "durationSeconds" : 235,
-  "filePath" : "/music/amárrame(feat.juanes).mp3"
+  "filePath" : "D:\\DATAFiles\\Codes\\SpotifyDAT_COJ\\music\\lacamisanegra.mp3"
 }, {
   "songId" : 1143,
   "title" : "Tu Falta De Querer",
@@ -1325,7 +389,7 @@
   "albumId" : 10057,
   "genre" : "POP",
   "durationSeconds" : 315,
-  "filePath" : "/music/tufaltadequerer.mp3"
+  "filePath" : "D:\\DATAFiles\\Codes\\SpotifyDAT_COJ\\music\\tufaltadequerer.mp3"
 }, {
   "songId" : 1144,
   "title" : "Mayonesa",
@@ -1333,15 +397,7 @@
   "albumId" : 10058,
   "genre" : "POP",
   "durationSeconds" : 260,
-  "filePath" : "/music/mayonesa.mp3"
-}, {
-  "songId" : 1145,
-  "title" : "Bouge de là",
-  "artistId" : 125,
-  "albumId" : 10051,
-  "genre" : "HIP_HOP",
-  "durationSeconds" : 210,
-  "filePath" : "/music/bougedelà.mp3"
+  "filePath" : "D:\\DATAFiles\\Codes\\SpotifyDAT_COJ\\music\\mayonesa.mp3"
 }, {
   "songId" : 1146,
   "title" : "Victime de la mode",
@@ -1349,7 +405,7 @@
   "albumId" : 10051,
   "genre" : "HIP_HOP",
   "durationSeconds" : 195,
-  "filePath" : "/music/victimedelamode.mp3"
+  "filePath" : "D:\\DATAFiles\\Codes\\SpotifyDAT_COJ\\music\\victimedelamode.mp3"
 }, {
   "songId" : 1147,
   "title" : "Les temps changent",
@@ -1357,7 +413,7 @@
   "albumId" : 10051,
   "genre" : "HIP_HOP",
   "durationSeconds" : 245,
-  "filePath" : "/music/lestempschangent.mp3"
+  "filePath" : "D:\\DATAFiles\\Codes\\SpotifyDAT_COJ\\music\\lestempschangent.mp3"
 }, {
   "songId" : 1148,
   "title" : "Caroline",
@@ -1365,7 +421,7 @@
   "albumId" : 10051,
   "genre" : "HIP_HOP",
   "durationSeconds" : 350,
-  "filePath" : "/music/caroline.mp3"
+  "filePath" : "D:\\DATAFiles\\Codes\\SpotifyDAT_COJ\\music\\caroline.mp3"
 }, {
   "songId" : 1149,
   "title" : "Juice (Breakbot Mix)",
@@ -1373,7 +429,7 @@
   "albumId" : 10059,
   "genre" : "HIP_HOP",
   "durationSeconds" : 195,
-  "filePath" : "/music/juice(breakbotmix).mp3"
+  "filePath" : "D:\\DATAFiles\\Codes\\SpotifyDAT_COJ\\music\\juicebreakbotmix.mp3"
 }, {
   "songId" : 1150,
   "title" : "Palco",
@@ -1381,5 +437,5 @@
   "albumId" : 10060,
   "genre" : "POP",
   "durationSeconds" : 270,
-  "filePath" : "/music/palco.mp3"
+  "filePath" : "D:\\DATAFiles\\Codes\\SpotifyDAT_COJ\\music\\palco.mp3"
 } ]

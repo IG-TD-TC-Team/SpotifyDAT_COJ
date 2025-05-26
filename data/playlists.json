@@ -36,14 +36,22 @@
   "ownerID" : 5,
   "playlistID" : 4,
   "likedByUsers" : [ ],
-  "sharedWith" : [ ],
-  "publiclyShareable" : false
+  "publiclyShareable" : false,
+  "sharedWith" : [ ]
 }, {
   "name" : "sofia",
   "songs" : [ ],
   "ownerID" : 1,
   "playlistID" : 6,
   "likedByUsers" : [ ],
-  "sharedWith" : [ ],
-  "publiclyShareable" : false
+  "publiclyShareable" : false,
+  "sharedWith" : [ ]
+}, {
+  "name" : "test",
+  "songs" : [ ],
+  "ownerID" : 43,
+  "playlistID" : 7,
+  "likedByUsers" : [ ],
+  "publiclyShareable" : false,
+  "sharedWith" : [ ]
 } ]

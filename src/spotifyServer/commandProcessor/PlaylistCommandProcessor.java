@@ -5,12 +5,14 @@ import songsAndArtists.Song;
 import songsOrganisation.Playlist;
 import spotifyServer.SpotifySocketServer;
 import spotifyServer.StreamingServer;
+import services.userServices.AuthorizationService;
 
 import java.util.LinkedList;
 
 public class PlaylistCommandProcessor extends AbstractProcessor {
     private final PlaylistService playlistService = PlaylistService.getInstance();
     private final StreamingServer streamingServer;
+    private final AuthorizationService authorizationService = AuthorizationService.getInstance();
 
     public PlaylistCommandProcessor() {
         this.streamingServer = StreamingServer.getInstance();
@@ -48,6 +50,11 @@ public class PlaylistCommandProcessor extends AbstractProcessor {
 
                 if (userId == null) {
                     return "ERROR: Could not determine user identity";
+                }
+
+                // Check authorization
+                if (!authorizationService.canAccessPlaylist(userId, playlistId)) {
+                    return "ERROR: You don't have permission to play this playlist";
                 }
 
                 // Build file paths including the user ID

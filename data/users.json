@@ -66,8 +66,8 @@
   "subscriptionPlan" : {
     "type" : "PremiumPlan",
     "type" : "PREMIUM",
-    "maxQuality" : 320,
-    "deviceLimit" : 5
+    "deviceLimit" : 5,
+    "maxQuality" : 320
   },
   "subscriptionInfo" : {
     "startDate" : 1745439808915,
@@ -122,8 +122,8 @@
   "subscriptionPlan" : {
     "type" : "PremiumPlan",
     "type" : "PREMIUM",
-    "maxQuality" : 320,
-    "deviceLimit" : 5
+    "deviceLimit" : 5,
+    "maxQuality" : 320
   },
   "subscriptionInfo" : null,
   "followedUsersIDs" : [ ],
@@ -143,8 +143,8 @@
   "subscriptionPlan" : {
     "type" : "PremiumPlan",
     "type" : "PREMIUM",
-    "maxQuality" : 320,
-    "deviceLimit" : 5
+    "deviceLimit" : 5,
+    "maxQuality" : 320
   },
   "subscriptionInfo" : {
     "startDate" : 1745439236374,
@@ -483,8 +483,8 @@
   "subscriptionPlan" : {
     "type" : "PremiumPlan",
     "type" : "PREMIUM",
-    "maxQuality" : 320,
-    "deviceLimit" : 5
+    "deviceLimit" : 5,
+    "maxQuality" : 320
   },
   "subscriptionInfo" : {
     "startDate" : 1746390257295,
@@ -577,8 +577,8 @@
   "subscriptionPlan" : {
     "type" : "PremiumPlan",
     "type" : "PREMIUM",
-    "maxQuality" : 320,
-    "deviceLimit" : 5
+    "deviceLimit" : 5,
+    "maxQuality" : 320
   },
   "subscriptionInfo" : {
     "startDate" : 1746390257565,
@@ -953,8 +953,8 @@
   "subscriptionPlan" : {
     "type" : "PremiumPlan",
     "type" : "PREMIUM",
-    "maxQuality" : 320,
-    "deviceLimit" : 5
+    "deviceLimit" : 5,
+    "maxQuality" : 320
   },
   "subscriptionInfo" : {
     "startDate" : 1746390257985,
@@ -1000,8 +1000,8 @@
   "subscriptionPlan" : {
     "type" : "StudentPlan",
     "type" : "STUDENT",
-    "maxQuality" : 256,
-    "deviceLimit" : 3
+    "deviceLimit" : 3,
+    "maxQuality" : 256
   },
   "subscriptionInfo" : {
     "startDate" : 1746390258003,
@@ -1047,8 +1047,8 @@
   "subscriptionPlan" : {
     "type" : "PremiumPlan",
     "type" : "PREMIUM",
-    "maxQuality" : 320,
-    "deviceLimit" : 5
+    "deviceLimit" : 5,
+    "maxQuality" : 320
   },
   "subscriptionInfo" : {
     "startDate" : 1746460470441,
@@ -1141,8 +1141,8 @@
   "subscriptionPlan" : {
     "type" : "PremiumPlan",
     "type" : "PREMIUM",
-    "maxQuality" : 320,
-    "deviceLimit" : 5
+    "deviceLimit" : 5,
+    "maxQuality" : 320
   },
   "subscriptionInfo" : {
     "startDate" : 1746460470676,
@@ -1517,8 +1517,8 @@
   "subscriptionPlan" : {
     "type" : "PremiumPlan",
     "type" : "PREMIUM",
-    "maxQuality" : 320,
-    "deviceLimit" : 5
+    "deviceLimit" : 5,
+    "maxQuality" : 320
   },
   "subscriptionInfo" : {
     "startDate" : 1746460471032,
@@ -1564,8 +1564,8 @@
   "subscriptionPlan" : {
     "type" : "StudentPlan",
     "type" : "STUDENT",
-    "maxQuality" : 256,
-    "deviceLimit" : 3
+    "deviceLimit" : 3,
+    "maxQuality" : 256
   },
   "subscriptionInfo" : {
     "startDate" : 1746460471043,
@@ -1734,6 +1734,100 @@
     "name" : "Favorites",
     "songs" : [ ],
     "ownerID" : 43,
+    "playlistID" : 0,
+    "likedByUsers" : [ ],
+    "publiclyShareable" : false,
+    "sharedWith" : [ ]
+  },
+  "active" : true
+}, {
+  "userID" : 44,
+  "username" : "dactat",
+  "email" : "tat@test.ch",
+  "password" : "03ac674216f3e15c761ee1a5e255f067953623c8b388b4459e13f978d7c846f4",
+  "firstName" : "tatiana",
+  "lastName" : "dacosta",
+  "dateOfBirth" : null,
+  "accountCreationDate" : 1748285983801,
+  "subscriptionPlan" : {
+    "type" : "FreePlan",
+    "type" : "FREE",
+    "maxQuality" : 128,
+    "deviceLimit" : 1
+  },
+  "subscriptionInfo" : {
+    "startDate" : 1748285983801,
+    "endDate" : null,
+    "lastBillingDate" : 1748285983801,
+    "paymentMethod" : null,
+    "autoRenew" : true,
+    "price" : 0.0
+  },
+  "followedUsersIDs" : [ ],
+  "followersIDs" : [ ],
+  "library" : {
+    "userID" : 44,
+    "playlists" : [ {
+      "name" : "Favorites",
+      "songs" : [ ],
+      "ownerID" : 44,
+      "playlistID" : 0,
+      "likedByUsers" : [ ],
+      "publiclyShareable" : false,
+      "sharedWith" : [ ]
+    } ]
+  },
+  "defaultPlaylist" : {
+    "name" : "Favorites",
+    "songs" : [ ],
+    "ownerID" : 44,
+    "playlistID" : 0,
+    "likedByUsers" : [ ],
+    "publiclyShareable" : false,
+    "sharedWith" : [ ]
+  },
+  "active" : true
+}, {
+  "userID" : 45,
+  "username" : "docker",
+  "email" : "dock@test.ch",
+  "password" : "03ac674216f3e15c761ee1a5e255f067953623c8b388b4459e13f978d7c846f4",
+  "firstName" : "docker",
+  "lastName" : "docker",
+  "dateOfBirth" : null,
+  "accountCreationDate" : 1748286131742,
+  "subscriptionPlan" : {
+    "type" : "FreePlan",
+    "type" : "FREE",
+    "maxQuality" : 128,
+    "deviceLimit" : 1
+  },
+  "subscriptionInfo" : {
+    "startDate" : 1748286131742,
+    "endDate" : null,
+    "lastBillingDate" : 1748286131742,
+    "paymentMethod" : null,
+    "autoRenew" : true,
+    "price" : 0.0
+  },
+  "followedUsersIDs" : [ ],
+  "followersIDs" : [ ],
+  "library" : {
+    "userID" : 45,
+    "playlists" : [ {
+      "name" : "Favorites",
+      "songs" : [ ],
+      "ownerID" : 45,
+      "playlistID" : 0,
+      "likedByUsers" : [ ],
+      "publiclyShareable" : false,
+      "sharedWith" : [ ]
+    } ]
+  },
+  "defaultPlaylist" : {
+    "name" : "Favorites",
+    "songs" : [ ],
+    "ownerID" : 45,
     "playlistID" : 0,
     "likedByUsers" : [ ],
     "publiclyShareable" : false,

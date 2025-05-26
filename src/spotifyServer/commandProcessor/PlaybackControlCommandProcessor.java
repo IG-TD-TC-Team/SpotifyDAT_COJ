@@ -39,6 +39,7 @@ public class PlaybackControlCommandProcessor extends AbstractProcessor {
         try {
             // Get user ID from your existing CommandContext system
             Integer userId = getCurrentUserId();
+
             if (userId == null) {
                 return "ERROR: Could not determine user identity";
             }

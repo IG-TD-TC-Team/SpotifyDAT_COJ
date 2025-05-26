@@ -3,6 +3,7 @@ package spotifyServer.commandProcessor;
 import services.playlistServices.PlaylistService;
 import services.playlistServices.SocialPlaylistService;
 import services.userServices.UserService;
+import services.userServices.AuthorizationService;
 import songsOrganisation.Playlist;
 import user.User;
 import java.util.List;
@@ -16,9 +17,15 @@ public class PlaylistSocialCommandProcessor extends AbstractProcessor {
     private final PlaylistService playlistService = PlaylistService.getInstance();
     private final SocialPlaylistService socialPlaylistService = SocialPlaylistService.getInstance();
     private final UserService userService = UserService.getInstance();
+    private final AuthorizationService authorizationService = AuthorizationService.getInstance();
 
     @Override
     public String processCommand(String command) {
+        // First check if user is authenticated
+        if (!isAuthenticated()) {
+            return "ERROR: Authentication required. Please login first.";
+        }
+
         String lowerCommand = command.toLowerCase();
 
         // Check if this is a playlist social command
@@ -52,8 +59,7 @@ public class PlaylistSocialCommandProcessor extends AbstractProcessor {
         }
 
         try {
-            // TODO: Get current user ID from session
-            int currentUserId = 1; // This should come from session
+            int currentUserId = getCurrentUserId();
 
             int playlistId = -1;
             int targetUserId = -1;
@@ -77,7 +83,8 @@ public class PlaylistSocialCommandProcessor extends AbstractProcessor {
                 return "ERROR: Playlist not found";
             }
 
-            if (playlist.getOwnerID() != currentUserId) {
+            // Check authorization
+            if (!authorizationService.canModifyPlaylist(currentUserId, playlistId)) {
                 return "ERROR: You don't have permission to share this playlist";
             }
 
@@ -112,8 +119,7 @@ public class PlaylistSocialCommandProcessor extends AbstractProcessor {
         }
 
         try {
-            // TODO: Get current user ID from session
-            int currentUserId = 1; // This should come from session
+            int currentUserId = getCurrentUserId();
 
             int playlistId = -1;
             int targetUserId = -1;
@@ -137,8 +143,9 @@ public class PlaylistSocialCommandProcessor extends AbstractProcessor {
                 return "ERROR: Playlist not found";
             }
 
-            if (playlist.getOwnerID() != currentUserId) {
-                return "ERROR: You don't have permission to manage sharing for this playlist";
+            // Check authorization
+            if (!authorizationService.canModifyPlaylist(currentUserId, playlistId)) {
+                return "ERROR: You don't have permission to share this playlist";
             }
 
             // Unshare the playlist
@@ -172,8 +179,7 @@ public class PlaylistSocialCommandProcessor extends AbstractProcessor {
         String identifier = parts[2];
 
         try {
-            // TODO: Get current user ID from session
-            int currentUserId = 1; // This should come from session
+            int currentUserId = getCurrentUserId();
 
             Playlist playlist = null;
 
@@ -229,8 +235,7 @@ public class PlaylistSocialCommandProcessor extends AbstractProcessor {
         String identifier = parts[2];
 
         try {
-            // TODO: Get current user ID from session
-            int currentUserId = 1; // This should come from session
+            int currentUserId = getCurrentUserId();
 
             Playlist playlist = null;
 
@@ -275,8 +280,7 @@ public class PlaylistSocialCommandProcessor extends AbstractProcessor {
      */
     private String handleViewLikedPlaylists() {
         try {
-            // TODO: Get current user ID from session
-            int currentUserId = 1; // This should come from session
+            int currentUserId = getCurrentUserId();
 
             List<Playlist> likedPlaylists = socialPlaylistService.getLikedPlaylistsByUser(currentUserId);
 
@@ -314,8 +318,7 @@ public class PlaylistSocialCommandProcessor extends AbstractProcessor {
         String[] parts = command.split(" ");
 
         try {
-            // TODO: Get current user ID from session
-            int currentUserId = 1; // This should come from session
+            int currentUserId = getCurrentUserId();
 
             if (parts.length == 1) {
                 // Show likes for all user's playlists
@@ -342,14 +345,18 @@ public class PlaylistSocialCommandProcessor extends AbstractProcessor {
                 // Show likes for a specific playlist
                 String identifierType = parts[1].toLowerCase();
                 String identifier = parts[2];
+                int playlistId=-1;
 
                 Playlist playlist = null;
 
                 if ("id".equals(identifierType)) {
-                    int playlistId = Integer.parseInt(identifier);
+                    playlistId = Integer.parseInt(identifier);
                     playlist = playlistService.getPlaylistById(playlistId);
                 } else if ("name".equals(identifierType)) {
                     playlist = playlistService.getPlaylistByNameAndOwner(identifier, currentUserId);
+                    if(playlist!=null) {
+                        playlistId = playlist.getPlaylistID();
+                    }
                 } else {
                     return "ERROR: Invalid identifier type. Use 'id' or 'name'";
                 }
@@ -358,9 +365,9 @@ public class PlaylistSocialCommandProcessor extends AbstractProcessor {
                     return "ERROR: Playlist not found";
                 }
 
-                // Verify ownership
-                if (playlist.getOwnerID() != currentUserId) {
-                    return "ERROR: You can only view likes on your own playlists";
+                // Check authorization
+                if (!authorizationService.canModifyPlaylist(currentUserId, playlistId)) {
+                    return "ERROR: You don't have permission to share this playlist";
                 }
 
                 List<User> usersWhoLiked = socialPlaylistService.getUsersWhoLikedPlaylist(playlist.getPlaylistID(), currentUserId);

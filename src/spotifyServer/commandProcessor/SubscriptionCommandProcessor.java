@@ -36,8 +36,7 @@ public class SubscriptionCommandProcessor extends AbstractProcessor {
      */
     private String handleViewSubscription() {
         try {
-            // TODO: Get current user ID from session
-            int userId = 1; // This should come from session
+            int userId = getCurrentUserId();
 
             User user = userService.getUserById(userId);
             SubscriptionPlan plan = user.getSubscriptionPlan();
@@ -96,8 +95,7 @@ public class SubscriptionCommandProcessor extends AbstractProcessor {
         String planType = parts[1].toLowerCase();
 
         try {
-            // TODO: Get current user ID from session
-            int userId = 1; // This should come from session
+            int userId = getCurrentUserId();
 
             switch (planType) {
                 case "premium":
@@ -126,8 +124,7 @@ public class SubscriptionCommandProcessor extends AbstractProcessor {
      */
     private String handleDowngradeSubscription() {
         try {
-            // TODO: Get current user ID from session
-            int userId = 1; // This should come from session
+            int userId = getCurrentUserId();
 
             subscriptionService.downgradeToFree(userId);
 

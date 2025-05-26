@@ -6,6 +6,7 @@ import services.playlistServices.PlaylistService;
 import services.playlistServices.SongInPlaylistService;
 import services.songServices.SongService;
 import persistence.interfaces.PlaylistRepositoryInterface;
+import services.userServices.AuthorizationService;
 import songsAndArtists.Song;
 import songsOrganisation.Playlist;
 import java.util.List;
@@ -21,9 +22,15 @@ public class PlaylistManagementCommandProcessor extends AbstractProcessor {
     private final SongService songService = SongService.getInstance();
     private final PlaylistRepositoryInterface playlistRepository = RepositoryFactory.getInstance().getPlaylistRepository();
     private final SongInPlaylistService songInPlaylistService = SongInPlaylistService.getInstance(playlistRepository);
+    private final AuthorizationService authorizationService = AuthorizationService.getInstance();
 
     @Override
     public String processCommand(String command) {
+        // First check if user is authenticated
+        if (!isAuthenticated()) {
+            return "ERROR: Authentication required. Please login first.";
+        }
+
         String lowerCommand = command.toLowerCase();
 
         // Check if this is a playlist management command
@@ -61,8 +68,8 @@ public class PlaylistManagementCommandProcessor extends AbstractProcessor {
         String playlistName = parts[1];
 
         try {
-            // TODO: Get current user ID from session
-            int userId = 1; // This should come from session
+
+            int userId = getCurrentUserId();
 
             Playlist newPlaylist = playlistFactory.createPlaylist(playlistName, userId);
 
@@ -91,14 +98,17 @@ public class PlaylistManagementCommandProcessor extends AbstractProcessor {
         String newName = parts[3];
 
         try {
-            // TODO: Get current user ID from session
-            int userId = 1; // This should come from session
-
+            int userId = getCurrentUserId();
             Playlist playlist = null;
 
             if ("id".equals(identifierType)) {
                 int playlistId = Integer.parseInt(identifier);
                 playlist = playlistService.getPlaylistById(playlistId);
+
+                // Check authorization
+                if (!authorizationService.canModifyPlaylist(userId, playlistId)) {
+                    return "ERROR: You don't have permission to modify this playlist";
+                }
             } else if ("name".equals(identifierType)) {
                 playlist = playlistService.getPlaylistByNameAndOwner(identifier, userId);
             } else {
@@ -110,9 +120,9 @@ public class PlaylistManagementCommandProcessor extends AbstractProcessor {
             }
 
             // Verify ownership
-            if (playlist.getOwnerID() != userId) {
+            /*if (playlist.getOwnerID() != userId) {
                 return "ERROR: You don't have permission to rename this playlist";
-            }
+            }*/
 
             boolean success = playlistService.renamePlaylist(playlist.getPlaylistID(), newName);
 
@@ -144,14 +154,17 @@ public class PlaylistManagementCommandProcessor extends AbstractProcessor {
         String identifier = parts[2];
 
         try {
-            // TODO: Get current user ID from session
-            int userId = 1; // This should come from session
-
+            int userId = getCurrentUserId();
             Playlist playlist = null;
 
             if ("id".equals(identifierType)) {
                 int playlistId = Integer.parseInt(identifier);
                 playlist = playlistService.getPlaylistById(playlistId);
+
+                // Check authorization
+                if (!authorizationService.canModifyPlaylist(userId, playlistId)) {
+                    return "ERROR: You don't have permission to delete this playlist";
+                }
             } else if ("name".equals(identifierType)) {
                 playlist = playlistService.getPlaylistByNameAndOwner(identifier, userId);
             } else {
@@ -163,9 +176,9 @@ public class PlaylistManagementCommandProcessor extends AbstractProcessor {
             }
 
             // Verify ownership
-            if (playlist.getOwnerID() != userId) {
+            /*if (playlist.getOwnerID() != userId) {
                 return "ERROR: You don't have permission to delete this playlist";
-            }
+            }*/
 
             boolean success = playlistService.deletePlaylist(playlist.getPlaylistID());
 
@@ -197,22 +210,29 @@ public class PlaylistManagementCommandProcessor extends AbstractProcessor {
         String identifier = parts[2];
 
         try {
-            // TODO: Get current user ID from session
-            int userId = 1; // This should come from session
-
+            int userId = getCurrentUserId();
             Playlist playlist = null;
+            int playlistId = -1;
 
             if ("id".equals(identifierType)) {
-                int playlistId = Integer.parseInt(identifier);
+                playlistId = Integer.parseInt(identifier);
                 playlist = playlistService.getPlaylistById(playlistId);
             } else if ("name".equals(identifierType)) {
                 playlist = playlistService.getPlaylistByNameAndOwner(identifier, userId);
+                if (playlist != null) {
+                    playlistId = playlist.getPlaylistID();
+                }
             } else {
                 return "ERROR: Invalid identifier type. Use 'id' or 'name'";
             }
 
             if (playlist == null) {
                 return "ERROR: Playlist not found";
+            }
+
+            // Check authorization
+            if (!authorizationService.canAccessPlaylist(userId, playlistId)) {
+                return "ERROR: You don't have permission to view this playlist";
             }
 
             // Build playlist details
@@ -254,8 +274,7 @@ public class PlaylistManagementCommandProcessor extends AbstractProcessor {
      */
     private String handleListPlaylists() {
         try {
-            // TODO: Get current user ID from session
-            int userId = 1; // This should come from session
+            int userId = getCurrentUserId();
 
             List<Playlist> playlists = playlistService.getPlaylistsByOwner(userId);
 
@@ -296,8 +315,7 @@ public class PlaylistManagementCommandProcessor extends AbstractProcessor {
         }
 
         try {
-            // TODO: Get current user ID from session
-            int userId = 1; // This should come from session
+            int userId = getCurrentUserId();
 
             int playlistId = -1;
             int songId = -1;
@@ -315,13 +333,15 @@ public class PlaylistManagementCommandProcessor extends AbstractProcessor {
                 return "ERROR: Invalid format. Please specify both playlistid and songid";
             }
 
+
             // Get the playlist and verify ownership
             Playlist playlist = playlistService.getPlaylistById(playlistId);
             if (playlist == null) {
                 return "ERROR: Playlist not found";
             }
 
-            if (playlist.getOwnerID() != userId) {
+            // Check authorization
+            if (!authorizationService.canAccessPlaylist(userId, playlistId)) {
                 return "ERROR: You don't have permission to modify this playlist";
             }
 
@@ -355,8 +375,7 @@ public class PlaylistManagementCommandProcessor extends AbstractProcessor {
         }
 
         try {
-            // TODO: Get current user ID from session
-            int userId = 1; // This should come from session
+            int userId = getCurrentUserId();
 
             int playlistId = -1;
             int songId = -1;
@@ -380,8 +399,9 @@ public class PlaylistManagementCommandProcessor extends AbstractProcessor {
                 return "ERROR: Playlist not found";
             }
 
-            if (playlist.getOwnerID() != userId) {
-                return "ERROR: You don't have permission to modify this playlist";
+            // Check authorization
+            if (!authorizationService.canAccessPlaylist(userId, playlistId)) {
+                return "ERROR: You don't have permission to delete a song from this playlist";
             }
 
             // Get the song

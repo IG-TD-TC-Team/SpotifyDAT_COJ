@@ -14,6 +14,11 @@ public class ProfileCommandProcessor extends AbstractProcessor {
 
     @Override
     public String processCommand(String command) {
+        // First check if user is authenticated
+        if (!isAuthenticated()) {
+            return "ERROR: Authentication required. Please login first.";
+        }
+
         String lowerCommand = command.toLowerCase();
 
         // Check if this is a profile command
@@ -35,9 +40,7 @@ public class ProfileCommandProcessor extends AbstractProcessor {
      */
     private String handleViewProfile() {
         try {
-            // TODO: Get current user ID from session
-
-            int userId = 1; // This should come from session !!!
+            int userId = getCurrentUserId();
 
             User user = userService.getUserById(userId);
 
@@ -77,8 +80,7 @@ public class ProfileCommandProcessor extends AbstractProcessor {
         String newValue = parts[2];
 
         try {
-            // TODO: Get current user ID from session
-            int userId = 1; // This should come from session !!!
+            int userId = getCurrentUserId();
 
             switch (field) {
                 case "firstname":
@@ -117,8 +119,7 @@ public class ProfileCommandProcessor extends AbstractProcessor {
         String newPassword = parts[2];
 
         try {
-            // TODO: Get current user ID from session
-            int userId = 1; // This should come from session !!!
+            int userId = getCurrentUserId();
 
             passwordService.changePassword(userId, currentPassword, newPassword);
             return "SUCCESS: Password changed successfully.";

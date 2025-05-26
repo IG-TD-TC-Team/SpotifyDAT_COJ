@@ -128,6 +128,10 @@ public class AuthenticationService {
      * @return true if a session was found and invalidated, false otherwise
      */
     public boolean logout(String sessionId) {
+        if (sessionId == null) {
+            return false;
+        }
+
         Integer userId = sessionToUserMap.remove(sessionId);
 
         if (userId != null) {

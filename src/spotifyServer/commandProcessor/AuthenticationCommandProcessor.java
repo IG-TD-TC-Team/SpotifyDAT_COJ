@@ -49,6 +49,18 @@ public class AuthenticationCommandProcessor extends AbstractProcessor {
             // Get client address from socket
             String clientAddress = clientSocket.getRemoteSocketAddress().toString();
 
+            // If already logged in, log out first to ensure clean state
+            if (isAuthenticated()) {
+                // First log out the current user silently
+                String sessionId = connectionContext.getSessionId();
+                if (sessionId != null) {
+                    authService.logout(sessionId);
+                }
+                // Deauthenticate the connection but keep the socket open
+                CommandContext.deauthenticateConnection(clientSocket);
+                System.out.println("Logged out previous session before new login");
+            }
+
             // Attempt to authenticate the user
             String sessionId = authService.login(username, password, clientAddress);
 

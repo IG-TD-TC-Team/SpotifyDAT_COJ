@@ -156,9 +156,15 @@ public class PlaylistManagementCommandProcessor extends AbstractProcessor {
         try {
             int userId = getCurrentUserId();
             Playlist playlist = null;
+            int playlistId = -1;
+
+            // Handle quoted identifiers for names
+            if (identifier.startsWith("\"") && identifier.endsWith("\"")) {
+                identifier = identifier.substring(1, identifier.length() - 1);
+            }
 
             if ("id".equals(identifierType)) {
-                int playlistId = Integer.parseInt(identifier);
+                playlistId = Integer.parseInt(identifier);
                 playlist = playlistService.getPlaylistById(playlistId);
 
                 // Check authorization
@@ -167,6 +173,9 @@ public class PlaylistManagementCommandProcessor extends AbstractProcessor {
                 }
             } else if ("name".equals(identifierType)) {
                 playlist = playlistService.getPlaylistByNameAndOwner(identifier, userId);
+                if (playlist != null) {
+                    playlistId = playlist.getPlaylistID();
+                }
             } else {
                 return "ERROR: Invalid identifier type. Use 'id' or 'name'";
             }
@@ -175,21 +184,22 @@ public class PlaylistManagementCommandProcessor extends AbstractProcessor {
                 return "ERROR: Playlist not found";
             }
 
-            // Verify ownership
-            /*if (playlist.getOwnerID() != userId) {
+            // Verify ownership - this check is redundant as authorizationService already checks this
+            // but keeping it here for extra safety
+            if (playlist.getOwnerID() != userId) {
                 return "ERROR: You don't have permission to delete this playlist";
-            }*/
+            }
 
             boolean success = playlistService.deletePlaylist(playlist.getPlaylistID());
 
             if (success) {
                 return "SUCCESS: Playlist '" + playlist.getName() + "' deleted successfully";
             } else {
-                return "ERROR: Failed to delete playlist";
+                return "ERROR: Failed to delete playlist. The server was unable to process the request.";
             }
 
         } catch (NumberFormatException e) {
-            return "ERROR: Invalid playlist ID format";
+            return "ERROR: Invalid playlist ID format. Please provide a numeric ID.";
         } catch (Exception e) {
             return "ERROR: Failed to delete playlist: " + e.getMessage();
         }

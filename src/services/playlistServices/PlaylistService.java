@@ -248,7 +248,21 @@ public class PlaylistService {
      * @return true if the playlist was deleted, false otherwise
      */
     public boolean deletePlaylist(int playlistId) {
-        return playlistRepository.deleteById(playlistId);
+        // First check if the playlist exists
+        Playlist playlist = getPlaylistById(playlistId);
+        if (playlist == null) {
+            return false;
+        }
+
+        // Delete the playlist
+        boolean result = playlistRepository.deleteById(playlistId);
+
+        // If deletion was successful, refresh cache
+        if (result) {
+            refreshCache();
+        }
+
+        return result;
     }
 
 }

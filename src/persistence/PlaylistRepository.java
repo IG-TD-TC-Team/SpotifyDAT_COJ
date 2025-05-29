@@ -181,4 +181,27 @@ public class PlaylistRepository extends JsonRepository<Playlist> implements Play
                 .filter(playlist -> playlist.getPlaylistID() == id)
                 .findFirst();
     }
+
+    /**
+     * Deletes a playlist by its ID.
+     *
+     * @param id The ID of the playlist to delete
+     * @return true if successful, false if not found
+     */
+    @Override
+    public boolean deleteById(int id) {
+        List<Playlist> playlists = findAll();
+        int initialSize = playlists.size();
+
+        // Filter to remove the playlist with the specified ID
+        playlists.removeIf(playlist -> playlist.getPlaylistID() == id);
+
+        // If size changed, something was removed
+        if (playlists.size() < initialSize) {
+            saveAll(playlists);
+            return true;
+        }
+
+        return false;
+    }
 }

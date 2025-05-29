@@ -320,7 +320,8 @@ public class PlaylistManagementCommandProcessor extends AbstractProcessor {
      * Format: addtoplaylist playlistid <playlistId> songid <songId>
      */
     private String handleAddToPlaylist(String command) {
-        String[] parts = command.split(" ");
+        // Split command but preserve quoted strings
+        String[] parts = parseCommandWithQuotes(command);
 
         if (parts.length < 5) {
             return "Error: Invalid format. Usage: addtoplaylist playlistid <id> songid <id>";
@@ -330,24 +331,52 @@ public class PlaylistManagementCommandProcessor extends AbstractProcessor {
             int userId = getCurrentUserId();
 
             int playlistId = -1;
+            String playlistName = null;
             int songId = -1;
+            String songName = null;
+            boolean usePlaylistName = false;
+            boolean useSongName = false;
 
-            // Parse the command
+            // Parse the command for playlist and song identifiers
             for (int i = 1; i < parts.length - 1; i++) {
-                if ("playlistid".equals(parts[i].toLowerCase())) {
-                    playlistId = Integer.parseInt(parts[i + 1]);
-                } else if ("songid".equals(parts[i].toLowerCase())) {
-                    songId = Integer.parseInt(parts[i + 1]);
+                String currentPart = parts[i].toLowerCase();
+                String nextPart = parts[i + 1];
+
+                if ("playlistid".equals(currentPart)) {
+                    playlistId = Integer.parseInt(nextPart);
+                    usePlaylistName = false;
+                    i++; // Skip the next part since we consumed it
+                } else if ("playlistname".equals(currentPart)) {
+                    playlistName = nextPart;
+                    usePlaylistName = true;
+                    i++; // Skip the next part since we consumed it
+                } else if ("songid".equals(currentPart)) {
+                    songId = Integer.parseInt(nextPart);
+                    useSongName = false;
+                    i++; // Skip the next part since we consumed it
+                } else if ("songname".equals(currentPart)) {
+                    songName = nextPart;
+                    useSongName = true;
+                    i++; // Skip the next part since we consumed it
                 }
             }
 
-            if (playlistId == -1 || songId == -1) {
-                return "ERROR: Invalid format. Please specify both playlistid and songid";
+            // Validate that we have both playlist and song identifiers
+            if ((playlistId == -1 && playlistName == null) || (songId == -1 && songName == null)) {
+                return "ERROR: Invalid format. Please specify both playlist and song identifiers";
             }
 
+            // Validate that we have both playlist and song identifiers
+            Playlist playlist = null;
+            if (usePlaylistName) {
+                playlist = playlistService.getPlaylistByNameAndOwner(playlistName, userId);
+                if (playlist != null) {
+                    playlistId = playlist.getPlaylistID();
+                }
+            } else {
+                playlist = playlistService.getPlaylistById(playlistId);
+            }
 
-            // Get the playlist and verify ownership
-            Playlist playlist = playlistService.getPlaylistById(playlistId);
             if (playlist == null) {
                 return "ERROR: Playlist not found";
             }
@@ -358,7 +387,27 @@ public class PlaylistManagementCommandProcessor extends AbstractProcessor {
             }
 
             // Get the song
-            Song song = songService.getSongById(songId);
+            Song song = null;
+            if (useSongName) {
+                // Search for song by name
+                List<Song> songsWithName = songService.getSongsByTitleFlexible(songName);
+                if (songsWithName.isEmpty()) {
+                    return "ERROR: No song found with name: " + songName;
+                } else if (songsWithName.size() > 1) {
+                    // Multiple songs found, show options
+                    StringBuilder response = new StringBuilder("Multiple songs found with name '" + songName + "':\n");
+                    response.append("Please specify by ID instead:\n");
+                    for (Song s : songsWithName) {
+                        response.append("ID: ").append(s.getSongId()).append(" - ").append(s.getTitle()).append("\n");
+                    }
+                    return response.toString();
+                } else {
+                    song = songsWithName.get(0);
+                }
+            } else {
+                song = songService.getSongById(songId);
+            }
+
             if (song == null) {
                 return "ERROR: Song not found";
             }
@@ -373,6 +422,37 @@ public class PlaylistManagementCommandProcessor extends AbstractProcessor {
         } catch (Exception e) {
             return "ERROR: Failed to add song to playlist: " + e.getMessage();
         }
+    }
+
+    /**
+     * Helper method to parse command while preserving quoted strings
+     */
+    private String[] parseCommandWithQuotes(String command) {
+        java.util.List<String> parts = new java.util.ArrayList<>();
+        boolean inQuotes = false;
+        StringBuilder currentPart = new StringBuilder();
+
+        for (int i = 0; i < command.length(); i++) {
+            char c = command.charAt(i);
+
+            if (c == '"') {
+                inQuotes = !inQuotes;
+            } else if (c == ' ' && !inQuotes) {
+                if (currentPart.length() > 0) {
+                    parts.add(currentPart.toString());
+                    currentPart = new StringBuilder();
+                }
+            } else {
+                currentPart.append(c);
+            }
+        }
+
+        // Add the last part
+        if (currentPart.length() > 0) {
+            parts.add(currentPart.toString());
+        }
+
+        return parts.toArray(new String[0]);
     }
 
     /**

@@ -41,6 +41,8 @@ public class PlaylistSocialCommandProcessor extends AbstractProcessor {
             return handleViewLikedPlaylists();
         } else if (lowerCommand.startsWith("viewplaylistlikes")) {
             return handleViewPlaylistLikes(command);
+        } else if (lowerCommand.equals("viewsharedplaylists")) {
+        return handleViewSharedPlaylists();
         }
 
         // Pass to next processor if not a playlist social command
@@ -254,6 +256,52 @@ public class PlaylistSocialCommandProcessor extends AbstractProcessor {
             return "ERROR: Invalid ID format";
         } catch (Exception e) {
             return "ERROR: Failed to unshare playlist: " + e.getMessage();
+        }
+    }
+
+    /**
+     * Handles viewing all playlists shared with the current user.
+     */
+    private String handleViewSharedPlaylists() {
+        try {
+            int currentUserId = getCurrentUserId();
+
+            List<Playlist> sharedPlaylists = playlistService.getPlaylistsSharedWithUser(currentUserId);
+
+            if (sharedPlaylists.isEmpty()) {
+                return "No playlists have been shared with you yet.";
+            }
+
+            StringBuilder response = new StringBuilder("Playlists Shared With You:\n");
+            response.append("═══════════════════════════════\n");
+
+            for (Playlist playlist : sharedPlaylists) {
+                // Get owner information
+                User owner;
+                try {
+                    owner = userService.getUserById(playlist.getOwnerID());
+                    response.append("• ").append(playlist.getName())
+                            .append(" (ID: ").append(playlist.getPlaylistID()).append(")")
+                            .append(" - by ").append(owner.getUsername())
+                            .append(" - ").append(playlist.getSongCount()).append(" songs")
+                            .append(" - ").append(formatDuration(playlist.getTotalDuration()))
+                            .append("\n");
+                } catch (Exception e) {
+                    // If owner can't be found for some reason
+                    response.append("• ").append(playlist.getName())
+                            .append(" (ID: ").append(playlist.getPlaylistID()).append(")")
+                            .append(" - ").append(playlist.getSongCount()).append(" songs")
+                            .append("\n");
+                }
+            }
+
+            response.append("═══════════════════════════════\n");
+            response.append("Total shared playlists: ").append(sharedPlaylists.size());
+
+            return response.toString();
+
+        } catch (Exception e) {
+            return "ERROR: Failed to retrieve shared playlists: " + e.getMessage();
         }
     }
 
@@ -491,6 +539,21 @@ public class PlaylistSocialCommandProcessor extends AbstractProcessor {
             return "ERROR: Invalid ID format";
         } catch (Exception e) {
             return "ERROR: Failed to view playlist likes: " + e.getMessage();
+        }
+    }
+
+    /**
+     * Helper method to format duration in seconds to a readable format.
+     */
+    private String formatDuration(int seconds) {
+        int hours = seconds / 3600;
+        int minutes = (seconds % 3600) / 60;
+        int secs = seconds % 60;
+
+        if (hours > 0) {
+            return String.format("%d:%02d:%02d", hours, minutes, secs);
+        } else {
+            return String.format("%d:%02d", minutes, secs);
         }
     }
 }

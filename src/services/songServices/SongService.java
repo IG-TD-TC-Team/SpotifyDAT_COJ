@@ -5,6 +5,7 @@ import songsAndArtists.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 public class SongService {
@@ -14,14 +15,31 @@ public class SongService {
     // Repositories
     private final SongRepositoryInterface songRepository;
 
-
     // Services for related entities
-    private ArtistService artistService = ArtistService.getInstance();
-    private AlbumService albumService = AlbumService.getInstance();
+    private ArtistService artistService;
+    private AlbumService albumService;
 
     private SongService() {
         // Initialize repositories
         songRepository = RepositoryFactory.getInstance().getSongRepository();
+
+        // Initialize services after this instance is created to avoid circular dependency
+        // We don't initialize these in the field declaration to prevent circular dependency
+    }
+
+    // Lazy initialization of related services to avoid circular dependency
+    private ArtistService getArtistService() {
+        if (artistService == null) {
+            artistService = ArtistService.getInstance();
+        }
+        return artistService;
+    }
+
+    private AlbumService getAlbumService() {
+        if (albumService == null) {
+            albumService = AlbumService.getInstance();
+        }
+        return albumService;
     }
 
     /// Public method to get the singleton instance
@@ -115,16 +133,46 @@ public class SongService {
 
     /**
      * Retrieves all songs by an artist name.
+     * The method now checks both first name, last name, and full name (case-insensitive).
      * @param artistName The name of the artist whose songs to retrieve.
      * @return A list of songs by the specified artist.
      */
     public List<Song> getSongByArtistName(String artistName) {
-        return songRepository.findAll().stream()
-                .filter(song -> {
-                    Artist artist = artistService.getArtistById(song.getArtistId());
-                    return artist != null && artist.getLastName().equalsIgnoreCase(artistName);
+        if (artistName == null || artistName.trim().isEmpty()) {
+            return new ArrayList<>();
+        }
+
+        // Normalize the search name
+        String normalizedName = artistName.toLowerCase().trim();
+
+        // Get all artists that match this name
+        List<Artist> matchingArtists = getArtistService().getAllArtists().stream()
+                .filter(artist -> {
+                    String firstName = artist.getFirstName() != null ? artist.getFirstName().toLowerCase() : "";
+                    String lastName = artist.getLastName() != null ? artist.getLastName().toLowerCase() : "";
+                    String fullName = firstName + " " + lastName;
+
+                    return firstName.equals(normalizedName) ||
+                            lastName.equals(normalizedName) ||
+                            fullName.equals(normalizedName) ||
+                            firstName.contains(normalizedName) ||
+                            lastName.contains(normalizedName) ||
+                            fullName.contains(normalizedName);
                 })
-                .collect(java.util.stream.Collectors.toList());
+                .collect(Collectors.toList());
+
+        // If no matching artists, return empty list
+        if (matchingArtists.isEmpty()) {
+            return new ArrayList<>();
+        }
+
+        // Get all songs by these artists
+        List<Song> result = new ArrayList<>();
+        for (Artist artist : matchingArtists) {
+            result.addAll(getSongsByArtistId(artist.getArtistID()));
+        }
+
+        return result;
     }
 
     /**
@@ -144,12 +192,33 @@ public class SongService {
      * @return A list of songs by the specified album.
      */
     public List<Song> getSongsByAlbumName(String albumName) {
-        return songRepository.findAll().stream()
-                .filter(song -> {
-                    Album album = albumService.getAlbumById(song.getAlbumId());
-                    return album != null && album.getTitle().equalsIgnoreCase(albumName);
+        if (albumName == null || albumName.trim().isEmpty()) {
+            return new ArrayList<>();
+        }
+
+        // Normalize the search name
+        String normalizedName = albumName.toLowerCase().trim();
+
+        // Get all albums that match this name
+        List<Album> matchingAlbums = getAlbumService().getAllAlbums().stream()
+                .filter(album -> {
+                    String title = album.getTitle() != null ? album.getTitle().toLowerCase() : "";
+                    return title.equals(normalizedName) || title.contains(normalizedName);
                 })
-                .collect(java.util.stream.Collectors.toList());
+                .collect(Collectors.toList());
+
+        // If no matching albums, return empty list
+        if (matchingAlbums.isEmpty()) {
+            return new ArrayList<>();
+        }
+
+        // Get all songs from these albums
+        List<Song> result = new ArrayList<>();
+        for (Album album : matchingAlbums) {
+            result.addAll(getSongsByAlbumId(album.getId()));
+        }
+
+        return result;
     }
 
     /**
@@ -168,5 +237,4 @@ public class SongService {
     public List<Song> getAllSongs() {
         return songRepository.findAll();
     }
-
 }

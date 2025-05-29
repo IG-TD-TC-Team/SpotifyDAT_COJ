@@ -334,8 +334,8 @@
     "ownerID" : 0,
     "playlistID" : 0,
     "likedByUsers" : [ ],
-    "publiclyShareable" : false,
-    "sharedWith" : [ ]
+    "sharedWith" : [ ],
+    "publiclyShareable" : false
   },
   "active" : true
 }, {
@@ -373,8 +373,8 @@
     "ownerID" : 0,
     "playlistID" : 0,
     "likedByUsers" : [ ],
-    "publiclyShareable" : false,
-    "sharedWith" : [ ]
+    "sharedWith" : [ ],
+    "publiclyShareable" : false
   },
   "active" : true
 }, {
@@ -410,8 +410,8 @@
       "ownerID" : 13,
       "playlistID" : 0,
       "likedByUsers" : [ ],
-      "publiclyShareable" : false,
-      "sharedWith" : [ ]
+      "sharedWith" : [ ],
+      "publiclyShareable" : false
     } ]
   },
   "defaultPlaylist" : {
@@ -420,8 +420,8 @@
     "ownerID" : 13,
     "playlistID" : 0,
     "likedByUsers" : [ ],
-    "publiclyShareable" : false,
-    "sharedWith" : [ ]
+    "sharedWith" : [ ],
+    "publiclyShareable" : false
   },
   "active" : true
 }, {
@@ -457,8 +457,8 @@
       "ownerID" : 14,
       "playlistID" : 0,
       "likedByUsers" : [ ],
-      "publiclyShareable" : false,
-      "sharedWith" : [ ]
+      "sharedWith" : [ ],
+      "publiclyShareable" : false
     } ]
   },
   "defaultPlaylist" : {
@@ -467,8 +467,8 @@
     "ownerID" : 14,
     "playlistID" : 0,
     "likedByUsers" : [ ],
-    "publiclyShareable" : false,
-    "sharedWith" : [ ]
+    "sharedWith" : [ ],
+    "publiclyShareable" : false
   },
   "active" : true
 }, {
@@ -504,8 +504,8 @@
       "ownerID" : 16,
       "playlistID" : 0,
       "likedByUsers" : [ ],
-      "publiclyShareable" : false,
-      "sharedWith" : [ ]
+      "sharedWith" : [ ],
+      "publiclyShareable" : false
     } ]
   },
   "defaultPlaylist" : {
@@ -514,8 +514,8 @@
     "ownerID" : 16,
     "playlistID" : 0,
     "likedByUsers" : [ ],
-    "publiclyShareable" : false,
-    "sharedWith" : [ ]
+    "sharedWith" : [ ],
+    "publiclyShareable" : false
   },
   "active" : true
 }, {
@@ -551,8 +551,8 @@
       "ownerID" : 17,
       "playlistID" : 0,
       "likedByUsers" : [ ],
-      "publiclyShareable" : false,
-      "sharedWith" : [ ]
+      "sharedWith" : [ ],
+      "publiclyShareable" : false
     } ]
   },
   "defaultPlaylist" : {
@@ -561,8 +561,8 @@
     "ownerID" : 17,
     "playlistID" : 0,
     "likedByUsers" : [ ],
-    "publiclyShareable" : false,
-    "sharedWith" : [ ]
+    "sharedWith" : [ ],
+    "publiclyShareable" : false
   },
   "active" : true
 }, {
@@ -598,8 +598,8 @@
       "ownerID" : 18,
       "playlistID" : 0,
       "likedByUsers" : [ ],
-      "publiclyShareable" : false,
-      "sharedWith" : [ ]
+      "sharedWith" : [ ],
+      "publiclyShareable" : false
     } ]
   },
   "defaultPlaylist" : {
@@ -608,8 +608,8 @@
     "ownerID" : 18,
     "playlistID" : 0,
     "likedByUsers" : [ ],
-    "publiclyShareable" : false,
-    "sharedWith" : [ ]
+    "sharedWith" : [ ],
+    "publiclyShareable" : false
   },
   "active" : true
 }, {
@@ -645,8 +645,8 @@
       "ownerID" : 19,
       "playlistID" : 0,
       "likedByUsers" : [ ],
-      "publiclyShareable" : false,
-      "sharedWith" : [ ]
+      "sharedWith" : [ ],
+      "publiclyShareable" : false
     } ]
   },
   "defaultPlaylist" : {
@@ -655,8 +655,8 @@
     "ownerID" : 19,
     "playlistID" : 0,
     "likedByUsers" : [ ],
-    "publiclyShareable" : false,
-    "sharedWith" : [ ]
+    "sharedWith" : [ ],
+    "publiclyShareable" : false
   },
   "active" : true
 }, {
@@ -692,8 +692,8 @@
       "ownerID" : 20,
       "playlistID" : 0,
       "likedByUsers" : [ ],
-      "publiclyShareable" : false,
-      "sharedWith" : [ ]
+      "sharedWith" : [ ],
+      "publiclyShareable" : false
     } ]
   },
   "defaultPlaylist" : {
@@ -702,8 +702,8 @@
     "ownerID" : 20,
     "playlistID" : 0,
     "likedByUsers" : [ ],
-    "publiclyShareable" : false,
-    "sharedWith" : [ ]
+    "sharedWith" : [ ],
+    "publiclyShareable" : false
   },
   "active" : true
 }, {
@@ -739,8 +739,8 @@
       "ownerID" : 21,
       "playlistID" : 0,
       "likedByUsers" : [ ],
-      "publiclyShareable" : false,
-      "sharedWith" : [ ]
+      "sharedWith" : [ ],
+      "publiclyShareable" : false
     } ]
   },
   "defaultPlaylist" : {
@@ -749,8 +749,8 @@
     "ownerID" : 21,
     "playlistID" : 0,
     "likedByUsers" : [ ],
-    "publiclyShareable" : false,
-    "sharedWith" : [ ]
+    "sharedWith" : [ ],
+    "publiclyShareable" : false
   },
   "active" : true
 }, {
@@ -786,8 +786,8 @@
       "ownerID" : 22,
       "playlistID" : 0,
       "likedByUsers" : [ ],
-      "publiclyShareable" : false,
-      "sharedWith" : [ ]
+      "sharedWith" : [ ],
+      "publiclyShareable" : false
     } ]
   },
   "defaultPlaylist" : {
@@ -796,8 +796,8 @@
     "ownerID" : 22,
     "playlistID" : 0,
     "likedByUsers" : [ ],
-    "publiclyShareable" : false,
-    "sharedWith" : [ ]
+    "sharedWith" : [ ],
+    "publiclyShareable" : false
   },
   "active" : true
 }, {
@@ -833,8 +833,8 @@
       "ownerID" : 23,
       "playlistID" : 0,
       "likedByUsers" : [ ],
-      "publiclyShareable" : false,
-      "sharedWith" : [ ]
+      "sharedWith" : [ ],
+      "publiclyShareable" : false
     } ]
   },
   "defaultPlaylist" : {
@@ -843,8 +843,8 @@
     "ownerID" : 23,
     "playlistID" : 0,
     "likedByUsers" : [ ],
-    "publiclyShareable" : false,
-    "sharedWith" : [ ]
+    "sharedWith" : [ ],
+    "publiclyShareable" : false
   },
   "active" : true
 }, {
@@ -880,8 +880,8 @@
       "ownerID" : 24,
       "playlistID" : 0,
       "likedByUsers" : [ ],
-      "publiclyShareable" : false,
-      "sharedWith" : [ ]
+      "sharedWith" : [ ],
+      "publiclyShareable" : false
     } ]
   },
   "defaultPlaylist" : {
@@ -890,8 +890,8 @@
     "ownerID" : 24,
     "playlistID" : 0,
     "likedByUsers" : [ ],
-    "publiclyShareable" : false,
-    "sharedWith" : [ ]
+    "sharedWith" : [ ],
+    "publiclyShareable" : false
   },
   "active" : true
 }, {
@@ -927,8 +927,8 @@
       "ownerID" : 25,
       "playlistID" : 0,
       "likedByUsers" : [ ],
-      "publiclyShareable" : false,
-      "sharedWith" : [ ]
+      "sharedWith" : [ ],
+      "publiclyShareable" : false
     } ]
   },
   "defaultPlaylist" : {
@@ -937,8 +937,8 @@
     "ownerID" : 25,
     "playlistID" : 0,
     "likedByUsers" : [ ],
-    "publiclyShareable" : false,
-    "sharedWith" : [ ]
+    "sharedWith" : [ ],
+    "publiclyShareable" : false
   },
   "active" : true
 }, {
@@ -974,8 +974,8 @@
       "ownerID" : 26,
       "playlistID" : 0,
       "likedByUsers" : [ ],
-      "publiclyShareable" : false,
-      "sharedWith" : [ ]
+      "sharedWith" : [ ],
+      "publiclyShareable" : false
     } ]
   },
   "defaultPlaylist" : {
@@ -984,8 +984,8 @@
     "ownerID" : 26,
     "playlistID" : 0,
     "likedByUsers" : [ ],
-    "publiclyShareable" : false,
-    "sharedWith" : [ ]
+    "sharedWith" : [ ],
+    "publiclyShareable" : false
   },
   "active" : true
 }, {
@@ -1021,8 +1021,8 @@
       "ownerID" : 27,
       "playlistID" : 0,
       "likedByUsers" : [ ],
-      "publiclyShareable" : false,
-      "sharedWith" : [ ]
+      "sharedWith" : [ ],
+      "publiclyShareable" : false
     } ]
   },
   "defaultPlaylist" : {
@@ -1031,8 +1031,8 @@
     "ownerID" : 27,
     "playlistID" : 0,
     "likedByUsers" : [ ],
-    "publiclyShareable" : false,
-    "sharedWith" : [ ]
+    "sharedWith" : [ ],
+    "publiclyShareable" : false
   },
   "active" : true
 }, {
@@ -1068,8 +1068,8 @@
       "ownerID" : 29,
       "playlistID" : 0,
       "likedByUsers" : [ ],
-      "publiclyShareable" : false,
-      "sharedWith" : [ ]
+      "sharedWith" : [ ],
+      "publiclyShareable" : false
     } ]
   },
   "defaultPlaylist" : {
@@ -1078,8 +1078,8 @@
     "ownerID" : 29,
     "playlistID" : 0,
     "likedByUsers" : [ ],
-    "publiclyShareable" : false,
-    "sharedWith" : [ ]
+    "sharedWith" : [ ],
+    "publiclyShareable" : false
   },
   "active" : true
 }, {
@@ -1115,8 +1115,8 @@
       "ownerID" : 30,
       "playlistID" : 0,
       "likedByUsers" : [ ],
-      "publiclyShareable" : false,
-      "sharedWith" : [ ]
+      "sharedWith" : [ ],
+      "publiclyShareable" : false
     } ]
   },
   "defaultPlaylist" : {
@@ -1125,8 +1125,8 @@
     "ownerID" : 30,
     "playlistID" : 0,
     "likedByUsers" : [ ],
-    "publiclyShareable" : false,
-    "sharedWith" : [ ]
+    "sharedWith" : [ ],
+    "publiclyShareable" : false
   },
   "active" : true
 }, {
@@ -1162,8 +1162,8 @@
       "ownerID" : 31,
       "playlistID" : 0,
       "likedByUsers" : [ ],
-      "publiclyShareable" : false,
-      "sharedWith" : [ ]
+      "sharedWith" : [ ],
+      "publiclyShareable" : false
     } ]
   },
   "defaultPlaylist" : {
@@ -1172,8 +1172,8 @@
     "ownerID" : 31,
     "playlistID" : 0,
     "likedByUsers" : [ ],
-    "publiclyShareable" : false,
-    "sharedWith" : [ ]
+    "sharedWith" : [ ],
+    "publiclyShareable" : false
   },
   "active" : true
 }, {
@@ -1209,8 +1209,8 @@
       "ownerID" : 32,
       "playlistID" : 0,
       "likedByUsers" : [ ],
-      "publiclyShareable" : false,
-      "sharedWith" : [ ]
+      "sharedWith" : [ ],
+      "publiclyShareable" : false
     } ]
   },
   "defaultPlaylist" : {
@@ -1219,8 +1219,8 @@
     "ownerID" : 32,
     "playlistID" : 0,
     "likedByUsers" : [ ],
-    "publiclyShareable" : false,
-    "sharedWith" : [ ]
+    "sharedWith" : [ ],
+    "publiclyShareable" : false
   },
   "active" : true
 }, {
@@ -1256,8 +1256,8 @@
       "ownerID" : 33,
       "playlistID" : 0,
       "likedByUsers" : [ ],
-      "publiclyShareable" : false,
-      "sharedWith" : [ ]
+      "sharedWith" : [ ],
+      "publiclyShareable" : false
     } ]
   },
   "defaultPlaylist" : {
@@ -1266,8 +1266,8 @@
     "ownerID" : 33,
     "playlistID" : 0,
     "likedByUsers" : [ ],
-    "publiclyShareable" : false,
-    "sharedWith" : [ ]
+    "sharedWith" : [ ],
+    "publiclyShareable" : false
   },
   "active" : true
 }, {
@@ -1303,8 +1303,8 @@
       "ownerID" : 34,
       "playlistID" : 0,
       "likedByUsers" : [ ],
-      "publiclyShareable" : false,
-      "sharedWith" : [ ]
+      "sharedWith" : [ ],
+      "publiclyShareable" : false
     } ]
   },
   "defaultPlaylist" : {
@@ -1313,8 +1313,8 @@
     "ownerID" : 34,
     "playlistID" : 0,
     "likedByUsers" : [ ],
-    "publiclyShareable" : false,
-    "sharedWith" : [ ]
+    "sharedWith" : [ ],
+    "publiclyShareable" : false
   },
   "active" : true
 }, {
@@ -1350,8 +1350,8 @@
       "ownerID" : 35,
       "playlistID" : 0,
       "likedByUsers" : [ ],
-      "publiclyShareable" : false,
-      "sharedWith" : [ ]
+      "sharedWith" : [ ],
+      "publiclyShareable" : false
     } ]
   },
   "defaultPlaylist" : {
@@ -1360,8 +1360,8 @@
     "ownerID" : 35,
     "playlistID" : 0,
     "likedByUsers" : [ ],
-    "publiclyShareable" : false,
-    "sharedWith" : [ ]
+    "sharedWith" : [ ],
+    "publiclyShareable" : false
   },
   "active" : true
 }, {
@@ -1397,8 +1397,8 @@
       "ownerID" : 36,
       "playlistID" : 0,
       "likedByUsers" : [ ],
-      "publiclyShareable" : false,
-      "sharedWith" : [ ]
+      "sharedWith" : [ ],
+      "publiclyShareable" : false
     } ]
   },
   "defaultPlaylist" : {
@@ -1407,8 +1407,8 @@
     "ownerID" : 36,
     "playlistID" : 0,
     "likedByUsers" : [ ],
-    "publiclyShareable" : false,
-    "sharedWith" : [ ]
+    "sharedWith" : [ ],
+    "publiclyShareable" : false
   },
   "active" : true
 }, {
@@ -1444,8 +1444,8 @@
       "ownerID" : 37,
       "playlistID" : 0,
       "likedByUsers" : [ ],
-      "publiclyShareable" : false,
-      "sharedWith" : [ ]
+      "sharedWith" : [ ],
+      "publiclyShareable" : false
     } ]
   },
   "defaultPlaylist" : {
@@ -1454,8 +1454,8 @@
     "ownerID" : 37,
     "playlistID" : 0,
     "likedByUsers" : [ ],
-    "publiclyShareable" : false,
-    "sharedWith" : [ ]
+    "sharedWith" : [ ],
+    "publiclyShareable" : false
   },
   "active" : true
 }, {
@@ -1491,8 +1491,8 @@
       "ownerID" : 38,
       "playlistID" : 0,
       "likedByUsers" : [ ],
-      "publiclyShareable" : false,
-      "sharedWith" : [ ]
+      "sharedWith" : [ ],
+      "publiclyShareable" : false
     } ]
   },
   "defaultPlaylist" : {
@@ -1501,8 +1501,8 @@
     "ownerID" : 38,
     "playlistID" : 0,
     "likedByUsers" : [ ],
-    "publiclyShareable" : false,
-    "sharedWith" : [ ]
+    "sharedWith" : [ ],
+    "publiclyShareable" : false
   },
   "active" : true
 }, {
@@ -1538,8 +1538,8 @@
       "ownerID" : 39,
       "playlistID" : 0,
       "likedByUsers" : [ ],
-      "publiclyShareable" : false,
-      "sharedWith" : [ ]
+      "sharedWith" : [ ],
+      "publiclyShareable" : false
     } ]
   },
   "defaultPlaylist" : {
@@ -1548,8 +1548,8 @@
     "ownerID" : 39,
     "playlistID" : 0,
     "likedByUsers" : [ ],
-    "publiclyShareable" : false,
-    "sharedWith" : [ ]
+    "sharedWith" : [ ],
+    "publiclyShareable" : false
   },
   "active" : true
 }, {
@@ -1585,8 +1585,8 @@
       "ownerID" : 40,
       "playlistID" : 0,
       "likedByUsers" : [ ],
-      "publiclyShareable" : false,
-      "sharedWith" : [ ]
+      "sharedWith" : [ ],
+      "publiclyShareable" : false
     } ]
   },
   "defaultPlaylist" : {
@@ -1595,8 +1595,8 @@
     "ownerID" : 40,
     "playlistID" : 0,
     "likedByUsers" : [ ],
-    "publiclyShareable" : false,
-    "sharedWith" : [ ]
+    "sharedWith" : [ ],
+    "publiclyShareable" : false
   },
   "active" : true
 }, {
@@ -1632,8 +1632,8 @@
       "ownerID" : 41,
       "playlistID" : 0,
       "likedByUsers" : [ ],
-      "publiclyShareable" : false,
-      "sharedWith" : [ ]
+      "sharedWith" : [ ],
+      "publiclyShareable" : false
     } ]
   },
   "defaultPlaylist" : {
@@ -1642,8 +1642,8 @@
     "ownerID" : 41,
     "playlistID" : 0,
     "likedByUsers" : [ ],
-    "publiclyShareable" : false,
-    "sharedWith" : [ ]
+    "sharedWith" : [ ],
+    "publiclyShareable" : false
   },
   "active" : true
 }, {
@@ -1679,8 +1679,8 @@
       "ownerID" : 42,
       "playlistID" : 0,
       "likedByUsers" : [ ],
-      "publiclyShareable" : false,
-      "sharedWith" : [ ]
+      "sharedWith" : [ ],
+      "publiclyShareable" : false
     } ]
   },
   "defaultPlaylist" : {
@@ -1689,17 +1689,17 @@
     "ownerID" : 42,
     "playlistID" : 0,
     "likedByUsers" : [ ],
-    "publiclyShareable" : false,
-    "sharedWith" : [ ]
+    "sharedWith" : [ ],
+    "publiclyShareable" : false
   },
   "active" : true
 }, {
   "userID" : 43,
   "username" : "dactat",
-  "email" : "tatiana@hes.ch",
-  "password" : "03ac674216f3e15c761ee1a5e255f067953623c8b388b4459e13f978d7c846f4",
+  "email" : "tatiana@test.ch",
+  "password" : "kcMkSu8xhYy+2tlm3gpJmSibII55po+MS3aNxzsKqqcG5OvDQw5onj5k0BGDn1ZS",
   "firstName" : "tatiana",
-  "lastName" : "dacosta",
+  "lastName" : "costa",
   "dateOfBirth" : null,
   "accountCreationDate" : 1747306675928,
   "subscriptionPlan" : {
@@ -1709,14 +1709,14 @@
     "deviceLimit" : 1
   },
   "subscriptionInfo" : {
-    "startDate" : 1747306675928,
+    "startDate" : 1748504132221,
     "endDate" : null,
-    "lastBillingDate" : 1747306675928,
+    "lastBillingDate" : 1748504132221,
     "paymentMethod" : null,
     "autoRenew" : true,
     "price" : 0.0
   },
-  "followedUsersIDs" : [ ],
+  "followedUsersIDs" : [ 45, 46 ],
   "followersIDs" : [ ],
   "library" : {
     "userID" : 43,
@@ -1726,8 +1726,8 @@
       "ownerID" : 43,
       "playlistID" : 0,
       "likedByUsers" : [ ],
-      "publiclyShareable" : false,
-      "sharedWith" : [ ]
+      "sharedWith" : [ ],
+      "publiclyShareable" : false
     } ]
   },
   "defaultPlaylist" : {
@@ -1736,8 +1736,8 @@
     "ownerID" : 43,
     "playlistID" : 0,
     "likedByUsers" : [ ],
-    "publiclyShareable" : false,
-    "sharedWith" : [ ]
+    "sharedWith" : [ ],
+    "publiclyShareable" : false
   },
   "active" : true
 }, {
@@ -1773,8 +1773,8 @@
       "ownerID" : 44,
       "playlistID" : 0,
       "likedByUsers" : [ ],
-      "publiclyShareable" : false,
-      "sharedWith" : [ ]
+      "sharedWith" : [ ],
+      "publiclyShareable" : false
     } ]
   },
   "defaultPlaylist" : {
@@ -1783,8 +1783,8 @@
     "ownerID" : 44,
     "playlistID" : 0,
     "likedByUsers" : [ ],
-    "publiclyShareable" : false,
-    "sharedWith" : [ ]
+    "sharedWith" : [ ],
+    "publiclyShareable" : false
   },
   "active" : true
 }, {
@@ -1811,7 +1811,7 @@
     "price" : 0.0
   },
   "followedUsersIDs" : [ ],
-  "followersIDs" : [ ],
+  "followersIDs" : [ 43 ],
   "library" : {
     "userID" : 45,
     "playlists" : [ {
@@ -1820,8 +1820,8 @@
       "ownerID" : 45,
       "playlistID" : 0,
       "likedByUsers" : [ ],
-      "publiclyShareable" : false,
-      "sharedWith" : [ ]
+      "sharedWith" : [ ],
+      "publiclyShareable" : false
     } ]
   },
   "defaultPlaylist" : {
@@ -1830,8 +1830,55 @@
     "ownerID" : 45,
     "playlistID" : 0,
     "likedByUsers" : [ ],
-    "publiclyShareable" : false,
-    "sharedWith" : [ ]
+    "sharedWith" : [ ],
+    "publiclyShareable" : false
+  },
+  "active" : true
+}, {
+  "userID" : 46,
+  "username" : "leila",
+  "email" : "leila@test.ch",
+  "password" : "03ac674216f3e15c761ee1a5e255f067953623c8b388b4459e13f978d7c846f4",
+  "firstName" : "leila",
+  "lastName" : "costa",
+  "dateOfBirth" : null,
+  "accountCreationDate" : 1748501239142,
+  "subscriptionPlan" : {
+    "type" : "FreePlan",
+    "type" : "FREE",
+    "maxQuality" : 128,
+    "deviceLimit" : 1
+  },
+  "subscriptionInfo" : {
+    "startDate" : 1748501239142,
+    "endDate" : null,
+    "lastBillingDate" : 1748501239142,
+    "paymentMethod" : null,
+    "autoRenew" : true,
+    "price" : 0.0
+  },
+  "followedUsersIDs" : [ ],
+  "followersIDs" : [ 43 ],
+  "library" : {
+    "userID" : 46,
+    "playlists" : [ {
+      "name" : "Favorites",
+      "songs" : [ ],
+      "ownerID" : 46,
+      "playlistID" : 0,
+      "likedByUsers" : [ ],
+      "sharedWith" : [ ],
+      "publiclyShareable" : false
+    } ]
+  },
+  "defaultPlaylist" : {
+    "name" : "Favorites",
+    "songs" : [ ],
+    "ownerID" : 46,
+    "playlistID" : 0,
+    "likedByUsers" : [ ],
+    "sharedWith" : [ ],
+    "publiclyShareable" : false
   },
   "active" : true
 } ]

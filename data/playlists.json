@@ -47,10 +47,18 @@
   "publiclyShareable" : false,
   "sharedWith" : [ ]
 }, {
-  "name" : "test",
+  "name" : "summerHits",
+  "songs" : [ ],
+  "ownerID" : 46,
+  "playlistID" : 10,
+  "likedByUsers" : [ ],
+  "publiclyShareable" : false,
+  "sharedWith" : [ ]
+}, {
+  "name" : "autumn",
   "songs" : [ ],
   "ownerID" : 43,
-  "playlistID" : 7,
+  "playlistID" : 14,
   "likedByUsers" : [ ],
   "publiclyShareable" : false,
   "sharedWith" : [ ]

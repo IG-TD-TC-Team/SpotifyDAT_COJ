@@ -52,6 +52,59 @@ public class SongService {
     }
 
     /**
+     * Retrieves songs by title with flexible matching.
+     * First tries exact match, then partial match if no exact matches found.
+     * @param songTitle The title of the song to search for.
+     * @return A list of songs matching the title.
+     */
+    public List<Song> getSongsByTitleFlexible(String songTitle) {
+        // First try exact match (case-insensitive)
+        List<Song> exactMatches = songRepository.findByTitle(songTitle);
+
+        if (!exactMatches.isEmpty()) {
+            return exactMatches;
+        }
+
+        // If no exact matches, try partial match
+        String normalizedSearch = songTitle.toLowerCase().trim();
+        return songRepository.findAll().stream()
+                .filter(song -> {
+                    String normalizedTitle = song.getTitle().toLowerCase().trim();
+                    return normalizedTitle.contains(normalizedSearch) ||
+                            normalizedSearch.contains(normalizedTitle);
+                })
+                .collect(java.util.stream.Collectors.toList());
+    }
+
+    /**
+     * Enhanced search that also removes common punctuation and extra spaces
+     */
+    public List<Song> getSongsByTitleAdvanced(String songTitle) {
+        String normalizedSearchTerm = normalizeTitle(songTitle);
+
+        return songRepository.findAll().stream()
+                .filter(song -> {
+                    String normalizedSongTitle = normalizeTitle(song.getTitle());
+                    return normalizedSongTitle.equals(normalizedSearchTerm) ||
+                            normalizedSongTitle.contains(normalizedSearchTerm) ||
+                            normalizedSearchTerm.contains(normalizedSongTitle);
+                })
+                .collect(java.util.stream.Collectors.toList());
+    }
+
+    /**
+     * Normalizes title by removing extra spaces, punctuation, and converting to lowercase
+     */
+    private String normalizeTitle(String title) {
+        if (title == null) return "";
+
+        return title.toLowerCase()
+                .replaceAll("[\\p{Punct}]", "") // Remove punctuation
+                .replaceAll("\\s+", " ")        // Replace multiple spaces with single space
+                .trim();
+    }
+
+    /**
      * Retrieves all songs by an artist ID.
      * @param artistId The ID of the artist whose songs to retrieve.
      * @return A list of songs by the specified artist.

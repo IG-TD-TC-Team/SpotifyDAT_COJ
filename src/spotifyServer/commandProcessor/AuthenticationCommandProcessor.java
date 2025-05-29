@@ -51,14 +51,21 @@ public class AuthenticationCommandProcessor extends AbstractProcessor {
 
             // If already logged in, log out first to ensure clean state
             if (isAuthenticated()) {
+                System.out.println("User already authenticated on this connection, logging out previous session first");
+
                 // First log out the current user silently
                 String sessionId = connectionContext.getSessionId();
                 if (sessionId != null) {
                     authService.logout(sessionId);
+                    System.out.println("Logged out previous session: " + sessionId);
                 }
                 // Deauthenticate the connection but keep the socket open
                 CommandContext.deauthenticateConnection(clientSocket);
-                System.out.println("Logged out previous session before new login");
+
+                // Small delay to ensure cleanup is complete
+                Thread.sleep(100);
+
+                System.out.println("You can loggin again !");
             }
 
             // Attempt to authenticate the user
@@ -92,15 +99,27 @@ public class AuthenticationCommandProcessor extends AbstractProcessor {
                 return "ERROR: You are not logged in.";
             }
 
+            // Get current user info for logging
+            String currentUsername = getCurrentUsername();
+            Integer currentUserId = getCurrentUserId();
+
             // Get session ID from context
             String sessionId = connectionContext.getSessionId();
 
             // Logout through authentication service
-            authService.logout(sessionId);
+            boolean logoutSuccess = authService.logout(sessionId);
 
             // Clear authentication from connection context
             CommandContext.deauthenticateConnection(clientSocket);
-            return "SUCCESS: Logged out successfully.";
+
+            if (logoutSuccess) {
+                System.out.println("User logged out: " + currentUsername + " (ID: " + currentUserId +
+                        ") session: " + sessionId);
+                return "SUCCESS: Logged out successfully.";
+            } else {
+                System.out.println("Logout attempt for invalid session: " + sessionId);
+                return "SUCCESS: Logged out (session was already invalid).";
+            }
 
         } catch (Exception e) {
             return "ERROR: Logout failed: " + e.getMessage();

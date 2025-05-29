@@ -25,7 +25,7 @@ public class PlaylistRepository extends JsonRepository<Playlist> implements Play
      * Constructor that initializes the Playlist repository.
      */
     private PlaylistRepository() {
-        super(Playlist.class, "playlists.json", Playlist::getOwnerID);
+        super(Playlist.class, "playlists.json", Playlist::getPlaylistID);
     }
 
     /**

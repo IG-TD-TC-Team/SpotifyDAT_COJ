@@ -285,8 +285,10 @@ public class PlaylistManagementCommandProcessor extends AbstractProcessor {
     private String handleListPlaylists() {
         try {
             int userId = getCurrentUserId();
+            System.out.println("DEBUG: Listing playlists for user ID: " + userId);
 
             List<Playlist> playlists = playlistService.getPlaylistsByOwner(userId);
+            System.out.println("DEBUG: PlaylistService returned " + playlists.size() + " playlists");
 
             if (playlists.isEmpty()) {
                 return "You don't have any playlists yet. Create one with 'createplaylist <name>'";

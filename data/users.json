@@ -1834,4 +1834,51 @@
     "sharedWith" : [ ]
   },
   "active" : true
+}, {
+  "userID" : 46,
+  "username" : "leila",
+  "email" : "leila@test.ch",
+  "password" : "03ac674216f3e15c761ee1a5e255f067953623c8b388b4459e13f978d7c846f4",
+  "firstName" : "leila",
+  "lastName" : "costa",
+  "dateOfBirth" : null,
+  "accountCreationDate" : 1748501239142,
+  "subscriptionPlan" : {
+    "type" : "FreePlan",
+    "type" : "FREE",
+    "maxQuality" : 128,
+    "deviceLimit" : 1
+  },
+  "subscriptionInfo" : {
+    "startDate" : 1748501239142,
+    "endDate" : null,
+    "lastBillingDate" : 1748501239142,
+    "paymentMethod" : null,
+    "autoRenew" : true,
+    "price" : 0.0
+  },
+  "followedUsersIDs" : [ ],
+  "followersIDs" : [ ],
+  "library" : {
+    "userID" : 46,
+    "playlists" : [ {
+      "name" : "Favorites",
+      "songs" : [ ],
+      "ownerID" : 46,
+      "playlistID" : 0,
+      "likedByUsers" : [ ],
+      "publiclyShareable" : false,
+      "sharedWith" : [ ]
+    } ]
+  },
+  "defaultPlaylist" : {
+    "name" : "Favorites",
+    "songs" : [ ],
+    "ownerID" : 46,
+    "playlistID" : 0,
+    "likedByUsers" : [ ],
+    "publiclyShareable" : false,
+    "sharedWith" : [ ]
+  },
+  "active" : true
 } ]

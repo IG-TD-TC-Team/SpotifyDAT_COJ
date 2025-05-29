@@ -28,7 +28,7 @@ public class FixExistingSongPaths {
                 System.out.println("  Old path: " + oldPath);
                 System.out.println("  New path: " + newPath);
 
-                File oldFile = new File("D:\\DATAFiles\\Codes\\SpotifyDAT_COJ" + oldPath.replace("/", "\\"));
+                File oldFile = new File("C:\\Users\\facos\\Desktop\\music\\" + oldPath.replace("/", "\\"));
                 File newFile = new File(newPath);
 
                 if (oldFile.exists()) {
@@ -57,7 +57,7 @@ public class FixExistingSongPaths {
 
     private static String generateSanitizedPath(String title) {
         String sanitized = sanitizeFileName(title);
-        return "D:\\DATAFiles\\Codes\\SpotifyDAT_COJ\\music\\" + sanitized + ".mp3";
+        return "C:\\Users\\facos\\Desktop\\music\\" + sanitized + ".mp3";
     }
 
     private static String sanitizeFileName(String fileName) {

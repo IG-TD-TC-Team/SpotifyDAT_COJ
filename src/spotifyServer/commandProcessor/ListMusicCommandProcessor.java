@@ -39,7 +39,7 @@ public class ListMusicCommandProcessor extends AbstractProcessor {
      *         listsongs genre <genre>
      */
     private String handleListSongs(String command) {
-        String[] parts = command.split(" ");
+        String[] parts = command.split(" ", 4); // Split with limit to preserve spaces in names
 
         if (parts.length < 3) {
             return "Error: Invalid format. Usage: listsongs <type> [id/name] <identifier>";
@@ -52,18 +52,58 @@ public class ListMusicCommandProcessor extends AbstractProcessor {
         try {
             switch (type) {
                 case "artist":
-                    songs = handleArtistSongs(parts);
-                    if (songs != null) {
-                        Artist artist = artistService.getArtistById(songs.get(0).getArtistId());
-                        listTitle = "Songs by " + artist.getFirstName() + " " + artist.getLastName();
+                    // Handle artist songs with proper parsing of multi-word names
+                    if (parts.length < 4) {
+                        return "Error: Missing artist identifier. Usage: listsongs artist [id/name] <identifier>";
+                    }
+
+                    String artistIdentifierType = parts[2].toLowerCase();
+                    String artistIdentifier = parts[3];
+
+                    // Process artist by ID or name
+                    if ("id".equals(artistIdentifierType)) {
+                        int artistId = Integer.parseInt(artistIdentifier);
+                        songs = songService.getSongsByArtistId(artistId);
+                        Artist artist = artistService.getArtistById(artistId);
+                        if (artist != null) {
+                            listTitle = "Songs by " + artist.getFirstName() + " " + artist.getLastName();
+                        } else {
+                            listTitle = "Songs by Artist ID " + artistId;
+                        }
+                    } else if ("name".equals(artistIdentifierType)) {
+                        // For artist name, we need to handle multi-word names
+                        songs = songService.getSongByArtistName(artistIdentifier);
+                        listTitle = "Songs by " + artistIdentifier;
+                    } else {
+                        return "Error: Invalid identifier type for artist. Use 'id' or 'name'";
                     }
                     break;
 
                 case "album":
-                    songs = handleAlbumSongs(parts);
-                    if (songs != null && !songs.isEmpty()) {
-                        Album album = albumService.getAlbumById(songs.get(0).getAlbumId());
-                        listTitle = "Songs in album '" + album.getTitle() + "'";
+                    // Handle album songs with proper parsing
+                    if (parts.length < 4) {
+                        return "Error: Missing album identifier. Usage: listsongs album [id/name] <identifier>";
+                    }
+
+                    String albumIdentifierType = parts[2].toLowerCase();
+                    String albumIdentifier = parts[3];
+
+                    // Process album by ID or name
+                    if ("id".equals(albumIdentifierType)) {
+                        int albumId = Integer.parseInt(albumIdentifier);
+                        songs = songService.getSongsByAlbumId(albumId);
+                        Album album = albumService.getAlbumById(albumId);
+                        if (album != null) {
+                            listTitle = "Songs in album '" + album.getTitle() + "'";
+                        } else {
+                            listTitle = "Songs in Album ID " + albumId;
+                        }
+                    } else if ("name".equals(albumIdentifierType)) {
+                        // For album name, we need to handle multi-word names
+                        songs = songService.getSongsByAlbumName(albumIdentifier);
+                        listTitle = "Songs in album '" + albumIdentifier + "'";
+                    } else {
+                        return "Error: Invalid identifier type for album. Use 'id' or 'name'";
                     }
                     break;
 
@@ -90,9 +130,11 @@ public class ListMusicCommandProcessor extends AbstractProcessor {
 
             for (Song song : songs) {
                 Artist artist = artistService.getArtistById(song.getArtistId());
+                String artistName = (artist != null) ? artist.getFirstName() + " " + artist.getLastName() : "Unknown Artist";
+
                 response.append("ID: ").append(song.getSongId())
                         .append(" | ").append(song.getTitle())
-                        .append(" | Artist: ").append(artist.getFirstName()).append(" ").append(artist.getLastName())
+                        .append(" | Artist: ").append(artistName)
                         .append(" | Duration: ").append(formatDuration(song.getDurationSeconds()))
                         .append("\n");
             }
@@ -103,67 +145,12 @@ public class ListMusicCommandProcessor extends AbstractProcessor {
             return response.toString();
 
         } catch (IllegalArgumentException e) {
-            return "ERROR: Invalid genre. Valid genres are: ROCK, POP, JAZZ, CLASSICAL, HIP_HOP, ELECTRONIC, COUNTRY, BLUES";
+            if (type.equals("genre")) {
+                return "ERROR: Invalid genre. Valid genres are: ROCK, POP, JAZZ, CLASSICAL, HIP_HOP, ELECTRONIC, COUNTRY, BLUES";
+            }
+            return "ERROR: " + e.getMessage();
         } catch (Exception e) {
             return "ERROR: Failed to list songs: " + e.getMessage();
-        }
-    }
-
-    /**
-     * Handles listing songs by artist.
-     */
-    private List<Song> handleArtistSongs(String[] parts) {
-        if (parts.length < 4) {
-            throw new IllegalArgumentException("Invalid format for artist songs");
-        }
-
-        String identifierType = parts[2].toLowerCase();
-        String identifier = parts[3];
-
-        if ("id".equals(identifierType)) {
-            int artistId = Integer.parseInt(identifier);
-            return songService.getSongsByArtistId(artistId);
-        } else if ("name".equals(identifierType)) {
-            // Join remaining parts for multi-word names
-            if (parts.length > 4) {
-                StringBuilder nameBuilder = new StringBuilder(identifier);
-                for (int i = 4; i < parts.length; i++) {
-                    nameBuilder.append(" ").append(parts[i]);
-                }
-                identifier = nameBuilder.toString();
-            }
-            return songService.getSongByArtistName(identifier);
-        } else {
-            throw new IllegalArgumentException("Invalid identifier type. Use 'id' or 'name'");
-        }
-    }
-
-    /**
-     * Handles listing songs by album.
-     */
-    private List<Song> handleAlbumSongs(String[] parts) {
-        if (parts.length < 4) {
-            throw new IllegalArgumentException("Invalid format for album songs");
-        }
-
-        String identifierType = parts[2].toLowerCase();
-        String identifier = parts[3];
-
-        if ("id".equals(identifierType)) {
-            int albumId = Integer.parseInt(identifier);
-            return songService.getSongsByAlbumId(albumId);
-        } else if ("name".equals(identifierType)) {
-            // Join remaining parts for multi-word names
-            if (parts.length > 4) {
-                StringBuilder nameBuilder = new StringBuilder(identifier);
-                for (int i = 4; i < parts.length; i++) {
-                    nameBuilder.append(" ").append(parts[i]);
-                }
-                identifier = nameBuilder.toString();
-            }
-            return songService.getSongsByAlbumName(identifier);
-        } else {
-            throw new IllegalArgumentException("Invalid identifier type. Use 'id' or 'name'");
         }
     }
 

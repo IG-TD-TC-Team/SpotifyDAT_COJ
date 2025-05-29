@@ -41,6 +41,8 @@ public class PlaylistSocialCommandProcessor extends AbstractProcessor {
             return handleViewLikedPlaylists();
         } else if (lowerCommand.startsWith("viewplaylistlikes")) {
             return handleViewPlaylistLikes(command);
+        } else if (lowerCommand.equals("viewsharedplaylists")) {
+        return handleViewSharedPlaylists();
         }
 
         // Pass to next processor if not a playlist social command
@@ -61,26 +63,56 @@ public class PlaylistSocialCommandProcessor extends AbstractProcessor {
         try {
             int currentUserId = getCurrentUserId();
 
+            // Variables to store parsed identifiers
             int playlistId = -1;
+            String playlistName = null;
             int targetUserId = -1;
+            String targetUsername = null;
+            boolean usePlaylistName = false;
+            boolean useUsername = false;
 
             // Parse the command for playlist and user identifiers
             for (int i = 1; i < parts.length - 1; i++) {
-                if ("playlistid".equals(parts[i].toLowerCase())) {
-                    playlistId = Integer.parseInt(parts[i + 1]);
-                } else if ("userid".equals(parts[i].toLowerCase())) {
-                    targetUserId = Integer.parseInt(parts[i + 1]);
+                String currentPart = parts[i].toLowerCase();
+                String nextPart = parts[i + 1];
+
+                if ("playlistid".equals(currentPart)) {
+                    playlistId = Integer.parseInt(nextPart);
+                    usePlaylistName = false;
+                    i++; // Skip the next part since we consumed it
+                } else if ("playlistname".equals(currentPart)) {
+                    playlistName = nextPart;
+                    usePlaylistName = true;
+                    i++; // Skip the next part since we consumed it
+                } else if ("userid".equals(currentPart)) {
+                    targetUserId = Integer.parseInt(nextPart);
+                    useUsername = false;
+                    i++; // Skip the next part since we consumed it
+                } else if ("username".equals(currentPart)) {
+                    targetUsername = nextPart;
+                    useUsername = true;
+                    i++; // Skip the next part since we consumed it
                 }
             }
 
-            if (playlistId == -1 || targetUserId == -1) {
-                return "ERROR: Invalid format. Please specify both playlistid and userid";
+            // Validate that we have both playlist and user identifiers
+            if ((playlistId == -1 && playlistName == null) || (targetUserId == -1 && targetUsername == null)) {
+                return "ERROR: Invalid format. Please specify both playlist and user identifiers";
             }
 
-            // Get the playlist and verify ownership
-            Playlist playlist = playlistService.getPlaylistById(playlistId);
-            if (playlist == null) {
-                return "ERROR: Playlist not found";
+            // Resolve playlist by name if needed
+            Playlist playlist = null;
+            if (usePlaylistName) {
+                playlist = playlistService.getPlaylistByNameAndOwner(playlistName, currentUserId);
+                if (playlist == null) {
+                    return "ERROR: Playlist not found with name: " + playlistName;
+                }
+                playlistId = playlist.getPlaylistID();
+            } else {
+                playlist = playlistService.getPlaylistById(playlistId);
+                if (playlist == null) {
+                    return "ERROR: Playlist not found with ID: " + playlistId;
+                }
             }
 
             // Check authorization
@@ -88,14 +120,29 @@ public class PlaylistSocialCommandProcessor extends AbstractProcessor {
                 return "ERROR: You don't have permission to share this playlist";
             }
 
-            // Verify target user exists
-            User targetUser = userService.getUserById(targetUserId);
+            // Resolve user by username if needed
+            if (useUsername) {
+                try {
+                    User targetUser = userService.getUserByUsername(targetUsername);
+                    targetUserId = targetUser.getUserID();
+                } catch (Exception e) {
+                    return "ERROR: User not found with username: " + targetUsername;
+                }
+            } else {
+                // Verify target user exists
+                try {
+                    User targetUser = userService.getUserById(targetUserId);
+                } catch (Exception e) {
+                    return "ERROR: User not found with ID: " + targetUserId;
+                }
+            }
 
             // Share the playlist
             boolean success = socialPlaylistService.sharePlaylist(playlistId, targetUserId);
 
             if (success) {
-                return "SUCCESS: Playlist '" + playlist.getName() + "' shared with user " + targetUser.getUsername();
+                String userIdentifier = useUsername ? targetUsername : "ID " + targetUserId;
+                return "SUCCESS: Playlist '" + playlist.getName() + "' shared with user " + userIdentifier;
             } else {
                 return "ERROR: Failed to share playlist. It may already be shared with this user.";
             }
@@ -115,44 +162,92 @@ public class PlaylistSocialCommandProcessor extends AbstractProcessor {
         String[] parts = command.split(" ");
 
         if (parts.length < 5) {
-            return "Error: Invalid format. Usage: unshareplaylist playlistid <id> userid <userId>";
+            return "Error: Invalid format. Usage: unshareplaylist playlistid/playlistname <value> userid/username <value>";
         }
 
         try {
             int currentUserId = getCurrentUserId();
 
+            // Variables to store parsed identifiers
             int playlistId = -1;
+            String playlistName = null;
             int targetUserId = -1;
+            String targetUsername = null;
+            boolean usePlaylistName = false;
+            boolean useUsername = false;
 
             // Parse the command for playlist and user identifiers
             for (int i = 1; i < parts.length - 1; i++) {
-                if ("playlistid".equals(parts[i].toLowerCase())) {
-                    playlistId = Integer.parseInt(parts[i + 1]);
-                } else if ("userid".equals(parts[i].toLowerCase())) {
-                    targetUserId = Integer.parseInt(parts[i + 1]);
+                String currentPart = parts[i].toLowerCase();
+                String nextPart = parts[i + 1];
+
+                if ("playlistid".equals(currentPart)) {
+                    playlistId = Integer.parseInt(nextPart);
+                    usePlaylistName = false;
+                    i++; // Skip the next part since we consumed it
+                } else if ("playlistname".equals(currentPart)) {
+                    playlistName = nextPart;
+                    usePlaylistName = true;
+                    i++; // Skip the next part since we consumed it
+                } else if ("userid".equals(currentPart)) {
+                    targetUserId = Integer.parseInt(nextPart);
+                    useUsername = false;
+                    i++; // Skip the next part since we consumed it
+                } else if ("username".equals(currentPart)) {
+                    targetUsername = nextPart;
+                    useUsername = true;
+                    i++; // Skip the next part since we consumed it
                 }
             }
 
-            if (playlistId == -1 || targetUserId == -1) {
-                return "ERROR: Invalid format. Please specify both playlistid and userid";
+            // Validate that we have both playlist and user identifiers
+            if ((playlistId == -1 && playlistName == null) || (targetUserId == -1 && targetUsername == null)) {
+                return "ERROR: Invalid format. Please specify both playlist and user identifiers";
             }
 
-            // Get the playlist and verify ownership
-            Playlist playlist = playlistService.getPlaylistById(playlistId);
-            if (playlist == null) {
-                return "ERROR: Playlist not found";
+            // Resolve playlist by name if needed
+            Playlist playlist = null;
+            if (usePlaylistName) {
+                playlist = playlistService.getPlaylistByNameAndOwner(playlistName, currentUserId);
+                if (playlist == null) {
+                    return "ERROR: Playlist not found with name: " + playlistName;
+                }
+                playlistId = playlist.getPlaylistID();
+            } else {
+                playlist = playlistService.getPlaylistById(playlistId);
+                if (playlist == null) {
+                    return "ERROR: Playlist not found with ID: " + playlistId;
+                }
             }
 
             // Check authorization
             if (!authorizationService.canModifyPlaylist(currentUserId, playlistId)) {
-                return "ERROR: You don't have permission to share this playlist";
+                return "ERROR: You don't have permission to modify sharing for this playlist";
+            }
+
+            // Resolve user by username if needed
+            if (useUsername) {
+                try {
+                    User targetUser = userService.getUserByUsername(targetUsername);
+                    targetUserId = targetUser.getUserID();
+                } catch (Exception e) {
+                    return "ERROR: User not found with username: " + targetUsername;
+                }
+            } else {
+                // Verify target user exists
+                try {
+                    User targetUser = userService.getUserById(targetUserId);
+                } catch (Exception e) {
+                    return "ERROR: User not found with ID: " + targetUserId;
+                }
             }
 
             // Unshare the playlist
             boolean success = socialPlaylistService.unsharePlaylist(playlistId, targetUserId);
 
             if (success) {
-                return "SUCCESS: Playlist '" + playlist.getName() + "' is no longer shared with user ID " + targetUserId;
+                String userIdentifier = useUsername ? targetUsername : "ID " + targetUserId;
+                return "SUCCESS: Playlist '" + playlist.getName() + "' is no longer shared with user " + userIdentifier;
             } else {
                 return "ERROR: Failed to unshare playlist. It may not be shared with this user.";
             }
@@ -161,6 +256,52 @@ public class PlaylistSocialCommandProcessor extends AbstractProcessor {
             return "ERROR: Invalid ID format";
         } catch (Exception e) {
             return "ERROR: Failed to unshare playlist: " + e.getMessage();
+        }
+    }
+
+    /**
+     * Handles viewing all playlists shared with the current user.
+     */
+    private String handleViewSharedPlaylists() {
+        try {
+            int currentUserId = getCurrentUserId();
+
+            List<Playlist> sharedPlaylists = playlistService.getPlaylistsSharedWithUser(currentUserId);
+
+            if (sharedPlaylists.isEmpty()) {
+                return "No playlists have been shared with you yet.";
+            }
+
+            StringBuilder response = new StringBuilder("Playlists Shared With You:\n");
+            response.append("═══════════════════════════════\n");
+
+            for (Playlist playlist : sharedPlaylists) {
+                // Get owner information
+                User owner;
+                try {
+                    owner = userService.getUserById(playlist.getOwnerID());
+                    response.append("• ").append(playlist.getName())
+                            .append(" (ID: ").append(playlist.getPlaylistID()).append(")")
+                            .append(" - by ").append(owner.getUsername())
+                            .append(" - ").append(playlist.getSongCount()).append(" songs")
+                            .append(" - ").append(formatDuration(playlist.getTotalDuration()))
+                            .append("\n");
+                } catch (Exception e) {
+                    // If owner can't be found for some reason
+                    response.append("• ").append(playlist.getName())
+                            .append(" (ID: ").append(playlist.getPlaylistID()).append(")")
+                            .append(" - ").append(playlist.getSongCount()).append(" songs")
+                            .append("\n");
+                }
+            }
+
+            response.append("═══════════════════════════════\n");
+            response.append("Total shared playlists: ").append(sharedPlaylists.size());
+
+            return response.toString();
+
+        } catch (Exception e) {
+            return "ERROR: Failed to retrieve shared playlists: " + e.getMessage();
         }
     }
 
@@ -398,6 +539,21 @@ public class PlaylistSocialCommandProcessor extends AbstractProcessor {
             return "ERROR: Invalid ID format";
         } catch (Exception e) {
             return "ERROR: Failed to view playlist likes: " + e.getMessage();
+        }
+    }
+
+    /**
+     * Helper method to format duration in seconds to a readable format.
+     */
+    private String formatDuration(int seconds) {
+        int hours = seconds / 3600;
+        int minutes = (seconds % 3600) / 60;
+        int secs = seconds % 60;
+
+        if (hours > 0) {
+            return String.format("%d:%02d:%02d", hours, minutes, secs);
+        } else {
+            return String.format("%d:%02d", minutes, secs);
         }
     }
 }

@@ -460,7 +460,7 @@ public class PlaylistManagementCommandProcessor extends AbstractProcessor {
      * Format: removefromplaylist playlistid <playlistId> songid <songId>
      */
     private String handleRemoveFromPlaylist(String command) {
-        String[] parts = command.split(" ");
+        String[] parts = parseCommandWithQuotes(command);
 
         if (parts.length < 5) {
             return "Error: Invalid format. Usage: removefromplaylist playlistid <id> songid <id>";
@@ -470,36 +470,90 @@ public class PlaylistManagementCommandProcessor extends AbstractProcessor {
             int userId = getCurrentUserId();
 
             int playlistId = -1;
+            String playlistName = null;
             int songId = -1;
+            String songName = null;
+            boolean usePlaylistName = false;
+            boolean useSongName = false;
 
-            // Parse the command
+            // Parse the command for playlist and song identifiers
             for (int i = 1; i < parts.length - 1; i++) {
-                if ("playlistid".equals(parts[i].toLowerCase())) {
-                    playlistId = Integer.parseInt(parts[i + 1]);
-                } else if ("songid".equals(parts[i].toLowerCase())) {
-                    songId = Integer.parseInt(parts[i + 1]);
+                String currentPart = parts[i].toLowerCase();
+                String nextPart = parts[i + 1];
+
+                if ("playlistid".equals(currentPart)) {
+                    playlistId = Integer.parseInt(nextPart);
+                    usePlaylistName = false;
+                    i++; // Skip the next part since we consumed it
+                } else if ("playlistname".equals(currentPart)) {
+                    playlistName = nextPart;
+                    usePlaylistName = true;
+                    i++; // Skip the next part since we consumed it
+                } else if ("songid".equals(currentPart)) {
+                    songId = Integer.parseInt(nextPart);
+                    useSongName = false;
+                    i++; // Skip the next part since we consumed it
+                } else if ("songname".equals(currentPart)) {
+                    songName = nextPart;
+                    useSongName = true;
+                    i++; // Skip the next part since we consumed it
                 }
             }
 
-            if (playlistId == -1 || songId == -1) {
-                return "ERROR: Invalid format. Please specify both playlistid and songid";
+            // Validate that we have both playlist and song identifiers
+            if ((playlistId == -1 && playlistName == null) || (songId == -1 && songName == null)) {
+                return "ERROR: Invalid format. Please specify both playlist and song identifiers";
             }
 
-            // Get the playlist and verify ownership
-            Playlist playlist = playlistService.getPlaylistById(playlistId);
+            // Get the playlist
+            Playlist playlist = null;
+            if (usePlaylistName) {
+                playlist = playlistService.getPlaylistByNameAndOwner(playlistName, userId);
+                if (playlist != null) {
+                    playlistId = playlist.getPlaylistID();
+                }
+            } else {
+                playlist = playlistService.getPlaylistById(playlistId);
+            }
+
             if (playlist == null) {
                 return "ERROR: Playlist not found";
             }
 
-            // Check authorization
-            if (!authorizationService.canAccessPlaylist(userId, playlistId)) {
-                return "ERROR: You don't have permission to delete a song from this playlist";
+            // Check authorization for modification, not just access
+            if (!authorizationService.canModifyPlaylist(userId, playlistId)) {
+                return "ERROR: You don't have permission to modify this playlist";
             }
 
             // Get the song
-            Song song = songService.getSongById(songId);
+            Song song = null;
+            if (useSongName) {
+                // FIXED: Use flexible search for song names
+                List<Song> songsWithName = songService.getSongsByTitleFlexible(songName);
+                if (songsWithName.isEmpty()) {
+                    return "ERROR: No song found with name: " + songName;
+                } else if (songsWithName.size() > 1) {
+                    // Multiple songs found, show options
+                    StringBuilder response = new StringBuilder("Multiple songs found with name '" + songName + "':\n");
+                    response.append("Please specify by ID instead:\n");
+                    for (Song s : songsWithName) {
+                        response.append("ID: ").append(s.getSongId()).append(" - ").append(s.getTitle()).append("\n");
+                    }
+                    return response.toString();
+                } else {
+                    song = songsWithName.get(0);
+                }
+            } else {
+                song = songService.getSongById(songId);
+            }
+
             if (song == null) {
                 return "ERROR: Song not found";
+            }
+
+            // Check if song is actually in the playlist before attempting removal
+            if (!songInPlaylistService.isInPlaylist(playlistId, song.getSongId())) {
+                return "ERROR: Song '" + song.getTitle() + "' is not in playlist '" + playlist.getName() + "'";
             }
 
             // Remove song from playlist
@@ -508,7 +562,7 @@ public class PlaylistManagementCommandProcessor extends AbstractProcessor {
             if (updatedPlaylist != null) {
                 return "SUCCESS: Removed '" + song.getTitle() + "' from playlist '" + playlist.getName() + "'";
             } else {
-                return "ERROR: Failed to remove song. Song might not be in the playlist.";
+                return "ERROR: Failed to remove song from playlist";
             }
 
         } catch (NumberFormatException e) {

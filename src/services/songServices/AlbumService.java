@@ -69,6 +69,35 @@ public class AlbumService {
     }
 
     /**
+     * Retrieves albums by title (case-insensitive).
+     * @param title The title to search for.
+     * @return A list of albums matching the title.
+     */
+    public List<Album> getAlbumsByTitle(String title) {
+        refreshCache();
+        List<Album> result = new ArrayList<>();
+        String searchTerm = title.toLowerCase();
+
+        for (Album album : albums) {
+            if (album.getTitle() != null && album.getTitle().toLowerCase().contains(searchTerm)) {
+                result.add(album);
+            }
+        }
+
+        return result;
+    }
+
+    /**
+     * Retrieves albums by artist ID.
+     * @param artistId The ID of the artist.
+     * @return A list of albums by the specified artist.
+     */
+    public List<Album> getAlbumsByArtist(int artistId) {
+        refreshCache();
+        return albumRepository.findByArtistId(artistId);
+    }
+
+    /**
      * Retrieves all albums.
      * @return A list of all albums.
      */

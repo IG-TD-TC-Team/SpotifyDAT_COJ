@@ -208,6 +208,18 @@ public class PlaylistService {
         return playlist.getTotalDuration();
     }
 
+    /**
+     * Retrieves all playlists that are shared with a specific user.
+     *
+     * @param userId the ID of the user to find shared playlists for
+     * @return a list of playlists shared with the specified user
+     */
+    public List<Playlist> getPlaylistsSharedWithUser(int userId) {
+        refreshCache();
+        return playlists.stream()
+                .filter(playlist -> playlist.getSharedWith().contains(userId))
+                .collect(Collectors.toList());
+    }
 
 
     /// ---------------PLAYLIST UPDATE ----------------- ///

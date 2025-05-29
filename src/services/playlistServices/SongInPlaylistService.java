@@ -174,21 +174,52 @@ public class SongInPlaylistService {
      * @param song The song to be removed.
      */
     public Playlist removeSongFromPlaylist(int playlistId, Song song) {
+        System.out.println("DEBUG: Attempting to remove song '" + song.getTitle() + "' (ID: " + song.getSongId() + ") from playlist " + playlistId);
+
         refreshCache();
         Playlist playlist = playlistService.getPlaylistById(playlistId);
         if (playlist == null) {
+            System.err.println("DEBUG: Playlist not found with ID: " + playlistId);
             return null; // Playlist not found
         }
-        else{
-            LinkedList<Song> songs = playlist.getSongs();
-            if (songs.remove(song)) {
-                playlist.setSongs(songs);
-                playlistRepository.update(playlist);
-                refreshCache();
-                return playlist; // Song removed successfully
-            } else {
-                return null; // Song not found in the playlist
+
+        System.out.println("DEBUG: Playlist found: '" + playlist.getName() + "' with " + playlist.getSongs().size() + " songs");
+
+        // Check if song is in playlist first
+        boolean songFound = false;
+        for (Song s : playlist.getSongs()) {
+            if (s.getSongId() == song.getSongId()) {
+                songFound = true;
+                System.out.println("DEBUG: Found song in playlist: '" + s.getTitle() + "' (ID: " + s.getSongId() + ")");
+                break;
             }
+        }
+
+        if (!songFound) {
+            System.err.println("DEBUG: Song not found in playlist");
+            return null;
+        }
+
+        // FIXED: Create a new LinkedList and remove by ID comparison, not object reference
+        LinkedList<Song> songs = new LinkedList<>(playlist.getSongs());
+        boolean removed = songs.removeIf(s -> s.getSongId() == song.getSongId());
+
+        if (removed) {
+            System.out.println("DEBUG: Song removed from list, updating playlist");
+            playlist.setSongs(songs);
+
+            Optional<Playlist> updated = playlistRepository.update(playlist);
+            if (updated.isPresent()) {
+                refreshCache();
+                System.out.println("DEBUG: Successfully removed song from playlist");
+                return updated.get();
+            } else {
+                System.err.println("DEBUG: Failed to update playlist in repository");
+                return null;
+            }
+        } else {
+            System.err.println("DEBUG: Failed to remove song from list");
+            return null;
         }
     }
 

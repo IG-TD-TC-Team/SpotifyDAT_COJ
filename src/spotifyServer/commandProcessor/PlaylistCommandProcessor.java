@@ -1,5 +1,6 @@
 package spotifyServer.commandProcessor;
 
+import services.playbackServices.PlaybackService;
 import services.playlistServices.PlaylistService;
 import songsAndArtists.Song;
 import songsOrganisation.Playlist;
@@ -13,6 +14,7 @@ public class PlaylistCommandProcessor extends AbstractProcessor {
     private final PlaylistService playlistService = PlaylistService.getInstance();
     private final StreamingServer streamingServer;
     private final AuthorizationService authorizationService = AuthorizationService.getInstance();
+    private final PlaybackService playbackService = PlaybackService.getInstance();
 
     public PlaylistCommandProcessor() {
         this.streamingServer = StreamingServer.getInstance();
@@ -57,22 +59,28 @@ public class PlaylistCommandProcessor extends AbstractProcessor {
                     return "ERROR: You don't have permission to play this playlist";
                 }
 
-                // Build file paths including the user ID
-                StringBuilder playlistData = new StringBuilder();
-                for (int i = 0; i < songs.size(); i++) {
-                    if (i > 0) playlistData.append(",");
-                    playlistData.append(songs.get(i).getFilePath());
+                // Start playlist in the PlaybackService and get the first song
+                Song firstSong = playbackService.startPlaylist(playlistId, userId);
+
+                if (firstSong == null) {
+                    return "Error: Failed to start playlist - unable to get first song";
                 }
 
-                // Include user ID in streaming instructions
-                String response = "PLAYLIST_STREAM_REQUEST|" + SpotifySocketServer.STREAMING_PORT +
-                        "|" + playlistData.toString() + "|" + playlist.getName() + "|" + userId;
+                // Prepare streaming for the first song
+                streamingServer.prepareForStreaming(firstSong);
 
-                System.out.println("Sending playlist streaming instructions for user " +
-                        username + " (ID: " + userId + "): " + playlist.getName());
+                // Send instructions to client to connect to streaming server for this song
+                // Include both the first song info AND the playlist ID for context
+                String response = "STREAM_REQUEST|" + SpotifySocketServer.STREAMING_PORT +
+                        "|" + firstSong.getFilePath() +
+                        "|" + firstSong.getTitle() +
+                        "|" + firstSong.getArtistId() +
+                        "|" + userId +
+                        "|" + playlistId;  // Include playlist ID to mark this as part of playlist
 
-                // Prepare the streaming server
-                streamingServer.prepareForPlaylistStreaming(playlist, songs);
+                System.out.println("Starting playlist '" + playlist.getName() +
+                        "' for user " + username + " (ID: " + userId +
+                        ") with song: " + firstSong.getTitle());
 
                 return response;
 

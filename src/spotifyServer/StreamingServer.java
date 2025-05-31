@@ -2,6 +2,7 @@ package spotifyServer;
 
 import songsAndArtists.Song;
 import songsOrganisation.Playlist;
+import services.playbackServices.PlaybackService;
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -10,8 +11,8 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutorService;
 
 /**
- * Enhanced StreamingServer that handles binary MP3 streaming on a dedicated port.
- * Keeps binary streaming completely separate from text-based command processing.
+ * Enhanced StreamingServer with better integration with PlaybackService.
+ * Handles binary MP3 streaming on a dedicated port.
  */
 public class StreamingServer {
     private static StreamingServer instance;
@@ -20,7 +21,7 @@ public class StreamingServer {
     private final ExecutorService threadPool;
     private ServerSocket serverSocket;
     private boolean running = false;
-    private final MusicStreamer musicStreamer;
+    private final PlaybackService playbackService;
 
     // Cache for prepared content
     private final ConcurrentHashMap<Integer, Song> preparedSongs = new ConcurrentHashMap<>();
@@ -29,7 +30,7 @@ public class StreamingServer {
     private StreamingServer(int port, ExecutorService threadPool) {
         this.port = port;
         this.threadPool = threadPool;
-        this.musicStreamer = new MusicStreamer();
+        this.playbackService = PlaybackService.getInstance();
     }
 
     public static synchronized StreamingServer getInstance(int port, ExecutorService threadPool) {
@@ -143,8 +144,10 @@ public class StreamingServer {
         }
 
         private void handleSongStream(String request, PrintWriter out) {
-            // Updated format: STREAM|filepath|title|artistId|userId
-            String[] parts = request.split("\\|", 5);
+            // Updated format: STREAM|filepath|title|artistId|userId|playlistId
+            String[] parts = request.split("\\|", 6);
+            int playlistId = -1; // Default to -1 for non-playlist songs
+
             if (parts.length < 5) {
                 out.println("ERROR|Invalid STREAM format - missing user ID");
                 return;
@@ -157,18 +160,24 @@ public class StreamingServer {
 
             try {
                 userId = Integer.parseInt(parts[4]);
+
+                // Check if this is part of a playlist
+                if (parts.length >= 6 && !parts[5].isEmpty()) {
+                    playlistId = Integer.parseInt(parts[5]);
+                }
             } catch (NumberFormatException e) {
                 out.println("ERROR|Invalid user ID format");
                 return;
             }
 
-            System.out.println("Streaming " + title + " for user ID: " + userId);
+            System.out.println("Streaming " + title + " for user ID: " + userId +
+                    (playlistId > 0 ? " (part of playlist " + playlistId + ")" : ""));
 
             // Create MusicStreamer and register it with the user ID
             MusicStreamer streamer = new MusicStreamer();
 
-            // This connects the CommandContext user ID to the streaming system
-            boolean success = streamer.streamAudioFile(filePath, clientSocket, userId);
+            // Stream the song
+            boolean success = streamer.streamAudioFile(filePath, clientSocket, userId, playlistId);
 
             if (!success) {
                 System.err.println("Failed to stream: " + title + " for user: " + userId);
@@ -176,65 +185,48 @@ public class StreamingServer {
         }
 
         private void handlePlaylistStream(String request, PrintWriter out) {
-            // Format: PLAYLIST|filepath1,filepath2,...|playlistName|userId
-            String[] parts = request.split("\\|", 4);
-            if (parts.length < 4) {
+            // Format: PLAYLIST|playlistId|userId
+            String[] parts = request.split("\\|", 3);
+            if (parts.length < 3) {
                 out.println("ERROR|Invalid PLAYLIST format - missing user ID");
                 return;
             }
 
-            String[] filePaths = parts[1].split(",");
-            String playlistName = parts[2];
-            Integer userId;
+            int playlistId;
+            int userId;
 
             try {
-                userId = Integer.parseInt(parts[3]);
+                playlistId = Integer.parseInt(parts[1]);
+                userId = Integer.parseInt(parts[2]);
             } catch (NumberFormatException e) {
-                out.println("ERROR|Invalid user ID format");
+                out.println("ERROR|Invalid ID format");
                 return;
             }
 
-            System.out.println("Streaming playlist: " + playlistName + " (" + filePaths.length + " songs) for user ID: " + userId);
-            out.println("PLAYLIST_START|" + playlistName + "|" + filePaths.length + " songs");
-            out.flush();
+            // Start the playlist in the PlaybackService
+            Song firstSong = playbackService.startPlaylist(playlistId, userId);
 
-            // Stream each song in the playlist
-            int songCount = 0;
-            for (String filePath : filePaths) {
-                songCount++;
-
-                // Send song start message
-                out.println("SONG_START|Song " + songCount + " of " + filePaths.length);
-                out.flush();
-
-                // Create a new streamer for each song
-                MusicStreamer streamer = new MusicStreamer();
-                boolean success = streamer.streamAudioFile(filePath, clientSocket, userId);
-
-                if (!success) {
-                    out.println("ERROR|Failed to stream song " + songCount);
-                    out.flush();
-                    break;
-                }
-
-                // Check if we should continue or if a stop was requested
-                MusicStreamer currentStreamer = MusicStreamer.getStreamerForUser(userId);
-                if (currentStreamer != null && currentStreamer.isStopped()) {
-                    System.out.println("Playlist streaming stopped by user request");
-                    break;
-                }
-
-                // Small pause between songs
-                try {
-                    Thread.sleep(500);
-                } catch (InterruptedException e) {
-                    Thread.currentThread().interrupt();
-                    break;
-                }
+            if (firstSong == null) {
+                out.println("ERROR|Playlist is empty or not found");
+                return;
             }
 
-            out.println("PLAYLIST_COMPLETE");
-            out.flush();
+            Playlist playlist = playbackService.getCurrentPlaylist(userId);
+            String playlistName = playlist != null ? playlist.getName() : "Unknown Playlist";
+
+            System.out.println("Starting playlist: " + playlistName + " for user ID: " + userId);
+            out.println("PLAYLIST_START|" + playlistName + "|" + playlistId);
+
+            // Stream the first song
+            out.println("SONG_START|" + firstSong.getTitle());
+
+            // Create streamer for the first song
+            MusicStreamer streamer = new MusicStreamer();
+            boolean success = streamer.streamAudioFile(firstSong.getFilePath(), clientSocket, userId, playlistId);
+
+            if (!success) {
+                out.println("ERROR|Failed to stream first song");
+            }
         }
     }
 

@@ -1,12 +1,23 @@
 package spotifyServer.commandProcessor;
 
+import services.playbackServices.PlaybackService;
+import songsAndArtists.Song;
 import spotifyServer.MusicStreamer;
+import spotifyServer.SpotifySocketServer;
+import spotifyServer.StreamingServer;
 
 /**
  * Playback control processor that integrates seamlessly with your existing
  * CommandContext system. No duplication of session management!
  */
 public class PlaybackControlCommandProcessor extends AbstractProcessor {
+
+    private final PlaybackService playbackService = PlaybackService.getInstance();
+    private final StreamingServer streamingServer;
+
+    public PlaybackControlCommandProcessor() {
+        this.streamingServer = StreamingServer.getInstance();
+    }
 
     @Override
     public String processCommand(String command) {
@@ -26,7 +37,16 @@ public class PlaybackControlCommandProcessor extends AbstractProcessor {
                 return handleStop();
             case "status":
                 return handleStatus();
+            case "next":
+                return handleNext();
+            case "previous":
+                return handlePrevious();
             default:
+                if (lowerCommand.startsWith("shuffle ")) {
+                    return handleShuffle(command);
+                } else if (lowerCommand.startsWith("repeat ")) {
+                    return handleRepeat(command);
+                }
                 return handleNext(command);
         }
     }
@@ -132,6 +152,119 @@ public class PlaybackControlCommandProcessor extends AbstractProcessor {
 
         } catch (Exception e) {
             return "ERROR: Failed to get status: " + e.getMessage();
+        }
+    }
+
+    private String handleNext() {
+        Integer userId = getCurrentUserId();
+        if (userId == null) {
+            return "ERROR: Could not determine user identity";
+        }
+
+        // Check if user has an active playlist
+        if (!playbackService.hasActivePlaylist(userId)) {
+            return "ERROR: No active playlist. Start a playlist first with 'playlist <id>'";
+        }
+
+        // Get the next song
+        Song nextSong = playbackService.getNextSong(userId);
+        if (nextSong == null) {
+            return "End of playlist reached";
+        }
+
+        // Prepare streaming for the next song
+        streamingServer.prepareForStreaming(nextSong);
+
+        // Return streaming instructions to client
+        return "STREAM_REQUEST|" + SpotifySocketServer.STREAMING_PORT + "|" +
+                nextSong.getFilePath() + "|" + nextSong.getTitle() + "|" +
+                nextSong.getArtistId() + "|" + userId;
+    }
+
+    private String handlePrevious() {
+        Integer userId = getCurrentUserId();
+        if (userId == null) {
+            return "ERROR: Could not determine user identity";
+        }
+
+        // Check if user has an active playlist
+        if (!playbackService.hasActivePlaylist(userId)) {
+            return "ERROR: No active playlist. Start a playlist first with 'playlist <id>'";
+        }
+
+        // Get the previous song
+        Song prevSong = playbackService.getPreviousSong(userId);
+        if (prevSong == null) {
+            return "Beginning of playlist reached";
+        }
+
+        // Prepare streaming for the previous song
+        streamingServer.prepareForStreaming(prevSong);
+
+        // Return streaming instructions to client
+        return "STREAM_REQUEST|" + SpotifySocketServer.STREAMING_PORT + "|" +
+                prevSong.getFilePath() + "|" + prevSong.getTitle() + "|" +
+                prevSong.getArtistId() + "|" + userId;
+    }
+
+    // Add handlers for shuffle and repeat commands
+    private String handleShuffle(String command) {
+        String[] parts = command.split(" ", 2);
+        if (parts.length < 2) {
+            return "Error: Missing mode. Usage: shuffle on/off";
+        }
+
+        String mode = parts[1].toLowerCase();
+        Integer userId = getCurrentUserId();
+
+        if (userId == null) {
+            return "ERROR: Could not determine user identity";
+        }
+
+        if (!playbackService.hasActivePlaylist(userId)) {
+            return "ERROR: No active playlist. Start a playlist first with 'playlist <id>'";
+        }
+
+        if ("on".equals(mode)) {
+            playbackService.setShuffleMode(userId);
+            return "SUCCESS: Shuffle mode enabled";
+        } else if ("off".equals(mode)) {
+            playbackService.setSequentialMode(userId);
+            return "SUCCESS: Shuffle mode disabled";
+        } else {
+            return "ERROR: Invalid mode. Use 'on' or 'off'";
+        }
+    }
+
+    private String handleRepeat(String command) {
+        String[] parts = command.split(" ", 2);
+        if (parts.length < 2) {
+            return "Error: Missing mode. Usage: repeat none/one/all";
+        }
+
+        String mode = parts[1].toLowerCase();
+        Integer userId = getCurrentUserId();
+
+        if (userId == null) {
+            return "ERROR: Could not determine user identity";
+        }
+
+        if (!playbackService.hasActivePlaylist(userId)) {
+            return "ERROR: No active playlist. Start a playlist first with 'playlist <id>'";
+        }
+
+        switch (mode) {
+            case "none":
+                playbackService.setSequentialMode(userId);
+                return "SUCCESS: Repeat mode set to none";
+            case "one":
+                playbackService.setRepeatOneMode(userId);
+                return "SUCCESS: Repeat mode set to repeat current song";
+            case "all":
+                playbackService.setRepeatAllMode(userId);
+                return "SUCCESS: Repeat mode set to repeat all songs";
+            default:
+                return "ERROR: Invalid mode. Use 'none', 'one', or 'all'";
         }
     }
 

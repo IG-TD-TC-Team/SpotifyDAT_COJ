@@ -29,29 +29,86 @@ public class PlaylistCommandProcessor extends AbstractProcessor {
             }
 
             try {
-                String[] parts = command.split(" ", 2);
+                // Parse command with support for both ID and name
+                String[] parts = parseCommandWithQuotes(command);
+
                 if (parts.length < 2) {
-                    return "Error: Missing playlist ID. Usage: playlist <playlist_id>";
+                    return "Error: Missing playlist identifier. Usage: playlist <playlist_id> or playlist id <id> or playlist name <name>";
                 }
 
-                int playlistId = Integer.parseInt(parts[1]);
-                Playlist playlist = playlistService.getPlaylistById(playlistId);
-
-                if (playlist == null) {
-                    return "Error: Playlist not found with ID: " + playlistId;
-                }
-
-                LinkedList<Song> songs = playlist.getSongs();
-                if (songs.isEmpty()) {
-                    return "Error: Playlist is empty";
-                }
-
-                // Get user ID from CommandContext
+                // Get user context
                 Integer userId = getCurrentUserId();
                 String username = getCurrentUsername();
 
                 if (userId == null) {
                     return "ERROR: Could not determine user identity";
+                }
+
+                Playlist playlist = null;
+                int playlistId = -1;
+
+                // Handle different command formats
+                if (parts.length == 2) {
+                    // Original format: "playlist <identifier>"
+                    String identifier = parts[1];
+
+                    if (identifier.matches("\\d+")) {
+                        // It's numeric, treat as ID
+                        playlistId = Integer.parseInt(identifier);
+                        playlist = playlistService.getPlaylistById(playlistId);
+
+                        if (playlist == null) {
+                            return "Error: Playlist not found with ID: " + playlistId;
+                        }
+                    } else {
+                        // It's not numeric, treat as name - search in user's playlists
+                        playlist = playlistService.getPlaylistByNameAndOwner(identifier, userId);
+
+                        if (playlist == null) {
+                            return "Error: Playlist not found with name: " + identifier;
+                        }
+                        playlistId = playlist.getPlaylistID();
+                    }
+                } else if (parts.length >= 3) {
+                    // New format: "playlist id <id>" or "playlist name <name>"
+                    String identifierType = parts[1].toLowerCase();
+                    String identifier = parts[2];
+
+                    if ("id".equals(identifierType)) {
+                        try {
+                            playlistId = Integer.parseInt(identifier);
+                            playlist = playlistService.getPlaylistById(playlistId);
+
+                            if (playlist == null) {
+                                return "Error: Playlist not found with ID: " + playlistId;
+                            }
+                        } catch (NumberFormatException e) {
+                            return "Error: Invalid playlist ID format. Please provide a numeric ID.";
+                        }
+                    } else if ("name".equals(identifierType)) {
+                        // Remove quotes if present
+                        if (identifier.startsWith("\"") && identifier.endsWith("\"")) {
+                            identifier = identifier.substring(1, identifier.length() - 1);
+                        }
+
+                        playlist = playlistService.getPlaylistByNameAndOwner(identifier, userId);
+
+                        if (playlist == null) {
+                            return "Error: Playlist not found with name: " + identifier;
+                        }
+                        playlistId = playlist.getPlaylistID();
+                    } else {
+                        return "Error: Invalid identifier type. Use 'id' or 'name'";
+                    }
+                }
+
+                if (playlist == null || playlistId == -1) {
+                    return "Error: Could not identify playlist from the provided parameters";
+                }
+
+                LinkedList<Song> songs = playlist.getSongs();
+                if (songs.isEmpty()) {
+                    return "Error: Playlist '" + playlist.getName() + "' is empty";
                 }
 
                 // Check authorization
@@ -92,5 +149,38 @@ public class PlaylistCommandProcessor extends AbstractProcessor {
         }
 
         return handleNext(command);
+    }
+
+    /**
+     * Helper method to parse command while preserving quoted strings.
+     * This allows playlist names with spaces to be properly handled.
+     */
+    private String[] parseCommandWithQuotes(String command) {
+        java.util.List<String> parts = new java.util.ArrayList<>();
+        boolean inQuotes = false;
+        StringBuilder currentPart = new StringBuilder();
+
+        for (int i = 0; i < command.length(); i++) {
+            char c = command.charAt(i);
+
+            if (c == '"') {
+                inQuotes = !inQuotes;
+                currentPart.append(c); // Keep quotes for later processing
+            } else if (c == ' ' && !inQuotes) {
+                if (currentPart.length() > 0) {
+                    parts.add(currentPart.toString());
+                    currentPart = new StringBuilder();
+                }
+            } else {
+                currentPart.append(c);
+            }
+        }
+
+        // Add the last part
+        if (currentPart.length() > 0) {
+            parts.add(currentPart.toString());
+        }
+
+        return parts.toArray(new String[0]);
     }
 }

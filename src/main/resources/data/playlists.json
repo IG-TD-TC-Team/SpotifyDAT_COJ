@@ -1,0 +1,105 @@
+[ {
+  "name" : "Copy of Test Rock Playlist",
+  "songs" : [ {
+    "songId" : 203,
+    "title" : "Life on Mars?",
+    "artistId" : 2,
+    "albumId" : 2002,
+    "genre" : "ROCK",
+    "durationSeconds" : 236,
+    "filePath" : "/music/lifeonmars.mp3"
+  }, {
+    "songId" : 201,
+    "title" : "Space Oddity",
+    "artistId" : 2,
+    "albumId" : 2001,
+    "genre" : "ROCK",
+    "durationSeconds" : 315,
+    "filePath" : "/music/spaceoddity.mp3"
+  }, {
+    "songId" : 202,
+    "title" : "Heroes",
+    "artistId" : 2,
+    "albumId" : 2001,
+    "genre" : "ROCK",
+    "durationSeconds" : 371,
+    "filePath" : "/music/heroes.mp3"
+  }, {
+    "songId" : 301,
+    "title" : "Imagine",
+    "artistId" : 3,
+    "albumId" : 3001,
+    "genre" : "ROCK",
+    "durationSeconds" : 180,
+    "filePath" : "/music/imagine.mp3"
+  } ],
+  "ownerID" : 5,
+  "playlistID" : 4,
+  "likedByUsers" : [ ],
+  "sharedWith" : [ ],
+  "publiclyShareable" : false
+}, {
+  "name" : "sofia",
+  "songs" : [ ],
+  "ownerID" : 1,
+  "playlistID" : 6,
+  "likedByUsers" : [ ],
+  "sharedWith" : [ ],
+  "publiclyShareable" : false
+}, {
+  "name" : "summerHits",
+  "songs" : [ ],
+  "ownerID" : 46,
+  "playlistID" : 10,
+  "likedByUsers" : [ ],
+  "sharedWith" : [ ],
+  "publiclyShareable" : false
+}, {
+  "name" : "autumn",
+  "songs" : [ ],
+  "ownerID" : 43,
+  "playlistID" : 14,
+  "likedByUsers" : [ ],
+  "sharedWith" : [ ],
+  "publiclyShareable" : false
+}, {
+  "name" : "summer",
+  "songs" : [ {
+    "songId" : 1141,
+    "title" : "La Camisa Negra",
+    "artistId" : 128,
+    "albumId" : 10055,
+    "genre" : "ROCK",
+    "durationSeconds" : 245,
+    "filePath" : "C:\\Users\\facos\\Desktop\\music\\lacamisanegra.mp3"
+  } ],
+  "ownerID" : 43,
+  "playlistID" : 15,
+  "likedByUsers" : [ ],
+  "sharedWith" : [ ],
+  "publiclyShareable" : false
+}, {
+  "name" : "samedi",
+  "songs" : [ {
+    "songId" : 1141,
+    "title" : "La Camisa Negra",
+    "artistId" : 128,
+    "albumId" : 10055,
+    "genre" : "ROCK",
+    "durationSeconds" : 245,
+    "filePath" : "C:\\Users\\facos\\Desktop\\music\\lacamisanegra.mp3"
+  }, {
+    "songId" : 1143,
+    "title" : "Tu Falta De Querer",
+    "artistId" : 129,
+    "albumId" : 10057,
+    "genre" : "POP",
+    "durationSeconds" : 315,
+    "filePath" : "C:\\Users\\facos\\Desktop\\music\\tufaltadequerer.mp3"
+  } ],
+  "ownerID" : 43,
+  "playlistID" : 16,
+  "likedByUsers" : [ ],
+  "sharedWith" : [ ],
+  "publiclyShareable" : false
+} ]

@@ -1,0 +1,126 @@
+[ {
+  "userID" : 5,
+  "playlists" : [ {
+    "name" : "Coldplay Favorites",
+    "songs" : [ {
+      "songId" : 501,
+      "title" : "Yellow",
+      "artistId" : 5,
+      "albumId" : 5001,
+      "genre" : "ROCK",
+      "durationSeconds" : 265,
+      "filePath" : "/music/yellow.mp3"
+    }, {
+      "songId" : 503,
+      "title" : "Fix You",
+      "artistId" : 5,
+      "albumId" : 5002,
+      "genre" : "ROCK",
+      "durationSeconds" : 296,
+      "filePath" : "/music/fixyou.mp3"
+    } ],
+    "ownerID" : 5,
+    "playlistID" : 0,
+    "sharedWith" : [ ]
+  } ]
+}, {
+  "userID" : 5,
+  "playlists" : [ {
+    "name" : "Coldplay Favorites",
+    "songs" : [ {
+      "songId" : 501,
+      "title" : "Yellow",
+      "artistId" : 5,
+      "albumId" : 5001,
+      "genre" : "ROCK",
+      "durationSeconds" : 265,
+      "filePath" : "/music/yellow.mp3"
+    }, {
+      "songId" : 503,
+      "title" : "Fix You",
+      "artistId" : 5,
+      "albumId" : 5002,
+      "genre" : "ROCK",
+      "durationSeconds" : 296,
+      "filePath" : "/music/fixyou.mp3"
+    } ],
+    "ownerID" : 5,
+    "playlistID" : 0,
+    "sharedWith" : [ ]
+  } ]
+}, {
+  "userID" : 5,
+  "playlists" : [ {
+    "name" : "Coldplay Favorites",
+    "songs" : [ {
+      "songId" : 501,
+      "title" : "Yellow",
+      "artistId" : 5,
+      "albumId" : 5001,
+      "genre" : "ROCK",
+      "durationSeconds" : 265,
+      "filePath" : "/music/yellow.mp3"
+    }, {
+      "songId" : 503,
+      "title" : "Fix You",
+      "artistId" : 5,
+      "albumId" : 5002,
+      "genre" : "ROCK",
+      "durationSeconds" : 296,
+      "filePath" : "/music/fixyou.mp3"
+    } ],
+    "ownerID" : 5,
+    "playlistID" : 0,
+    "sharedWith" : [ ]
+  } ]
+}, {
+  "userID" : 5,
+  "playlists" : [ {
+    "name" : "Coldplay Favorites",
+    "songs" : [ {
+      "songId" : 501,
+      "title" : "Yellow",
+      "artistId" : 5,
+      "albumId" : 5001,
+      "genre" : "ROCK",
+      "durationSeconds" : 265,
+      "filePath" : "/music/yellow.mp3"
+    }, {
+      "songId" : 503,
+      "title" : "Fix You",
+      "artistId" : 5,
+      "albumId" : 5002,
+      "genre" : "ROCK",
+      "durationSeconds" : 296,
+      "filePath" : "/music/fixyou.mp3"
+    } ],
+    "ownerID" : 5,
+    "playlistID" : 0,
+    "sharedWith" : [ ]
+  } ]
+}, {
+  "userID" : 5,
+  "playlists" : [ {
+    "name" : "Coldplay Favorites",
+    "songs" : [ {
+      "songId" : 501,
+      "title" : "Yellow",
+      "artistId" : 5,
+      "albumId" : 5001,
+      "genre" : "ROCK",
+      "durationSeconds" : 265,
+      "filePath" : "/music/yellow.mp3"
+    }, {
+      "songId" : 503,
+      "title" : "Fix You",
+      "artistId" : 5,
+      "albumId" : 5002,
+      "genre" : "ROCK",
+      "durationSeconds" : 296,
+      "filePath" : "/music/fixyou.mp3"
+    } ],
+    "ownerID" : 5,
+    "playlistID" : 0,
+    "sharedWith" : [ ]
+  } ]
+} ]

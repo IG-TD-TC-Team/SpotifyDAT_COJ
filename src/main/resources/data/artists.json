@@ -1,0 +1,85 @@
+[ {
+  "artistID" : 117,
+  "firstName" : "Aldebert",
+  "lastName" : "",
+  "birthDate" : 1748028095645,
+  "countryOfBirth" : "Unknown",
+  "songs" : [ 1054, 1055, 1056, 1057, 1058, 1059, 1060, 1061, 1062, 1063, 1064, 1065, 1066, 1067, 1068, 1069, 1070 ]
+}, {
+  "artistID" : 118,
+  "firstName" : "La Reine des chansons pour enfants",
+  "lastName" : "et bébés",
+  "birthDate" : 1748028095939,
+  "countryOfBirth" : "Unknown",
+  "songs" : [ 1071, 1072, 1073, 1074, 1075, 1076, 1077, 1078, 1079, 1080, 1081, 1082, 1083, 1084 ]
+}, {
+  "artistID" : 119,
+  "firstName" : "Mazapán",
+  "lastName" : "",
+  "birthDate" : 1748028096084,
+  "countryOfBirth" : "Unknown",
+  "songs" : [ 1085, 1086, 1087, 1088, 1089, 1090, 1091, 1092, 1093, 1094 ]
+}, {
+  "artistID" : 120,
+  "firstName" : "Mister",
+  "lastName" : "Toony",
+  "birthDate" : 1748028096173,
+  "countryOfBirth" : "Unknown",
+  "songs" : [ 1095 ]
+}, {
+  "artistID" : 122,
+  "firstName" : "Angèle",
+  "lastName" : "",
+  "birthDate" : 1748028096197,
+  "countryOfBirth" : "Unknown",
+  "songs" : [ 1097, 1098, 1099, 1100, 1101, 1102, 1103, 1104, 1105, 1106, 1107, 1108, 1109, 1110, 1111, 1112, 1113, 1114, 1115 ]
+}, {
+  "artistID" : 124,
+  "firstName" : "Gauvain",
+  "lastName" : "Sers",
+  "birthDate" : 1748028096389,
+  "countryOfBirth" : "Unknown",
+  "songs" : [ 1118, 1119, 1120, 1121, 1122, 1123, 1124, 1125, 1126, 1127, 1128, 1129, 1130, 1131, 1132, 1133 ]
+}, {
+  "artistID" : 125,
+  "firstName" : "MC",
+  "lastName" : "Solaar",
+  "birthDate" : 1748028096521,
+  "countryOfBirth" : "Unknown",
+  "songs" : [ 1134, 1135, 1136, 1137, 1145, 1146, 1147, 1148 ]
+}, {
+  "artistID" : 128,
+  "firstName" : "Juanes",
+  "lastName" : "",
+  "birthDate" : 1748028096579,
+  "countryOfBirth" : "Unknown",
+  "songs" : [ 1140, 1141 ]
+}, {
+  "artistID" : 129,
+  "firstName" : "Mon",
+  "lastName" : "Laferte",
+  "birthDate" : 1748028096599,
+  "countryOfBirth" : "Unknown",
+  "songs" : [ 1142, 1143 ]
+}, {
+  "artistID" : 130,
+  "firstName" : "Chocolate",
+  "lastName" : "",
+  "birthDate" : 1748028096618,
+  "countryOfBirth" : "Unknown",
+  "songs" : [ 1144 ]
+}, {
+  "artistID" : 131,
+  "firstName" : "Lizzo",
+  "lastName" : "",
+  "birthDate" : 1748028096659,
+  "countryOfBirth" : "Unknown",
+  "songs" : [ 1149 ]
+}, {
+  "artistID" : 132,
+  "firstName" : "Gilberto",
+  "lastName" : "Gil",
+  "birthDate" : 1748028096670,
+  "countryOfBirth" : "Unknown",
+  "songs" : [ 1150 ]
+} ]

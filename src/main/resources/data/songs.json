@@ -1,0 +1,441 @@
+[ {
+  "songId" : 1057,
+  "title" : "Les amoureux (Live)",
+  "artistId" : 117,
+  "albumId" : 10040,
+  "genre" : "POP",
+  "durationSeconds" : 235,
+  "filePath" : "C:\\Users\\facos\\Desktop\\music\\lesamoureuxlive.mp3"
+}, {
+  "songId" : 1058,
+  "title" : "Super Mamie (Live)",
+  "artistId" : 117,
+  "albumId" : 10040,
+  "genre" : "POP",
+  "durationSeconds" : 285,
+  "filePath" : "C:\\Users\\facos\\Desktop\\music\\supermamielive.mp3"
+}, {
+  "songId" : 1059,
+  "title" : "Le dragon (Live)",
+  "artistId" : 117,
+  "albumId" : 10040,
+  "genre" : "POP",
+  "durationSeconds" : 225,
+  "filePath" : "C:\\Users\\facos\\Desktop\\music\\ledragonlive.mp3"
+}, {
+  "songId" : 1064,
+  "title" : "Samir le fakir (Live)",
+  "artistId" : 117,
+  "albumId" : 10040,
+  "genre" : "POP",
+  "durationSeconds" : 290,
+  "filePath" : "C:\\Users\\facos\\Desktop\\music\\samirlefakirlive.mp3"
+}, {
+  "songId" : 1067,
+  "title" : "La soucoupe volante (Live)",
+  "artistId" : 117,
+  "albumId" : 10040,
+  "genre" : "POP",
+  "durationSeconds" : 300,
+  "filePath" : "C:\\Users\\facos\\Desktop\\music\\lasoucoupevolantelive.mp3"
+}, {
+  "songId" : 1068,
+  "title" : "Du gros son (Live)",
+  "artistId" : 117,
+  "albumId" : 10040,
+  "genre" : "POP",
+  "durationSeconds" : 315,
+  "filePath" : "C:\\Users\\facos\\Desktop\\music\\dugrossonlive.mp3"
+}, {
+  "songId" : 1069,
+  "title" : "Plus tard quand tu seras grand (Live)",
+  "artistId" : 117,
+  "albumId" : 10040,
+  "genre" : "POP",
+  "durationSeconds" : 260,
+  "filePath" : "C:\\Users\\facos\\Desktop\\music\\plustardquandtuserasgrandlive.mp3"
+}, {
+  "songId" : 1071,
+  "title" : "Ah les crocodiles",
+  "artistId" : 118,
+  "albumId" : 10041,
+  "genre" : "CLASSICAL",
+  "durationSeconds" : 180,
+  "filePath" : "C:\\Users\\facos\\Desktop\\music\\ahlescrocodiles.mp3"
+}, {
+  "songId" : 1073,
+  "title" : "Au claire de la lune",
+  "artistId" : 118,
+  "albumId" : 10041,
+  "genre" : "CLASSICAL",
+  "durationSeconds" : 110,
+  "filePath" : "C:\\Users\\facos\\Desktop\\music\\auclairedelalune.mp3"
+}, {
+  "songId" : 1074,
+  "title" : "Une souris verte",
+  "artistId" : 118,
+  "albumId" : 10041,
+  "genre" : "CLASSICAL",
+  "durationSeconds" : 60,
+  "filePath" : "C:\\Users\\facos\\Desktop\\music\\unesourisverte.mp3"
+}, {
+  "songId" : 1075,
+  "title" : "Promenons-nous dans les bois",
+  "artistId" : 118,
+  "albumId" : 10041,
+  "genre" : "CLASSICAL",
+  "durationSeconds" : 105,
+  "filePath" : "C:\\Users\\facos\\Desktop\\music\\promenons-nousdanslesbois.mp3"
+}, {
+  "songId" : 1081,
+  "title" : "Ainsi font font font",
+  "artistId" : 118,
+  "albumId" : 10041,
+  "genre" : "CLASSICAL",
+  "durationSeconds" : 95,
+  "filePath" : "C:\\Users\\facos\\Desktop\\music\\ainsifontfontfont.mp3"
+}, {
+  "songId" : 1082,
+  "title" : "Un grand cerf",
+  "artistId" : 118,
+  "albumId" : 10041,
+  "genre" : "CLASSICAL",
+  "durationSeconds" : 80,
+  "filePath" : "C:\\Users\\facos\\Desktop\\music\\ungrandcerf.mp3"
+}, {
+  "songId" : 1085,
+  "title" : "Este Dedito/Mis Deditos",
+  "artistId" : 119,
+  "albumId" : 10042,
+  "genre" : "POP",
+  "durationSeconds" : 140,
+  "filePath" : "C:\\Users\\facos\\Desktop\\music\\estededito_misdeditos.mp3"
+}, {
+  "songId" : 1086,
+  "title" : "Vamos a Jugar",
+  "artistId" : 119,
+  "albumId" : 10042,
+  "genre" : "POP",
+  "durationSeconds" : 150,
+  "filePath" : "C:\\Users\\facos\\Desktop\\music\\vamosajugar.mp3"
+}, {
+  "songId" : 1088,
+  "title" : "La Vaquita Loca",
+  "artistId" : 119,
+  "albumId" : 10042,
+  "genre" : "POP",
+  "durationSeconds" : 160,
+  "filePath" : "C:\\Users\\facos\\Desktop\\music\\lavaquitaloca.mp3"
+}, {
+  "songId" : 1090,
+  "title" : "Chapecao de Segundo",
+  "artistId" : 119,
+  "albumId" : 10042,
+  "genre" : "POP",
+  "durationSeconds" : 160,
+  "filePath" : "C:\\Users\\facos\\Desktop\\music\\chapecaodesegundo.mp3"
+}, {
+  "songId" : 1091,
+  "title" : "Payas del Rezongo",
+  "artistId" : 119,
+  "albumId" : 10042,
+  "genre" : "POP",
+  "durationSeconds" : 195,
+  "filePath" : "C:\\Users\\facos\\Desktop\\music\\payasdelrezongo.mp3"
+}, {
+  "songId" : 1095,
+  "title" : "Ah! Les crocodiles",
+  "artistId" : 120,
+  "albumId" : 10043,
+  "genre" : "POP",
+  "durationSeconds" : 150,
+  "filePath" : "C:\\Users\\facos\\Desktop\\music\\ahlescrocodiles.mp3"
+}, {
+  "songId" : 1097,
+  "title" : "La thune",
+  "artistId" : 122,
+  "albumId" : 10045,
+  "genre" : "POP",
+  "durationSeconds" : 230,
+  "filePath" : "C:\\Users\\facos\\Desktop\\music\\lathune.mp3"
+}, {
+  "songId" : 1098,
+  "title" : "Balance ton quoi",
+  "artistId" : 122,
+  "albumId" : 10045,
+  "genre" : "POP",
+  "durationSeconds" : 215,
+  "filePath" : "C:\\Users\\facos\\Desktop\\music\\balancetonquoi.mp3"
+}, {
+  "songId" : 1099,
+  "title" : "Perdus",
+  "artistId" : 122,
+  "albumId" : 10046,
+  "genre" : "POP",
+  "durationSeconds" : 210,
+  "filePath" : "C:\\Users\\facos\\Desktop\\music\\perdus.mp3"
+}, {
+  "songId" : 1100,
+  "title" : "Oui ou non",
+  "artistId" : 122,
+  "albumId" : 10046,
+  "genre" : "POP",
+  "durationSeconds" : 225,
+  "filePath" : "C:\\Users\\facos\\Desktop\\music\\ouiounon.mp3"
+}, {
+  "songId" : 1101,
+  "title" : "Insomnies",
+  "artistId" : 122,
+  "albumId" : 10046,
+  "genre" : "POP",
+  "durationSeconds" : 240,
+  "filePath" : "C:\\Users\\facos\\Desktop\\music\\insomnies.mp3"
+}, {
+  "songId" : 1102,
+  "title" : "Jalousie",
+  "artistId" : 122,
+  "albumId" : 10046,
+  "genre" : "POP",
+  "durationSeconds" : 255,
+  "filePath" : "C:\\Users\\facos\\Desktop\\music\\jalousie.mp3"
+}, {
+  "songId" : 1103,
+  "title" : "Tout oublier",
+  "artistId" : 122,
+  "albumId" : 10046,
+  "genre" : "POP",
+  "durationSeconds" : 230,
+  "filePath" : "C:\\Users\\facos\\Desktop\\music\\toutoublier.mp3"
+}, {
+  "songId" : 1104,
+  "title" : "Tu me regardes",
+  "artistId" : 122,
+  "albumId" : 10046,
+  "genre" : "POP",
+  "durationSeconds" : 220,
+  "filePath" : "C:\\Users\\facos\\Desktop\\music\\tumeregardes.mp3"
+}, {
+  "songId" : 1106,
+  "title" : "La loi de Murphy",
+  "artistId" : 122,
+  "albumId" : 10046,
+  "genre" : "POP",
+  "durationSeconds" : 220,
+  "filePath" : "C:\\Users\\facos\\Desktop\\music\\laloidemurphy.mp3"
+}, {
+  "songId" : 1107,
+  "title" : "Nombreux",
+  "artistId" : 122,
+  "albumId" : 10046,
+  "genre" : "POP",
+  "durationSeconds" : 220,
+  "filePath" : "C:\\Users\\facos\\Desktop\\music\\nombreux.mp3"
+}, {
+  "songId" : 1109,
+  "title" : "Ta reine (Version orchestrale)",
+  "artistId" : 122,
+  "albumId" : 10046,
+  "genre" : "POP",
+  "durationSeconds" : 310,
+  "filePath" : "C:\\Users\\facos\\Desktop\\music\\tareineversionorchestrale.mp3"
+}, {
+  "songId" : 1111,
+  "title" : "Les matins",
+  "artistId" : 122,
+  "albumId" : 10046,
+  "genre" : "POP",
+  "durationSeconds" : 200,
+  "filePath" : "C:\\Users\\facos\\Desktop\\music\\lesmatins.mp3"
+}, {
+  "songId" : 1112,
+  "title" : "Je veux tes yeux",
+  "artistId" : 122,
+  "albumId" : 10046,
+  "genre" : "POP",
+  "durationSeconds" : 235,
+  "filePath" : "C:\\Users\\facos\\Desktop\\music\\jeveuxtesyeux.mp3"
+}, {
+  "songId" : 1113,
+  "title" : "Ta reine",
+  "artistId" : 122,
+  "albumId" : 10046,
+  "genre" : "POP",
+  "durationSeconds" : 240,
+  "filePath" : "C:\\Users\\facos\\Desktop\\music\\tareine.mp3"
+}, {
+  "songId" : 1114,
+  "title" : "Flemme",
+  "artistId" : 122,
+  "albumId" : 10046,
+  "genre" : "POP",
+  "durationSeconds" : 290,
+  "filePath" : "C:\\Users\\facos\\Desktop\\music\\flemme.mp3"
+}, {
+  "songId" : 1115,
+  "title" : "Flou",
+  "artistId" : 122,
+  "albumId" : 10046,
+  "genre" : "POP",
+  "durationSeconds" : 225,
+  "filePath" : "C:\\Users\\facos\\Desktop\\music\\flou.mp3"
+}, {
+  "songId" : 1119,
+  "title" : "Ton jean bleu",
+  "artistId" : 124,
+  "albumId" : 10049,
+  "genre" : "POP",
+  "durationSeconds" : 265,
+  "filePath" : "C:\\Users\\facos\\Desktop\\music\\tonjeanbleu.mp3"
+}, {
+  "songId" : 1123,
+  "title" : "Excuse-moi mon amour",
+  "artistId" : 124,
+  "albumId" : 10049,
+  "genre" : "POP",
+  "durationSeconds" : 215,
+  "filePath" : "C:\\Users\\facos\\Desktop\\music\\excuse-moimonamour.mp3"
+}, {
+  "songId" : 1125,
+  "title" : "Le tiroir",
+  "artistId" : 124,
+  "albumId" : 10049,
+  "genre" : "POP",
+  "durationSeconds" : 205,
+  "filePath" : "C:\\Users\\facos\\Desktop\\music\\letiroir.mp3"
+}, {
+  "songId" : 1126,
+  "title" : "Changement de programme",
+  "artistId" : 124,
+  "albumId" : 10049,
+  "genre" : "POP",
+  "durationSeconds" : 280,
+  "filePath" : "C:\\Users\\facos\\Desktop\\music\\changementdeprogramme.mp3"
+}, {
+  "songId" : 1127,
+  "title" : "Petite piaule",
+  "artistId" : 124,
+  "albumId" : 10049,
+  "genre" : "POP",
+  "durationSeconds" : 225,
+  "filePath" : "C:\\Users\\facos\\Desktop\\music\\petitepiaule.mp3"
+}, {
+  "songId" : 1128,
+  "title" : "Tu sais mon grand",
+  "artistId" : 124,
+  "albumId" : 10049,
+  "genre" : "POP",
+  "durationSeconds" : 240,
+  "filePath" : "C:\\Users\\facos\\Desktop\\music\\tusaismongrand.mp3"
+}, {
+  "songId" : 1132,
+  "title" : "Pourvu",
+  "artistId" : 124,
+  "albumId" : 10050,
+  "genre" : "POP",
+  "durationSeconds" : 230,
+  "filePath" : "C:\\Users\\facos\\Desktop\\music\\pourvu.mp3"
+}, {
+  "songId" : 1133,
+  "title" : "Dans mes poches",
+  "artistId" : 124,
+  "albumId" : 10050,
+  "genre" : "POP",
+  "durationSeconds" : 225,
+  "filePath" : "C:\\Users\\facos\\Desktop\\music\\dansmespoches.mp3"
+}, {
+  "songId" : 1135,
+  "title" : "Victime de la mode",
+  "artistId" : 125,
+  "albumId" : 10051,
+  "genre" : "HIP_HOP",
+  "durationSeconds" : 195,
+  "filePath" : "C:\\Users\\facos\\Desktop\\music\\victimedelamode.mp3"
+}, {
+  "songId" : 1136,
+  "title" : "Les temps changent",
+  "artistId" : 125,
+  "albumId" : 10051,
+  "genre" : "HIP_HOP",
+  "durationSeconds" : 245,
+  "filePath" : "C:\\Users\\facos\\Desktop\\music\\lestempschangent.mp3"
+}, {
+  "songId" : 1137,
+  "title" : "Caroline",
+  "artistId" : 125,
+  "albumId" : 10051,
+  "genre" : "HIP_HOP",
+  "durationSeconds" : 350,
+  "filePath" : "C:\\Users\\facos\\Desktop\\music\\caroline.mp3"
+}, {
+  "songId" : 1140,
+  "title" : "Fuego",
+  "artistId" : 128,
+  "albumId" : 10054,
+  "genre" : "ROCK",
+  "durationSeconds" : 190,
+  "filePath" : "C:\\Users\\facos\\Desktop\\music\\fuego.mp3"
+}, {
+  "songId" : 1141,
+  "title" : "La Camisa Negra",
+  "artistId" : 128,
+  "albumId" : 10055,
+  "genre" : "ROCK",
+  "durationSeconds" : 245,
+  "filePath" : "C:\\Users\\facos\\Desktop\\music\\lacamisanegra.mp3"
+}, {
+  "songId" : 1143,
+  "title" : "Tu Falta De Querer",
+  "artistId" : 129,
+  "albumId" : 10057,
+  "genre" : "POP",
+  "durationSeconds" : 315,
+  "filePath" : "C:\\Users\\facos\\Desktop\\music\\tufaltadequerer.mp3"
+}, {
+  "songId" : 1144,
+  "title" : "Mayonesa",
+  "artistId" : 130,
+  "albumId" : 10058,
+  "genre" : "POP",
+  "durationSeconds" : 260,
+  "filePath" : "C:\\Users\\facos\\Desktop\\music\\mayonesa.mp3"
+}, {
+  "songId" : 1146,
+  "title" : "Victime de la mode",
+  "artistId" : 125,
+  "albumId" : 10051,
+  "genre" : "HIP_HOP",
+  "durationSeconds" : 195,
+  "filePath" : "C:\\Users\\facos\\Desktop\\music\\victimedelamode.mp3"
+}, {
+  "songId" : 1147,
+  "title" : "Les temps changent",
+  "artistId" : 125,
+  "albumId" : 10051,
+  "genre" : "HIP_HOP",
+  "durationSeconds" : 245,
+  "filePath" : "C:\\Users\\facos\\Desktop\\music\\lestempschangent.mp3"
+}, {
+  "songId" : 1148,
+  "title" : "Caroline",
+  "artistId" : 125,
+  "albumId" : 10051,
+  "genre" : "HIP_HOP",
+  "durationSeconds" : 350,
+  "filePath" : "C:\\Users\\facos\\Desktop\\music\\caroline.mp3"
+}, {
+  "songId" : 1149,
+  "title" : "Juice (Breakbot Mix)",
+  "artistId" : 131,
+  "albumId" : 10059,
+  "genre" : "HIP_HOP",
+  "durationSeconds" : 195,
+  "filePath" : "C:\\Users\\facos\\Desktop\\music\\juicebreakbotmix.mp3"
+}, {
+  "songId" : 1150,
+  "title" : "Palco",
+  "artistId" : 132,
+  "albumId" : 10060,
+  "genre" : "POP",
+  "durationSeconds" : 270,
+  "filePath" : "C:\\Users\\facos\\Desktop\\music\\palco.mp3"
+} ]

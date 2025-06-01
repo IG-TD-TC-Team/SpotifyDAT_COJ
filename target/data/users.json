@@ -1,0 +1,48 @@
+[ {
+  "userID" : 1,
+  "username" : "julcor",
+  "email" : "juliocortes14@gmail.com",
+  "password" : "b43206bb030355e10e4b57108dc726310d9450b76d6f8b9c108d7d001945556a",
+  "firstName" : "Julio",
+  "lastName" : "Cortés",
+  "dateOfBirth" : null,
+  "accountCreationDate" : 1748698403198,
+  "subscriptionPlan" : {
+    "type" : "FreePlan",
+    "type" : "FREE",
+    "maxQuality" : 128,
+    "deviceLimit" : 1
+  },
+  "subscriptionInfo" : {
+    "startDate" : 1748698403199,
+    "endDate" : null,
+    "lastBillingDate" : 1748698403199,
+    "paymentMethod" : null,
+    "autoRenew" : true,
+    "price" : 0.0
+  },
+  "followedUsersIDs" : [ ],
+  "followersIDs" : [ ],
+  "library" : {
+    "userID" : 1,
+    "playlists" : [ {
+      "name" : "Favorites",
+      "songs" : [ ],
+      "ownerID" : 1,
+      "playlistID" : 0,
+      "likedByUsers" : [ ],
+      "publiclyShareable" : false,
+      "sharedWith" : [ ]
+    } ]
+  },
+  "defaultPlaylist" : {
+    "name" : "Favorites",
+    "songs" : [ ],
+    "ownerID" : 1,
+    "playlistID" : 0,
+    "likedByUsers" : [ ],
+    "publiclyShareable" : false,
+    "sharedWith" : [ ]
+  },
+  "active" : true
+} ]

@@ -9,16 +9,38 @@ import user.User;
 import java.util.List;
 
 /**
- * Factory for creating repository instances.
- * This factory centralizes access to all repositories in the application.
- * Since repositories implement the singleton pattern, this factory returns
- * the singleton instances.
+ * Factory for creating and providing access to repository instances.
+ *
+ * This class follows both the Factory and Singleton patterns:
+ * - Factory pattern: Creates and configures appropriate repository instances
+ * - Singleton pattern: Ensures consistent repository access throughout the application
+ *
+ * The RepositoryFactory centralizes repository creation and configuration, especially:
+ * - Configuring caching strategies for different entity types
+ * - Creating appropriate repository wrappers
+ * - Ensuring single instances of repositories are used application-wide
+ *
+ * This factory acts as a dependency provider in the application's dependency injection
+ * approach, allowing other components to obtain repository references without
+ * creating direct dependencies on concrete implementations.
+ *
  */
 public class RepositoryFactory {
 
+    /**
+     * The singleton instance of the factory.
+     */
     private static RepositoryFactory instance;
+
+    /**
+     * Flag indicating whether the factory has been initialized.
+     */
     private static boolean isInitialized = false;
 
+    /**
+     * Private constructor to enforce the Singleton pattern.
+     * Performs one-time initialization when first instantiated.
+     */
     // Private constructor to prevent instantiation
     private RepositoryFactory() {
         if (!isInitialized) {
@@ -26,12 +48,19 @@ public class RepositoryFactory {
         }
     }
 
+    /**
+     * Gets the singleton instance of RepositoryFactory.
+     * Creates the instance if it doesn't exist yet.
+     *
+     * @return The singleton instance of RepositoryFactory
+     */
     public static synchronized RepositoryFactory getInstance() {
         if (instance == null) {
             instance = new RepositoryFactory();
         }
         return instance;
     }
+
     /**
      * Gets the UserRepository singleton instance.
      *

@@ -39,6 +39,14 @@ public class ArtistRepository extends JsonRepository<Artist> implements ArtistRe
         return instance;
     }
 
+    /**
+     * Finds artists by name (first name, last name, or full name).
+     * Performs a case-insensitive search across first name, last name, and
+     * combined full name to find matching artists.
+     *
+     * @param name The name to search for in artist names
+     * @return A list of artists whose first name, last name, or full name matches the search term
+     */
     @Override
     public List<Artist> findByName(String name) {
         return findAll().stream()
@@ -49,6 +57,13 @@ public class ArtistRepository extends JsonRepository<Artist> implements ArtistRe
                 .collect(Collectors.toList());
     }
 
+    /**
+     * Finds artists by their country of birth.
+     * Performs a case-insensitive search to find artists from the specified country.
+     *
+     * @param country The country of birth to search for
+     * @return A list of artists from the specified country
+     */
     @Override
     public List<Artist> findByCountry(String country) {
         return findAll().stream()
@@ -56,6 +71,16 @@ public class ArtistRepository extends JsonRepository<Artist> implements ArtistRe
                 .collect(Collectors.toList());
     }
 
+    /**
+     * Adds a song to an artist's song list.
+     * Retrieves the artist by ID, adds the song to their songs list if not already present,
+     * and persists the updated artist.
+     *
+     * @param artistId The ID of the artist to update
+     * @param songId The ID of the song to add
+     * @return true if the artist was found and updated or if the song was already in the artist's list,
+     *         false if the artist wasn't found
+     */
     @Override
     public boolean addSongToArtist(int artistId, int songId) {
         Optional<Artist> artistOpt = findById(artistId);
@@ -79,6 +104,16 @@ public class ArtistRepository extends JsonRepository<Artist> implements ArtistRe
         return false; // Artist not found
     }
 
+    /**
+     * Removes a song from an artist's song list.
+     * Retrieves the artist by ID, removes the song from their songs list if present,
+     * and persists the updated artist.
+     *
+     * @param artistId The ID of the artist to update
+     * @param songId The ID of the song to remove
+     * @return true if the artist was found and the song was removed and the update was successful,
+     *         false if the artist wasn't found, had no songs, or the song wasn't in the list
+     */
     @Override
     public boolean removeSongFromArtist(int artistId, int songId) {
         Optional<Artist> artistOpt = findById(artistId);

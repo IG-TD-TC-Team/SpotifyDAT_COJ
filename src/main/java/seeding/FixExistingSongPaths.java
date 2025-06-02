@@ -8,8 +8,21 @@ import songsAndArtists.Song;
 import java.io.File;
 import java.util.List;
 
+/**
+ * Utility class to fix and standardize file paths for existing songs in the database.
+ * This class scans all songs in the repository, generates sanitized file paths based on
+ * song titles, updates the database records, and optionally renames the actual files on disk.
+ *
+ * This is useful for maintaining consistency in file paths and ensuring proper
+ * file naming conventions are followed throughout the system.
+ */
 public class FixExistingSongPaths {
 
+    /**
+     * Main method to execute the song path fixing process.
+     *
+     * @param args Command line arguments (not used)
+     */
     public static void main(String[] args) {
         System.out.println("Starting to fix song file paths...");
 
@@ -55,11 +68,24 @@ public class FixExistingSongPaths {
         System.out.println("Renamed " + renamedCount + " physical files.");
     }
 
+    /**
+     * Generates a full sanitized file path for a song based on its title.
+     *
+     * @param title The song title to use for the file name
+     * @return A sanitized file path suitable for storage
+     */
     private static String generateSanitizedPath(String title) {
         String sanitized = sanitizeFileName(title);
         return "C:\\Users\\facos\\Desktop\\music\\" + sanitized + ".mp3";
     }
 
+    /**
+     * Sanitizes a file name by removing or replacing problematic characters.
+     * This ensures the file name will work across different systems and protocols.
+     *
+     * @param fileName The original file name
+     * @return A sanitized file name safe for use in file paths
+     */
     private static String sanitizeFileName(String fileName) {
         String sanitized = fileName.toLowerCase();
 

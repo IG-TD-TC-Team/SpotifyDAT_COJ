@@ -1,6 +1,7 @@
 package factory;
 
 import persistence.interfaces.UserRepositoryInterface;
+import services.playlistServices.PlaylistService;
 import user.*;
 import user.security.PasswordHasher;
 import user.security.SHA256Hasher;
@@ -31,16 +32,30 @@ public class UserFactory {
     private final PasswordHasher passwordHasher;
 
     /**
+     * Playlist factory for creating playlists.
+     */
+    private final PlaylistFactory playlistFactory;
+
+    /**
+     * Playlist service for playlist operations.
+     */
+    private final PlaylistService playlistService;
+
+    /**
      * Private constructor initializing repositories through RepositoryFactory.
      */
     private UserFactory() {
         this.userRepository = RepositoryFactory.getInstance().getUserRepository();
         this.passwordHasher = new SHA256Hasher(); //default
+        this.playlistFactory = PlaylistFactory.getInstance();
+        this.playlistService = PlaylistService.getInstance();
     }
 
     public UserFactory(UserRepositoryInterface userRepository, PasswordHasher passwordHasher) {
         this.userRepository = userRepository;
         this.passwordHasher = passwordHasher;
+        this.playlistFactory = PlaylistFactory.getInstance();
+        this.playlistService = PlaylistService.getInstance();
     }
 
     /**
@@ -92,10 +107,30 @@ public class UserFactory {
         // Save user
         User savedUser = userRepository.save(user);
 
+        createDefaultPlaylistForUser(savedUser);
+
         System.out.println("Created user → ID=" + savedUser.getUserID()
                 + ", username=" + savedUser.getUsername());
 
         return savedUser;
+    }
+
+    /**
+     * Creates a default playlist for a user and ensures it's saved to the repository.
+     *
+     * @param user The user to create the default playlist for
+     */
+    private void createDefaultPlaylistForUser(User user) {
+        try {
+            // Create default "Favorites" playlist using PlaylistFactory
+            playlistFactory.createPlaylist("Favorites", user.getUserID());
+
+            System.out.println("Created default playlist 'Favorites' for user → ID=" + user.getUserID()
+                    + ", username=" + user.getUsername());
+        } catch (Exception e) {
+            System.err.println("Error creating default playlist for user " + user.getUserID() + ": " + e.getMessage());
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -151,6 +186,8 @@ public class UserFactory {
 
         // Save user
         User savedUser = userRepository.save(user);
+
+        createDefaultPlaylistForUser(savedUser);
 
         System.out.println("Created user → ID=" + savedUser.getUserID()
                 + ", username=" + savedUser.getUsername()

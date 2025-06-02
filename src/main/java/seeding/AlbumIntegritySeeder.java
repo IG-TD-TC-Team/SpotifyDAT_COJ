@@ -15,9 +15,25 @@ import java.util.stream.Collectors;
  */
 public class AlbumIntegritySeeder {
 
+    /**
+     * Repository for accessing and modifying album data.
+     * Used to retrieve all albums and delete orphaned ones.
+     */
     private final AlbumRepository albumRepo;
+
+    /**
+     * Repository for accessing song data.
+     * Used to determine which albums are referenced by songs.
+     */
     private final SongRepository  songRepo;
 
+    /**
+     * Constructs a new AlbumIntegritySeeder with the necessary repositories.
+     *
+     * Initializes the seeder with instances of the album and song repositories
+     * obtained through their respective singleton patterns.
+     *
+     */
     public AlbumIntegritySeeder() {
         this.albumRepo = AlbumRepository.getInstance();
         this.songRepo  = SongRepository.getInstance();

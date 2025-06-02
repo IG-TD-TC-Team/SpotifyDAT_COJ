@@ -15,9 +15,25 @@ import java.util.stream.Collectors;
  */
 public class ArtistIntegritySeeder {
 
+    /**
+     * Repository for accessing and modifying artist data.
+     * Used to retrieve all artists and delete orphaned ones.
+     */
     private final ArtistRepository artistRepo;
+
+    /**
+     * Repository for accessing song data.
+     * Used to determine which artists are referenced by songs.
+     */
     private final SongRepository   songRepo;
 
+    /**
+     * Constructs a new ArtistIntegritySeeder with the necessary repositories.
+     *
+     * Initializes the seeder with instances of the artist and song repositories
+     * obtained through their respective singleton patterns.
+     *
+     */
     public ArtistIntegritySeeder() {
         this.artistRepo = ArtistRepository.getInstance();
         this.songRepo   = SongRepository.getInstance();

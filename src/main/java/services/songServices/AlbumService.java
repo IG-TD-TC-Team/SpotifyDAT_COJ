@@ -126,6 +126,85 @@ public class AlbumService {
         return new ArrayList<>(albumsCache); // Return a copy to prevent external modification
     }
 
+    /**
+     * Searches for albums by title using flexible matching strategies.
+     * This method employs multiple strategies to find matching albums:
+     * 1. Exact match (case-insensitive)
+     * 2. Contains match (case-insensitive)
+     * 3. Fuzzy match (normalized strings)
+     *
+     * @param title The title to search for
+     * @return A list of matching albums ordered by relevance
+     */
+    public List<Album> searchAlbumsByTitle(String title) {
+        ensureCacheIsLoaded();
+
+        if (title == null || title.trim().isEmpty()) {
+            return new ArrayList<>();
+        }
+
+        List<Album> exactMatches = new ArrayList<>();
+        List<Album> containsMatches = new ArrayList<>();
+        List<Album> fuzzyMatches = new ArrayList<>();
+
+        String normalizedQuery = normalizeString(title);
+
+        for (Album album : albumsCache) {
+            if (album.getTitle() == null) continue;
+
+            // Exact match (case-insensitive)
+            if (album.getTitle().equalsIgnoreCase(title)) {
+                exactMatches.add(album);
+                continue;
+            }
+
+            // Contains match (case-insensitive)
+            if (album.getTitle().toLowerCase().contains(title.toLowerCase())) {
+                containsMatches.add(album);
+                continue;
+            }
+
+            // Fuzzy match
+            String normalizedTitle = normalizeString(album.getTitle());
+            if (normalizedTitle.contains(normalizedQuery)) {
+                fuzzyMatches.add(album);
+            }
+        }
+
+        // Combine results, prioritizing exact matches, then contains matches, then fuzzy matches
+        List<Album> results = new ArrayList<>(exactMatches);
+        results.addAll(containsMatches);
+        results.addAll(fuzzyMatches);
+
+        return results;
+    }
+
+    /**
+     * Helper method to normalize a string for fuzzy matching.
+     */
+    private String normalizeString(String input) {
+        if (input == null) return "";
+
+        // Convert to lowercase
+        String result = input.toLowerCase();
+
+        // Remove special characters
+        result = result.replaceAll("[^a-z0-9\\s]", "");
+
+        // Replace multiple spaces with a single space
+        result = result.replaceAll("\\s+", " ");
+
+        // Remove accents (simplified approach)
+        result = result.replace("á", "a")
+                .replace("é", "e")
+                .replace("í", "i")
+                .replace("ó", "o")
+                .replace("ú", "u")
+                .replace("ñ", "n");
+
+        return result.trim();
+    }
+
     /// ---------------------- ALBUM UPDATE ----------------- ///
     /**
      * Adds a song to an album.

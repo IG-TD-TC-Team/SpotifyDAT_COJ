@@ -1,10 +1,17 @@
-// Create src/cache/CacheWarmer.java
 package cache;
 
 import factory.RepositoryFactory;
+import persistence.interfaces.PlaylistRepositoryInterface;
 import persistence.interfaces.SongRepositoryInterface;
+import services.playlistServices.PlaylistService;
+import services.songServices.AlbumService;
+import services.songServices.ArtistService;
 import services.songServices.SongService;
+import songsAndArtists.Album;
+import songsAndArtists.Artist;
 import songsAndArtists.Song;
+import songsOrganisation.Playlist;
+
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Executors;
@@ -55,10 +62,20 @@ public class CacheWarmer {
             warmSongCache();
         });
 
-        // For later use, here add others
+        CompletableFuture<Void> playlistWarmup = CompletableFuture.runAsync(() -> {
+            warmPlaylistCache();
+        });
+
+        CompletableFuture<Void> albumWarmup = CompletableFuture.runAsync(() -> {
+            warmAlbumCache();
+        });
+
+        CompletableFuture<Void> artistWarmup = CompletableFuture.runAsync(() -> {
+            warmArtistCache();
+        });
 
         // Wait for all warmups to complete
-        CompletableFuture.allOf(songWarmup).join();
+        CompletableFuture.allOf(songWarmup, playlistWarmup, albumWarmup, artistWarmup).join();
 
         long duration = System.currentTimeMillis() - startTime;
         System.out.println("Cache warming completed in " + duration + "ms");
@@ -89,6 +106,78 @@ public class CacheWarmer {
     }
 
     /**
+     * Warms the playlist cache by loading all playlists from the repository.
+     * This method uses the PlaylistService to load all playlists, which will populate
+     * the underlying cache for future queries.
+     */
+    private static void warmPlaylistCache() {
+        try {
+            PlaylistService playlistService = PlaylistService.getInstance();
+
+            System.out.println("Warming playlist cache...");
+            long startTime = System.currentTimeMillis();
+
+            // Pre-load all playlists
+            List<Playlist> allPlaylists = playlistService.getAllPlaylists();
+
+            long duration = System.currentTimeMillis() - startTime;
+            System.out.println("Loaded " + allPlaylists.size() + " playlists into cache in " + duration + "ms");
+
+        } catch (Exception e) {
+            System.err.println("Error warming playlist cache: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Warms the album cache by loading all albums from the repository.
+     * This method uses the AlbumService to load all albums, which will populate
+     * the underlying cache for future queries.
+     */
+    private static void warmAlbumCache() {
+        try {
+            AlbumService albumService = AlbumService.getInstance();
+
+            System.out.println("Warming album cache...");
+            long startTime = System.currentTimeMillis();
+
+            // Pre-load all albums
+            List<Album> allAlbums = albumService.getAllAlbums();
+
+            long duration = System.currentTimeMillis() - startTime;
+            System.out.println("Loaded " + allAlbums.size() + " albums into cache in " + duration + "ms");
+
+        } catch (Exception e) {
+            System.err.println("Error warming album cache: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Warms the artist cache by loading all artists from the repository.
+     * This method uses the ArtistService to load all artists, which will populate
+     * the underlying cache for future queries.
+     */
+    private static void warmArtistCache() {
+        try {
+            ArtistService artistService = ArtistService.getInstance();
+
+            System.out.println("Warming artist cache...");
+            long startTime = System.currentTimeMillis();
+
+            // Pre-load all artists
+            List<Artist> allArtists = artistService.getAllArtists();
+
+            long duration = System.currentTimeMillis() - startTime;
+            System.out.println("Loaded " + allArtists.size() + " artists into cache in " + duration + "ms");
+
+        } catch (Exception e) {
+            System.err.println("Error warming artist cache: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
+    /**
      * Schedules periodic cache refresh at the specified interval.
      * This method uses a ScheduledExecutorService to run cache warming
      * operations at regular intervals, ensuring the cache data remains fresh.
@@ -109,7 +198,7 @@ public class CacheWarmer {
      * This method provides a way to selectively warm a specific cache
      * rather than warming all caches.
      *
-     * @param cacheName The name of the cache to warm (e.g., "song", "artist")
+     * @param cacheName The name of the cache to warm (e.g., "song", "artist", "playlist")
      */
     public void warmCache(String cacheName) {
         System.out.println("Warming cache: " + cacheName);
@@ -118,7 +207,15 @@ public class CacheWarmer {
             case "song":
                 warmSongCache();
                 break;
-            // Add other caches as needed
+            case "playlist":
+                warmPlaylistCache();
+                break;
+            case "album":
+                warmAlbumCache();
+                break;
+            case "artist":
+                warmArtistCache();
+                break;
             default:
                 System.out.println("Unknown cache: " + cacheName);
         }

@@ -3,7 +3,10 @@ package factory;
 import cache.*;
 import persistence.*;
 import persistence.interfaces.*;
+import songsAndArtists.Album;
+import songsAndArtists.Artist;
 import songsAndArtists.Song;
+import songsOrganisation.Playlist;
 import user.User;
 
 import java.util.List;
@@ -104,30 +107,62 @@ public class RepositoryFactory {
     }
 
     /**
-     * Gets a new ArtistRepository instance.
+     * Gets a new ArtistRepository instance with caching applied.
      *
-     * @return An ArtistRepository instance
+     * @return An ArtistRepositoryInterface instance
      */
     public ArtistRepositoryInterface getArtistRepository() {
-        return ArtistRepository.getInstance();
+        // Create base repository
+        ArtistRepository baseArtistRepo = ArtistRepository.getInstance();
+
+        // Create cache strategy for artists (in-memory for better performance)
+        CachingStrategy<Artist> artistCache = new InMemoryCacheStrategy<>();
+
+        // Wrap with caching
+        CachedRepository<Artist> cachedArtistRepo = new CachedRepository<>(baseArtistRepo, artistCache,
+                artist -> "artist_" + artist.getArtistID());
+
+        // Return as ArtistRepositoryInterface with the wrapper
+        return new CachedArtistRepositoryWrapper(cachedArtistRepo, baseArtistRepo);
     }
 
     /**
-     * Gets a new AlbumRepository instance.
+     * Gets a new AlbumRepository instance with caching applied.
      *
-     * @return An AlbumRepository instance
+     * @return An AlbumRepositoryInterface instance
      */
     public AlbumRepositoryInterface getAlbumRepository() {
-        return AlbumRepository.getInstance();
+        // Create base repository
+        AlbumRepository baseAlbumRepo = AlbumRepository.getInstance();
+
+        // Create cache strategy for albums (in-memory for better performance)
+        CachingStrategy<Album> albumCache = new InMemoryCacheStrategy<>();
+
+        // Wrap with caching
+        CachedRepository<Album> cachedAlbumRepo = new CachedRepository<>(baseAlbumRepo, albumCache,
+                album -> "album_" + album.getId());
+
+        // Return as AlbumRepositoryInterface with the wrapper
+        return new CachedAlbumRepositoryWrapper(cachedAlbumRepo, baseAlbumRepo);
     }
 
     /**
-     * Gets a new PlaylistRepository instance.
+     * Gets a new PlaylistRepository instance with caching applied.
      *
-     * @return A PlaylistRepository instance
+     * @return A PlaylistRepositoryInterface instance
      */
     public PlaylistRepositoryInterface getPlaylistRepository() {
-        return PlaylistRepository.getInstance();
-    }
+        // Create base repository
+        PlaylistRepository basePlaylistRepo = PlaylistRepository.getInstance();
 
+        // Create cache strategy for playlists (in-memory for better performance)
+        CachingStrategy<Playlist> playlistCache = new InMemoryCacheStrategy<>();
+
+        // Wrap with caching
+        CachedRepository<Playlist> cachedPlaylistRepo = new CachedRepository<>(basePlaylistRepo, playlistCache,
+                playlist -> "playlist_" + playlist.getPlaylistID());
+
+        // Return as PlaylistRepositoryInterface with the wrapper
+        return new CachedPlaylistRepositoryWrapper(cachedPlaylistRepo, basePlaylistRepo);
+    }
 }

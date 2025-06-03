@@ -21,7 +21,8 @@ public class PlaylistManagementCommandProcessor extends AbstractProcessor {
     private final PlaylistFactory playlistFactory = PlaylistFactory.getInstance();
     private final SongService songService = SongService.getInstance();
     private final PlaylistRepositoryInterface playlistRepository = RepositoryFactory.getInstance().getPlaylistRepository();
-    private final SongInPlaylistService songInPlaylistService = SongInPlaylistService.getInstance(playlistRepository);
+    // Update this line to use the parameterless getInstance() method
+    private final SongInPlaylistService songInPlaylistService = SongInPlaylistService.getInstance();
     private final AuthorizationService authorizationService = AuthorizationService.getInstance();
 
     @Override

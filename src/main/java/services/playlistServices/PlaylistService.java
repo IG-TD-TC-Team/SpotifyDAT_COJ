@@ -1,6 +1,5 @@
 package services.playlistServices;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import factory.PlaylistFactory;
 import factory.RepositoryFactory;
 import persistence.PlaylistRepository;
@@ -34,20 +33,20 @@ public class PlaylistService {
     /**
      * Cache of all playlists for faster retrieval.
      */
-    private List<Playlist> playlists;
+    private List<Playlist> playlistsCache;
 
-
-
+    /**
+     * Flag to track if the cache is initialized
+     */
+    private boolean cacheInitialized = false;
 
     /**
      * Private constructor to prevent external instantiation.
      * Initializes the PlaylistRepository instance and loads all playlists.
      */
     private PlaylistService() {
-
-
         this.playlistRepository = RepositoryFactory.getInstance().getPlaylistRepository();
-        refreshCache();
+        initializeCache();
     }
 
     /**
@@ -62,15 +61,36 @@ public class PlaylistService {
         return instance;
     }
 
+    /**
+     * Initializes the cache by loading all playlists from the repository.
+     * This is called once during service initialization.
+     */
+    private void initializeCache() {
+        this.playlistsCache = playlistRepository.findAll();
+        this.cacheInitialized = true;
+        System.out.println("PlaylistService initialized with " + playlistsCache.size() + " playlists");
+    }
+
     /// ------------------- CACHE REFRESH ----------------- ///
     /**
      * Refreshes the in-memory cache with the latest data from repositories.
      * Call this after playlists are created, updated, or deleted.
      */
     public void refreshCache() {
-        playlists = playlistRepository.findAll();
+        this.playlistsCache = playlistRepository.findAll();
+        System.out.println("PlaylistService cache refreshed with " + playlistsCache.size() + " playlists");
     }
 
+    /**
+     * Ensures the cache is loaded before accessing it.
+     * This method is called by all methods that access the cache to ensure
+     * it is initialized and up-to-date.
+     */
+    private void ensureCacheIsLoaded() {
+        if (!cacheInitialized) {
+            initializeCache();
+        }
+    }
 
     /// ------------------ PLAYLIST RETRIEVAL ----------------- ///
     /**
@@ -79,8 +99,8 @@ public class PlaylistService {
      * @return a list of all playlists
      */
     public List<Playlist> getAllPlaylists() {
-        refreshCache();
-        return playlists;
+        ensureCacheIsLoaded();
+        return new ArrayList<>(playlistsCache); // Return a copy to prevent external modification
     }
 
     /**
@@ -90,11 +110,9 @@ public class PlaylistService {
      * @return the playlist with the specified ID, or null if not found
      */
     public Playlist getPlaylistById(int playlistId) {
-        refreshCache();
-        return playlists.stream()
-                .filter(playlist -> playlist.getPlaylistID() == playlistId)
-                .findFirst()
-                .orElse(null);
+        // Use the repository directly for single item lookup to leverage its caching
+        Optional<Playlist> playlist = playlistRepository.findById(playlistId);
+        return playlist.orElse(null);
     }
 
     /**
@@ -105,11 +123,9 @@ public class PlaylistService {
      * @return the playlist with the specified name and owner ID, or null if not found
      */
     public Playlist getPlaylistByNameAndOwner(String name, int ownerID) {
-        refreshCache();
-        return playlists.stream()
-                .filter(playlist -> playlist.getName().equals(name) && playlist.getOwnerID() == ownerID)
-                .findFirst()
-                .orElse(null);
+        // Use the repository directly for specialized queries
+        Optional<Playlist> playlist = playlistRepository.findByNameAndOwnerID(name, ownerID);
+        return playlist.orElse(null);
     }
 
     /**
@@ -119,10 +135,8 @@ public class PlaylistService {
      * @return a list of playlists owned by the specified user
      */
     public List<Playlist> getPlaylistsByOwner(int ownerID) {
-        refreshCache();
-        return playlists.stream()
-                .filter(playlist -> playlist.getOwnerID() == ownerID)
-                .collect(Collectors.toList());
+        // Use the repository directly for specialized queries
+        return playlistRepository.findByOwnerID(ownerID);
     }
 
     /**
@@ -133,11 +147,9 @@ public class PlaylistService {
      * @return a list of playlists owned by the specified user
      */
     public List<Playlist> getPlaylistsByOwnerUsername(String username, UserService userService) {
-
         User user = userService.getUserByUsername(username);
         return getPlaylistsByOwner(user.getUserID());
     }
-
 
     /**
      * Retrieves all playlists that contain a specific song.
@@ -146,8 +158,8 @@ public class PlaylistService {
      * @return a list of playlists containing the specified song
      */
     public List<Playlist> getPlaylistsContainingSong(int songId) {
-        refreshCache();
-        return playlists.stream()
+        ensureCacheIsLoaded();
+        return playlistsCache.stream()
                 .filter(playlist -> playlist.getSongs().stream()
                         .anyMatch(song -> song.getSongId() == songId))
                 .collect(Collectors.toList());
@@ -160,8 +172,8 @@ public class PlaylistService {
      * @return a list of playlists containing songs of the specified genre
      */
     public List<Playlist> getPlaylistsContainingGenre(Genre genre) {
-        refreshCache();
-        return playlists.stream()
+        ensureCacheIsLoaded();
+        return playlistsCache.stream()
                 .filter(playlist -> playlist.getSongs().stream()
                         .anyMatch(song -> song.getGenre() == genre))
                 .collect(Collectors.toList());
@@ -174,8 +186,8 @@ public class PlaylistService {
      * @return a list of playlists containing songs by the specified artist
      */
     public List<Playlist> getPlaylistsContainingArtist(int artistId) {
-        refreshCache();
-        return playlists.stream()
+        ensureCacheIsLoaded();
+        return playlistsCache.stream()
                 .filter(playlist -> playlist.getSongs().stream()
                         .anyMatch(song -> song.getArtistId() == artistId))
                 .collect(Collectors.toList());
@@ -188,8 +200,8 @@ public class PlaylistService {
      * @return a list of playlists with names containing the specified text
      */
     public List<Playlist> searchPlaylistsByName(String nameText) {
-        refreshCache();
-        return playlists.stream()
+        ensureCacheIsLoaded();
+        return playlistsCache.stream()
                 .filter(playlist -> playlist.getName().toLowerCase().contains(nameText.toLowerCase()))
                 .collect(Collectors.toList());
     }
@@ -215,12 +227,9 @@ public class PlaylistService {
      * @return a list of playlists shared with the specified user
      */
     public List<Playlist> getPlaylistsSharedWithUser(int userId) {
-        refreshCache();
-        return playlists.stream()
-                .filter(playlist -> playlist.getSharedWith().contains(userId))
-                .collect(Collectors.toList());
+        // Use the repository directly for specialized queries
+        return playlistRepository.findSharedWithUserByID(userId);
     }
-
 
     /// ---------------PLAYLIST UPDATE ----------------- ///
     /**
@@ -245,13 +254,16 @@ public class PlaylistService {
         }
 
         playlist.setName(newName);
-        playlistRepository.update(playlist);
+        boolean updated = playlistRepository.update(playlist).isPresent();
 
-        return true;
+        if (updated) {
+            refreshCache(); // Refresh the cache after successful update
+        }
+
+        return updated;
     }
 
     /// ------------------ PLAYLIST DELETION ----------------- ///
-
 
     /**
      * Deletes a playlist.
@@ -276,5 +288,4 @@ public class PlaylistService {
 
         return result;
     }
-
 }

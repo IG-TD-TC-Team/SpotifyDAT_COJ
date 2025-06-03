@@ -1,6 +1,5 @@
 package services.playlistServices;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import factory.RepositoryFactory;
 import persistence.interfaces.PlaylistRepositoryInterface;
 import songsAndArtists.Song;
@@ -11,6 +10,11 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Service class for managing songs within playlists.
+ * This class provides operations for adding, removing, and manipulating songs
+ * within playlist structures while maintaining cache coherence.
+ */
 public class SongInPlaylistService {
 
     /**
@@ -24,42 +28,50 @@ public class SongInPlaylistService {
     private final PlaylistRepositoryInterface playlistRepository;
 
     /**
-     * Cache of all playlists for faster retrieval.
+     * Reference to the PlaylistService for coordinated cache management.
      */
-    private List<Playlist> playlists;
-
-    private PlaylistService playlistService;
+    private final PlaylistService playlistService;
 
     /**
      * Private constructor to prevent external instantiation.
-     * Initializes the PlaylistRepository instance and loads all playlists.
+     * Initializes the PlaylistRepository instance.
      */
-    private SongInPlaylistService(PlaylistRepositoryInterface playlistRepository) {
+    private SongInPlaylistService() {
         this.playlistRepository = RepositoryFactory.getInstance().getPlaylistRepository();
         this.playlistService = PlaylistService.getInstance();
-        refreshCache();
     }
+
     /**
      * Returns the single instance of SongInPlaylistService, creating it if it doesn't exist.
      *
      * @return the singleton instance of SongInPlaylistService
      */
-    public static synchronized SongInPlaylistService getInstance(PlaylistRepositoryInterface playlistRepository) {
+    public static synchronized SongInPlaylistService getInstance() {
         if (instance == null) {
-            instance = new SongInPlaylistService(playlistRepository);
+            instance = new SongInPlaylistService();
         }
         return instance;
     }
 
-    /// -----------------CACHE REFRESH ----------------- ///
     /**
-     * Refreshes the cache of playlists by retrieving all playlists from the repository.
+     * @deprecated Use getInstance() without parameters instead.
+     * This method exists only for backward compatibility and will be removed in future versions.
+     *
+     * @param playlistRepository The playlist repository (ignored)
+     * @return The singleton instance of SongInPlaylistService
      */
-    public void refreshCache() {
-        this.playlists = playlistRepository.findAll();
+    @Deprecated
+    public static synchronized SongInPlaylistService getInstance(PlaylistRepositoryInterface playlistRepository) {
+        return getInstance();
     }
 
-
+    /**
+     * Refreshes the cache to ensure consistency with the repository data.
+     * This delegates to the PlaylistService to refresh its cache.
+     */
+    public void refreshCache() {
+        playlistService.refreshCache();
+    }
 
     /// ------------------------SONG IN PLAYLIST RETRIEVAL ----------------- ///
     /**
@@ -70,113 +82,115 @@ public class SongInPlaylistService {
      * @return true if the song is in the playlist, false otherwise
      */
     public boolean isInPlaylist(int playlistId, int songId) {
-       refreshCache();
-       Playlist playlistTemp = playlistService.getPlaylistById(playlistId);
+        Playlist playlist = playlistService.getPlaylistById(playlistId);
 
-       if (playlistTemp == null) {
+        if (playlist == null) {
             return false;
         }
-        return playlistTemp.getSongs().stream()
+        return playlist.getSongs().stream()
                 .anyMatch(song -> song.getSongId() == songId);
-
     }
-
 
     /**
      * Gets the first song in the playlist.
      * @return The first song or null if the playlist is empty.
      */
-    @JsonIgnore // Prevent serialization of this method as a property
     public Song getFirstSongInPlaylist(int playlistId) {
-        refreshCache();
         Playlist playlist = playlistService.getPlaylistById(playlistId);
 
         if (playlist == null || playlist.getSongs().isEmpty()) {
             return null;
         }
         return playlist.getSongs().getFirst();
-
-
     }
 
     /**
      * Gets the last song in the playlist.
      * @return The last song or null if the playlist is empty.
      */
-    @JsonIgnore // Prevent serialization of this method as a property
     public Song getLastSongInPlaylist(int playlistId) {
-        refreshCache();
         Playlist playlist = playlistService.getPlaylistById(playlistId);
 
         if (playlist == null || playlist.getSongs().isEmpty()) {
             return null;
         }
         return playlist.getSongs().getLast();
-
     }
-
 
     /// ----------------------- SONG IN PLAYLIST CREATION ----------------- ///
     /**
      * Adds a song to the playlist.
-     * @param song The song to be added.
+     * @param playlistId The ID of the playlist
+     * @param song The song to be added
+     * @return The updated playlist, or null if the operation failed
      */
     public Playlist addSongToPlaylist(int playlistId, Song song) {
-        refreshCache();
         Playlist playlist = playlistService.getPlaylistById(playlistId);
+
+        if (playlist == null) {
+            return null;
+        }
 
         if (isInPlaylist(playlistId, song.getSongId())) {
             return playlist; // Song already in playlist, no need to add again
         }
 
-        else {
-            LinkedList<Song> songs = playlist.getSongs();
-            /// Add the song to the end of the playlist
-            songs.add(song);
-            playlist.setSongs(songs);
-            playlistRepository.update(playlist);
-            refreshCache();
+        LinkedList<Song> songs = playlist.getSongs();
+        /// Add the song to the end of the playlist
+        songs.add(song);
+        playlist.setSongs(songs);
 
-            return playlist;
+        Optional<Playlist> updated = playlistRepository.update(playlist);
+        if (updated.isPresent()) {
+            refreshCache(); // Refresh the cache after successful update
+            return updated.get();
         }
-    }
 
+        return null;
+    }
 
     /**
      * Adds a song to the beginning of the playlist.
-     * @param song The song to be added at the beginning.
+     * @param playlistId The ID of the playlist
+     * @param song The song to be added at the beginning
+     * @return The updated playlist, or null if the operation failed
      */
     public Playlist addSongToBeginningToPlaylist(int playlistId, Song song) {
-        refreshCache();
         Playlist playlist = playlistService.getPlaylistById(playlistId);
+
+        if (playlist == null) {
+            return null;
+        }
 
         if (isInPlaylist(playlistId, song.getSongId())) {
             return playlist; // Song already in playlist, no need to add again
         }
-        else {
 
-            LinkedList<Song> songs = playlist.getSongs();
-            /// Add the song to the beginning of the playlist
-            songs.addFirst(song);
-            playlist.setSongs(songs);
-            playlistRepository.update(playlist);
-            refreshCache();
+        LinkedList<Song> songs = playlist.getSongs();
+        /// Add the song to the beginning of the playlist
+        songs.addFirst(song);
+        playlist.setSongs(songs);
 
-            return playlist;
+        Optional<Playlist> updated = playlistRepository.update(playlist);
+        if (updated.isPresent()) {
+            refreshCache(); // Refresh the cache after successful update
+            return updated.get();
         }
+
+        return null;
     }
 
-/// ----------------------- SONG IN PLAYLIST DELETION ----------------- ///
-
+    /// ----------------------- SONG IN PLAYLIST DELETION ----------------- ///
 
     /**
      * Removes a song from the playlist.
-     * @param song The song to be removed.
+     * @param playlistId The ID of the playlist
+     * @param song The song to be removed
+     * @return The updated playlist, or null if the operation failed
      */
     public Playlist removeSongFromPlaylist(int playlistId, Song song) {
         System.out.println("DEBUG: Attempting to remove song '" + song.getTitle() + "' (ID: " + song.getSongId() + ") from playlist " + playlistId);
 
-        refreshCache();
         Playlist playlist = playlistService.getPlaylistById(playlistId);
         if (playlist == null) {
             System.err.println("DEBUG: Playlist not found with ID: " + playlistId);
@@ -200,7 +214,7 @@ public class SongInPlaylistService {
             return null;
         }
 
-        // FIXED: Create a new LinkedList and remove by ID comparison, not object reference
+        // Create a new LinkedList and remove by ID comparison, not object reference
         LinkedList<Song> songs = new LinkedList<>(playlist.getSongs());
         boolean removed = songs.removeIf(s -> s.getSongId() == song.getSongId());
 
@@ -210,7 +224,7 @@ public class SongInPlaylistService {
 
             Optional<Playlist> updated = playlistRepository.update(playlist);
             if (updated.isPresent()) {
-                refreshCache();
+                refreshCache(); // Refresh the cache after successful update
                 System.out.println("DEBUG: Successfully removed song from playlist");
                 return updated.get();
             } else {
@@ -225,52 +239,61 @@ public class SongInPlaylistService {
 
     /**
      * Removes the first song from the playlist.
-     * @return The removed song or null if the playlist is empty.
+     * @param playlistId The ID of the playlist
+     * @return The updated playlist, or null if the operation failed
      */
     public Playlist removeFirstSongFromPlaylist(int playlistId) {
-        refreshCache();
         Playlist playlist = playlistService.getPlaylistById(playlistId);
         if (playlist == null || playlist.getSongs().isEmpty()) {
             return null;
         }
+
         LinkedList<Song> songs = playlist.getSongs();
-        Song removedSong = songs.removeFirst();
+        songs.removeFirst();
         playlist.setSongs(songs);
-        playlistRepository.update(playlist);
-        refreshCache();
-        return playlist; // Song removed successfully
+
+        Optional<Playlist> updated = playlistRepository.update(playlist);
+        if (updated.isPresent()) {
+            refreshCache(); // Refresh the cache after successful update
+            return updated.get();
+        }
+
+        return null;
     }
 
     /**
      * Removes the last song from the playlist.
-     * @return The removed song or null if the playlist is empty.
+     * @param playlistId The ID of the playlist
+     * @return The updated playlist, or null if the operation failed
      */
     public Playlist removeLastSongFromPlaylist(int playlistId) {
-        refreshCache();
         Playlist playlist = playlistService.getPlaylistById(playlistId);
         if (playlist == null || playlist.getSongs().isEmpty()) {
             return null;
         }
+
         LinkedList<Song> songs = playlist.getSongs();
-        Song removedSong = songs.removeLast();
+        songs.removeLast();
         playlist.setSongs(songs);
-        playlistRepository.update(playlist);
-        refreshCache();
-        return playlist; // Song removed successfully
 
+        Optional<Playlist> updated = playlistRepository.update(playlist);
+        if (updated.isPresent()) {
+            refreshCache(); // Refresh the cache after successful update
+            return updated.get();
+        }
+
+        return null;
     }
-
-
 
     /// ----------------------- SONG IN PLAYLIST UPDATE ----------------- ///
 
     /**
      * Moves a song to the next position in the playlist.
-     * @param song The song to be moved.
+     * @param playlistId The ID of the playlist
+     * @param song The song to be moved
      * @return true if the song was moved, false otherwise
      */
     public boolean moveNext(int playlistId, Song song) {
-        refreshCache();
         Playlist playlist = playlistService.getPlaylistById(playlistId);
 
         if (playlist == null) {
@@ -286,19 +309,22 @@ public class SongInPlaylistService {
 
         Collections.swap(songs, index, index + 1);
         playlist.setSongs(songs);
-        playlistRepository.update(playlist);
-        refreshCache();
 
-        return true;
+        boolean updated = playlistRepository.update(playlist).isPresent();
+        if (updated) {
+            refreshCache(); // Refresh the cache after successful update
+        }
+
+        return updated;
     }
 
     /**
      * Moves a song to the previous position in the playlist.
-     * @param song The song to be moved.
+     * @param playlistId The ID of the playlist
+     * @param song The song to be moved
      * @return true if the song was moved, false otherwise
      */
     public boolean movePrevious(int playlistId, Song song) {
-        refreshCache();
         Playlist playlist = playlistService.getPlaylistById(playlistId);
 
         if (playlist == null) {
@@ -314,11 +340,12 @@ public class SongInPlaylistService {
 
         Collections.swap(songs, index, index - 1);
         playlist.setSongs(songs);
-        playlistRepository.update(playlist);
-        refreshCache();
 
-        return true;
+        boolean updated = playlistRepository.update(playlist).isPresent();
+        if (updated) {
+            refreshCache(); // Refresh the cache after successful update
+        }
+
+        return updated;
     }
-
-
 }

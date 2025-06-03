@@ -29,8 +29,12 @@ public class AlbumService {
     /**
      * List of albums.
      */
-    private List<Album> albums;
+    private List<Album> albumsCache;
 
+    /**
+     * Flag to track if the cache is initialized
+     */
+    private boolean cacheInitialized = false;
 
     /**
      * Private constructor to prevent external instantiation.
@@ -38,9 +42,30 @@ public class AlbumService {
      */
     private AlbumService() {
         albumRepository = RepositoryFactory.getInstance().getAlbumRepository();
-        albums = new ArrayList<>();
-        albums = albumRepository.findAll();
+        initializeCache();
     }
+
+    /**
+     * Initializes the cache by loading all albums from the repository.
+     * This is called once during service initialization.
+     */
+    private void initializeCache() {
+        this.albumsCache = albumRepository.findAll();
+        this.cacheInitialized = true;
+        System.out.println("AlbumService initialized with " + albumsCache.size() + " albums");
+    }
+
+    /**
+     * Ensures the cache is loaded before accessing it.
+     * This method is called by methods that access the cache to ensure
+     * it is initialized and up-to-date.
+     */
+    private void ensureCacheIsLoaded() {
+        if (!cacheInitialized) {
+            initializeCache();
+        }
+    }
+
     /**
      * Returns the singleton instance of AlbumService.
      * @return The singleton instance of AlbumService.
@@ -59,13 +84,8 @@ public class AlbumService {
      * @return The album with the specified ID, or null if not found.
      */
     public Album getAlbumById(int albumId) {
-        refreshCache();
-        for (Album album : albums) {
-            if (album.getId() == albumId) {
-                return album;
-            }
-        }
-        return null;// Album not found
+        // Use the repository directly to leverage its caching
+        return albumRepository.findById(albumId).orElse(null);
     }
 
     /**
@@ -74,11 +94,11 @@ public class AlbumService {
      * @return A list of albums matching the title.
      */
     public List<Album> getAlbumsByTitle(String title) {
-        refreshCache();
+        ensureCacheIsLoaded();
         List<Album> result = new ArrayList<>();
         String searchTerm = title.toLowerCase();
 
-        for (Album album : albums) {
+        for (Album album : albumsCache) {
             if (album.getTitle() != null && album.getTitle().toLowerCase().contains(searchTerm)) {
                 result.add(album);
             }
@@ -93,7 +113,7 @@ public class AlbumService {
      * @return A list of albums by the specified artist.
      */
     public List<Album> getAlbumsByArtist(int artistId) {
-        refreshCache();
+        // Use the repository for specialized queries
         return albumRepository.findByArtistId(artistId);
     }
 
@@ -102,8 +122,8 @@ public class AlbumService {
      * @return A list of all albums.
      */
     public List<Album> getAllAlbums() {
-        refreshCache();
-        return albums;
+        ensureCacheIsLoaded();
+        return new ArrayList<>(albumsCache); // Return a copy to prevent external modification
     }
 
     /// ---------------------- ALBUM UPDATE ----------------- ///
@@ -115,7 +135,11 @@ public class AlbumService {
      * @return true if successful, false otherwise
      */
     public boolean addSongToAlbum(int songId, int albumId) {
-        return albumRepository.addSongToAlbum(albumId, songId);
+        boolean result = albumRepository.addSongToAlbum(albumId, songId);
+        if (result) {
+            refreshCache(); // Refresh the cache after successful update
+        }
+        return result;
     }
 
     /**
@@ -126,17 +150,20 @@ public class AlbumService {
      * @return true if successful, false otherwise
      */
     public boolean removeSongFromAlbum(int songId, int albumId) {
-        return albumRepository.removeSongFromAlbum(albumId, songId);
+        boolean result = albumRepository.removeSongFromAlbum(albumId, songId);
+        if (result) {
+            refreshCache(); // Refresh the cache after successful update
+        }
+        return result;
     }
 
-
-    /// ----------------------CAHE REFRESH----------------- ///
+    /// ----------------------CACHE REFRESH----------------- ///
     /**
      * Refreshes the in-memory cache with the latest data from repositories.
      * Call this after entities are created, updated, or deleted.
      */
     public void refreshCache() {
-        albums = albumRepository.findAll();
+        albumsCache = albumRepository.findAll();
+        System.out.println("AlbumService cache refreshed with " + albumsCache.size() + " albums");
     }
-
 }

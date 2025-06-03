@@ -7,18 +7,46 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-
+/**
+ * Service responsible for retrieving and managing song data.
+ *
+ * This class provides a centralized access point for song-related operations,
+ * including searching and retrieving songs by various criteria such as ID, title,
+ * artist, album, and genre. It implements the Singleton pattern to ensure a single
+ * instance manages song data throughout the application.
+ *
+ * The service abstracts the underlying repository interactions and provides
+ * business logic for advanced search operations, handling the relationships between
+ * songs and other entities like artists and albums.
+ */
 public class SongService {
+    /**
+     * Singleton instance of the SongService.
+     * Ensures only one instance exists throughout the application.
+     */
     // Singleton instance
     private static SongService instance;
 
+    /**
+     * Repository interface for accessing song data.
+     * Follows the Repository pattern to abstract data access operations.
+     */
     // Repositories
     private final SongRepositoryInterface songRepository;
 
+    /**
+     * References to related services for accessing artist and album data.
+     * These fields use lazy initialization to prevent circular dependencies.
+     */
     // Services for related entities
     private ArtistService artistService;
     private AlbumService albumService;
 
+    /**
+     * Private constructor following the Singleton pattern.
+     * Initializes the song repository but defers service dependencies to avoid
+     * circular references.
+     */
     private SongService() {
         // Initialize repositories
         songRepository = RepositoryFactory.getInstance().getSongRepository();
@@ -27,6 +55,13 @@ public class SongService {
         // We don't initialize these in the field declaration to prevent circular dependency
     }
 
+    /**
+     * Lazily initializes and returns the ArtistService instance.
+     * This method helps prevent circular dependencies by deferring initialization
+     * until the service is actually needed.
+     *
+     * @return The singleton instance of ArtistService
+     */
     // Lazy initialization of related services to avoid circular dependency
     private ArtistService getArtistService() {
         if (artistService == null) {
@@ -35,6 +70,13 @@ public class SongService {
         return artistService;
     }
 
+    /**
+     * Lazily initializes and returns the AlbumService instance.
+     * This method helps prevent circular dependencies by deferring initialization
+     * until the service is actually needed.
+     *
+     * @return The singleton instance of AlbumService
+     */
     private AlbumService getAlbumService() {
         if (albumService == null) {
             albumService = AlbumService.getInstance();
@@ -42,6 +84,13 @@ public class SongService {
         return albumService;
     }
 
+    /**
+     * Returns the singleton instance of SongService.
+     * Creates the instance if it doesn't exist yet, following the lazy initialization
+     * approach to the Singleton pattern.
+     *
+     * @return The singleton instance of SongService
+     */
     /// Public method to get the singleton instance
     public static synchronized SongService getInstance() {
         if (instance == null) {
@@ -73,7 +122,7 @@ public class SongService {
      * Retrieves songs by title with flexible matching.
      * First tries exact match, then partial match if no exact matches found.
      * @param songTitle The title of the song to search for.
-     * @return A list of songs matching the title.
+     * @return A list of songs matching the title exactly or partially.
      */
     public List<Song> getSongsByTitleFlexible(String songTitle) {
         // First try exact match (case-insensitive)
@@ -96,6 +145,9 @@ public class SongService {
 
     /**
      * Enhanced search that also removes common punctuation and extra spaces
+     *
+     * @param songTitle The title of the song to search for.
+     * @return A list of songs matching the normalized title.
      */
     public List<Song> getSongsByTitleAdvanced(String songTitle) {
         String normalizedSearchTerm = normalizeTitle(songTitle);
@@ -112,6 +164,8 @@ public class SongService {
 
     /**
      * Normalizes title by removing extra spaces, punctuation, and converting to lowercase
+     * @param title The title to normalize.
+     * @return The normalized title string, or an empty string if the input is null.
      */
     private String normalizeTitle(String title) {
         if (title == null) return "";

@@ -5,9 +5,34 @@ import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.util.Base64;
 
+/**
+ * Implementation of the PasswordHasher interface using the SHA-256 hashing algorithm.
+ *
+ * This class provides both simple and salted password hashing functionality, as well as
+ * verification of passwords against previously generated hashes. It uses SHA-256, which
+ * is a cryptographic hash function that is reasonably secure for password storage when
+ * properly implemented with salting.
+ *
+ */
 public class SHA256Hasher implements PasswordHasher {
+    /**
+     * The length of the random salt in bytes.
+     * A 16-byte salt provides a good balance between security and storage efficiency.
+     */
     private static final int SALT_LENGTH = 16;
 
+    /**
+     * Hashes a password using SHA-256 without salt.
+     *
+     * This method produces a 64-character hexadecimal string representing the hash.
+     * Since this method does not use salt, identical passwords will produce identical
+     * hashes, making it vulnerable to rainbow table attacks.
+     *
+     * @param password The plaintext password to hash
+     * @return A 64-character hexadecimal string representing the hash
+     * @throws RuntimeException If the SHA-256 algorithm is not available in the
+     *         current Java environment
+     */
     @Override
     public String hash(String password) {
         try {
@@ -21,6 +46,16 @@ public class SHA256Hasher implements PasswordHasher {
         }
     }
 
+    /**
+     * Hashes a password using SHA-256 with a randomly generated salt.
+     *
+     * The resulting string contains both the salt and hash, allowing for later
+     * verification without storing the salt separately.
+     *
+     * @param password The plaintext password to hash
+     * @return A Base64-encoded string containing both the salt and hash
+     * @throws RuntimeException If the SHA-256 algorithm is not available
+     */
     @Override
     public String hashWithSalt(String password) {
         try {
@@ -46,6 +81,17 @@ public class SHA256Hasher implements PasswordHasher {
         }
     }
 
+    /**
+     * Verifies that a plaintext password matches a previously hashed password.
+     *
+     * The method automatically detects the format and uses the appropriate verification
+     * technique. For salted hashes, it extracts the salt from the stored hash, rehashes
+     * the password with that salt, and compares the result.
+     *
+     * @param rawPassword The plaintext password to verify
+     * @param hashedPassword The previously hashed password (may include salt)
+     * @return true if the password matches the hash, false otherwise
+     */
     @Override
     public boolean verify(String rawPassword, String hashedPassword) {
         // For simple hex hashes (no salt)

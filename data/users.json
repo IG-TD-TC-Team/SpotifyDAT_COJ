@@ -1881,4 +1881,98 @@
     "publiclyShareable" : false
   },
   "active" : true
+}, {
+  "userID" : 47,
+  "username" : "newuser",
+  "email" : "user@test.ch",
+  "password" : "03ac674216f3e15c761ee1a5e255f067953623c8b388b4459e13f978d7c846f4",
+  "firstName" : "user",
+  "lastName" : "test",
+  "dateOfBirth" : null,
+  "accountCreationDate" : 1748894005501,
+  "subscriptionPlan" : {
+    "type" : "FreePlan",
+    "type" : "FREE",
+    "maxQuality" : 128,
+    "deviceLimit" : 1
+  },
+  "subscriptionInfo" : {
+    "startDate" : 1748894005501,
+    "endDate" : null,
+    "lastBillingDate" : 1748894005501,
+    "paymentMethod" : null,
+    "autoRenew" : true,
+    "price" : 0.0
+  },
+  "followedUsersIDs" : [ ],
+  "followersIDs" : [ ],
+  "library" : {
+    "userID" : 47,
+    "playlists" : [ {
+      "name" : "Favorites",
+      "songs" : [ ],
+      "ownerID" : 47,
+      "playlistID" : 0,
+      "likedByUsers" : [ ],
+      "sharedWith" : [ ],
+      "publiclyShareable" : false
+    } ]
+  },
+  "defaultPlaylist" : {
+    "name" : "Favorites",
+    "songs" : [ ],
+    "ownerID" : 47,
+    "playlistID" : 0,
+    "likedByUsers" : [ ],
+    "sharedWith" : [ ],
+    "publiclyShareable" : false
+  },
+  "active" : true
+}, {
+  "userID" : 48,
+  "username" : "bianca24",
+  "email" : "bianca@test.ch",
+  "password" : "03ac674216f3e15c761ee1a5e255f067953623c8b388b4459e13f978d7c846f4",
+  "firstName" : "bianca",
+  "lastName" : "chien",
+  "dateOfBirth" : null,
+  "accountCreationDate" : 1748898537223,
+  "subscriptionPlan" : {
+    "type" : "FreePlan",
+    "type" : "FREE",
+    "maxQuality" : 128,
+    "deviceLimit" : 1
+  },
+  "subscriptionInfo" : {
+    "startDate" : 1748898537223,
+    "endDate" : null,
+    "lastBillingDate" : 1748898537223,
+    "paymentMethod" : null,
+    "autoRenew" : true,
+    "price" : 0.0
+  },
+  "followedUsersIDs" : [ ],
+  "followersIDs" : [ ],
+  "library" : {
+    "userID" : 48,
+    "playlists" : [ {
+      "name" : "Favorites",
+      "songs" : [ ],
+      "ownerID" : 48,
+      "playlistID" : 0,
+      "likedByUsers" : [ ],
+      "sharedWith" : [ ],
+      "publiclyShareable" : false
+    } ]
+  },
+  "defaultPlaylist" : {
+    "name" : "Favorites",
+    "songs" : [ ],
+    "ownerID" : 48,
+    "playlistID" : 0,
+    "likedByUsers" : [ ],
+    "sharedWith" : [ ],
+    "publiclyShareable" : false
+  },
+  "active" : true
 } ]

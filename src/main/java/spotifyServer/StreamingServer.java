@@ -27,12 +27,29 @@ public class StreamingServer {
     private final ConcurrentHashMap<Integer, Song> preparedSongs = new ConcurrentHashMap<>();
     private final ConcurrentHashMap<Integer, LinkedList<Song>> preparedPlaylists = new ConcurrentHashMap<>();
 
+    /**
+     * Private constructor enforcing the Singleton pattern.
+     * Initializes the server with the specified port and thread pool,
+     * and obtains a reference to the PlaybackService singleton.
+     *
+     * @param port The port on which the streaming server will listen
+     * @param threadPool The executor service for handling client connections
+     */
     private StreamingServer(int port, ExecutorService threadPool) {
         this.port = port;
         this.threadPool = threadPool;
         this.playbackService = PlaybackService.getInstance();
     }
 
+    /**
+     * Returns the singleton instance of StreamingServer, creating it if it doesn't exist.
+     * This method must be called with port and thread pool parameters before any other
+     * methods can be used.
+     *
+     * @param port The port on which the streaming server will listen
+     * @param threadPool The executor service for handling client connections
+     * @return The singleton instance of StreamingServer
+     */
     public static synchronized StreamingServer getInstance(int port, ExecutorService threadPool) {
         if (instance == null) {
             instance = new StreamingServer(port, threadPool);
@@ -40,6 +57,13 @@ public class StreamingServer {
         return instance;
     }
 
+    /**
+     * Returns the existing singleton instance of StreamingServer.
+     * This method must be called after getInstance(port, threadPool) has been called at least once.
+     *
+     * @return The singleton instance of StreamingServer
+     * @throws IllegalStateException if the server has not been initialized with port and thread pool
+     */
     public static StreamingServer getInstance() {
         if (instance == null) {
             throw new IllegalStateException("StreamingServer not initialized. Call getInstance(port, threadPool) first.");
@@ -48,7 +72,11 @@ public class StreamingServer {
     }
 
     /**
-     * Prepares a single song for streaming.
+     * Prepares a single song for streaming by adding it to the prepared songs cache.
+     * This method is typically called before a client connects to stream the song,
+     * allowing the server to pre-load the song information.
+     *
+     * @param song The song to prepare for streaming
      */
     public void prepareForStreaming(Song song) {
         if (song != null) {
@@ -58,7 +86,12 @@ public class StreamingServer {
     }
 
     /**
-     * Prepares a playlist for streaming.
+     * Prepares a playlist for streaming by adding it to the prepared playlists cache.
+     * This method creates a deep copy of the songs list to prevent modifications
+     * to the original playlist affecting the streaming session.
+     *
+     * @param playlist The playlist to prepare for streaming
+     * @param songs The ordered list of songs in the playlist
      */
     public void prepareForPlaylistStreaming(Playlist playlist, LinkedList<Song> songs) {
         if (playlist != null && songs != null) {
@@ -68,7 +101,10 @@ public class StreamingServer {
     }
 
     /**
-     * Starts the streaming server on the dedicated streaming port.
+     * Starts the streaming server, accepting client connections on the configured port.
+     * Each connection is handled in a separate thread from the thread pool.
+     *
+     * This method blocks until the server is stopped or encounters an error.
      */
     public void start() {
         try {
@@ -98,7 +134,9 @@ public class StreamingServer {
     }
 
     /**
-     * Inner class to handle individual streaming connections.
+     * Stops the streaming server, closing the server socket and clearing all caches.
+     * This method should be called when shutting down the application or when
+     * the server needs to be restarted.
      */
     private class StreamingHandler implements Runnable {
         private final Socket clientSocket;
@@ -143,6 +181,13 @@ public class StreamingServer {
             }
         }
 
+        /**
+         * Handles streaming of a single song to the client.
+         *
+         *
+         * @param request The STREAM request string from the client
+         * @param out The PrintWriter for sending text responses to the client
+         */
         private void handleSongStream(String request, PrintWriter out) {
             // Updated format: STREAM|filepath|title|artistId|userId|playlistId
             String[] parts = request.split("\\|", 6);
@@ -184,6 +229,13 @@ public class StreamingServer {
             }
         }
 
+        /**
+         * Handles streaming of an entire playlist to the client.
+         *
+         *
+         * @param request The PLAYLIST request string from the client
+         * @param out The PrintWriter for sending text responses to the client
+         */
         private void handlePlaylistStream(String request, PrintWriter out) {
             // Format: PLAYLIST|playlistId|userId
             String[] parts = request.split("\\|", 3);
@@ -231,6 +283,11 @@ public class StreamingServer {
     }
 
     /// -----------------------STOP------------------------------------- ///
+    /**
+     * Stops the streaming server, closing the server socket and clearing all caches.
+     * This method should be called when shutting down the application or when
+     * the server needs to be restarted.
+     */
     public void stop() {
         running = false;
         if (serverSocket != null && !serverSocket.isClosed()) {

@@ -102,4 +102,84 @@
   "likedByUsers" : [ ],
   "sharedWith" : [ ],
   "publiclyShareable" : false
+}, {
+  "name" : "Favorites",
+  "songs" : [ ],
+  "ownerID" : 47,
+  "playlistID" : 17,
+  "likedByUsers" : [ ],
+  "sharedWith" : [ ],
+  "publiclyShareable" : false
+}, {
+  "name" : "Favorites",
+  "songs" : [ ],
+  "ownerID" : 48,
+  "playlistID" : 18,
+  "likedByUsers" : [ ],
+  "sharedWith" : [ ],
+  "publiclyShareable" : false
+}, {
+  "name" : "lundi",
+  "songs" : [ {
+    "songId" : 1141,
+    "title" : "La Camisa Negra",
+    "artistId" : 128,
+    "albumId" : 10055,
+    "genre" : "ROCK",
+    "durationSeconds" : 245,
+    "filePath" : "C:\\Users\\facos\\Desktop\\music\\lacamisanegra.mp3"
+  }, {
+    "songId" : 1086,
+    "title" : "Vamos a Jugar",
+    "artistId" : 119,
+    "albumId" : 10042,
+    "genre" : "POP",
+    "durationSeconds" : 150,
+    "filePath" : "C:\\Users\\facos\\Desktop\\music\\vamosajugar.mp3"
+  } ],
+  "ownerID" : 48,
+  "playlistID" : 19,
+  "likedByUsers" : [ ],
+  "sharedWith" : [ ],
+  "publiclyShareable" : false
+}, {
+  "name" : "mardi",
+  "songs" : [ {
+    "songId" : 1141,
+    "title" : "La Camisa Negra",
+    "artistId" : 128,
+    "albumId" : 10055,
+    "genre" : "ROCK",
+    "durationSeconds" : 245,
+    "filePath" : "C:\\Users\\facos\\Desktop\\music\\lacamisanegra.mp3"
+  }, {
+    "songId" : 1140,
+    "title" : "Fuego",
+    "artistId" : 128,
+    "albumId" : 10054,
+    "genre" : "ROCK",
+    "durationSeconds" : 190,
+    "filePath" : "C:\\Users\\facos\\Desktop\\music\\fuego.mp3"
+  } ],
+  "ownerID" : 43,
+  "playlistID" : 20,
+  "likedByUsers" : [ ],
+  "sharedWith" : [ ],
+  "publiclyShareable" : false
+}, {
+  "name" : "mardimidi",
+  "songs" : [ {
+    "songId" : 1140,
+    "title" : "Fuego",
+    "artistId" : 128,
+    "albumId" : 10054,
+    "genre" : "ROCK",
+    "durationSeconds" : 190,
+    "filePath" : "C:\\Users\\facos\\Desktop\\music\\fuego.mp3"
+  } ],
+  "ownerID" : 43,
+  "playlistID" : 21,
+  "likedByUsers" : [ ],
+  "sharedWith" : [ ],
+  "publiclyShareable" : false
 } ]

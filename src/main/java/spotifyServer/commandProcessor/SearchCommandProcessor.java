@@ -187,6 +187,15 @@ public class SearchCommandProcessor extends AbstractProcessor {
         return response.toString();
     }
 
+    /**
+     * Searches for albums based on a user query string with multiple matching strategies.
+     * Results are prioritized in the order of matching strategy, with exact matches appearing first,
+     * followed by contains matches, and finally fuzzy matches.
+     *
+     * @param query The search query string provided by the user
+     * @return A formatted string containing the search results, including album IDs, titles,
+     *         artist names, and song counts, or a message indicating no albums were found
+     */
     private String searchAlbums(String query) {
         // Log the search query for debugging
         System.out.println("DEBUG: Searching for album with query: '" + query + "'");

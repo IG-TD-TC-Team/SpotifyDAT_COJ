@@ -71,6 +71,9 @@ public class User {
         this.library = new Library(userID, playlists);
     }
 
+    /**
+     * Getters and setters
+     */
     // Standard getters and setters
     public int getUserID() { return userID; }
 

@@ -23,6 +23,9 @@ public class CommandContext {
 
     private CommandContext() {}
 
+    /**
+     * Returns the singleton instance, creating it if needed.
+     */
     public static synchronized CommandContext getInstance() {
         if (instance == null) {
             instance = new CommandContext();
@@ -175,6 +178,9 @@ public class CommandContext {
         public String getIpAddress() { return ipAddress; }
         public long getConnectionTime() { return connectionTime; }
 
+        /**
+         * Checks if this connection has valid authentication credentials.
+         */
         public boolean isAuthenticated() {
             return sessionId != null && userId != null;
         }

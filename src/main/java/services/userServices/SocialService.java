@@ -140,7 +140,13 @@ public class SocialService {
     }
 
     // Private helper methods
-
+    /**
+     * Retrieves a user by their ID, throwing an exception if not found.
+     *
+     * @param userId The unique identifier of the user to retrieve
+     * @return The User object with the specified ID
+     * @throws UserNotFoundException If no user exists with the specified ID
+     */
     private User getUserById(int userId) {
         User user = UserService.getInstance().getUserById(userId);
         if (user == null) {
@@ -149,6 +155,14 @@ public class SocialService {
         return user;
     }
 
+    /**
+     * Converts a list of user IDs to a list of User objects, skipping invalid IDs.
+     *
+     *
+     * @param userIds A list of user identifiers to convert to User objects
+     * @return A list containing the valid User objects corresponding to the input IDs,
+     *         excluding any IDs that could not be resolved to valid users
+     */
     private List<User> convertIdsToUsers(List<Integer> userIds) {
         List<User> users = new ArrayList<>();
         for (Integer id : userIds) {

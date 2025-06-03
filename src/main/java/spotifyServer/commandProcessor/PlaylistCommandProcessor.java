@@ -10,16 +10,39 @@ import services.userServices.AuthorizationService;
 
 import java.util.LinkedList;
 
+/**
+ * Processor that handles playlist streaming commands.
+ * This class is part of the Chain of Responsibility pattern and processes
+ * commands related to playing playlists through the streaming server.
+ *
+ * The processor supports various command formats for playlist identification:
+ * - By ID: "playlist 123" or "playlist id 123"
+ * - By name: "playlist My Playlist" or "playlist name My Playlist"
+ *
+ * Upon successful processing, it returns streaming instructions to the client.
+ */
 public class PlaylistCommandProcessor extends AbstractProcessor {
     private final PlaylistService playlistService = PlaylistService.getInstance();
     private final StreamingServer streamingServer;
     private final AuthorizationService authorizationService = AuthorizationService.getInstance();
     private final PlaybackService playbackService = PlaybackService.getInstance();
 
+    /**
+     * Constructs a new PlaylistCommandProcessor.
+     * Initializes the StreamingServer instance required for playlist streaming.
+     */
     public PlaylistCommandProcessor() {
         this.streamingServer = StreamingServer.getInstance();
     }
 
+    /**
+     * Processes playlist commands and either handles them or passes them to the next processor.
+     * This method parses playlist commands, validates authentication and authorization,
+     * and prepares the streaming server for playback if all checks pass.
+     *
+     * @param command The command string from the client
+     * @return A response string containing streaming instructions or an error message
+     */
     @Override
     public String processCommand(String command) {
         if (command.toLowerCase().startsWith("playlist ")) {
@@ -154,6 +177,9 @@ public class PlaylistCommandProcessor extends AbstractProcessor {
     /**
      * Helper method to parse command while preserving quoted strings.
      * This allows playlist names with spaces to be properly handled.
+     *
+     * @param command The command string to parse
+     * @return An array of parsed command parts
      */
     private String[] parseCommandWithQuotes(String command) {
         java.util.List<String> parts = new java.util.ArrayList<>();

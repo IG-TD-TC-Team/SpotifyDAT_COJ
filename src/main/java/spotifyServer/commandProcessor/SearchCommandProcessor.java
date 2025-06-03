@@ -8,6 +8,7 @@ import songsAndArtists.Artist;
 import songsAndArtists.Genre;
 import songsAndArtists.Song;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -46,7 +47,8 @@ public class SearchCommandProcessor extends AbstractProcessor {
             return "ERROR: Authentication required. Please login first.";
         }
 
-        String[] parts = command.split(" ", 3);
+        // Parse the command while preserving quoted strings
+        String[] parts = parseCommandWithQuotes(command);
 
         if (parts.length < 3) {
             return "Error: Invalid search format. Usage: search <type> <query>";
@@ -54,6 +56,11 @@ public class SearchCommandProcessor extends AbstractProcessor {
 
         String type = parts[1].toLowerCase();
         String query = parts[2];
+
+        // Remove quotes if present
+        if (query.startsWith("\"") && query.endsWith("\"")) {
+            query = query.substring(1, query.length() - 1);
+        }
 
         if (query.isEmpty()) {
             return "Error: Search query cannot be empty";
@@ -76,6 +83,39 @@ public class SearchCommandProcessor extends AbstractProcessor {
             return "ERROR: Search failed: " + e.getMessage();
         }
     }
+
+    /**
+     * Helper method to parse command while preserving quoted strings
+     */
+    private String[] parseCommandWithQuotes(String command) {
+        List<String> parts = new ArrayList<>();
+        boolean inQuotes = false;
+        StringBuilder currentPart = new StringBuilder();
+
+        for (int i = 0; i < command.length(); i++) {
+            char c = command.charAt(i);
+
+            if (c == '"') {
+                inQuotes = !inQuotes;
+                currentPart.append(c);
+            } else if (c == ' ' && !inQuotes) {
+                if (currentPart.length() > 0) {
+                    parts.add(currentPart.toString());
+                    currentPart = new StringBuilder();
+                }
+            } else {
+                currentPart.append(c);
+            }
+        }
+
+        // Add the last part
+        if (currentPart.length() > 0) {
+            parts.add(currentPart.toString());
+        }
+
+        return parts.toArray(new String[0]);
+    }
+
 
     /**
      * Searches for songs by title.
@@ -147,26 +187,57 @@ public class SearchCommandProcessor extends AbstractProcessor {
         return response.toString();
     }
 
-    /**
-     * Searches for albums by title.
-     */
     private String searchAlbums(String query) {
-        // First, make sure we get all albums from the service
+        // Log the search query for debugging
+        System.out.println("DEBUG: Searching for album with query: '" + query + "'");
+
         List<Album> allAlbums = albumService.getAllAlbums();
-        System.out.println("Debug: Found " + allAlbums.size() + " total albums in the system");
+        System.out.println("DEBUG: Found " + allAlbums.size() + " total albums in the system");
 
-        // Filter by matching the query against album titles (case-insensitive)
-        List<Album> albums = allAlbums.stream()
-                .filter(album -> {
-                    if (album.getTitle() == null) return false;
-                    return album.getTitle().toLowerCase().contains(query.toLowerCase());
-                })
-                .collect(Collectors.toList());
+        // Enhanced search logic with multiple strategies:
+        // 1. First try exact match (case-insensitive)
+        // 2. Then try contains match (case-insensitive)
+        // 3. Finally try fuzzy matching (ignoring special characters, etc.)
 
-        System.out.println("Debug: Found " + albums.size() + " albums matching '" + query + "'");
+        List<Album> exactMatches = new ArrayList<>();
+        List<Album> containsMatches = new ArrayList<>();
+        List<Album> fuzzyMatches = new ArrayList<>();
+
+        String normalizedQuery = normalizeString(query);
+
+        for (Album album : allAlbums) {
+            if (album.getTitle() == null) continue;
+
+            // Try exact match (case-insensitive)
+            if (album.getTitle().equalsIgnoreCase(query)) {
+                exactMatches.add(album);
+                continue;
+            }
+
+            // Try contains match (case-insensitive)
+            if (album.getTitle().toLowerCase().contains(query.toLowerCase())) {
+                containsMatches.add(album);
+                continue;
+            }
+
+            // Try fuzzy matching
+            String normalizedTitle = normalizeString(album.getTitle());
+            if (normalizedTitle.contains(normalizedQuery)) {
+                fuzzyMatches.add(album);
+            }
+        }
+
+        // Combine results, prioritizing exact matches, then contains matches, then fuzzy matches
+        List<Album> albums = new ArrayList<>(exactMatches);
+        albums.addAll(containsMatches);
+        albums.addAll(fuzzyMatches);
+
+        System.out.println("DEBUG: Found matches - Exact: " + exactMatches.size()
+                + ", Contains: " + containsMatches.size()
+                + ", Fuzzy: " + fuzzyMatches.size());
 
         if (albums.isEmpty()) {
-            return "No albums found matching: " + query;
+            return "No albums found matching: \"" + query + "\"";
         }
 
         StringBuilder response = new StringBuilder("Albums matching '" + query + "':\n");
@@ -196,6 +267,35 @@ public class SearchCommandProcessor extends AbstractProcessor {
         response.append("\nUse 'listsongs album id <album_id>' to see an album's songs");
 
         return response.toString();
+    }
+
+    /**
+     * Helper method to normalize a string for fuzzy matching:
+     * - Convert to lowercase
+     * - Remove special characters and extra spaces
+     * - Remove accents
+     */
+    private String normalizeString(String input) {
+        if (input == null) return "";
+
+        // Convert to lowercase
+        String result = input.toLowerCase();
+
+        // Remove special characters
+        result = result.replaceAll("[^a-z0-9\\s]", "");
+
+        // Replace multiple spaces with a single space
+        result = result.replaceAll("\\s+", " ");
+
+        // Remove accents (simplified approach)
+        result = result.replace("á", "a")
+                .replace("é", "e")
+                .replace("í", "i")
+                .replace("ó", "o")
+                .replace("ú", "u")
+                .replace("ñ", "n");
+
+        return result.trim();
     }
 
     /**

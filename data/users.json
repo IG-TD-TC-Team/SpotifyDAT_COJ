@@ -139,4 +139,51 @@
     "publiclyShareable" : false
   },
   "active" : true
+}, {
+  "userID" : 50,
+  "username" : "julio",
+  "email" : "julio@io.ch",
+  "password" : "b43206bb030355e10e4b57108dc726310d9450b76d6f8b9c108d7d001945556a",
+  "firstName" : "julio",
+  "lastName" : "cortes",
+  "dateOfBirth" : null,
+  "accountCreationDate" : 1749201826915,
+  "subscriptionPlan" : {
+    "type" : "FreePlan",
+    "type" : "FREE",
+    "maxQuality" : 128,
+    "deviceLimit" : 1
+  },
+  "subscriptionInfo" : {
+    "startDate" : 1749201826915,
+    "endDate" : null,
+    "lastBillingDate" : 1749201826915,
+    "paymentMethod" : null,
+    "autoRenew" : true,
+    "price" : 0.0
+  },
+  "followedUsersIDs" : [ ],
+  "followersIDs" : [ ],
+  "library" : {
+    "userID" : 50,
+    "playlists" : [ {
+      "name" : "Favorites",
+      "songs" : [ ],
+      "ownerID" : 50,
+      "playlistID" : 0,
+      "likedByUsers" : [ ],
+      "sharedWith" : [ ],
+      "publiclyShareable" : false
+    } ]
+  },
+  "defaultPlaylist" : {
+    "name" : "Favorites",
+    "songs" : [ ],
+    "ownerID" : 50,
+    "playlistID" : 0,
+    "likedByUsers" : [ ],
+    "sharedWith" : [ ],
+    "publiclyShareable" : false
+  },
+  "active" : true
 } ]

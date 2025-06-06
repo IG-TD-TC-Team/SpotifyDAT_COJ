@@ -11,8 +11,8 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutorService;
 
 /**
- * Enhanced StreamingServer with better integration with PlaybackService.
- * Handles binary MP3 streaming on a dedicated port.
+ * Enhanced StreamingServer with support for continuous playlist streaming.
+ * Handles both single song streams and continuous playlist streams.
  */
 public class StreamingServer {
     private static StreamingServer instance;
@@ -29,11 +29,6 @@ public class StreamingServer {
 
     /**
      * Private constructor enforcing the Singleton pattern.
-     * Initializes the server with the specified port and thread pool,
-     * and obtains a reference to the PlaybackService singleton.
-     *
-     * @param port The port on which the streaming server will listen
-     * @param threadPool The executor service for handling client connections
      */
     private StreamingServer(int port, ExecutorService threadPool) {
         this.port = port;
@@ -42,13 +37,7 @@ public class StreamingServer {
     }
 
     /**
-     * Returns the singleton instance of StreamingServer, creating it if it doesn't exist.
-     * This method must be called with port and thread pool parameters before any other
-     * methods can be used.
-     *
-     * @param port The port on which the streaming server will listen
-     * @param threadPool The executor service for handling client connections
-     * @return The singleton instance of StreamingServer
+     * Returns the singleton instance of StreamingServer.
      */
     public static synchronized StreamingServer getInstance(int port, ExecutorService threadPool) {
         if (instance == null) {
@@ -59,10 +48,6 @@ public class StreamingServer {
 
     /**
      * Returns the existing singleton instance of StreamingServer.
-     * This method must be called after getInstance(port, threadPool) has been called at least once.
-     *
-     * @return The singleton instance of StreamingServer
-     * @throws IllegalStateException if the server has not been initialized with port and thread pool
      */
     public static StreamingServer getInstance() {
         if (instance == null) {
@@ -72,11 +57,7 @@ public class StreamingServer {
     }
 
     /**
-     * Prepares a single song for streaming by adding it to the prepared songs cache.
-     * This method is typically called before a client connects to stream the song,
-     * allowing the server to pre-load the song information.
-     *
-     * @param song The song to prepare for streaming
+     * Prepares a single song for streaming.
      */
     public void prepareForStreaming(Song song) {
         if (song != null) {
@@ -86,12 +67,7 @@ public class StreamingServer {
     }
 
     /**
-     * Prepares a playlist for streaming by adding it to the prepared playlists cache.
-     * This method creates a deep copy of the songs list to prevent modifications
-     * to the original playlist affecting the streaming session.
-     *
-     * @param playlist The playlist to prepare for streaming
-     * @param songs The ordered list of songs in the playlist
+     * Prepares a playlist for streaming.
      */
     public void prepareForPlaylistStreaming(Playlist playlist, LinkedList<Song> songs) {
         if (playlist != null && songs != null) {
@@ -101,16 +77,13 @@ public class StreamingServer {
     }
 
     /**
-     * Starts the streaming server, accepting client connections on the configured port.
-     * Each connection is handled in a separate thread from the thread pool.
-     *
-     * This method blocks until the server is stopped or encounters an error.
+     * Starts the streaming server.
      */
     public void start() {
         try {
             serverSocket = new ServerSocket(port);
             running = true;
-            System.out.println("Streaming server started on port " + port);
+            System.out.println("Enhanced Streaming server started on port " + port);
 
             while (running) {
                 try {
@@ -118,7 +91,7 @@ public class StreamingServer {
                     System.out.println("New streaming connection from: " + clientSocket.getInetAddress());
 
                     // Handle each streaming connection in a separate thread
-                    threadPool.execute(new StreamingHandler(clientSocket));
+                    threadPool.execute(new EnhancedStreamingHandler(clientSocket));
 
                 } catch (IOException e) {
                     if (running) {
@@ -134,14 +107,12 @@ public class StreamingServer {
     }
 
     /**
-     * Stops the streaming server, closing the server socket and clearing all caches.
-     * This method should be called when shutting down the application or when
-     * the server needs to be restarted.
+     * Enhanced streaming handler that supports both single songs and continuous playlists.
      */
-    private class StreamingHandler implements Runnable {
+    private class EnhancedStreamingHandler implements Runnable {
         private final Socket clientSocket;
 
-        public StreamingHandler(Socket clientSocket) {
+        public EnhancedStreamingHandler(Socket clientSocket) {
             this.clientSocket = clientSocket;
         }
 
@@ -164,8 +135,10 @@ public class StreamingServer {
                     handleSongStream(request, out);
                 } else if (request.startsWith("PLAYLIST|")) {
                     handlePlaylistStream(request, out);
+                } else if (request.startsWith("CONTROL|")) {
+                    handlePlaybackControl(request, out);
                 } else {
-                    out.println("ERROR|Unknown streaming command");
+                    out.println("ERROR|Unknown streaming command: " + request);
                 }
 
             } catch (IOException e) {
@@ -182,16 +155,12 @@ public class StreamingServer {
         }
 
         /**
-         * Handles streaming of a single song to the client.
-         *
-         *
-         * @param request The STREAM request string from the client
-         * @param out The PrintWriter for sending text responses to the client
+         * Handles streaming of a single song.
+         * Format: STREAM|filepath|title|artistId|userId|playlistId
          */
         private void handleSongStream(String request, PrintWriter out) {
-            // Updated format: STREAM|filepath|title|artistId|userId|playlistId
             String[] parts = request.split("\\|", 6);
-            int playlistId = -1; // Default to -1 for non-playlist songs
+            int playlistId = -1;
 
             if (parts.length < 5) {
                 out.println("ERROR|Invalid STREAM format - missing user ID");
@@ -218,26 +187,21 @@ public class StreamingServer {
             System.out.println("Streaming " + title + " for user ID: " + userId +
                     (playlistId > 0 ? " (part of playlist " + playlistId + ")" : ""));
 
-            // Create MusicStreamer and register it with the user ID
+            // Create MusicStreamer and start streaming
             MusicStreamer streamer = new MusicStreamer();
-
-            // Stream the song
             boolean success = streamer.streamAudioFile(filePath, clientSocket, userId, playlistId);
 
             if (!success) {
                 System.err.println("Failed to stream: " + title + " for user: " + userId);
+                out.println("ERROR|Failed to stream song");
             }
         }
 
         /**
-         * Handles streaming of an entire playlist to the client.
-         *
-         *
-         * @param request The PLAYLIST request string from the client
-         * @param out The PrintWriter for sending text responses to the client
+         * Handles streaming of an entire playlist continuously.
+         * Format: PLAYLIST|playlistId|userId
          */
         private void handlePlaylistStream(String request, PrintWriter out) {
-            // Format: PLAYLIST|playlistId|userId
             String[] parts = request.split("\\|", 3);
             if (parts.length < 3) {
                 out.println("ERROR|Invalid PLAYLIST format - missing user ID");
@@ -266,27 +230,84 @@ public class StreamingServer {
             Playlist playlist = playbackService.getCurrentPlaylist(userId);
             String playlistName = playlist != null ? playlist.getName() : "Unknown Playlist";
 
-            System.out.println("Starting playlist: " + playlistName + " for user ID: " + userId);
+            System.out.println("Starting continuous playlist streaming: " + playlistName + " for user ID: " + userId);
             out.println("PLAYLIST_START|" + playlistName + "|" + playlistId);
 
-            // Stream the first song
-            out.println("SONG_START|" + firstSong.getTitle());
-
-            // Create streamer for the first song
+            // Create streamer for continuous playlist streaming
+            // We pass the first song's path, but the streamer will handle the entire playlist
             MusicStreamer streamer = new MusicStreamer();
             boolean success = streamer.streamAudioFile(firstSong.getFilePath(), clientSocket, userId, playlistId);
 
             if (!success) {
-                out.println("ERROR|Failed to stream first song");
+                out.println("ERROR|Failed to start playlist streaming");
+            }
+        }
+
+        /**
+         * Handles playback control commands.
+         * Format: CONTROL|userId|command (where command is PAUSE, RESUME, STOP, NEXT, PREVIOUS)
+         */
+        private void handlePlaybackControl(String request, PrintWriter out) {
+            String[] parts = request.split("\\|", 3);
+            if (parts.length < 3) {
+                out.println("ERROR|Invalid CONTROL format");
+                return;
+            }
+
+            int userId;
+            String command = parts[2];
+
+            try {
+                userId = Integer.parseInt(parts[1]);
+            } catch (NumberFormatException e) {
+                out.println("ERROR|Invalid user ID format");
+                return;
+            }
+
+            // Get the active streamer for this user
+            MusicStreamer streamer = MusicStreamer.getStreamerForUser(userId);
+            if (streamer == null) {
+                out.println("ERROR|No active streaming session for user");
+                return;
+            }
+
+            System.out.println("Processing control command: " + command + " for user: " + userId);
+
+            switch (command.toUpperCase()) {
+                case "PAUSE":
+                    streamer.pause();
+                    out.println("CONTROL_SUCCESS|PAUSED");
+                    break;
+                case "RESUME":
+                    streamer.resume();
+                    out.println("CONTROL_SUCCESS|RESUMED");
+                    break;
+                case "STOP":
+                    streamer.stopStreaming();
+                    out.println("CONTROL_SUCCESS|STOPPED");
+                    break;
+                case "NEXT":
+                    if (streamer.skipToNext()) {
+                        out.println("CONTROL_SUCCESS|NEXT");
+                    } else {
+                        out.println("CONTROL_ERROR|Cannot skip to next");
+                    }
+                    break;
+                case "PREVIOUS":
+                    if (streamer.skipToPrevious()) {
+                        out.println("CONTROL_SUCCESS|PREVIOUS");
+                    } else {
+                        out.println("CONTROL_ERROR|Cannot skip to previous");
+                    }
+                    break;
+                default:
+                    out.println("ERROR|Unknown control command: " + command);
             }
         }
     }
 
-    /// -----------------------STOP------------------------------------- ///
     /**
-     * Stops the streaming server, closing the server socket and clearing all caches.
-     * This method should be called when shutting down the application or when
-     * the server needs to be restarted.
+     * Stops the streaming server.
      */
     public void stop() {
         running = false;
@@ -299,6 +320,6 @@ public class StreamingServer {
         }
         preparedSongs.clear();
         preparedPlaylists.clear();
-        System.out.println("Streaming server stopped");
+        System.out.println("Enhanced streaming server stopped");
     }
 }

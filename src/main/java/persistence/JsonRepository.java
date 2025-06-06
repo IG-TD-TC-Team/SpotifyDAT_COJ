@@ -4,88 +4,155 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import persistence.interfaces.Repository;
 
 import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.nio.file.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.function.Function;
 import java.util.function.ToIntFunction;
 
 /**
  * Abstract implementation of the Repository interface for persisting entities as JSON.
+ * Automatically detects development vs production environment and handles data folder accordingly.
  *
  * @param <T> The domain model type the repository manages
  */
 public abstract class JsonRepository<T> implements Repository<T> {
-    /**
-     * The Class type of T, used by Jackson for serialization/deserialization.
-     * This allows Jackson to correctly convert between JSON and the specific entity type.
-     */
-    // The Class type of T, used by Jackson for serialization/deserialization
     protected final Class<T> entityType;
-
-    /**
-     * The path where the JSON file is stored.
-     * All repository files are stored in a 'data' directory with a specific filename
-     * for each entity type.
-     */
-    // The path where the JSON file is stored
     protected final Path storagePath;
-
-    /**
-     * Jackson's ObjectMapper for converting objects to/from JSON.
-     * This mapper is configured by the JacksonConfig class to handle the
-     * specific serialization needs of the application.
-     */
-    // Jackson's ObjectMapper for converting objects to/from JSON
     protected final ObjectMapper mapper;
-
-    /**
-     * Function to extract the ID from an entity.
-     * This allows the repository to identify entities without knowing
-     * their specific implementation details.
-     */
-    // Function to extract the ID from an entity
     protected final ToIntFunction<T> idExtractor;
 
-    /**
-     * Constructor that initializes the repository.
-     *
-     * @param entityType   The class type of the entities this repository handles
-     * @param filename     The name of the JSON file to store entities
-     * @param idExtractor  A function to extract the ID from an entity
-     * @throws RuntimeException if the repository initialization fails
-     */
+    // Static flag to ensure resource extraction happens only once
+    private static boolean resourcesExtracted = false;
+
     protected JsonRepository(Class<T> entityType, String filename, ToIntFunction<T> idExtractor) {
         this.entityType = entityType;
-        this.storagePath = Paths.get("data", filename);
         this.mapper = JacksonConfig.getConfiguredMapper();
         this.idExtractor = idExtractor;
 
+        // Determine the appropriate data directory
+        Path dataDirectory = determineDataDirectory();
+        this.storagePath = dataDirectory.resolve(filename);
+
         try {
-            // Ensure the parent directory exists
-            Files.createDirectories(storagePath.getParent());
+            // Ensure the data directory exists
+            Files.createDirectories(dataDirectory);
+
+            // Extract resources if running from JAR and not already extracted
+            if (!resourcesExtracted && isRunningFromJar()) {
+                extractDataResources(dataDirectory);
+                resourcesExtracted = true;
+            }
 
             // If the file doesn't exist, create it and initialize with an empty JSON array
             if (!Files.exists(storagePath)) {
                 Files.writeString(storagePath, "[]");
+                System.out.println("Created new JSON file: " + storagePath);
             }
         } catch (IOException e) {
-            throw new RuntimeException("Failed to initialize repository", e);
+            throw new RuntimeException("Failed to initialize repository for " + filename, e);
         }
     }
 
-    /// ------------READ------- ///
     /**
-     * Retrieves all entities from the repository.
-     *
-     * This method reads the entire JSON file and deserializes it into a list of entities.
-     * If any errors occur during reading or deserialization, an empty list is returned
-     * and the error is logged.
-     *
-     *
-     * @return A list of all entities in the repository
+     * Determines the appropriate data directory based on the execution context.
      */
+    private Path determineDataDirectory() {
+        if (isRunningFromJar()) {
+            // Production: Use data folder next to JAR
+            Path jarPath = getJarPath();
+            Path dataDir = jarPath.getParent().resolve("data");
+            System.out.println("Production mode: Using data directory: " + dataDir);
+            return dataDir;
+        } else {
+            // Development: Use data folder in current working directory
+            Path dataDir = Paths.get("data");
+            System.out.println("Development mode: Using data directory: " + dataDir);
+            return dataDir;
+        }
+    }
+
+    /**
+     * Checks if the application is running from a JAR file.
+     */
+    private boolean isRunningFromJar() {
+        try {
+            URI uri = JsonRepository.class.getProtectionDomain().getCodeSource().getLocation().toURI();
+            return uri.toString().endsWith(".jar");
+        } catch (URISyntaxException e) {
+            System.err.println("Warning: Could not determine if running from JAR: " + e.getMessage());
+            return false;
+        }
+    }
+
+    /**
+     * Gets the path to the JAR file.
+     */
+    private Path getJarPath() {
+        try {
+            URI uri = JsonRepository.class.getProtectionDomain().getCodeSource().getLocation().toURI();
+            return Paths.get(uri);
+        } catch (URISyntaxException e) {
+            throw new RuntimeException("Could not determine JAR path", e);
+        }
+    }
+
+    /**
+     * Extracts data resources from JAR to external filesystem.
+     */
+    private void extractDataResources(Path targetDataDirectory) {
+        System.out.println("Extracting data resources from JAR...");
+
+        try {
+            // List of JSON files to extract
+            String[] dataFiles = {
+                    "songs.json",
+                    "artists.json",
+                    "albums.json",
+                    "playlists.json",
+                    "users.json",
+                    "Library.json"
+            };
+
+            for (String filename : dataFiles) {
+                extractResourceFile("data/" + filename, targetDataDirectory.resolve(filename));
+            }
+
+            System.out.println("Successfully extracted data resources to: " + targetDataDirectory);
+        } catch (Exception e) {
+            System.err.println("Warning: Could not extract all data resources: " + e.getMessage());
+            // Don't throw exception - let the application create empty files if needed
+        }
+    }
+
+    /**
+     * Extracts a single resource file from JAR to filesystem.
+     */
+    private void extractResourceFile(String resourcePath, Path targetPath) {
+        try {
+            // Try to read the resource from the classpath
+            var inputStream = getClass().getClassLoader().getResourceAsStream(resourcePath);
+
+            if (inputStream != null) {
+                // Create parent directories if they don't exist
+                Files.createDirectories(targetPath.getParent());
+
+                // Copy the resource to the target location
+                Files.copy(inputStream, targetPath, StandardCopyOption.REPLACE_EXISTING);
+                System.out.println("Extracted: " + resourcePath + " -> " + targetPath);
+                inputStream.close();
+            } else {
+                System.out.println("Resource not found in JAR: " + resourcePath + " (will create empty file if needed)");
+            }
+        } catch (IOException e) {
+            System.err.println("Failed to extract resource " + resourcePath + ": " + e.getMessage());
+        }
+    }
+
+    // ... rest of the methods remain the same ...
+
     @Override
     public List<T> findAll() {
         try {
@@ -93,21 +160,12 @@ public abstract class JsonRepository<T> implements Repository<T> {
             return mapper.readValue(content,
                     mapper.getTypeFactory().constructCollectionType(List.class, entityType));
         } catch (IOException e) {
+            System.err.println("Error reading from " + storagePath + ": " + e.getMessage());
             e.printStackTrace();
             return new ArrayList<>();
         }
     }
 
-    /**
-     * Finds an entity by its ID.
-     *
-     * This method streams through all entities and returns the first one with a matching ID.
-     * The ID is extracted using the idExtractor function provided in the constructor.
-     *
-     *
-     * @param id The ID of the entity to find
-     * @return An Optional containing the entity if found, or empty if not found
-     */
     @Override
     public Optional<T> findById(int id) {
         return findAll().stream()
@@ -115,73 +173,35 @@ public abstract class JsonRepository<T> implements Repository<T> {
                 .findFirst();
     }
 
-    /// ---------CREATE------ ///
-    /**
-     * Saves a new entity to the repository or updates an existing one.
-     *
-     * If an entity with the same ID already exists, the existing entity is updated
-     * instead of creating a new one. This prevents duplicate entities with the same ID.
-     *
-     *
-     * @param entity The entity to save
-     * @return The saved entity (may include generated values)
-     */
     @Override
     public T save(T entity) {
         List<T> entities = findAll();
         int entityId = idExtractor.applyAsInt(entity);
 
-        // Check if entity with this ID already exists
         boolean exists = entities.stream()
                 .anyMatch(e -> idExtractor.applyAsInt(e) == entityId);
 
         if (exists) {
-            // Notify about duplicate entity
             System.out.println("NOTIFICATION: Entity of type " + entityType.getSimpleName() +
                     " with ID " + entityId + " already exists. Updating instead of creating new.");
-
-            // Update the existing entity
             return update(entity).orElse(entity);
         }
 
-        // If it doesn't exist, add it
         entities.add(entity);
         saveAll(entities);
         return entity;
     }
 
-    /**
-     * Saves multiple entities to the repository.
-     *
-     * This method overwrites the entire JSON file with the provided list of entities.
-     * It uses Jackson's pretty printer to format the JSON for better readability.
-     *
-     *
-     * @param entities The list of entities to save
-     * @throws RuntimeException if the entities cannot be saved
-     */
     @Override
     public void saveAll(List<T> entities) {
         try {
             String json = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(entities);
             Files.writeString(storagePath, json);
         } catch (IOException e) {
-            throw new RuntimeException("Failed to save entities", e);
+            throw new RuntimeException("Failed to save entities to " + storagePath, e);
         }
     }
 
-    /// ---------UPDATE------ ///
-    /**
-     * Updates an existing entity in the repository.
-     *
-     * This method finds the entity with the matching ID in the repository and
-     * replaces it with the updated entity. If no entity with the matching ID is
-     * found, an empty Optional is returned.
-     *
-     *
-     * @param updatedEntity The entity with updated values
-     * @return An Optional containing the updated entity if successful, or empty if not found
-     */
     @Override
     public Optional<T> update(T updatedEntity) {
         List<T> entities = findAll();
@@ -204,17 +224,6 @@ public abstract class JsonRepository<T> implements Repository<T> {
         return Optional.empty();
     }
 
-    /// ---------DELETE------ ///
-    /**
-     * Deletes an entity by its ID.
-     *
-     * This method removes the entity with the matching ID from the repository.
-     * If the entity is found and removed, the changes are saved to the JSON file.
-     *
-     *
-     * @param id The ID of the entity to delete
-     * @return true if the entity was found and deleted, false otherwise
-     */
     @Override
     public boolean deleteById(int id) {
         List<T> entities = findAll();

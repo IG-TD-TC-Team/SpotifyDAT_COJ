@@ -5,7 +5,7 @@
   "albumId" : 10040,
   "genre" : "POP",
   "durationSeconds" : 235,
-  "filePath" : "C:\\Users\\facos\\Desktop\\music\\lesamoureuxlive.mp3"
+  "filePath" : "D:\\DATAFiles\\Codes\\SpotifyDAT_COJ\\music\\lesamoureuxlive.mp3"
 }, {
   "songId" : 1058,
   "title" : "Super Mamie (Live)",
@@ -13,7 +13,7 @@
   "albumId" : 10040,
   "genre" : "POP",
   "durationSeconds" : 285,
-  "filePath" : "C:\\Users\\facos\\Desktop\\music\\supermamielive.mp3"
+  "filePath" : "D:\\DATAFiles\\Codes\\SpotifyDAT_COJ\\music\\supermamielive.mp3"
 }, {
   "songId" : 1059,
   "title" : "Le dragon (Live)",
@@ -21,7 +21,7 @@
   "albumId" : 10040,
   "genre" : "POP",
   "durationSeconds" : 225,
-  "filePath" : "C:\\Users\\facos\\Desktop\\music\\ledragonlive.mp3"
+  "filePath" : "D:\\DATAFiles\\Codes\\SpotifyDAT_COJ\\music\\ledragonlive.mp3"
 }, {
   "songId" : 1064,
   "title" : "Samir le fakir (Live)",
@@ -29,7 +29,7 @@
   "albumId" : 10040,
   "genre" : "POP",
   "durationSeconds" : 290,
-  "filePath" : "C:\\Users\\facos\\Desktop\\music\\samirlefakirlive.mp3"
+  "filePath" : "D:\\DATAFiles\\Codes\\SpotifyDAT_COJ\\music\\samirlefakirlive.mp3"
 }, {
   "songId" : 1067,
   "title" : "La soucoupe volante (Live)",
@@ -37,7 +37,7 @@
   "albumId" : 10040,
   "genre" : "POP",
   "durationSeconds" : 300,
-  "filePath" : "C:\\Users\\facos\\Desktop\\music\\lasoucoupevolantelive.mp3"
+  "filePath" : "D:\\DATAFiles\\Codes\\SpotifyDAT_COJ\\music\\lasoucoupevolantelive.mp3"
 }, {
   "songId" : 1068,
   "title" : "Du gros son (Live)",
@@ -45,7 +45,7 @@
   "albumId" : 10040,
   "genre" : "POP",
   "durationSeconds" : 315,
-  "filePath" : "C:\\Users\\facos\\Desktop\\music\\dugrossonlive.mp3"
+  "filePath" : "D:\\DATAFiles\\Codes\\SpotifyDAT_COJ\\music\\dugrossonlive.mp3"
 }, {
   "songId" : 1069,
   "title" : "Plus tard quand tu seras grand (Live)",
@@ -53,7 +53,7 @@
   "albumId" : 10040,
   "genre" : "POP",
   "durationSeconds" : 260,
-  "filePath" : "C:\\Users\\facos\\Desktop\\music\\plustardquandtuserasgrandlive.mp3"
+  "filePath" : "D:\\DATAFiles\\Codes\\SpotifyDAT_COJ\\music\\plustardquandtuserasgrandlive.mp3"
 }, {
   "songId" : 1071,
   "title" : "Ah les crocodiles",
@@ -61,7 +61,7 @@
   "albumId" : 10041,
   "genre" : "CLASSICAL",
   "durationSeconds" : 180,
-  "filePath" : "C:\\Users\\facos\\Desktop\\music\\ahlescrocodiles.mp3"
+  "filePath" : "D:\\DATAFiles\\Codes\\SpotifyDAT_COJ\\music\\ahlescrocodiles.mp3"
 }, {
   "songId" : 1073,
   "title" : "Au claire de la lune",
@@ -69,7 +69,7 @@
   "albumId" : 10041,
   "genre" : "CLASSICAL",
   "durationSeconds" : 110,
-  "filePath" : "C:\\Users\\facos\\Desktop\\music\\auclairedelalune.mp3"
+  "filePath" : "D:\\DATAFiles\\Codes\\SpotifyDAT_COJ\\music\\auclairedelalune.mp3"
 }, {
   "songId" : 1074,
   "title" : "Une souris verte",
@@ -77,7 +77,7 @@
   "albumId" : 10041,
   "genre" : "CLASSICAL",
   "durationSeconds" : 60,
-  "filePath" : "C:\\Users\\facos\\Desktop\\music\\unesourisverte.mp3"
+  "filePath" : "D:\\DATAFiles\\Codes\\SpotifyDAT_COJ\\music\\unesourisverte.mp3"
 }, {
   "songId" : 1075,
   "title" : "Promenons-nous dans les bois",
@@ -85,7 +85,7 @@
   "albumId" : 10041,
   "genre" : "CLASSICAL",
   "durationSeconds" : 105,
-  "filePath" : "C:\\Users\\facos\\Desktop\\music\\promenons-nousdanslesbois.mp3"
+  "filePath" : "D:\\DATAFiles\\Codes\\SpotifyDAT_COJ\\music\\promenons-nousdanslesbois.mp3"
 }, {
   "songId" : 1081,
   "title" : "Ainsi font font font",
@@ -93,7 +93,7 @@
   "albumId" : 10041,
   "genre" : "CLASSICAL",
   "durationSeconds" : 95,
-  "filePath" : "C:\\Users\\facos\\Desktop\\music\\ainsifontfontfont.mp3"
+  "filePath" : "D:\\DATAFiles\\Codes\\SpotifyDAT_COJ\\music\\ainsifontfontfont.mp3"
 }, {
   "songId" : 1082,
   "title" : "Un grand cerf",
@@ -101,7 +101,7 @@
   "albumId" : 10041,
   "genre" : "CLASSICAL",
   "durationSeconds" : 80,
-  "filePath" : "C:\\Users\\facos\\Desktop\\music\\ungrandcerf.mp3"
+  "filePath" : "D:\\DATAFiles\\Codes\\SpotifyDAT_COJ\\music\\ungrandcerf.mp3"
 }, {
   "songId" : 1085,
   "title" : "Este Dedito/Mis Deditos",
@@ -109,7 +109,7 @@
   "albumId" : 10042,
   "genre" : "POP",
   "durationSeconds" : 140,
-  "filePath" : "C:\\Users\\facos\\Desktop\\music\\estededito_misdeditos.mp3"
+  "filePath" : "D:\\DATAFiles\\Codes\\SpotifyDAT_COJ\\music\\estededito_misdeditos.mp3"
 }, {
   "songId" : 1086,
   "title" : "Vamos a Jugar",
@@ -117,7 +117,7 @@
   "albumId" : 10042,
   "genre" : "POP",
   "durationSeconds" : 150,
-  "filePath" : "C:\\Users\\facos\\Desktop\\music\\vamosajugar.mp3"
+  "filePath" : "D:\\DATAFiles\\Codes\\SpotifyDAT_COJ\\music\\vamosajugar.mp3"
 }, {
   "songId" : 1088,
   "title" : "La Vaquita Loca",
@@ -125,7 +125,7 @@
   "albumId" : 10042,
   "genre" : "POP",
   "durationSeconds" : 160,
-  "filePath" : "C:\\Users\\facos\\Desktop\\music\\lavaquitaloca.mp3"
+  "filePath" : "D:\\DATAFiles\\Codes\\SpotifyDAT_COJ\\music\\lavaquitaloca.mp3"
 }, {
   "songId" : 1090,
   "title" : "Chapecao de Segundo",
@@ -133,7 +133,7 @@
   "albumId" : 10042,
   "genre" : "POP",
   "durationSeconds" : 160,
-  "filePath" : "C:\\Users\\facos\\Desktop\\music\\chapecaodesegundo.mp3"
+  "filePath" : "D:\\DATAFiles\\Codes\\SpotifyDAT_COJ\\music\\chapecaodesegundo.mp3"
 }, {
   "songId" : 1091,
   "title" : "Payas del Rezongo",
@@ -141,7 +141,7 @@
   "albumId" : 10042,
   "genre" : "POP",
   "durationSeconds" : 195,
-  "filePath" : "C:\\Users\\facos\\Desktop\\music\\payasdelrezongo.mp3"
+  "filePath" : "D:\\DATAFiles\\Codes\\SpotifyDAT_COJ\\music\\payasdelrezongo.mp3"
 }, {
   "songId" : 1095,
   "title" : "Ah! Les crocodiles",
@@ -149,7 +149,7 @@
   "albumId" : 10043,
   "genre" : "POP",
   "durationSeconds" : 150,
-  "filePath" : "C:\\Users\\facos\\Desktop\\music\\ahlescrocodiles.mp3"
+  "filePath" : "D:\\DATAFiles\\Codes\\SpotifyDAT_COJ\\music\\ahlescrocodiles.mp3"
 }, {
   "songId" : 1097,
   "title" : "La thune",
@@ -157,7 +157,7 @@
   "albumId" : 10045,
   "genre" : "POP",
   "durationSeconds" : 230,
-  "filePath" : "C:\\Users\\facos\\Desktop\\music\\lathune.mp3"
+  "filePath" : "D:\\DATAFiles\\Codes\\SpotifyDAT_COJ\\music\\lathune.mp3"
 }, {
   "songId" : 1098,
   "title" : "Balance ton quoi",
@@ -165,7 +165,7 @@
   "albumId" : 10045,
   "genre" : "POP",
   "durationSeconds" : 215,
-  "filePath" : "C:\\Users\\facos\\Desktop\\music\\balancetonquoi.mp3"
+  "filePath" : "D:\\DATAFiles\\Codes\\SpotifyDAT_COJ\\music\\balancetonquoi.mp3"
 }, {
   "songId" : 1099,
   "title" : "Perdus",
@@ -173,7 +173,7 @@
   "albumId" : 10046,
   "genre" : "POP",
   "durationSeconds" : 210,
-  "filePath" : "C:\\Users\\facos\\Desktop\\music\\perdus.mp3"
+  "filePath" : "D:\\DATAFiles\\Codes\\SpotifyDAT_COJ\\music\\perdus.mp3"
 }, {
   "songId" : 1100,
   "title" : "Oui ou non",
@@ -181,7 +181,7 @@
   "albumId" : 10046,
   "genre" : "POP",
   "durationSeconds" : 225,
-  "filePath" : "C:\\Users\\facos\\Desktop\\music\\ouiounon.mp3"
+  "filePath" : "D:\\DATAFiles\\Codes\\SpotifyDAT_COJ\\music\\ouiounon.mp3"
 }, {
   "songId" : 1101,
   "title" : "Insomnies",
@@ -189,7 +189,7 @@
   "albumId" : 10046,
   "genre" : "POP",
   "durationSeconds" : 240,
-  "filePath" : "C:\\Users\\facos\\Desktop\\music\\insomnies.mp3"
+  "filePath" : "D:\\DATAFiles\\Codes\\SpotifyDAT_COJ\\music\\insomnies.mp3"
 }, {
   "songId" : 1102,
   "title" : "Jalousie",
@@ -197,7 +197,7 @@
   "albumId" : 10046,
   "genre" : "POP",
   "durationSeconds" : 255,
-  "filePath" : "C:\\Users\\facos\\Desktop\\music\\jalousie.mp3"
+  "filePath" : "D:\\DATAFiles\\Codes\\SpotifyDAT_COJ\\music\\jalousie.mp3"
 }, {
   "songId" : 1103,
   "title" : "Tout oublier",
@@ -205,7 +205,7 @@
   "albumId" : 10046,
   "genre" : "POP",
   "durationSeconds" : 230,
-  "filePath" : "C:\\Users\\facos\\Desktop\\music\\toutoublier.mp3"
+  "filePath" : "D:\\DATAFiles\\Codes\\SpotifyDAT_COJ\\music\\toutoublier.mp3"
 }, {
   "songId" : 1104,
   "title" : "Tu me regardes",
@@ -213,7 +213,7 @@
   "albumId" : 10046,
   "genre" : "POP",
   "durationSeconds" : 220,
-  "filePath" : "C:\\Users\\facos\\Desktop\\music\\tumeregardes.mp3"
+  "filePath" : "D:\\DATAFiles\\Codes\\SpotifyDAT_COJ\\music\\tumeregardes.mp3"
 }, {
   "songId" : 1106,
   "title" : "La loi de Murphy",
@@ -221,7 +221,7 @@
   "albumId" : 10046,
   "genre" : "POP",
   "durationSeconds" : 220,
-  "filePath" : "C:\\Users\\facos\\Desktop\\music\\laloidemurphy.mp3"
+  "filePath" : "D:\\DATAFiles\\Codes\\SpotifyDAT_COJ\\music\\laloidemurphy.mp3"
 }, {
   "songId" : 1107,
   "title" : "Nombreux",
@@ -229,7 +229,7 @@
   "albumId" : 10046,
   "genre" : "POP",
   "durationSeconds" : 220,
-  "filePath" : "C:\\Users\\facos\\Desktop\\music\\nombreux.mp3"
+  "filePath" : "D:\\DATAFiles\\Codes\\SpotifyDAT_COJ\\music\\nombreux.mp3"
 }, {
   "songId" : 1109,
   "title" : "Ta reine (Version orchestrale)",
@@ -237,7 +237,7 @@
   "albumId" : 10046,
   "genre" : "POP",
   "durationSeconds" : 310,
-  "filePath" : "C:\\Users\\facos\\Desktop\\music\\tareineversionorchestrale.mp3"
+  "filePath" : "D:\\DATAFiles\\Codes\\SpotifyDAT_COJ\\music\\tareineversionorchestrale.mp3"
 }, {
   "songId" : 1111,
   "title" : "Les matins",
@@ -245,7 +245,7 @@
   "albumId" : 10046,
   "genre" : "POP",
   "durationSeconds" : 200,
-  "filePath" : "C:\\Users\\facos\\Desktop\\music\\lesmatins.mp3"
+  "filePath" : "D:\\DATAFiles\\Codes\\SpotifyDAT_COJ\\music\\lesmatins.mp3"
 }, {
   "songId" : 1112,
   "title" : "Je veux tes yeux",
@@ -253,7 +253,7 @@
   "albumId" : 10046,
   "genre" : "POP",
   "durationSeconds" : 235,
-  "filePath" : "C:\\Users\\facos\\Desktop\\music\\jeveuxtesyeux.mp3"
+  "filePath" : "D:\\DATAFiles\\Codes\\SpotifyDAT_COJ\\music\\jeveuxtesyeux.mp3"
 }, {
   "songId" : 1113,
   "title" : "Ta reine",
@@ -261,7 +261,7 @@
   "albumId" : 10046,
   "genre" : "POP",
   "durationSeconds" : 240,
-  "filePath" : "C:\\Users\\facos\\Desktop\\music\\tareine.mp3"
+  "filePath" : "D:\\DATAFiles\\Codes\\SpotifyDAT_COJ\\music\\tareine.mp3"
 }, {
   "songId" : 1114,
   "title" : "Flemme",
@@ -269,7 +269,7 @@
   "albumId" : 10046,
   "genre" : "POP",
   "durationSeconds" : 290,
-  "filePath" : "C:\\Users\\facos\\Desktop\\music\\flemme.mp3"
+  "filePath" : "D:\\DATAFiles\\Codes\\SpotifyDAT_COJ\\music\\flemme.mp3"
 }, {
   "songId" : 1115,
   "title" : "Flou",
@@ -277,7 +277,7 @@
   "albumId" : 10046,
   "genre" : "POP",
   "durationSeconds" : 225,
-  "filePath" : "C:\\Users\\facos\\Desktop\\music\\flou.mp3"
+  "filePath" : "D:\\DATAFiles\\Codes\\SpotifyDAT_COJ\\music\\flou.mp3"
 }, {
   "songId" : 1119,
   "title" : "Ton jean bleu",
@@ -285,7 +285,7 @@
   "albumId" : 10049,
   "genre" : "POP",
   "durationSeconds" : 265,
-  "filePath" : "C:\\Users\\facos\\Desktop\\music\\tonjeanbleu.mp3"
+  "filePath" : "D:\\DATAFiles\\Codes\\SpotifyDAT_COJ\\music\\tonjeanbleu.mp3"
 }, {
   "songId" : 1123,
   "title" : "Excuse-moi mon amour",
@@ -293,7 +293,7 @@
   "albumId" : 10049,
   "genre" : "POP",
   "durationSeconds" : 215,
-  "filePath" : "C:\\Users\\facos\\Desktop\\music\\excuse-moimonamour.mp3"
+  "filePath" : "D:\\DATAFiles\\Codes\\SpotifyDAT_COJ\\music\\excuse-moimonamour.mp3"
 }, {
   "songId" : 1125,
   "title" : "Le tiroir",
@@ -301,7 +301,7 @@
   "albumId" : 10049,
   "genre" : "POP",
   "durationSeconds" : 205,
-  "filePath" : "C:\\Users\\facos\\Desktop\\music\\letiroir.mp3"
+  "filePath" : "D:\\DATAFiles\\Codes\\SpotifyDAT_COJ\\music\\letiroir.mp3"
 }, {
   "songId" : 1126,
   "title" : "Changement de programme",
@@ -309,7 +309,7 @@
   "albumId" : 10049,
   "genre" : "POP",
   "durationSeconds" : 280,
-  "filePath" : "C:\\Users\\facos\\Desktop\\music\\changementdeprogramme.mp3"
+  "filePath" : "D:\\DATAFiles\\Codes\\SpotifyDAT_COJ\\music\\changementdeprogramme.mp3"
 }, {
   "songId" : 1127,
   "title" : "Petite piaule",
@@ -317,7 +317,7 @@
   "albumId" : 10049,
   "genre" : "POP",
   "durationSeconds" : 225,
-  "filePath" : "C:\\Users\\facos\\Desktop\\music\\petitepiaule.mp3"
+  "filePath" : "D:\\DATAFiles\\Codes\\SpotifyDAT_COJ\\music\\petitepiaule.mp3"
 }, {
   "songId" : 1128,
   "title" : "Tu sais mon grand",
@@ -325,7 +325,7 @@
   "albumId" : 10049,
   "genre" : "POP",
   "durationSeconds" : 240,
-  "filePath" : "C:\\Users\\facos\\Desktop\\music\\tusaismongrand.mp3"
+  "filePath" : "D:\\DATAFiles\\Codes\\SpotifyDAT_COJ\\music\\tusaismongrand.mp3"
 }, {
   "songId" : 1132,
   "title" : "Pourvu",
@@ -333,7 +333,7 @@
   "albumId" : 10050,
   "genre" : "POP",
   "durationSeconds" : 230,
-  "filePath" : "C:\\Users\\facos\\Desktop\\music\\pourvu.mp3"
+  "filePath" : "D:\\DATAFiles\\Codes\\SpotifyDAT_COJ\\music\\pourvu.mp3"
 }, {
   "songId" : 1133,
   "title" : "Dans mes poches",
@@ -341,7 +341,7 @@
   "albumId" : 10050,
   "genre" : "POP",
   "durationSeconds" : 225,
-  "filePath" : "C:\\Users\\facos\\Desktop\\music\\dansmespoches.mp3"
+  "filePath" : "D:\\DATAFiles\\Codes\\SpotifyDAT_COJ\\music\\dansmespoches.mp3"
 }, {
   "songId" : 1135,
   "title" : "Victime de la mode",
@@ -349,7 +349,7 @@
   "albumId" : 10051,
   "genre" : "HIP_HOP",
   "durationSeconds" : 195,
-  "filePath" : "C:\\Users\\facos\\Desktop\\music\\victimedelamode.mp3"
+  "filePath" : "D:\\DATAFiles\\Codes\\SpotifyDAT_COJ\\music\\victimedelamode.mp3"
 }, {
   "songId" : 1136,
   "title" : "Les temps changent",
@@ -357,7 +357,7 @@
   "albumId" : 10051,
   "genre" : "HIP_HOP",
   "durationSeconds" : 245,
-  "filePath" : "C:\\Users\\facos\\Desktop\\music\\lestempschangent.mp3"
+  "filePath" : "D:\\DATAFiles\\Codes\\SpotifyDAT_COJ\\music\\lestempschangent.mp3"
 }, {
   "songId" : 1137,
   "title" : "Caroline",
@@ -365,7 +365,7 @@
   "albumId" : 10051,
   "genre" : "HIP_HOP",
   "durationSeconds" : 350,
-  "filePath" : "C:\\Users\\facos\\Desktop\\music\\caroline.mp3"
+  "filePath" : "D:\\DATAFiles\\Codes\\SpotifyDAT_COJ\\music\\caroline.mp3"
 }, {
   "songId" : 1140,
   "title" : "Fuego",
@@ -373,7 +373,7 @@
   "albumId" : 10054,
   "genre" : "ROCK",
   "durationSeconds" : 190,
-  "filePath" : "C:\\Users\\facos\\Desktop\\music\\fuego.mp3"
+  "filePath" : "D:\\DATAFiles\\Codes\\SpotifyDAT_COJ\\music\\fuego.mp3"
 }, {
   "songId" : 1141,
   "title" : "La Camisa Negra",
@@ -381,7 +381,7 @@
   "albumId" : 10055,
   "genre" : "ROCK",
   "durationSeconds" : 245,
-  "filePath" : "C:\\Users\\facos\\Desktop\\music\\lacamisanegra.mp3"
+  "filePath" : "D:\\DATAFiles\\Codes\\SpotifyDAT_COJ\\music\\lacamisanegra.mp3"
 }, {
   "songId" : 1143,
   "title" : "Tu Falta De Querer",
@@ -389,7 +389,7 @@
   "albumId" : 10057,
   "genre" : "POP",
   "durationSeconds" : 315,
-  "filePath" : "C:\\Users\\facos\\Desktop\\music\\tufaltadequerer.mp3"
+  "filePath" : "D:\\DATAFiles\\Codes\\SpotifyDAT_COJ\\music\\tufaltadequerer.mp3"
 }, {
   "songId" : 1144,
   "title" : "Mayonesa",
@@ -397,7 +397,7 @@
   "albumId" : 10058,
   "genre" : "POP",
   "durationSeconds" : 260,
-  "filePath" : "C:\\Users\\facos\\Desktop\\music\\mayonesa.mp3"
+  "filePath" : "D:\\DATAFiles\\Codes\\SpotifyDAT_COJ\\music\\mayonesa.mp3"
 }, {
   "songId" : 1146,
   "title" : "Victime de la mode",
@@ -405,7 +405,7 @@
   "albumId" : 10051,
   "genre" : "HIP_HOP",
   "durationSeconds" : 195,
-  "filePath" : "C:\\Users\\facos\\Desktop\\music\\victimedelamode.mp3"
+  "filePath" : "D:\\DATAFiles\\Codes\\SpotifyDAT_COJ\\music\\victimedelamode.mp3"
 }, {
   "songId" : 1147,
   "title" : "Les temps changent",
@@ -413,7 +413,7 @@
   "albumId" : 10051,
   "genre" : "HIP_HOP",
   "durationSeconds" : 245,
-  "filePath" : "C:\\Users\\facos\\Desktop\\music\\lestempschangent.mp3"
+  "filePath" : "D:\\DATAFiles\\Codes\\SpotifyDAT_COJ\\music\\lestempschangent.mp3"
 }, {
   "songId" : 1148,
   "title" : "Caroline",
@@ -421,7 +421,7 @@
   "albumId" : 10051,
   "genre" : "HIP_HOP",
   "durationSeconds" : 350,
-  "filePath" : "C:\\Users\\facos\\Desktop\\music\\caroline.mp3"
+  "filePath" : "D:\\DATAFiles\\Codes\\SpotifyDAT_COJ\\music\\caroline.mp3"
 }, {
   "songId" : 1149,
   "title" : "Juice (Breakbot Mix)",
@@ -429,7 +429,7 @@
   "albumId" : 10059,
   "genre" : "HIP_HOP",
   "durationSeconds" : 195,
-  "filePath" : "C:\\Users\\facos\\Desktop\\music\\juicebreakbotmix.mp3"
+  "filePath" : "D:\\DATAFiles\\Codes\\SpotifyDAT_COJ\\music\\juicebreakbotmix.mp3"
 }, {
   "songId" : 1150,
   "title" : "Palco",
@@ -437,5 +437,5 @@
   "albumId" : 10060,
   "genre" : "POP",
   "durationSeconds" : 270,
-  "filePath" : "C:\\Users\\facos\\Desktop\\music\\palco.mp3"
+  "filePath" : "D:\\DATAFiles\\Codes\\SpotifyDAT_COJ\\music\\palco.mp3"
 } ]

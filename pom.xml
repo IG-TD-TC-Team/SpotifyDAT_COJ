@@ -9,46 +9,42 @@
     <version>1.0</version>
 
     <properties>
-        <!-- Fixed: Made Java version consistent -->
         <maven.compiler.source>11</maven.compiler.source>
         <maven.compiler.target>11</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <!-- Define Jackson version to ensure all Jackson libraries use the same version -->
         <jackson.version>2.15.2</jackson.version>
     </properties>
 
     <dependencies>
-        <!-- JLayer for MP3 playback - your existing dependency -->
+        <!-- JLayer for MP3 playback -->
         <dependency>
             <groupId>javazoom</groupId>
             <artifactId>jlayer</artifactId>
             <version>1.0.1</version>
         </dependency>
 
-        <!-- Jackson Core: Provides the fundamental streaming JSON parser/generator -->
+        <!-- Jackson Core -->
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-core</artifactId>
             <version>${jackson.version}</version>
         </dependency>
 
-        <!-- Jackson Annotations: Provides the annotations you're using (@JsonTypeInfo, @JsonSubTypes, etc.) -->
+        <!-- Jackson Annotations -->
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-annotations</artifactId>
             <version>${jackson.version}</version>
         </dependency>
 
-        <!-- Jackson Databind: Provides the high-level data binding functionality -->
-        <!-- This is the main Jackson library that contains JavaType and ObjectMapper -->
+        <!-- Jackson Databind -->
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
             <version>${jackson.version}</version>
         </dependency>
 
-        <!-- Jackson JSR310: Support for Java 8 time/date API (if you use LocalDateTime, etc.) -->
-        <!-- This is optional but recommended for modern Java applications -->
+        <!-- Jackson JSR310 -->
         <dependency>
             <groupId>com.fasterxml.jackson.datatype</groupId>
             <artifactId>jackson-datatype-jsr310</artifactId>
@@ -57,18 +53,28 @@
     </dependencies>
 
     <build>
+        <!-- Ensure resources are included -->
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <includes>
+                    <include>**/*</include>
+                </includes>
+            </resource>
+        </resources>
+
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.8.1</version>
                 <configuration>
-                    <source>11</source>
-                    <target>11</target>
+                    <source>13</source>
+                    <target>13</target>
                 </configuration>
             </plugin>
 
-            <!-- ADDED: Copy dependencies to target/lib for launcher -->
+            <!-- Copy dependencies to target/lib for launcher -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-dependency-plugin</artifactId>
@@ -87,7 +93,7 @@
                 </executions>
             </plugin>
 
-            <!-- Create clickable JAR that opens terminal -->
+            <!-- Create production-ready JARs -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-shade-plugin</artifactId>
@@ -107,6 +113,15 @@
                                     <mainClass>launcher.TerminalLauncher</mainClass>
                                 </transformer>
                             </transformers>
+                            <!-- Include all resources -->
+                            <filters>
+                                <filter>
+                                    <artifact>*:*</artifact>
+                                    <includes>
+                                        <include>**</include>
+                                    </includes>
+                                </filter>
+                            </filters>
                         </configuration>
                     </execution>
                     <!-- Direct server JAR (for command line use) -->
@@ -123,6 +138,15 @@
                                     <mainClass>spotifyServer.SpotifySocketServer</mainClass>
                                 </transformer>
                             </transformers>
+                            <!-- Include all resources -->
+                            <filters>
+                                <filter>
+                                    <artifact>*:*</artifact>
+                                    <includes>
+                                        <include>**</include>
+                                    </includes>
+                                </filter>
+                            </filters>
                         </configuration>
                     </execution>
                 </executions>

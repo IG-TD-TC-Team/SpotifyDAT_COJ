@@ -1670,7 +1670,7 @@
     "price" : 0.0
   },
   "followedUsersIDs" : [ ],
-  "followersIDs" : [ ],
+  "followersIDs" : [ 47 ],
   "library" : {
     "userID" : 42,
     "playlists" : [ {
@@ -1875,6 +1875,53 @@
     "name" : "Favorites",
     "songs" : [ ],
     "ownerID" : 46,
+    "playlistID" : 0,
+    "likedByUsers" : [ ],
+    "sharedWith" : [ ],
+    "publiclyShareable" : false
+  },
+  "active" : true
+}, {
+  "userID" : 47,
+  "username" : "jiji",
+  "email" : "jiji@jiji.com",
+  "password" : "b43206bb030355e10e4b57108dc726310d9450b76d6f8b9c108d7d001945556a",
+  "firstName" : "ji",
+  "lastName" : "ji",
+  "dateOfBirth" : null,
+  "accountCreationDate" : 1748962871993,
+  "subscriptionPlan" : {
+    "type" : "PremiumPlan",
+    "type" : "PREMIUM",
+    "deviceLimit" : 5,
+    "maxQuality" : 320
+  },
+  "subscriptionInfo" : {
+    "startDate" : 1748963736851,
+    "endDate" : 1780499736851,
+    "lastBillingDate" : 1748963736851,
+    "paymentMethod" : null,
+    "autoRenew" : true,
+    "price" : 0.0
+  },
+  "followedUsersIDs" : [ 42 ],
+  "followersIDs" : [ ],
+  "library" : {
+    "userID" : 47,
+    "playlists" : [ {
+      "name" : "Favorites",
+      "songs" : [ ],
+      "ownerID" : 47,
+      "playlistID" : 0,
+      "likedByUsers" : [ ],
+      "sharedWith" : [ ],
+      "publiclyShareable" : false
+    } ]
+  },
+  "defaultPlaylist" : {
+    "name" : "Favorites",
+    "songs" : [ ],
+    "ownerID" : 47,
     "playlistID" : 0,
     "likedByUsers" : [ ],
     "sharedWith" : [ ],

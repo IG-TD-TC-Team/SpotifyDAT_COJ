@@ -36,7 +36,6 @@ public class ProfileCommandProcessor extends AbstractProcessor {
 
     /**
      * Handles viewing the current user's profile.
-     * TODO: This needs session management to get the current user
      */
     private String handleViewProfile() {
         try {

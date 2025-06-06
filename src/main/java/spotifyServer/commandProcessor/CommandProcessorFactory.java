@@ -13,6 +13,9 @@ public class CommandProcessorFactory {
         // Private constructor for singleton
     }
 
+    /**
+     * Returns the singleton instance, creating it if needed.
+     */
     public static synchronized CommandProcessorFactory getInstance() {
         if (instance == null) {
             instance = new CommandProcessorFactory();

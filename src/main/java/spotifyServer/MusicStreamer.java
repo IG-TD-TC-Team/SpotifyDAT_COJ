@@ -210,6 +210,17 @@ public class MusicStreamer {
         }
     }
 
+    /**
+     * Pauses the streaming thread until streaming is resumed or stopped.
+     *
+     * This method implements a polling mechanism that suspends the current thread's
+     * execution when streaming is paused. It logs the pause state with the current
+     * streaming position and enters a loop that checks every 50ms if the pause state
+     * has been released or if streaming has been requested to stop.
+     *
+     * The method handles thread interruption gracefully by preserving the interrupt
+     * flag and breaking the loop, allowing the thread to terminate properly.
+     */
     private void waitWhilePaused() {
         if (isPaused.get()) {
             System.out.println("User " + userId + " stream paused at " + bytesStreamed.get() + " bytes");
@@ -224,6 +235,16 @@ public class MusicStreamer {
         }
     }
 
+    /**
+     * Pauses streaming for the current user.
+     *
+     * This method sets the pause flag to true if streaming is currently active,
+     * which causes the streaming thread to enter a wait state. The method is
+     * synchronized to ensure thread safety when modifying the pause state.
+     *
+     * The method only changes state if streaming is not already paused, avoiding
+     * unnecessary state changes and logging.
+     */
     // Control methods
     public synchronized void pause() {
         if (!isPaused.get()) {
@@ -232,6 +253,16 @@ public class MusicStreamer {
         }
     }
 
+    /**
+     * Resumes streaming for the current user after a pause.
+     *
+     * This method sets the pause flag to false if streaming is currently paused,
+     * which allows the streaming thread to continue from its wait state. The method
+     * is synchronized to ensure thread safety when modifying the pause state.
+     *
+     * The method only changes state if streaming is currently paused, avoiding
+     * unnecessary state changes and logging.
+     */
     public synchronized void resume() {
         if (isPaused.get()) {
             isPaused.set(false);
@@ -239,6 +270,11 @@ public class MusicStreamer {
         }
     }
 
+    /**
+     * Stops the current streaming session completely.
+     *
+     * The method is synchronized to ensure thread safety when modifying stream state.
+     */
     public synchronized void stopStreaming() {
         stopRequested.set(true);
         isPaused.set(false);
@@ -251,12 +287,47 @@ public class MusicStreamer {
     }
 
     // State query methods
+    /**
+     * Checks if the streaming is currently in a paused state.
+     *
+     * @return true if streaming is paused, false otherwise
+     */
     public boolean isPaused() { return isPaused.get(); }
+
+    /**
+     * Checks if the streaming has been requested to stop.
+     *
+     * @return true if streaming has been stopped or is in the process of stopping, false otherwise
+     */
     public boolean isStopped() { return stopRequested.get(); }
+
+    /**
+     * Gets the total number of bytes streamed so far in the current session.
+     *
+     * @return the count of bytes that have been streamed
+     */
     public long getBytesStreamed() { return bytesStreamed.get(); }
+
+    /**
+     * Gets the file path of the currently streaming audio file.
+     *
+     * @return the path to the current audio file, or null if no file is being streamed
+     */
     public String getCurrentFile() { return currentFilePath; }
+
+    /**
+     * Gets the user ID associated with this streaming session.
+     *
+     * @return the ID of the user receiving the stream, or null if not associated with a user
+     */
     public Integer getUserId() { return userId; }
 
+    /**
+     * Sends an error message to the client through the provided socket.
+     *
+     * @param socket the client socket to send the error message to
+     * @param message the error message content to send
+     */
     private void sendErrorToClient(Socket socket, String message) {
         try {
             PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
@@ -266,6 +337,13 @@ public class MusicStreamer {
         }
     }
 
+    /**
+     * Performs resource cleanup after streaming is complete or terminated.
+     *
+     * The method catches and logs IOExceptions that might occur during cleanup
+     * but ensures that the streamer is removed from the active streamers map
+     * regardless of any exceptions.
+     */
     private void cleanup() {
         try {
             if (audioFile != null) {

@@ -7,18 +7,24 @@ import spotifyServer.SpotifySocketServer;
 import spotifyServer.StreamingServer;
 
 /**
- * Playback control processor that integrates seamlessly with your existing
- * CommandContext system. No duplication of session management!
+ * Command processor for music playback control operations.
+ * Handles pause, resume, stop, status, next, previous, shuffle and repeat commands.
  */
 public class PlaybackControlCommandProcessor extends AbstractProcessor {
 
     private final PlaybackService playbackService = PlaybackService.getInstance();
     private final StreamingServer streamingServer;
 
+    /**
+     * Initializes the processor with required dependencies.
+     */
     public PlaybackControlCommandProcessor() {
         this.streamingServer = StreamingServer.getInstance();
     }
 
+    /**
+     * Processes playback control commands and delegates to appropriate handlers.
+     */
     @Override
     public String processCommand(String command) {
         // Check authentication using your existing system
@@ -52,8 +58,7 @@ public class PlaybackControlCommandProcessor extends AbstractProcessor {
     }
 
     /**
-     * Uses your existing CommandContext to get the current user ID.
-     * No duplication of session management logic!
+     * Pauses the current stream for the authenticated user.
      */
     private String handlePause() {
         try {
@@ -83,6 +88,9 @@ public class PlaybackControlCommandProcessor extends AbstractProcessor {
         }
     }
 
+    /**
+     * Resumes a paused stream for the authenticated user.
+     */
     private String handleResume() {
         try {
             Integer userId = getCurrentUserId();
@@ -104,6 +112,9 @@ public class PlaybackControlCommandProcessor extends AbstractProcessor {
         }
     }
 
+    /**
+     * Stops the current stream for the authenticated user.
+     */
     private String handleStop() {
         try {
             Integer userId = getCurrentUserId();
@@ -125,6 +136,9 @@ public class PlaybackControlCommandProcessor extends AbstractProcessor {
         }
     }
 
+    /**
+     * Gets the current playback status for the authenticated user.
+     */
     private String handleStatus() {
         try {
             Integer userId = getCurrentUserId();
@@ -155,6 +169,9 @@ public class PlaybackControlCommandProcessor extends AbstractProcessor {
         }
     }
 
+    /**
+     * Advances to the next song in the active playlist.
+     */
     private String handleNext() {
         Integer userId = getCurrentUserId();
         if (userId == null) {
@@ -181,6 +198,9 @@ public class PlaybackControlCommandProcessor extends AbstractProcessor {
                 nextSong.getArtistId() + "|" + userId;
     }
 
+    /**
+     * Returns to the previous song in the active playlist.
+     */
     private String handlePrevious() {
         Integer userId = getCurrentUserId();
         if (userId == null) {
@@ -207,6 +227,9 @@ public class PlaybackControlCommandProcessor extends AbstractProcessor {
                 prevSong.getArtistId() + "|" + userId;
     }
 
+    /**
+     * Enables or disables shuffle mode for the active playlist.
+     */
     // Add handlers for shuffle and repeat commands
     private String handleShuffle(String command) {
         String[] parts = command.split(" ", 2);
@@ -236,6 +259,9 @@ public class PlaybackControlCommandProcessor extends AbstractProcessor {
         }
     }
 
+    /**
+     * Sets the repeat mode (none, one, all) for the active playlist.
+     */
     private String handleRepeat(String command) {
         String[] parts = command.split(" ", 2);
         if (parts.length < 2) {
@@ -268,6 +294,9 @@ public class PlaybackControlCommandProcessor extends AbstractProcessor {
         }
     }
 
+    /**
+     * Formats byte counts into human-readable strings.
+     */
     private String formatBytes(long bytes) {
         if (bytes < 1024) {
             return bytes + " bytes";

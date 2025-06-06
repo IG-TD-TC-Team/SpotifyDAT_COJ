@@ -3,7 +3,20 @@ package user.subscription;
 import java.util.Date;
 
 /**
+ * Stores metadata and billing information for a user's subscription.
  *
+ * This class encapsulates all relevant details about a user's subscription status,
+ * including temporal information (start date, end date, billing date), payment details,
+ * and subscription preferences. It serves as a companion to the {@link SubscriptionPlan}
+ * classes, which define the features of a subscription, while this class tracks the
+ * lifecycle and billing aspects.
+ *
+ * This class is designed to work with the Jackson JSON serialization framework,
+ * providing both a default no-arg constructor for deserialization and a parameterized
+ * constructor for programmatic creation.
+ *
+ * @see SubscriptionPlan
+ * @see SubscriptionType
  */
 public class SubscriptionInfo {
     private Date startDate;
@@ -31,6 +44,10 @@ public class SubscriptionInfo {
         this.autoRenew = true;
     }
 
+    /**
+     * Getters and Setters
+     *
+     */
     public Date getStartDate() {
         return startDate;
     }

@@ -111,6 +111,9 @@
   "sharedWith" : [ ],
   "publiclyShareable" : false
 }, {
+
+  "name" : "jiji",
+  "songs" : [ {
   "name" : "Favorites",
   "songs" : [ ],
   "ownerID" : 48,
@@ -160,6 +163,27 @@
     "genre" : "ROCK",
     "durationSeconds" : 190,
     "filePath" : "C:\\Users\\facos\\Desktop\\music\\fuego.mp3"
+
+  }, {
+    "songId" : 1135,
+    "title" : "Victime de la mode",
+    "artistId" : 125,
+    "albumId" : 10051,
+    "genre" : "HIP_HOP",
+    "durationSeconds" : 195,
+    "filePath" : "C:\\Users\\facos\\Desktop\\music\\victimedelamode.mp3"
+  } ],
+  "ownerID" : 47,
+  "playlistID" : 18,
+  "likedByUsers" : [ 47, 42 ],
+  "sharedWith" : [ 42 ],
+  "publiclyShareable" : false
+}, {
+  "name" : "lolo",
+  "songs" : [ ],
+  "ownerID" : 42,
+  "playlistID" : 19,
+
   } ],
   "ownerID" : 43,
   "playlistID" : 20,

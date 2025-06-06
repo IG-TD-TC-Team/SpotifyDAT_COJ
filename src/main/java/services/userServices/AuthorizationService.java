@@ -45,8 +45,8 @@ public class AuthorizationService {
             return false;
         }
 
-        // User owns the playlist
-        if (playlist.getOwnerID() == userId) {
+        // User owns the playlist OR is sharedWith
+        if (playlist.getOwnerID() == userId || playlist.getSharedWith().contains(userId)) {
             return true;
         }
 

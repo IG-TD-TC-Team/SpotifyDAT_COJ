@@ -15,41 +15,18 @@ import user.User;
  * handling multiple concurrent client connections.
  */
 public class AuthenticationService {
-
     // Singleton instance
     private static AuthenticationService instance;
 
-    // Thread-safe map to store active user sessions by sessionId
-    private final Map<String, Integer> sessionToUserMap = new ConcurrentHashMap<>();
+    // SessionManager
+    private final SessionManager sessionManager = new SessionManager();
 
-    // Thread-safe map to store sessionIds by userId (one user can have multiple sessions)
-    private final Map<Integer, Map<String, SessionInfo>> userToSessionsMap = new ConcurrentHashMap<>();
-
-    // Dependencies
+    // Dependencies (keep these unchanged)
     private final UserService userService;
     private final PasswordService passwordService;
     private final UserRepositoryInterface userRepository;
 
-    /**
-     * Inner class to store session information
-     */
-    private static class SessionInfo {
-        private final String clientAddress;
-        private final long loginTime;
 
-        public SessionInfo(String clientAddress) {
-            this.clientAddress = clientAddress;
-            this.loginTime = System.currentTimeMillis();
-        }
-
-        public String getClientAddress() {
-            return clientAddress;
-        }
-
-        public long getLoginTime() {
-            return loginTime;
-        }
-    }
 
     /**
      * Private constructor with dependency injection.
@@ -59,6 +36,7 @@ public class AuthenticationService {
         this.passwordService = PasswordService.getInstance();
         this.userRepository = RepositoryFactory.getInstance().getUserRepository();
     }
+
 
     /**
      * Returns the singleton instance of AuthenticationService.
@@ -101,14 +79,8 @@ public class AuthenticationService {
             // Generate a unique session ID
             String sessionId = generateSessionId();
 
-            // Store session in sessionToUserMap
-            sessionToUserMap.put(sessionId, user.getUserID());
-
-            // Store session in userToSessionsMap
-            Map<String, SessionInfo> userSessions = userToSessionsMap.computeIfAbsent(
-                    user.getUserID(), k -> new ConcurrentHashMap<>()
-            );
-            userSessions.put(sessionId, new SessionInfo(clientAddress));
+            // Create session using SessionManager
+            sessionManager.createSession(sessionId, user.getUserID(), clientAddress);
 
             System.out.println("User logged in: " + username +
                     " (Session: " + sessionId + ", Client: " + clientAddress + ")");
@@ -116,7 +88,7 @@ public class AuthenticationService {
             return sessionId;
 
         } catch (UserNotFoundException e) {
-            // For security reasons, don't specify whether username or password was incorrect
+
             throw new AuthenticationException();
         }
     }
@@ -132,24 +104,14 @@ public class AuthenticationService {
             return false;
         }
 
-        Integer userId = sessionToUserMap.remove(sessionId);
+        Integer userId = sessionManager.removeSession(sessionId);
 
         if (userId != null) {
-            // Remove from user's sessions
-            Map<String, SessionInfo> userSessions = userToSessionsMap.get(userId);
-            if (userSessions != null) {
-                SessionInfo sessionInfo = userSessions.remove(sessionId);
-                if (sessionInfo != null) {
-                    System.out.println("User logged out: ID=" + userId +
-                            " (Session: " + sessionId + ", Client: " + sessionInfo.getClientAddress() + ")");
-                }
-
-                // If user has no more sessions, remove from map
-                if (userSessions.isEmpty()) {
-                    userToSessionsMap.remove(userId);
-                }
+            SessionManager.SessionInfo sessionInfo = sessionManager.getSessionInfo(sessionId);
+            if (sessionInfo != null) {
+                System.out.println("User logged out: ID=" + userId +
+                        " (Session: " + sessionId + ", Client: " + sessionInfo.getClientAddress() + ")");
             }
-
             return true;
         }
 
@@ -163,7 +125,7 @@ public class AuthenticationService {
      * @return true if the session is authenticated, false otherwise
      */
     public boolean isAuthenticated(String sessionId) {
-        return sessionToUserMap.containsKey(sessionId);
+        return sessionManager.sessionExists(sessionId);
     }
 
     /**
@@ -173,7 +135,7 @@ public class AuthenticationService {
      * @return the user ID, or null if the session is not authenticated
      */
     public Integer getUserIdFromSession(String sessionId) {
-        return sessionToUserMap.get(sessionId);
+        return sessionManager.getUserIdFromSession(sessionId);
     }
 
     /**
@@ -183,14 +145,14 @@ public class AuthenticationService {
      * @return the User object, or null if the session is not authenticated
      */
     public User getUserFromSession(String sessionId) {
-        Integer userId = getUserIdFromSession(sessionId);
+        Integer userId = sessionManager.getUserIdFromSession(sessionId);
 
         if (userId != null) {
             try {
                 return userService.getUserById(userId);
             } catch (UserNotFoundException e) {
                 // If user no longer exists, invalidate the session
-                terminateUserSessions(userId);
+                sessionManager.terminateUserSessions(userId);
                 return null;
             }
         }
@@ -205,16 +167,7 @@ public class AuthenticationService {
      * @return a map of session IDs to client addresses
      */
     public Map<String, String> getUserSessions(int userId) {
-        Map<String, String> result = new ConcurrentHashMap<>();
-        Map<String, SessionInfo> sessions = userToSessionsMap.get(userId);
-
-        if (sessions != null) {
-            for (Map.Entry<String, SessionInfo> entry : sessions.entrySet()) {
-                result.put(entry.getKey(), entry.getValue().getClientAddress());
-            }
-        }
-
-        return result;
+        return sessionManager.getUserSessions(userId);
     }
 
     /**
@@ -224,20 +177,7 @@ public class AuthenticationService {
      * @return the number of sessions terminated
      */
     public int terminateUserSessions(int userId) {
-        Map<String, SessionInfo> sessions = userToSessionsMap.remove(userId);
-
-        if (sessions == null) {
-            return 0;
-        }
-
-        int count = 0;
-        for (String sessionId : sessions.keySet()) {
-            if (sessionToUserMap.remove(sessionId) != null) {
-                count++;
-            }
-        }
-
-        return count;
+        return sessionManager.terminateUserSessions(userId);
     }
 
     /**
@@ -248,29 +188,7 @@ public class AuthenticationService {
      * @return the number of sessions terminated
      */
     public int terminateClientSessions(String clientAddress) {
-        int count = 0;
-
-        // Find all sessions with this client address
-        for (Map.Entry<Integer, Map<String, SessionInfo>> userEntry : userToSessionsMap.entrySet()) {
-            Map<String, SessionInfo> sessions = userEntry.getValue();
-
-            // Get all sessions for this user that match the client address
-            for (Map.Entry<String, SessionInfo> sessionEntry : sessions.entrySet()) {
-                if (sessionEntry.getValue().getClientAddress().equals(clientAddress)) {
-                    String sessionId = sessionEntry.getKey();
-                    sessions.remove(sessionId);
-                    sessionToUserMap.remove(sessionId);
-                    count++;
-                }
-            }
-
-            // If user has no more sessions, remove from map
-            if (sessions.isEmpty()) {
-                userToSessionsMap.remove(userEntry.getKey());
-            }
-        }
-
-        return count;
+        return sessionManager.terminateClientSessions(clientAddress);
     }
 
     /**
@@ -279,7 +197,7 @@ public class AuthenticationService {
      * @return the number of active sessions
      */
     public int getActiveSessionCount() {
-        return sessionToUserMap.size();
+        return sessionManager.getActiveSessionCount();
     }
 
     /**
@@ -288,7 +206,7 @@ public class AuthenticationService {
      * @return the number of users with active sessions
      */
     public int getActiveUserCount() {
-        return userToSessionsMap.size();
+        return sessionManager.getActiveUserCount();
     }
 
     /**

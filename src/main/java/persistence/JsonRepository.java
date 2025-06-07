@@ -151,8 +151,6 @@ public abstract class JsonRepository<T> implements Repository<T> {
         }
     }
 
-    // ... rest of the methods remain the same ...
-
     @Override
     public List<T> findAll() {
         try {

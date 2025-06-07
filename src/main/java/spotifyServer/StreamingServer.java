@@ -6,9 +6,18 @@ import java.net.Socket;
 import java.util.concurrent.ExecutorService;
 
 /**
- * MODIFICATIONS: Simplified StreamingServer for PURE AUDIO STREAMING ONLY.
- * Removed playlist logic, control commands, and text protocol mixing.
- * Now handles single song requests with raw MP3 data only.
+ * Dedicated streaming server for handling audio streaming requests.
+ *
+ * <p>This server operates on a separate port from the command server and is responsible
+ * for streaming raw MP3 audio data to clients. It implements the Singleton pattern to
+ * ensure only one streaming server instance exists in the application.</p>
+ *
+ * <p>The server accepts streaming requests in the format:
+ * {@code STREAM|filepath|title|artistId|userId} and responds with pure audio data
+ * without any text protocol mixing.</p>
+ *
+ * <p>Each client connection is handled in a separate thread to support concurrent
+ * streaming to multiple clients simultaneously.</p>
  */
 public class StreamingServer {
     private static StreamingServer instance;
@@ -18,19 +27,23 @@ public class StreamingServer {
     private ServerSocket serverSocket;
     private boolean running = false;
 
-    // MODIFICATIONS: Removed caching, playlist support, and PlaybackService dependency
-
     /**
      * Private constructor enforcing the Singleton pattern.
+     *
+     * @param port the port number for the streaming server
+     * @param threadPool the thread pool for handling concurrent client connections
      */
     private StreamingServer(int port, ExecutorService threadPool) {
         this.port = port;
         this.threadPool = threadPool;
-        // MODIFICATIONS: Removed PlaybackService dependency
     }
 
     /**
      * Returns the singleton instance of StreamingServer.
+     *
+     * @param port the port number for the streaming server
+     * @param threadPool the thread pool for handling concurrent client connections
+     * @return the singleton StreamingServer instance
      */
     public static synchronized StreamingServer getInstance(int port, ExecutorService threadPool) {
         if (instance == null) {
@@ -41,6 +54,9 @@ public class StreamingServer {
 
     /**
      * Returns the existing singleton instance of StreamingServer.
+     *
+     * @return the singleton StreamingServer instance
+     * @throws IllegalStateException if the server has not been initialized
      */
     public static StreamingServer getInstance() {
         if (instance == null) {
@@ -50,17 +66,16 @@ public class StreamingServer {
     }
 
     /**
-     * MODIFICATIONS: Removed preparation methods - no longer needed for single-song streaming.
-     */
-
-    /**
-     * Starts the streaming server.
+     * Starts the streaming server and begins accepting client connections.
+     *
+     * <p>This method runs in a blocking loop, accepting client connections and
+     * delegating each connection to a separate thread for processing.</p>
      */
     public void start() {
         try {
             serverSocket = new ServerSocket(port);
             running = true;
-            System.out.println("Pure Audio Streaming server started on port " + port);
+            System.out.println("Audio Streaming server started on port " + port);
 
             while (running) {
                 try {
@@ -84,12 +99,27 @@ public class StreamingServer {
     }
 
     /**
-     * MODIFICATIONS: Simplified streaming handler for PURE AUDIO ONLY.
-     * No text protocol mixing, no playlist logic, no control commands.
+     * Handler for individual audio streaming client connections.
+     *
+     * <p>This inner class is used because:</p>
+     * <ul>
+     *   <li>It has access to the outer class's context and resources</li>
+     *   <li>It's logically coupled to the StreamingServer and not used elsewhere</li>
+     *   <li>It keeps related streaming functionality encapsulated within the server</li>
+     *   <li>It can access private members of the outer class if needed</li>
+     * </ul>
+     *
+     * <p>Each instance handles a single client connection, reading the streaming
+     * request and delegating to the appropriate streaming method.</p>
      */
     private class PureAudioStreamingHandler implements Runnable {
         private final Socket clientSocket;
 
+        /**
+         * Creates a new streaming handler for the given client socket.
+         *
+         * @param clientSocket the socket connection to the client
+         */
         public PureAudioStreamingHandler(Socket clientSocket) {
             this.clientSocket = clientSocket;
         }
@@ -107,7 +137,6 @@ public class StreamingServer {
                     return;
                 }
 
-                // MODIFICATIONS: Only handle STREAM requests - no PLAYLIST or CONTROL
                 if (request.startsWith("STREAM|")) {
                     handlePureAudioStream(request);
                 } else {
@@ -128,9 +157,13 @@ public class StreamingServer {
         }
 
         /**
-         * MODIFICATIONS: Simplified to handle PURE AUDIO STREAMING only.
-         * Format: STREAM|filepath|title|artistId|userId
-         * No playlist logic, no text responses - just raw MP3 data.
+         * Handles a pure audio streaming request.
+         *
+         * <p>Parses the request format and initiates audio streaming for the specified
+         * file. The request must follow the format:</p>
+         * {@code STREAM|filepath|title|artistId|userId}
+         *
+         * @param request the streaming request string to parse and handle
          */
         private void handlePureAudioStream(String request) {
             String[] parts = request.split("\\|", 5);
@@ -154,7 +187,7 @@ public class StreamingServer {
 
             System.out.println("Starting pure audio stream: " + title + " for user ID: " + userId);
 
-            // MODIFICATIONS: Create MusicStreamer for SINGLE SONG streaming only
+            // Create MusicStreamer for single song streaming
             MusicStreamer streamer = new MusicStreamer();
             boolean success = streamer.streamAudioFile(filePath, clientSocket, userId);
 
@@ -163,18 +196,14 @@ public class StreamingServer {
             } else {
                 System.out.println("Successfully completed streaming: " + title + " for user: " + userId);
             }
-
-            // MODIFICATIONS: No response messages - client detects completion via audio stream end
         }
-
-        /**
-         * MODIFICATIONS: Removed playlist and control command handlers.
-         * All playlist navigation now handled via command port (45000).
-         */
     }
 
     /**
-     * Stops the streaming server.
+     * Stops the streaming server and closes all resources.
+     *
+     * <p>This method gracefully shuts down the server by closing the server socket
+     * and setting the running flag to false.</p>
      */
     public void stop() {
         running = false;
@@ -185,7 +214,7 @@ public class StreamingServer {
                 System.err.println("Error closing streaming server: " + e.getMessage());
             }
         }
-        // MODIFICATIONS: Removed cache clearing since we don't cache anymore
-        System.out.println("Pure audio streaming server stopped");
+
+        System.out.println("Audio streaming server stopped");
     }
 }

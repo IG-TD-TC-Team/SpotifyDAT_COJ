@@ -52,7 +52,7 @@ public class PlaylistNavigationProcessor extends AbstractProcessor {
                     return handleGetNextSong(userId);
 
                 case "auto_next":
-                    // MODIFICATIONS: This is called by client when current song ends
+                    // This is called by client when current song ends
                     return handleAutoNext(userId);
 
                 default:
@@ -77,7 +77,7 @@ public class PlaylistNavigationProcessor extends AbstractProcessor {
         if (nextSong != null) {
             System.out.println("User " + userId + " manually skipped to: " + nextSong.getTitle());
 
-            // MODIFICATIONS: Return multi-line response with stream request
+            // Return multi-line response with stream request
             StringBuilder response = new StringBuilder();
             response.append("SUCCESS: Next song ready\n");
             response.append("STREAM_REQUEST|45001|").append(nextSong.getFilePath())
@@ -103,7 +103,7 @@ public class PlaylistNavigationProcessor extends AbstractProcessor {
         if (prevSong != null) {
             System.out.println("User " + userId + " manually skipped to previous: " + prevSong.getTitle());
 
-            // MODIFICATIONS: Return multi-line response with stream request
+            // Return multi-line response with stream request
             StringBuilder response = new StringBuilder();
             response.append("SUCCESS: Previous song ready\n");
             response.append("STREAM_REQUEST|45001|").append(prevSong.getFilePath())
@@ -132,7 +132,7 @@ public class PlaylistNavigationProcessor extends AbstractProcessor {
         if (nextSong != null) {
             System.out.println("Auto-transition for user " + userId + " to: " + nextSong.getTitle());
 
-            // MODIFICATIONS: Return multi-line response with stream request for auto-next
+            // Return multi-line response with stream request for auto-next
             StringBuilder response = new StringBuilder();
             response.append("AUTO_NEXT_READY\n");
             response.append("STREAM_REQUEST|45001|").append(nextSong.getFilePath())
@@ -176,7 +176,7 @@ public class PlaylistNavigationProcessor extends AbstractProcessor {
     }
 
     /**
-     * MODIFICATIONS: Get current song info.
+     * Get current song info.
      */
     private String handleCurrentSong(Integer userId) {
         Song currentSong = playbackService.getCurrentSong(userId);
@@ -193,7 +193,7 @@ public class PlaylistNavigationProcessor extends AbstractProcessor {
     }
 
     /**
-     * MODIFICATIONS: Preview next song without advancing.
+     * Preview next song without advancing.
      */
     private String handleGetNextSong(Integer userId) {
         Song nextSong = playbackService.peekNextSong(userId);

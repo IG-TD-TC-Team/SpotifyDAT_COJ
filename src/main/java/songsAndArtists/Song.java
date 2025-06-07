@@ -13,7 +13,7 @@ public class Song {
     private int albumId;
     private Genre genre;
     private int durationSeconds;
-    public String filePath;
+    private String filePath;
 
     public Song(int songId, String title, int artistId, int albumId, Genre genre, int durationSeconds, String filePath) {
         this.songId = songId;

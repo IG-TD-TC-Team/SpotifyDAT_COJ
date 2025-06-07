@@ -8,6 +8,39 @@ import songsOrganisation.Playlist;
 import user.subscription.SubscriptionInfo;
 import user.subscription.SubscriptionPlan;
 
+/**
+ * Represents a user entity in the music streaming application.
+ *
+ * <p>This class encapsulates all user-related information including personal details,
+ * account management, subscription information, and social relationships. Each user
+ * has a unique identifier and maintains their own music library with playlists.</p>
+ *
+ * <p>Key features of the User entity:</p>
+ * <ul>
+ *   <li><strong>Identity Management:</strong> Unique ID, username, email, and password</li>
+ *   <li><strong>Personal Information:</strong> Name, date of birth, account creation date</li>
+ *   <li><strong>Subscription Management:</strong> Current plan and billing information</li>
+ *   <li><strong>Social Features:</strong> Following and follower relationships</li>
+ *   <li><strong>Music Organization:</strong> Personal library and default playlist</li>
+ *   <li><strong>Account Status:</strong> Active/inactive status management</li>
+ * </ul>
+ *
+ * <p>The User class is designed to work with the Jackson JSON serialization framework
+ * for persistence and API communication. It includes both a default constructor for
+ * deserialization and a parameterized constructor for programmatic creation.</p>
+ *
+ * <p>Social relationships are maintained through lists of user IDs rather than
+ * direct object references to avoid circular dependencies and improve serialization
+ * performance.</p>
+ *
+ * <p>Each user automatically receives a default "Favorites" playlist upon creation,
+ * and their personal library is initialized to contain this playlist.</p>
+ *
+ * @see SubscriptionPlan
+ * @see SubscriptionInfo
+ * @see Library
+ * @see Playlist
+ */
 public class User {
     // Identity fields
     private int userID;
@@ -38,6 +71,7 @@ public class User {
 
     /**
      * Default constructor for Jackson deserialization.
+     * Initializes the user with empty collections and a default library structure.
      */
     public User() {
         this.followedUsersIDs = new ArrayList<>();
@@ -51,7 +85,13 @@ public class User {
     }
 
     /**
-     * Constructor with required fields.
+     * Constructor with required fields for creating a new user.
+     *
+     * @param userID the unique identifier for this user
+     * @param username the user's chosen username (must be unique)
+     * @param email the user's email address (must be unique)
+     * @param password the user's hashed password
+     * @param accountCreationDate the date when the account was created
      */
     public User(int userID, String username, String email, String password, Date accountCreationDate) {
         this.userID = userID;

@@ -190,7 +190,7 @@ public class PlaybackControlCommandProcessor extends AbstractProcessor {
         }
 
         // Prepare streaming for the next song
-        streamingServer.prepareForStreaming(nextSong);
+        //streamingServer.prepareForStreaming(nextSong);
 
         // Return streaming instructions to client
         return "STREAM_REQUEST|" + SpotifySocketServer.STREAMING_PORT + "|" +
@@ -219,7 +219,7 @@ public class PlaybackControlCommandProcessor extends AbstractProcessor {
         }
 
         // Prepare streaming for the previous song
-        streamingServer.prepareForStreaming(prevSong);
+        //streamingServer.prepareForStreaming(prevSong);
 
         // Return streaming instructions to client
         return "STREAM_REQUEST|" + SpotifySocketServer.STREAMING_PORT + "|" +

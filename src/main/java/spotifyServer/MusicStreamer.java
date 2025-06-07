@@ -5,12 +5,11 @@ import java.net.Socket;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicLong;
-import services.playbackServices.PlaybackService;
-import songsAndArtists.Song;
 
 /**
- * Enhanced MusicStreamer with continuous playlist streaming support.
- * Handles seamless transitions between songs in a playlist.
+ * MODIFICATIONS: Fixed MusicStreamer to handle PURE AUDIO STREAMING ONLY.
+ * Removed all text control messages from audio stream to prevent MP3 decoder corruption.
+ * Now streams single songs on demand - playlist control handled via command port.
  */
 public class MusicStreamer {
     // Track active streamers by user ID
@@ -27,17 +26,11 @@ public class MusicStreamer {
     private Socket streamingSocket;
     private RandomAccessFile audioFile;
     private OutputStream clientOut;
-    private PrintWriter textOut;
 
-    // Reference to the PlaybackService
-    private PlaybackService playbackService;
-
-    // Playlist context
-    private int currentPlaylistId = -1;
-    private boolean isPlaylistStreaming = false;
+    // MODIFICATIONS: Removed PrintWriter textOut - NO MORE TEXT ON AUDIO STREAM!
 
     public MusicStreamer() {
-        this.playbackService = PlaybackService.getInstance();
+        // MODIFICATIONS: Removed PlaybackService dependency - not needed for pure audio streaming
     }
 
     /**
@@ -62,32 +55,26 @@ public class MusicStreamer {
     }
 
     /**
-     * Streams audio file with enhanced playlist support.
+     * MODIFICATIONS: Simplified to stream SINGLE SONG ONLY with PURE AUDIO DATA.
+     * No text messages, no playlist logic - just raw MP3 streaming.
+     *
      * @param filePath Path to the audio file
      * @param streamingSocket Socket for streaming
-     * @param userId User ID
-     * @param playlistId Playlist ID (or -1 if not part of a playlist)
+     * @param userId User ID for tracking
      * @return true if streaming started successfully
      */
-    public boolean streamAudioFile(String filePath, Socket streamingSocket, Integer userId, int playlistId) {
+    public boolean streamAudioFile(String filePath, Socket streamingSocket, Integer userId) {
         this.streamingSocket = streamingSocket;
-        this.currentPlaylistId = playlistId;
-        this.isPlaylistStreaming = (playlistId > 0);
+        this.currentFilePath = filePath;
 
         // Register with user ID system
         registerForUser(userId);
 
         try {
             clientOut = streamingSocket.getOutputStream();
-            textOut = new PrintWriter(new OutputStreamWriter(clientOut), true);
+            // MODIFICATIONS: NO PrintWriter - only binary output stream
 
-            // If this is playlist streaming, start the continuous playlist stream
-            if (isPlaylistStreaming) {
-                return streamPlaylistContinuously();
-            } else {
-                // Single song streaming
-                return streamSingleSong(filePath);
-            }
+            return streamSingleSong(filePath);
 
         } catch (Exception e) {
             System.err.println("Streaming error: " + e.getMessage());
@@ -98,115 +85,25 @@ public class MusicStreamer {
     }
 
     /**
-     * Streams a single song (non-playlist mode).
+     * MODIFICATIONS: Pure audio streaming with no text control messages.
      */
     private boolean streamSingleSong(String filePath) throws IOException {
         File file = new File(filePath);
         if (!file.exists() || !file.canRead()) {
             System.err.println("Error: File not accessible: " + filePath);
-            sendErrorToClient("File not found: " + filePath);
+            // MODIFICATIONS: No error messages sent to client - just fail silently
             return false;
         }
 
         this.currentFilePath = filePath;
-        textOut.println("STREAMING_START|" + file.getName());
+        // MODIFICATIONS: Removed text messages - client will detect stream start/end via HTTP
         System.out.println("Started streaming single song for user " + userId + ": " + file.getName());
 
         return streamFileContent(file);
     }
 
     /**
-     * Streams a playlist continuously, transitioning between songs seamlessly.
-     */
-    private boolean streamPlaylistContinuously() {
-        try {
-            textOut.println("PLAYLIST_STREAMING_START|" + currentPlaylistId);
-            System.out.println("Started continuous playlist streaming for user " + userId + ", playlist " + currentPlaylistId);
-
-            // Get the current song from the playback service
-            Song currentSong = playbackService.getCurrentSong(userId);
-            if (currentSong == null) {
-                // No current song, get the first song
-                currentSong = playbackService.getNextSong(userId);
-            }
-
-            while (currentSong != null && !stopRequested.get()) {
-                // Check for pause
-                waitWhilePaused();
-
-                // Stream the current song
-                boolean streamSuccess = streamSongInPlaylist(currentSong);
-                if (!streamSuccess) {
-                    System.err.println("Failed to stream song: " + currentSong.getTitle());
-                    break;
-                }
-
-                // Check if we should continue to next song
-                if (stopRequested.get()) {
-                    break;
-                }
-
-                // Get next song
-                Song nextSong = playbackService.getNextSong(userId);
-                if (nextSong != null) {
-                    textOut.println("NEXT_SONG|" + nextSong.getTitle() + "|" + nextSong.getFilePath());
-                    System.out.println("Transitioning to next song: " + nextSong.getTitle());
-
-                    // Small pause between songs to ensure client is ready
-                    Thread.sleep(100);
-
-                    currentSong = nextSong;
-                } else {
-                    // End of playlist
-                    textOut.println("PLAYLIST_COMPLETE");
-                    System.out.println("Playlist complete for user: " + userId);
-                    break;
-                }
-            }
-
-            return true;
-
-        } catch (Exception e) {
-            System.err.println("Error in continuous playlist streaming: " + e.getMessage());
-            e.printStackTrace();
-            return false;
-        }
-    }
-
-    /**
-     * Streams a single song within a playlist context.
-     */
-    private boolean streamSongInPlaylist(Song song) {
-        try {
-            File file = new File(song.getFilePath());
-            if (!file.exists() || !file.canRead()) {
-                System.err.println("Error: Song file not accessible: " + song.getFilePath());
-                textOut.println("SONG_ERROR|File not found: " + song.getTitle());
-                return false;
-            }
-
-            this.currentFilePath = song.getFilePath();
-            textOut.println("SONG_START|" + song.getTitle() + "|" + song.getFilePath());
-            System.out.println("Streaming song in playlist: " + song.getTitle() + " for user " + userId);
-
-            boolean success = streamFileContent(file);
-
-            if (success) {
-                textOut.println("SONG_END|" + song.getTitle());
-                System.out.println("Finished streaming song: " + song.getTitle());
-            }
-
-            return success;
-
-        } catch (Exception e) {
-            System.err.println("Error streaming song " + song.getTitle() + ": " + e.getMessage());
-            textOut.println("SONG_ERROR|" + song.getTitle() + "|" + e.getMessage());
-            return false;
-        }
-    }
-
-    /**
-     * Streams the content of a file.
+     * MODIFICATIONS: Pure audio content streaming - no control messages mixed in.
      */
     private boolean streamFileContent(File file) throws IOException {
         try (RandomAccessFile audioFile = new RandomAccessFile(file, "r")) {
@@ -227,7 +124,7 @@ public class MusicStreamer {
                     return false;
                 }
 
-                // Stream to client
+                // MODIFICATIONS: ONLY stream raw audio data - no text messages!
                 clientOut.write(buffer, 0, bytesRead);
                 clientOut.flush();
                 bytesStreamed.addAndGet(bytesRead);
@@ -243,6 +140,7 @@ public class MusicStreamer {
             }
 
             System.out.println("Finished streaming file: " + file.getName() + " (" + totalBytesRead + " bytes)");
+            // MODIFICATIONS: No "STREAMING_COMPLETE" message - client detects end via audio events
             return true;
 
         } catch (IOException e) {
@@ -252,99 +150,41 @@ public class MusicStreamer {
     }
 
     /**
-     * Checks if this streamer is streaming from a playlist.
-     */
-    public boolean isPlaylistStreaming() {
-        return isPlaylistStreaming;
-    }
-
-    /**
-     * Gets the ID of the playlist being streamed, or -1 if not streaming a playlist.
-     */
-    public int getCurrentPlaylistId() {
-        return currentPlaylistId;
-    }
-
-    /**
-     * Pauses streaming for the current user.
+     * MODIFICATIONS: Simplified pause - no text messages sent.
      */
     public synchronized void pause() {
         if (!isPaused.get()) {
             isPaused.set(true);
-            if (textOut != null) {
-                textOut.println("PLAYBACK_PAUSED");
-            }
+            // MODIFICATIONS: No text message to client - control via command port only
             System.out.println("PAUSE requested for user: " + userId);
         }
     }
 
     /**
-     * Resumes streaming for the current user after a pause.
+     * MODIFICATIONS: Simplified resume - no text messages sent.
      */
     public synchronized void resume() {
         if (isPaused.get()) {
             isPaused.set(false);
-            if (textOut != null) {
-                textOut.println("PLAYBACK_RESUMED");
-            }
+            // MODIFICATIONS: No text message to client - control via command port only
             System.out.println("RESUME requested for user: " + userId);
         }
     }
 
     /**
-     * Stops the current streaming session completely.
+     * MODIFICATIONS: Simplified stop - no text messages sent.
      */
     public synchronized void stopStreaming() {
         stopRequested.set(true);
         isPaused.set(false);
 
-        if (textOut != null) {
-            textOut.println("STREAMING_STOPPED");
-        }
-
+        // MODIFICATIONS: No text message to client - control via command port only
         System.out.println("STOP requested for user: " + userId);
-
-        // If this was a playlist, also stop the playlist navigation
-        if (isPlaylistStreaming && userId != null && playbackService != null) {
-            playbackService.stopPlayback(userId);
-        }
     }
 
     /**
-     * Skips to the next song in playlist mode.
+     * MODIFICATIONS: Removed skip methods - playlist navigation handled via command port.
      */
-    public synchronized boolean skipToNext() {
-        if (!isPlaylistStreaming || userId == null) {
-            return false;
-        }
-
-        Song nextSong = playbackService.getNextSong(userId);
-        if (nextSong != null && textOut != null) {
-            textOut.println("SKIP_TO_NEXT|" + nextSong.getTitle() + "|" + nextSong.getFilePath());
-            System.out.println("Skipping to next song: " + nextSong.getTitle());
-            return true;
-        }
-
-        return false;
-    }
-
-    /**
-     * Skips to the previous song in playlist mode.
-     */
-    public synchronized boolean skipToPrevious() {
-        if (!isPlaylistStreaming || userId == null) {
-            return false;
-        }
-
-        Song prevSong = playbackService.getPreviousSong(userId);
-        if (prevSong != null && textOut != null) {
-            textOut.println("SKIP_TO_PREVIOUS|" + prevSong.getTitle() + "|" + prevSong.getFilePath());
-            System.out.println("Skipping to previous song: " + prevSong.getTitle());
-            return true;
-        }
-
-        return false;
-    }
 
     /**
      * Waits while streaming is paused.
@@ -360,15 +200,6 @@ public class MusicStreamer {
                     break;
                 }
             }
-        }
-    }
-
-    /**
-     * Sends an error message to the client.
-     */
-    private void sendErrorToClient(String message) {
-        if (textOut != null) {
-            textOut.println("ERROR|" + message);
         }
     }
 

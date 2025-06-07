@@ -10,9 +10,7 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- * Extracts music resources from JAR to external filesystem, following the same pattern
- * as JsonRepository for data files. This allows the existing streaming logic to work
- * unchanged with regular file paths.
+ * Extracts music resources from JAR to external filesystem.
  */
 public class MusicResourceExtractor {
 
@@ -98,13 +96,22 @@ public class MusicResourceExtractor {
         System.out.println("Extracting music resources from JAR...");
 
         try {
-            // Get list of music files from resources
-            List<String> musicFiles = getMusicFilesFromResources();
+            // First try the comprehensive JAR scanning method
+            List<String> musicFiles = scanMusicFilesInJar();
+
+            // If JAR scanning fails or returns empty, fall back to directory scanning
+            if (musicFiles.isEmpty()) {
+                System.out.println("JAR scanning returned no files, trying alternative method...");
+                musicFiles = getMusicFilesFromResourcesDirectory();
+            }
 
             if (musicFiles.isEmpty()) {
                 System.out.println("No music files found in JAR resources");
                 return;
             }
+
+            System.out.println("Found " + musicFiles.size() + " music files to extract:");
+            musicFiles.forEach(file -> System.out.println("  - " + file));
 
             int extractedCount = 0;
             for (String musicFile : musicFiles) {
@@ -122,58 +129,24 @@ public class MusicResourceExtractor {
     }
 
     /**
-     * Gets a list of music files from the JAR resources.
-     * You can either hardcode known files or scan the resources.
-     */
-    private static List<String> getMusicFilesFromResources() {
-        // For now, let's try to extract based on common music file extensions
-        // In a real implementation, you might want to scan the JAR or have a predefined list
-
-        List<String> musicFiles = new ArrayList<>();
-
-        // Try some common music files that might be in your resources
-        String[] commonMusicFiles = {
-                "fuego.mp3",
-                "supermamielive.mp3",
-                "echameelculpa.mp3",
-                "echangelaculpa.mp3",
-                "mayonesa.mp3",
-                "palmae.mp3",
-                "elballelive.mp3",
-                // Add more files as needed...
-        };
-
-        for (String fileName : commonMusicFiles) {
-            // Check if the resource exists
-            try (InputStream stream = MusicResourceExtractor.class.getClassLoader()
-                    .getResourceAsStream("music/" + fileName)) {
-                if (stream != null) {
-                    musicFiles.add(fileName);
-                }
-            } catch (IOException e) {
-                // File doesn't exist, skip it
-            }
-        }
-
-        return musicFiles;
-    }
-
-    /**
-     * Alternative method to get ALL music files by scanning the JAR.
-     * This is more comprehensive but requires additional JAR scanning logic.
+     * Scans the JAR file to find all music files in the /music directory.
+     * This is the most comprehensive method for finding all music files.
      */
     private static List<String> scanMusicFilesInJar() {
         List<String> musicFiles = new ArrayList<>();
 
         try {
-            // This is a more advanced approach to scan the JAR
             URI uri = MusicResourceExtractor.class.getProtectionDomain().getCodeSource().getLocation().toURI();
 
             if (uri.toString().endsWith(".jar")) {
+                System.out.println("Scanning JAR file for music files: " + uri);
+
                 try (FileSystem fileSystem = FileSystems.newFileSystem(Paths.get(uri), Collections.emptyMap())) {
                     Path musicPath = fileSystem.getPath("/music");
 
                     if (Files.exists(musicPath)) {
+                        System.out.println("Found /music directory in JAR, scanning contents...");
+
                         Files.walk(musicPath)
                                 .filter(Files::isRegularFile)
                                 .filter(path -> {
@@ -183,15 +156,79 @@ public class MusicResourceExtractor {
                                 })
                                 .forEach(path -> {
                                     String relativePath = musicPath.relativize(path).toString();
-                                    musicFiles.add(relativePath.replace('\\', '/'));
+                                    // Normalize path separators to forward slashes
+                                    String normalizedPath = relativePath.replace('\\', '/');
+                                    musicFiles.add(normalizedPath);
+                                    System.out.println("  Found music file: " + normalizedPath);
                                 });
+                    } else {
+                        System.out.println("No /music directory found in JAR");
                     }
                 }
             }
         } catch (Exception e) {
             System.err.println("Could not scan JAR for music files: " + e.getMessage());
-            // Fall back to the predefined list method
-            return getMusicFilesFromResources();
+            e.printStackTrace();
+        }
+
+        return musicFiles;
+    }
+
+    /**
+     * Alternative method to find music files by checking the classpath resources.
+     * This method tries a different approach when JAR scanning fails.
+     */
+    private static List<String> getMusicFilesFromResourcesDirectory() {
+        List<String> musicFiles = new ArrayList<>();
+
+        try {
+            // Try to get the music directory as a resource
+            URI musicUri = MusicResourceExtractor.class.getClassLoader().getResource("music").toURI();
+
+            if ("jar".equals(musicUri.getScheme())) {
+                // Handle JAR file system
+                String[] parts = musicUri.toString().split("!");
+                URI jarUri = URI.create(parts[0]);
+
+                try (FileSystem jarFs = FileSystems.newFileSystem(jarUri, Collections.emptyMap())) {
+                    Path musicPath = jarFs.getPath(parts[1]);
+
+                    if (Files.exists(musicPath)) {
+                        Files.list(musicPath)
+                                .filter(Files::isRegularFile)
+                                .filter(path -> {
+                                    String fileName = path.getFileName().toString().toLowerCase();
+                                    return fileName.endsWith(".mp3") || fileName.endsWith(".wav") ||
+                                            fileName.endsWith(".flac") || fileName.endsWith(".ogg");
+                                })
+                                .forEach(path -> {
+                                    String fileName = path.getFileName().toString();
+                                    musicFiles.add(fileName);
+                                    System.out.println("  Found music file via resources: " + fileName);
+                                });
+                    }
+                }
+            } else {
+                // Handle regular file system (development mode)
+                Path musicPath = Paths.get(musicUri);
+                if (Files.exists(musicPath)) {
+                    Files.list(musicPath)
+                            .filter(Files::isRegularFile)
+                            .filter(path -> {
+                                String fileName = path.getFileName().toString().toLowerCase();
+                                return fileName.endsWith(".mp3") || fileName.endsWith(".wav") ||
+                                        fileName.endsWith(".flac") || fileName.endsWith(".ogg");
+                            })
+                            .forEach(path -> {
+                                String fileName = path.getFileName().toString();
+                                musicFiles.add(fileName);
+                                System.out.println("  Found music file: " + fileName);
+                            });
+                }
+            }
+        } catch (Exception e) {
+            System.err.println("Could not scan resources for music files: " + e.getMessage());
+            e.printStackTrace();
         }
 
         return musicFiles;
@@ -265,5 +302,42 @@ public class MusicResourceExtractor {
         }
 
         return files;
+    }
+
+    /**
+     * Debug method to list all resources that can be found in the music directory.
+     * Useful for troubleshooting what files are actually available in the JAR.
+     */
+    public static void debugListMusicResources() {
+        System.out.println("=== DEBUG: Music Resources Analysis ===");
+
+        // Method 1: Try JAR scanning
+        System.out.println("Method 1 - JAR Scanning:");
+        List<String> jarFiles = scanMusicFilesInJar();
+        if (jarFiles.isEmpty()) {
+            System.out.println("  No files found via JAR scanning");
+        } else {
+            jarFiles.forEach(file -> System.out.println("  JAR: " + file));
+        }
+
+        // Method 2: Try resource directory scanning
+        System.out.println("Method 2 - Resource Directory Scanning:");
+        List<String> resourceFiles = getMusicFilesFromResourcesDirectory();
+        if (resourceFiles.isEmpty()) {
+            System.out.println("  No files found via resource scanning");
+        } else {
+            resourceFiles.forEach(file -> System.out.println("  Resource: " + file));
+        }
+
+        // Method 3: Check if music directory resource exists
+        System.out.println("Method 3 - Resource Existence Check:");
+        try {
+            URI musicUri = MusicResourceExtractor.class.getClassLoader().getResource("music").toURI();
+            System.out.println("  Music resource URI: " + musicUri);
+        } catch (Exception e) {
+            System.out.println("  Music resource not found: " + e.getMessage());
+        }
+
+        System.out.println("=== End Debug Analysis ===");
     }
 }

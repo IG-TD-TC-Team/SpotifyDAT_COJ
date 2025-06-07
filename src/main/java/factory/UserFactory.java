@@ -2,6 +2,10 @@ package factory;
 
 import persistence.interfaces.UserRepositoryInterface;
 import services.playlistServices.PlaylistService;
+import services.playlistServices.SongInPlaylistService;
+import services.songServices.SongService;
+import songsAndArtists.Song;
+import songsOrganisation.Playlist;
 import user.*;
 import user.security.PasswordHasher;
 import user.security.SHA256Hasher;
@@ -116,20 +120,52 @@ public class UserFactory {
     }
 
     /**
-     * Creates a default playlist for a user and ensures it's saved to the repository.
+     * Creates a default playlist for a user with pre-selected songs.
      *
      * @param user The user to create the default playlist for
      */
     private void createDefaultPlaylistForUser(User user) {
         try {
             // Create default "Favorites" playlist using PlaylistFactory
-            playlistFactory.createPlaylist("Favorites", user.getUserID());
+            Playlist favoritesPlaylist = playlistFactory.createPlaylist("Favorites", user.getUserID());
 
-            System.out.println("Created default playlist 'Favorites' for user → ID=" + user.getUserID()
+            // Add 4 default songs to the playlist
+            addDefaultSongsToPlaylist(favoritesPlaylist);
+
+            System.out.println("Created default playlist 'Favorites' with default songs for user → ID=" + user.getUserID()
                     + ", username=" + user.getUsername());
         } catch (Exception e) {
             System.err.println("Error creating default playlist for user " + user.getUserID() + ": " + e.getMessage());
             e.printStackTrace();
+        }
+    }
+
+    /**
+     * Adds 4 default songs to a newly created user's favorites playlist.
+     * Uses predefined song IDs for consistent default content.
+     *
+     * @param playlist The playlist to add default songs to
+     */
+    private void addDefaultSongsToPlaylist(Playlist playlist) {
+        try {
+            SongService songService = SongService.getInstance();
+            SongInPlaylistService playlistSongService = SongInPlaylistService.getInstance();
+
+            //Default Songs
+            int[] defaultSongIds = {1141, 1146, 1148, 1140};
+
+            for (int songId : defaultSongIds) {
+                Song song = songService.getSongById(songId);
+                if (song != null) {
+                    playlistSongService.addSongToPlaylist(playlist.getPlaylistID(), song);
+                    System.out.println("Added default song: " + song.getTitle() + " to favorites");
+                } else {
+                    System.out.println("Default song not found with ID: " + songId);
+                }
+            }
+
+        } catch (Exception e) {
+            System.err.println("Error adding default songs to playlist: " + e.getMessage());
         }
     }
 

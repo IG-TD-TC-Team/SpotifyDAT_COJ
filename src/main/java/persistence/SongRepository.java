@@ -21,7 +21,7 @@ public class SongRepository extends JsonRepository<Song> implements SongReposito
 
     /**
      * Constructor that initializes the Song repository.
-     * It sets the entity type to Song, the storage file to "songs.json",
+     * It sets the entity type to Song, the storage file to "songs.json"
      */
     private SongRepository() {
         super(Song.class, "songs.json", Song::getSongId);
@@ -39,7 +39,7 @@ public class SongRepository extends JsonRepository<Song> implements SongReposito
         return instance;
     }
     /**
-     * Finds all songs in the repository.
+     * Finds all songs in the repository by Artist ID.
      *
      * @return A list of all songs.
      */
@@ -51,7 +51,7 @@ public class SongRepository extends JsonRepository<Song> implements SongReposito
     }
 
     /**
-     * Finds all songs in the repository.
+     * Finds all songs in the repository ny Genre.
      *
      * @return A list of all songs.
      */
@@ -63,7 +63,7 @@ public class SongRepository extends JsonRepository<Song> implements SongReposito
     }
 
     /**
-     * Finds all songs in the repository.
+     * Finds all songs in the repository by Song Title.
      *
      * @return A list of all songs.
      */

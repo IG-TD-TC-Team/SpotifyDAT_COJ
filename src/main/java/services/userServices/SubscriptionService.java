@@ -12,8 +12,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
-//Implement cache
-//Implement automatic downgrade when expired
+
 
 /**
  * Service class for subscription-related operations.

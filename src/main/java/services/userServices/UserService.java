@@ -7,11 +7,9 @@ import services.userServices.exceptions.UserNotFoundException;
 import services.userServices.exceptions.UserValidationException;
 import user.User;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-//Cache not implemented
 
 /**
  * Manages user-related operations such as retrieving user information

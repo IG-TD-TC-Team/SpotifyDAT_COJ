@@ -3,26 +3,21 @@ package spotifyServer.commandProcessor;
 import services.songServices.SongService;
 import songsAndArtists.Song;
 import spotifyServer.SpotifySocketServer;
-import spotifyServer.StreamingServer;
 
-import java.net.Socket;
-import java.util.Arrays;
 import java.util.List;
 
 /**
- * Enhanced PlayCommandProcessor that properly separates command processing
- * from music streaming by using the two-port architecture.
+ * MODIFICATIONS: Updated PlayCommandProcessor for simplified streaming architecture.
+ * Removed prepareForStreaming call since StreamingServer now handles pure audio only.
  *
  * This processor handles the "play" command by:
  * 1. Validating the song exists
  * 2. Sending streaming instructions to the client (on command port)
- * 3. Letting the client initiate streaming on the streaming port
+ * 3. Letting the client initiate pure audio streaming on the streaming port
  */
-
-
 public class PlayCommandProcessor extends AbstractProcessor {
     private final SongService songService = SongService.getInstance();
-    private final StreamingServer streamingServer = StreamingServer.getInstance();
+    // MODIFICATIONS: Removed StreamingServer dependency since no preparation needed
 
     @Override
     public String processCommand(String command) {
@@ -97,16 +92,16 @@ public class PlayCommandProcessor extends AbstractProcessor {
                     return "ERROR: Could not determine user identity";
                 }
 
-                // Include user ID in streaming instructions - this is the key handoff!
+                // MODIFICATIONS: Build streaming request for single song playback
                 String response = "STREAM_REQUEST|" + SpotifySocketServer.STREAMING_PORT +
                         "|" + song.getFilePath() + "|" + song.getTitle() +
                         "|" + song.getArtistId() + "|" + userId;
 
-                System.out.println("Preparing stream for user " + username + " (ID: " + userId +
+                System.out.println("Sending stream request for user " + username + " (ID: " + userId +
                         "): " + song.getTitle());
 
-                // Prepare streaming server
-                streamingServer.prepareForStreaming(song);
+                // MODIFICATIONS: No preparation needed - StreamingServer handles pure audio on demand
+                // Client will connect to streaming port and request this specific song
 
                 return response;
 
@@ -142,8 +137,9 @@ public class PlayCommandProcessor extends AbstractProcessor {
     }
 
     /**
-     * Helper method to handle multiple song matches.
+     * MODIFICATIONS: Helper method to handle multiple song matches.
      * Creates a user-friendly error message when multiple songs match the search.
+     * Note: This method is not currently used but kept for future enhancements.
      *
      * @param songName The searched song name
      * @param matchingSongs List of matching songs

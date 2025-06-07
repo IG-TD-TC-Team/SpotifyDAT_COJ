@@ -36,32 +36,32 @@
   "ownerID" : 5,
   "playlistID" : 4,
   "likedByUsers" : [ ],
-  "sharedWith" : [ ],
-  "publiclyShareable" : false
+  "publiclyShareable" : false,
+  "sharedWith" : [ ]
 }, {
   "name" : "sofia",
   "songs" : [ ],
   "ownerID" : 1,
   "playlistID" : 6,
   "likedByUsers" : [ ],
-  "sharedWith" : [ ],
-  "publiclyShareable" : false
+  "publiclyShareable" : false,
+  "sharedWith" : [ ]
 }, {
   "name" : "summerHits",
   "songs" : [ ],
   "ownerID" : 46,
   "playlistID" : 10,
   "likedByUsers" : [ ],
-  "sharedWith" : [ ],
-  "publiclyShareable" : false
+  "publiclyShareable" : false,
+  "sharedWith" : [ ]
 }, {
   "name" : "autumn",
   "songs" : [ ],
   "ownerID" : 43,
   "playlistID" : 14,
   "likedByUsers" : [ ],
-  "sharedWith" : [ ],
-  "publiclyShareable" : false
+  "publiclyShareable" : false,
+  "sharedWith" : [ ]
 }, {
   "name" : "summer",
   "songs" : [ {
@@ -76,8 +76,8 @@
   "ownerID" : 43,
   "playlistID" : 15,
   "likedByUsers" : [ ],
-  "sharedWith" : [ ],
-  "publiclyShareable" : false
+  "publiclyShareable" : false,
+  "sharedWith" : [ ]
 }, {
   "name" : "samedi",
   "songs" : [ {
@@ -100,16 +100,16 @@
   "ownerID" : 43,
   "playlistID" : 16,
   "likedByUsers" : [ ],
-  "sharedWith" : [ ],
-  "publiclyShareable" : false
+  "publiclyShareable" : false,
+  "sharedWith" : [ ]
 }, {
   "name" : "Favorites",
   "songs" : [ ],
   "ownerID" : 47,
   "playlistID" : 17,
   "likedByUsers" : [ ],
-  "sharedWith" : [ ],
-  "publiclyShareable" : false
+  "publiclyShareable" : false,
+  "sharedWith" : [ ]
 }, {
   "name" : "jiji",
   "songs" : [ {
@@ -128,20 +128,28 @@
     "genre" : "HIP_HOP",
     "durationSeconds" : 195,
     "filePath" : "C:\\Users\\facos\\Desktop\\music\\victimedelamode.mp3"
+  }, {
+    "songId" : 1141,
+    "title" : "La Camisa Negra",
+    "artistId" : 128,
+    "albumId" : 10055,
+    "genre" : "ROCK",
+    "durationSeconds" : 245,
+    "filePath" : "D:\\DATAFiles\\Codes\\SpotifyDAT_COJ\\music\\lacamisanegra.mp3"
   } ],
   "ownerID" : 47,
   "playlistID" : 18,
   "likedByUsers" : [ 47, 42 ],
-  "sharedWith" : [ 42 ],
-  "publiclyShareable" : false
+  "publiclyShareable" : false,
+  "sharedWith" : [ 42 ]
 }, {
   "name" : "Favorites",
   "songs" : [ ],
   "ownerID" : 48,
   "playlistID" : 19,
   "likedByUsers" : [ ],
-  "sharedWith" : [ ],
-  "publiclyShareable" : false
+  "publiclyShareable" : false,
+  "sharedWith" : [ ]
 }, {
   "name" : "lundi",
   "songs" : [ {
@@ -164,8 +172,8 @@
   "ownerID" : 48,
   "playlistID" : 20,
   "likedByUsers" : [ ],
-  "sharedWith" : [ ],
-  "publiclyShareable" : false
+  "publiclyShareable" : false,
+  "sharedWith" : [ ]
 }, {
   "name" : "mardi",
   "songs" : [ {
@@ -196,16 +204,16 @@
   "ownerID" : 43,
   "playlistID" : 21,
   "likedByUsers" : [ ],
-  "sharedWith" : [ ],
-  "publiclyShareable" : false
+  "publiclyShareable" : false,
+  "sharedWith" : [ ]
 }, {
   "name" : "lolo",
   "songs" : [ ],
   "ownerID" : 42,
   "playlistID" : 22,
   "likedByUsers" : [ ],
-  "sharedWith" : [ ],
-  "publiclyShareable" : false
+  "publiclyShareable" : false,
+  "sharedWith" : [ ]
 }, {
   "name" : "mardimidi",
   "songs" : [ {
@@ -220,16 +228,16 @@
   "ownerID" : 43,
   "playlistID" : 23,
   "likedByUsers" : [ ],
-  "sharedWith" : [ ],
-  "publiclyShareable" : false
+  "publiclyShareable" : false,
+  "sharedWith" : [ ]
 }, {
   "name" : "Favorites",
   "songs" : [ ],
   "ownerID" : 50,
   "playlistID" : 24,
   "likedByUsers" : [ ],
-  "sharedWith" : [ ],
-  "publiclyShareable" : false
+  "publiclyShareable" : false,
+  "sharedWith" : [ ]
 }, {
   "name" : "julio",
   "songs" : [ {
@@ -252,6 +260,6 @@
   "ownerID" : 50,
   "playlistID" : 25,
   "likedByUsers" : [ ],
-  "sharedWith" : [ ],
-  "publiclyShareable" : false
+  "publiclyShareable" : false,
+  "sharedWith" : [ ]
 } ]

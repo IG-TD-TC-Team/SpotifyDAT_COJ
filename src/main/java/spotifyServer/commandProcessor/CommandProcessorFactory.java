@@ -43,6 +43,7 @@ public class CommandProcessorFactory {
 
         // Playback-related processors
         PlayCommandProcessor playProcessor = new PlayCommandProcessor();
+        PlaylistNavigationProcessor playlistNavProcessor = new PlaylistNavigationProcessor();
         PlaylistCommandProcessor playlistProcessor = new PlaylistCommandProcessor();
         PlaybackControlCommandProcessor playbackControlProcessor = new PlaybackControlCommandProcessor(); // <-- THIS WAS MISSING!
 
@@ -67,7 +68,8 @@ public class CommandProcessorFactory {
         playbackControlProcessor.setNextProcessor(searchProcessor);
 
         searchProcessor.setNextProcessor(listMusicProcessor);
-        listMusicProcessor.setNextProcessor(defaultProcessor);
+        listMusicProcessor.setNextProcessor(playlistNavProcessor);
+        playlistNavProcessor.setNextProcessor(defaultProcessor);
 
         // Return the first processor (entry point for all commands)
         return helpProcessor;

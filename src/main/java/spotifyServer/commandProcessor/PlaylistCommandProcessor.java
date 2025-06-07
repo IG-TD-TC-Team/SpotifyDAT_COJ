@@ -5,61 +5,41 @@ import services.playlistServices.PlaylistService;
 import songsAndArtists.Song;
 import songsOrganisation.Playlist;
 import spotifyServer.SpotifySocketServer;
-import spotifyServer.StreamingServer;
-import services.userServices.AuthorizationService;
 
-import java.util.LinkedList;
+import java.util.List;
 
 /**
- * Processor that handles playlist streaming commands.
- * This class is part of the Chain of Responsibility pattern and processes
- * commands related to playing playlists through the streaming server.
+ * MODIFICATIONS: Updated PlaylistCommandProcessor for simplified streaming architecture.
+ * Removed prepareForPlaylistStreaming call since StreamingServer now handles pure audio only.
+ * Now uses PlaybackService to start playlist and returns first song stream request.
  *
- * The processor supports various command formats for playlist identification:
- * - By ID: "playlist 123" or "playlist id 123"
- * - By name: "playlist My Playlist" or "playlist name My Playlist"
- *
- * Upon successful processing, it returns streaming instructions to the client.
+ * This processor handles the "playlist" command by:
+ * 1. Finding the requested playlist
+ * 2. Starting playlist in PlaybackService
+ * 3. Sending streaming instructions for first song to client
+ * 4. Client-driven navigation handles subsequent songs via auto_next
  */
 public class PlaylistCommandProcessor extends AbstractProcessor {
     private final PlaylistService playlistService = PlaylistService.getInstance();
-    private final StreamingServer streamingServer;
-    private final AuthorizationService authorizationService = AuthorizationService.getInstance();
     private final PlaybackService playbackService = PlaybackService.getInstance();
+    // MODIFICATIONS: Removed StreamingServer dependency since no preparation needed
 
-    /**
-     * Constructs a new PlaylistCommandProcessor.
-     * Initializes the StreamingServer instance required for playlist streaming.
-     */
-    public PlaylistCommandProcessor() {
-        this.streamingServer = StreamingServer.getInstance();
-    }
-
-    /**
-     * Processes playlist commands and either handles them or passes them to the next processor.
-     * This method parses playlist commands, validates authentication and authorization,
-     * and prepares the streaming server for playback if all checks pass.
-     *
-     * @param command The command string from the client
-     * @return A response string containing streaming instructions or an error message
-     */
     @Override
     public String processCommand(String command) {
         if (command.toLowerCase().startsWith("playlist ")) {
             // Check authentication
             if (!isAuthenticated()) {
-                return "ERROR: You must be logged in to play music";
+                return "ERROR: You must be logged in to play playlists";
             }
 
             try {
-                // Parse command with support for both ID and name
-                String[] parts = parseCommandWithQuotes(command);
-
+                // Parse the command to get playlist identifier
+                String[] parts = command.split(" ", 3);
                 if (parts.length < 2) {
-                    return "Error: Missing playlist identifier. Usage: playlist <playlist_id> or playlist id <id> or playlist name <name>";
+                    return "Error: Missing playlist identifier. Usage: playlist <playlist_name> or playlist id <playlist_id>";
                 }
 
-                // Get user context
+                Playlist playlist = null;
                 Integer userId = getCurrentUserId();
                 String username = getCurrentUsername();
 
@@ -67,105 +47,69 @@ public class PlaylistCommandProcessor extends AbstractProcessor {
                     return "ERROR: Could not determine user identity";
                 }
 
-                Playlist playlist = null;
-                int playlistId = -1;
-
                 // Handle different command formats
                 if (parts.length == 2) {
-                    // Original format: "playlist <identifier>"
-                    String identifier = parts[1];
-
-                    if (identifier.matches("\\d+")) {
-                        // It's numeric, treat as ID
-                        playlistId = Integer.parseInt(identifier);
-                        playlist = playlistService.getPlaylistById(playlistId);
-
-                        if (playlist == null) {
-                            return "Error: Playlist not found with ID: " + playlistId;
-                        }
-                    } else {
-                        // It's not numeric, treat as name - search in user's playlists
-                        playlist = playlistService.getPlaylistByNameAndOwner(identifier, userId);
-
-                        if (playlist == null) {
-                            return "Error: Playlist not found with name: " + identifier;
-                        }
-                        playlistId = playlist.getPlaylistID();
+                    // Format: "playlist <name>"
+                    String playlistName = parts[1];
+                    playlist = findPlaylistByName(playlistName, userId);
+                    if (playlist == null) {
+                        return "Error: Playlist not found with name: " + playlistName;
                     }
-                } else if (parts.length >= 3) {
-                    // New format: "playlist id <id>" or "playlist name <name>"
+                } else if (parts.length == 3) {
+                    // Format: "playlist id <playlist_id>"
                     String identifierType = parts[1].toLowerCase();
                     String identifier = parts[2];
 
                     if ("id".equals(identifierType)) {
                         try {
-                            playlistId = Integer.parseInt(identifier);
+                            int playlistId = Integer.parseInt(identifier);
                             playlist = playlistService.getPlaylistById(playlistId);
-
                             if (playlist == null) {
                                 return "Error: Playlist not found with ID: " + playlistId;
+                            }
+
+                            // Check if user can access this playlist
+                            if (playlist.getOwnerID() != userId && !playlist.getSharedWith().contains(userId)) {
+                                return "Error: You don't have access to playlist ID: " + playlistId;
                             }
                         } catch (NumberFormatException e) {
                             return "Error: Invalid playlist ID format. Please provide a numeric ID.";
                         }
-                    } else if ("name".equals(identifierType)) {
-                        // Remove quotes if present
-                        if (identifier.startsWith("\"") && identifier.endsWith("\"")) {
-                            identifier = identifier.substring(1, identifier.length() - 1);
-                        }
-
-                        playlist = playlistService.getPlaylistByNameAndOwner(identifier, userId);
-
-                        if (playlist == null) {
-                            return "Error: Playlist not found with name: " + identifier;
-                        }
-                        playlistId = playlist.getPlaylistID();
                     } else {
-                        return "Error: Invalid identifier type. Use 'id' or 'name'";
+                        return "Error: Invalid identifier type. Use 'id' for playlist ID";
                     }
                 }
 
-                if (playlist == null || playlistId == -1) {
+                if (playlist == null) {
                     return "Error: Could not identify playlist from the provided parameters";
                 }
 
-                LinkedList<Song> songs = playlist.getSongs();
-                if (songs.isEmpty()) {
+                // Check if playlist has songs
+                if (playlist.getSongs().isEmpty()) {
                     return "Error: Playlist '" + playlist.getName() + "' is empty";
                 }
 
-                // Check authorization
-                if (!authorizationService.canAccessPlaylist(userId, playlistId)) {
-                    return "ERROR: You don't have permission to play this playlist";
-                }
-
-                // Start playlist in the PlaybackService and get the first song
-                Song firstSong = playbackService.startPlaylist(playlistId, userId);
+                // MODIFICATIONS: Start playlist using PlaybackService (this handles navigation state)
+                Song firstSong = playbackService.startPlaylist(playlist.getPlaylistID(), userId);
 
                 if (firstSong == null) {
-                    return "Error: Failed to start playlist - unable to get first song";
+                    return "Error: Failed to start playlist '" + playlist.getName() + "'";
                 }
 
-                // Prepare streaming for the first song
-                streamingServer.prepareForStreaming(firstSong);
+                System.out.println("Starting playlist '" + playlist.getName() + "' for user " + username +
+                        " (ID: " + userId + ") with " + playlist.getSongs().size() + " songs");
 
-                // Send instructions to client to connect to streaming server for this song
-                // Include both the first song info AND the playlist ID for context
+                // MODIFICATIONS: Return stream request for first song only
+                // Client will handle subsequent songs via auto_next mechanism
                 String response = "STREAM_REQUEST|" + SpotifySocketServer.STREAMING_PORT +
-                        "|" + firstSong.getFilePath() +
-                        "|" + firstSong.getTitle() +
-                        "|" + firstSong.getArtistId() +
-                        "|" + userId +
-                        "|" + playlistId;  // Include playlist ID to mark this as part of playlist
+                        "|" + firstSong.getFilePath() + "|" + firstSong.getTitle() +
+                        "|" + firstSong.getArtistId() + "|" + userId;
 
-                System.out.println("Starting playlist '" + playlist.getName() +
-                        "' for user " + username + " (ID: " + userId +
-                        ") with song: " + firstSong.getTitle());
+                // MODIFICATIONS: No preparation needed - StreamingServer handles pure audio on demand
+                // PlaybackService now manages playlist state for client-driven navigation
 
                 return response;
 
-            } catch (NumberFormatException e) {
-                return "Error: Invalid playlist ID format. Please provide a number.";
             } catch (Exception e) {
                 return "Error processing playlist command: " + e.getMessage();
             }
@@ -175,38 +119,66 @@ public class PlaylistCommandProcessor extends AbstractProcessor {
     }
 
     /**
-     * Helper method to parse command while preserving quoted strings.
-     * This allows playlist names with spaces to be properly handled.
+     * MODIFICATIONS: Finds a playlist by name that the user can access.
+     * Checks both owned playlists and playlists shared with the user.
      *
-     * @param command The command string to parse
-     * @return An array of parsed command parts
+     * @param playlistName The name of the playlist to search for
+     * @param userId The ID of the user requesting the playlist
+     * @return The found playlist, or null if not found or not accessible
      */
-    private String[] parseCommandWithQuotes(String command) {
-        java.util.List<String> parts = new java.util.ArrayList<>();
-        boolean inQuotes = false;
-        StringBuilder currentPart = new StringBuilder();
-
-        for (int i = 0; i < command.length(); i++) {
-            char c = command.charAt(i);
-
-            if (c == '"') {
-                inQuotes = !inQuotes;
-                currentPart.append(c); // Keep quotes for later processing
-            } else if (c == ' ' && !inQuotes) {
-                if (currentPart.length() > 0) {
-                    parts.add(currentPart.toString());
-                    currentPart = new StringBuilder();
-                }
-            } else {
-                currentPart.append(c);
+    private Playlist findPlaylistByName(String playlistName, Integer userId) {
+        // First, try to find in user's own playlists
+        List<Playlist> userPlaylists = playlistService.getPlaylistsByOwner(userId);
+        for (Playlist playlist : userPlaylists) {
+            if (playlist.getName().equalsIgnoreCase(playlistName)) {
+                return playlist;
             }
         }
 
-        // Add the last part
-        if (currentPart.length() > 0) {
-            parts.add(currentPart.toString());
+        // Then, try to find in playlists shared with the user
+        List<Playlist> sharedPlaylists = playlistService.getPlaylistsSharedWithUser(userId);
+        for (Playlist playlist : sharedPlaylists) {
+            if (playlist.getName().equalsIgnoreCase(playlistName)) {
+                return playlist;
+            }
         }
 
-        return parts.toArray(new String[0]);
+        // Finally, try partial matching in accessible playlists
+        for (Playlist playlist : userPlaylists) {
+            if (playlist.getName().toLowerCase().contains(playlistName.toLowerCase())) {
+                return playlist;
+            }
+        }
+
+        for (Playlist playlist : sharedPlaylists) {
+            if (playlist.getName().toLowerCase().contains(playlistName.toLowerCase())) {
+                return playlist;
+            }
+        }
+
+        return null; // Playlist not found or not accessible
+    }
+
+    /**
+     * MODIFICATIONS: Helper method to create user-friendly error for multiple matches.
+     * Note: Currently not used but kept for future enhancements.
+     *
+     * @param playlistName The searched playlist name
+     * @param matchingPlaylists List of matching playlists
+     * @return Formatted error message with playlist options
+     */
+    private String createMultiplePlaylistMatchesError(String playlistName, List<Playlist> matchingPlaylists) {
+        StringBuilder response = new StringBuilder("Multiple playlists found matching '");
+        response.append(playlistName).append("':\n");
+        response.append("Please be more specific or use playlist ID:\n");
+
+        for (Playlist playlist : matchingPlaylists) {
+            response.append("ID: ").append(playlist.getPlaylistID())
+                    .append(" - ").append(playlist.getName())
+                    .append(" (").append(playlist.getSongs().size()).append(" songs)\n");
+        }
+
+        response.append("Use: playlist id <playlist_id> to play a specific playlist");
+        return response.toString();
     }
 }

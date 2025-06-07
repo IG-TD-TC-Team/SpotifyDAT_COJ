@@ -36,32 +36,32 @@
   "ownerID" : 5,
   "playlistID" : 4,
   "likedByUsers" : [ ],
-  "publiclyShareable" : false,
-  "sharedWith" : [ ]
+  "sharedWith" : [ ],
+  "publiclyShareable" : false
 }, {
   "name" : "sofia",
   "songs" : [ ],
   "ownerID" : 1,
   "playlistID" : 6,
   "likedByUsers" : [ ],
-  "publiclyShareable" : false,
-  "sharedWith" : [ ]
+  "sharedWith" : [ ],
+  "publiclyShareable" : false
 }, {
   "name" : "summerHits",
   "songs" : [ ],
   "ownerID" : 46,
   "playlistID" : 10,
   "likedByUsers" : [ ],
-  "publiclyShareable" : false,
-  "sharedWith" : [ ]
+  "sharedWith" : [ ],
+  "publiclyShareable" : false
 }, {
   "name" : "autumn",
   "songs" : [ ],
   "ownerID" : 43,
   "playlistID" : 14,
   "likedByUsers" : [ ],
-  "publiclyShareable" : false,
-  "sharedWith" : [ ]
+  "sharedWith" : [ ],
+  "publiclyShareable" : false
 }, {
   "name" : "summer",
   "songs" : [ {
@@ -76,8 +76,8 @@
   "ownerID" : 43,
   "playlistID" : 15,
   "likedByUsers" : [ ],
-  "publiclyShareable" : false,
-  "sharedWith" : [ ]
+  "sharedWith" : [ ],
+  "publiclyShareable" : false
 }, {
   "name" : "samedi",
   "songs" : [ {
@@ -100,16 +100,16 @@
   "ownerID" : 43,
   "playlistID" : 16,
   "likedByUsers" : [ ],
-  "publiclyShareable" : false,
-  "sharedWith" : [ ]
+  "sharedWith" : [ ],
+  "publiclyShareable" : false
 }, {
   "name" : "Favorites",
   "songs" : [ ],
   "ownerID" : 47,
   "playlistID" : 17,
   "likedByUsers" : [ ],
-  "publiclyShareable" : false,
-  "sharedWith" : [ ]
+  "sharedWith" : [ ],
+  "publiclyShareable" : false
 }, {
   "name" : "jiji",
   "songs" : [ {
@@ -140,16 +140,16 @@
   "ownerID" : 47,
   "playlistID" : 18,
   "likedByUsers" : [ 47, 42 ],
-  "publiclyShareable" : false,
-  "sharedWith" : [ 42 ]
+  "sharedWith" : [ 42 ],
+  "publiclyShareable" : false
 }, {
   "name" : "Favorites",
   "songs" : [ ],
   "ownerID" : 48,
   "playlistID" : 19,
   "likedByUsers" : [ ],
-  "publiclyShareable" : false,
-  "sharedWith" : [ ]
+  "sharedWith" : [ ],
+  "publiclyShareable" : false
 }, {
   "name" : "lundi",
   "songs" : [ {
@@ -172,8 +172,8 @@
   "ownerID" : 48,
   "playlistID" : 20,
   "likedByUsers" : [ ],
-  "publiclyShareable" : false,
-  "sharedWith" : [ ]
+  "sharedWith" : [ ],
+  "publiclyShareable" : false
 }, {
   "name" : "mardi",
   "songs" : [ {
@@ -204,16 +204,16 @@
   "ownerID" : 43,
   "playlistID" : 21,
   "likedByUsers" : [ ],
-  "publiclyShareable" : false,
-  "sharedWith" : [ ]
+  "sharedWith" : [ ],
+  "publiclyShareable" : false
 }, {
   "name" : "lolo",
   "songs" : [ ],
   "ownerID" : 42,
   "playlistID" : 22,
   "likedByUsers" : [ ],
-  "publiclyShareable" : false,
-  "sharedWith" : [ ]
+  "sharedWith" : [ ],
+  "publiclyShareable" : false
 }, {
   "name" : "mardimidi",
   "songs" : [ {
@@ -228,16 +228,16 @@
   "ownerID" : 43,
   "playlistID" : 23,
   "likedByUsers" : [ ],
-  "publiclyShareable" : false,
-  "sharedWith" : [ ]
+  "sharedWith" : [ ],
+  "publiclyShareable" : false
 }, {
   "name" : "Favorites",
   "songs" : [ ],
   "ownerID" : 50,
   "playlistID" : 24,
   "likedByUsers" : [ ],
-  "publiclyShareable" : false,
-  "sharedWith" : [ ]
+  "sharedWith" : [ ],
+  "publiclyShareable" : false
 }, {
   "name" : "julio",
   "songs" : [ {
@@ -260,6 +260,46 @@
   "ownerID" : 50,
   "playlistID" : 25,
   "likedByUsers" : [ ],
-  "publiclyShareable" : false,
-  "sharedWith" : [ ]
+  "sharedWith" : [ ],
+  "publiclyShareable" : false
+}, {
+  "name" : "Favorites",
+  "songs" : [ {
+    "songId" : 1141,
+    "title" : "La Camisa Negra",
+    "artistId" : 128,
+    "albumId" : 10055,
+    "genre" : "ROCK",
+    "durationSeconds" : 245,
+    "filePath" : "D:\\DATAFiles\\Codes\\SpotifyDAT_COJ\\music\\lacamisanegra.mp3"
+  }, {
+    "songId" : 1146,
+    "title" : "Victime de la mode",
+    "artistId" : 125,
+    "albumId" : 10051,
+    "genre" : "HIP_HOP",
+    "durationSeconds" : 195,
+    "filePath" : "D:\\DATAFiles\\Codes\\SpotifyDAT_COJ\\music\\victimedelamode.mp3"
+  }, {
+    "songId" : 1148,
+    "title" : "Caroline",
+    "artistId" : 125,
+    "albumId" : 10051,
+    "genre" : "HIP_HOP",
+    "durationSeconds" : 350,
+    "filePath" : "D:\\DATAFiles\\Codes\\SpotifyDAT_COJ\\music\\caroline.mp3"
+  }, {
+    "songId" : 1140,
+    "title" : "Fuego",
+    "artistId" : 128,
+    "albumId" : 10054,
+    "genre" : "ROCK",
+    "durationSeconds" : 190,
+    "filePath" : "D:\\DATAFiles\\Codes\\SpotifyDAT_COJ\\music\\fuego.mp3"
+  } ],
+  "ownerID" : 51,
+  "playlistID" : 26,
+  "likedByUsers" : [ ],
+  "sharedWith" : [ ],
+  "publiclyShareable" : false
 } ]
